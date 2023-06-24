@@ -1,7 +1,7 @@
 name: Cakenaysh
 version: '${project.version}'
 main: com.stelios.cakenaysh.Cakenaysh
-api-version: 1.20
+api-version: '1.20'
 authors: [Stelios]
 description: Main plungin for the Cakenaysh Minecraft Server
 commands:
