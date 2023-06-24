@@ -1,6 +1,6 @@
 name: Cakenaysh
 version: '1.0-SNAPSHOT'
-main: com.stelios.cakenaysh.Cakenaysh
+main: com.stelios.cakenaysh.Main
 api-version: '1.20'
 authors: [Stelios]
 description: Main plungin for the Cakenaysh Minecraft Server
