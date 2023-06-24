@@ -34,7 +34,6 @@ public abstract class ItemAbility implements Listener {
 
     //getters
     public ItemStack getItem() {return item.getItemStack();}
-    public int getStamina() {return stamina;}
 
 
     //requirements for the ability
@@ -44,13 +43,13 @@ public abstract class ItemAbility implements Listener {
         Main main = Main.getPlugin(Main.class);
 
         //if the stamina is above the requirement or the cooldown has expired use the ability
-        if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() >= this.stamina && !cooldown.asMap().containsKey(player.getUniqueId())){
+        if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() >= ability.getStamina() && !cooldown.asMap().containsKey(player.getUniqueId())){
 
                 //add the player to the cooldown cache
                 cooldown.put(player.getUniqueId(), System.currentTimeMillis());
 
                 //remove the stamina
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() - this.stamina);
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() - ability.getStamina());
                 return true;
         }
 

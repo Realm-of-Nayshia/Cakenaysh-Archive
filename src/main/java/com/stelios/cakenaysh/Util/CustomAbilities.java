@@ -1,16 +1,12 @@
 package com.stelios.cakenaysh.Util;
 
-import com.stelios.cakenaysh.Listeners.ItemAbility;
-import com.stelios.cakenaysh.Util.Abilities.TestAbility;
 import net.kyori.adventure.text.Component;
-
-import java.util.ArrayList;
 
 public enum CustomAbilities {
 
 
     TEST_ABILITY(Component.text("Test Ability"), Component.text("This is a test ability"),
-            0, 1, "RIGHT_CLICK")
+            0, 1, "RIGHT_CLICK",false)
 
 
 
@@ -22,8 +18,15 @@ public enum CustomAbilities {
     private int stamina;
     private long cooldown;
     private String clickType;
+    private Boolean hasSpecialCases;
 
-    CustomAbilities(Component name, Component description, int stamina, long cooldown, String clickType){
+    CustomAbilities(Component name, Component description, int stamina, long cooldown, String clickType, Boolean hasSpecialCases){
+        this.name = name;
+        this.description = description;
+        this.stamina = stamina;
+        this.cooldown = cooldown;
+        this.clickType = clickType;
+        this.hasSpecialCases = hasSpecialCases;
     }
 
     //getters
@@ -32,6 +35,7 @@ public enum CustomAbilities {
     public int getStamina(){return this.stamina;}
     public long getCooldown(){return this.cooldown;}
     public String getClickType(){return this.clickType;}
+    public Boolean getHasSpecialCases(){return this.hasSpecialCases;}
 
 
 

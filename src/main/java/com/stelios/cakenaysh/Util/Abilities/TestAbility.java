@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class TestAbility extends ItemAbility {
 
     public TestAbility(CustomAbilities ability, ItemBuilder item, int stamina, long cooldown) {
-        super(ability, item, stamina, cooldown);
+        super(CustomAbilities.TEST_ABILITY, item, 10, 10);
     }
 
     //executing the ability
