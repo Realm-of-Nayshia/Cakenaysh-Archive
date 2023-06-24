@@ -31,7 +31,9 @@ public class ConnectionListener implements Listener {
             CustomPlayer playerData = new CustomPlayer(main, player.getUniqueId());
             main.getPlayerManager().addCustomPlayer(player.getUniqueId(), playerData);
         } catch (SQLException ex) {
-            player.kick(Component.text(("An error occurred while loading your data. Please contact a server admin."),
+            //player.kick(Component.text(("An error occurred while loading your data. Please contact a server admin."),
+            //        TextColor.color(255,0,0)));
+            player.sendMessage(Component.text("Your data is not loaded. Please contact a server admin.",
                     TextColor.color(255,0,0)));
             ex.printStackTrace();
         }
