@@ -130,7 +130,21 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false))));
+                    new ArrayList<>(Arrays.asList(false)))),
+
+
+
+    SCYTHE_OF_INTELLIJ(new BattleItemBuilder(Material.GOLDEN_HOE, 1,60,11,120,5
+            ,0,0,0,5)
+            .setDisplayName("Scythe of Intellij"
+                    , 66, 27, 224, false, false, false, false, false)
+            .setLore(new ArrayList<>(Arrays.asList("A divine weapon created by the ancient", "God of Intellect: Intellij")),
+                    new ArrayList<>(Arrays.asList(201,201,201,201,201,201)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false))));
 
 
     private ItemBuilder itemBuilder;
