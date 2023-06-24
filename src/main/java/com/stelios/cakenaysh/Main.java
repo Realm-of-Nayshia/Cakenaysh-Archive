@@ -5,6 +5,7 @@ import com.stelios.cakenaysh.Commands.TabComplete.*;
 import com.stelios.cakenaysh.Listeners.ConnectionListener;
 import com.stelios.cakenaysh.Listeners.PlayerInteractListener;
 import com.stelios.cakenaysh.Listeners.ServerListPingListener;
+import com.stelios.cakenaysh.Util.Abilities.TestAbility;
 import com.stelios.cakenaysh.Util.Database;
 import com.stelios.cakenaysh.Util.PlayerManager;
 import org.bukkit.Bukkit;

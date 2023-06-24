@@ -139,6 +139,13 @@ public enum CustomItems {
         this.itemBuilder = itemBuilder;
     }
 
+
+    //gets an items itemBuilder
+    //@return the ItemBuilder
+    public ItemBuilder getItemBuilder(){
+        return itemBuilder;
+    }
+
     //gets an item from the enum
     //@param name: The name of the item being picked.
     //@return the ItemBuilder

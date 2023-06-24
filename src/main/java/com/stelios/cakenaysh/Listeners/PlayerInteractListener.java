@@ -29,31 +29,31 @@ public class PlayerInteractListener implements Listener {
 
             ////MENU
             //if the player clicks on the menu item
-            if (e.getItem().equals(CustomItems.getItem("RPG_MENU").build())){
+            if (e.getItem().equals(CustomItems.RPG_MENU.getItemBuilder().build())){
 
                 //open the menu
                 Inventory menu = Bukkit.createInventory(player, 45, Component.text("RPG Menu").decoration(TextDecoration.BOLD, true));
 
                 //creating the items in the menu
                 //setting the skull owner to the player
-                ItemBuilder profile = CustomItems.getItem("PROFILE");
+                ItemBuilder profile = CustomItems.PROFILE.getItemBuilder();
                 ItemStack profileItem = profile.build();
                 SkullMeta profileMeta = (SkullMeta) profileItem.getItemMeta();
                 profileMeta.setOwningPlayer(player);
                 profileItem.setItemMeta(profileMeta);
 
                 menu.setItem(4, profileItem);
-                menu.setItem(20, CustomItems.getItem("STATS").build());
-                menu.setItem(21, CustomItems.getItem("SKILLS").build());
-                menu.setItem(23, CustomItems.getItem("QUESTS").build());
-                menu.setItem(24, CustomItems.getItem("RECIPE_BOOK").build());
-                menu.setItem(39, CustomItems.getItem("CHARACTER_MANAGEMENT").build());
-                menu.setItem(40, CustomItems.getItem("CLOSE").build());
-                menu.setItem(41, CustomItems.getItem("SETTINGS").build());
+                menu.setItem(20, CustomItems.STATS.getItemBuilder().build());
+                menu.setItem(21, CustomItems.SKILLS.getItemBuilder().build());
+                menu.setItem(23, CustomItems.QUESTS.getItemBuilder().build());
+                menu.setItem(24, CustomItems.RECIPE_BOOK.getItemBuilder().build());
+                menu.setItem(39, CustomItems.CHARACTER_MANAGEMENT.getItemBuilder().build());
+                menu.setItem(40, CustomItems.CLOSE.getItemBuilder().build());
+                menu.setItem(41, CustomItems.SETTINGS.getItemBuilder().build());
 
                 for(int i: new int[]{0,1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
                         22,25,26,27,28,29,30,31,32,33,34,35,36,37,38,42,43,44}){
-                    menu.setItem(i, CustomItems.getItem("BLANK_BLACK_PANE").build());
+                    menu.setItem(i, CustomItems.BLANK_BLACK_PANE.getItemBuilder().build());
                 }
 
                 player.openInventory(menu);
@@ -66,7 +66,7 @@ public class PlayerInteractListener implements Listener {
 
             ////DIAL_OF_THE_SUN
             //if the player right clicks on air with the DIAL_OF_THE_SUN in hand
-            if (e.getItem().equals(CustomItems.getItem("DIAL_OF_THE_SUN").build())){
+            if (e.getItem().isSimilar(CustomItems.DIAL_OF_THE_SUN.getItemBuilder().build())){
                 if (e.getAction().isRightClick() && e.getClickedBlock() == null){
 
                     //take away the dial and play a sound
