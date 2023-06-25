@@ -6,20 +6,16 @@ import org.bukkit.event.inventory.ClickType;
 public enum CustomAbilities {
 
 
-    TEST_ABILITY(Component.text("Test Ability"), Component.text("This is a test ability"),
-            0, 1, ClickType.RIGHT,false)
+    SPARTAN_WRATH(Component.text("Test Ability"), Component.text("This is a test ability"),
+            0, 1, ClickType.RIGHT,false);
 
 
-
-    ;
-
-
-    private Component name;
-    private Component description;
-    private int stamina;
-    private long cooldown;
-    private ClickType clickType;
-    private Boolean hasSpecialCases;
+    private final Component name;
+    private final Component description;
+    private final int stamina;
+    private final long cooldown;
+    private final ClickType clickType;
+    private final Boolean hasSpecialCases;
 
     CustomAbilities(Component name, Component description, int stamina, long cooldown, ClickType clickType, Boolean hasSpecialCases){
         this.name = name;
