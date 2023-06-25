@@ -6,6 +6,8 @@ import com.stelios.cakenaysh.Listeners.ConnectionListener;
 import com.stelios.cakenaysh.Listeners.PlayerInteractListener;
 import com.stelios.cakenaysh.Listeners.ServerListPingListener;
 import com.stelios.cakenaysh.Util.Abilities.TestAbility;
+import com.stelios.cakenaysh.Util.CustomAbilities;
+import com.stelios.cakenaysh.Util.CustomItems;
 import com.stelios.cakenaysh.Util.Database;
 import com.stelios.cakenaysh.Util.PlayerManager;
 import org.bukkit.Bukkit;
@@ -33,8 +35,23 @@ public final class Main extends JavaPlugin {
         //player manager setup
         playerManager = new PlayerManager();
 
+        //registering important plugin info
+        registerEvents();
+        registerCommands();
+        registerAbilities();
 
-        //commands setup
+    }
+
+    //registering events
+    private void registerEvents(){
+        Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
+    }
+
+    //registering commands
+    @SuppressWarnings("DataFlowIssue")
+    private void registerCommands(){
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("vanish").setExecutor(new VanishCommand());
 
@@ -52,20 +69,20 @@ public final class Main extends JavaPlugin {
 
         getCommand("resetattributes").setExecutor(new ResetAttributesCommand());
         getCommand("resetattributes").setTabCompleter(new ResetAttributesTabComplete());
+    }
 
-        //events setup
-        Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
-        Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
-
+    //registering abilities
+    private void registerAbilities(){
+        new TestAbility(CustomAbilities.SPARTAN_WRATH, CustomItems.WRATH_OF_SPARTA.getItemBuilder(), 10, 10);
     }
 
     ////getters
-
     //gets and returns the database
     public Database getDatabase() {return database;}
+
     //gets and returns the player manager
     public PlayerManager getPlayerManager() {return playerManager;}
+
 
 
     @Override

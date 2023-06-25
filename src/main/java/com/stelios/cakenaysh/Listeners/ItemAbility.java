@@ -7,6 +7,7 @@ import com.stelios.cakenaysh.Util.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,17 +22,23 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ItemAbility implements Listener {
 
-    private CustomAbilities ability;
-    private ItemBuilder item;
-    private int stamina;
-    private Cache<UUID, Long> cooldown;
+    private final CustomAbilities ability;
+    private final ItemBuilder item;
+    private final int stamina;
+    private final Cache<UUID, Long> cooldown;
+    private static boolean eventRegistered = false;
 
     public ItemAbility(CustomAbilities ability, ItemBuilder item, int stamina, long cooldown) {
         this.ability = ability;
         this.item = item;
         this.stamina = stamina;
         this.cooldown = CacheBuilder.newBuilder().expireAfterWrite(cooldown, TimeUnit.SECONDS).build();
-        Bukkit.getPluginManager().registerEvents(this, Main.getPlugin(Main.class));
+
+        //check if an event is already registered
+        if (!eventRegistered) {
+            Bukkit.getPluginManager().registerEvents(this, Main.getPlugin(Main.class));
+            eventRegistered = true;
+        }
     }
 
     //getters
@@ -69,15 +76,10 @@ public abstract class ItemAbility implements Listener {
                 return true;
         }
 
-        player.playSound(player.getLocation(), "minecraft:block.note_block.bass", 1, 1);
+        player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_FALL, 1, 1);
         long distance = cooldown.asMap().get(player.getUniqueId()) - System.currentTimeMillis();
         player.sendMessage(Component.text("You must wait " + TimeUnit.MILLISECONDS.toSeconds(distance) + " seconds to use this ability again!", TextColor.color(255,0,0)));
         return false;
-    }
-
-    //unregistering the listener
-    public void unregister(){
-        PlayerInteractEvent.getHandlerList().unregister(this);
     }
 
     @EventHandler

@@ -11,10 +11,10 @@ import java.util.UUID;
 
 public class CustomPlayer {
 
-    private Main main;
+    private final Main main;
 
 
-    private UUID uuid;
+    private final UUID uuid;
     private String rank;
     private String joinDate;
     private float playTime;

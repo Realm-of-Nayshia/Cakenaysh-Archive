@@ -18,8 +18,8 @@ import java.util.UUID;
 
 public class ItemBuilder {
 
-    private ItemStack itemStack;
-    private ItemMeta itemMeta;
+    private final ItemStack itemStack;
+    private final ItemMeta itemMeta;
 
 
     //@param material: The material of the item being built.
