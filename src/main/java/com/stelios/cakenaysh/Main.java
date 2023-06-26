@@ -6,7 +6,7 @@ import com.stelios.cakenaysh.Listeners.ConnectionListener;
 import com.stelios.cakenaysh.Listeners.PlayerInteractListener;
 import com.stelios.cakenaysh.Listeners.ServerListPingListener;
 import com.stelios.cakenaysh.Util.Abilities.DialOfTheSunAbility;
-import com.stelios.cakenaysh.Util.Abilities.TestAbility;
+import com.stelios.cakenaysh.Util.Abilities.WrathOfSpartaAbility;
 import com.stelios.cakenaysh.Util.CustomAbilities;
 import com.stelios.cakenaysh.Util.CustomItems;
 import com.stelios.cakenaysh.Util.Database;
@@ -74,7 +74,7 @@ public final class Main extends JavaPlugin {
 
     //registering abilities
     private void registerAbilities(){
-        new TestAbility(CustomAbilities.SPARTAN_WRATH, CustomItems.WRATH_OF_SPARTA.getItemBuilder(), 2, 5);
+        new WrathOfSpartaAbility(CustomAbilities.SPARTAN_WRATH, CustomItems.WRATH_OF_SPARTA.getItemBuilder(), 2, 5);
         new DialOfTheSunAbility(CustomAbilities.GRADUAL_SET_DAY, CustomItems.DIAL_OF_THE_SUN.getItemBuilder(), 1, 15);
     }
 

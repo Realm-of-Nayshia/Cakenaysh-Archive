@@ -49,14 +49,31 @@ public class ItemBuilder {
     //@param isObfuscated: Makes the name obfuscated.
     //@param isStrikethrough: Makes the name strikethrough.
     //@return the ItemBuilder
-    public ItemBuilder setDisplayName(String name, int red, int green, int blue, Boolean isBold, Boolean isUnderlined, Boolean isItalic,
-                                      Boolean isObfuscated, Boolean isStrikethrough){
-        this.itemMeta.displayName(Component.text(name, TextColor.color(red, green, blue)).
-                decoration(TextDecoration.BOLD, isBold).
-                decoration(TextDecoration.UNDERLINED, isUnderlined).
-                decoration(TextDecoration.ITALIC, isItalic).
-                decoration(TextDecoration.OBFUSCATED, isObfuscated).
-                decoration(TextDecoration.STRIKETHROUGH, isStrikethrough));
+    public ItemBuilder setDisplayName(List<String> nameText, List<Integer> rgbValues, List<Boolean> isBold,
+                                      List<Boolean> isUnderlined, List<Boolean> isItalic, List<Boolean> isObfuscated,
+                                      List<Boolean> isStrikethrough){
+
+        //list to store every word of the item name
+        List<TextComponent> nameList = new ArrayList<> ();
+
+        //loop through the nameText, apply the stated colors/decorations, and add each word to the nameList
+        for (int i = 0; i < nameText.size(); i++){
+            nameList.add(nameList.size(),(Component.text(nameText.get(i),
+                            TextColor.color(rgbValues.get(i*3), rgbValues.get(i*3+1), rgbValues.get(i*3+2)))
+                    .decoration(TextDecoration.BOLD, isBold.get(i))
+                    .decoration(TextDecoration.UNDERLINED, isUnderlined.get(i))
+                    .decoration(TextDecoration.ITALIC, isItalic.get(i))
+                    .decoration(TextDecoration.OBFUSCATED, isObfuscated.get(i))
+                    .decoration(TextDecoration.STRIKETHROUGH, isStrikethrough.get(i))));
+        }
+
+        //loop through the nameList and concatenate each word to one textcomponent
+        TextComponent displayName = Component.empty();
+        for (TextComponent word : nameList){
+            displayName = displayName.append(word);
+        }
+
+        this.itemMeta.displayName(displayName);
         return this;
     }
 
@@ -69,20 +86,49 @@ public class ItemBuilder {
     //@param isObfuscated: Makes the lore obfuscated.
     //@param isStrikethrough: Makes the lore strikethrough.
     //@return the ItemBuilder
-    public ItemBuilder setLore(List<String> loreText, List<Integer> rgbValues, List<Boolean> isBold, List<Boolean> isUnderlined, List<Boolean> isItalic, List<Boolean> isObfuscated, List<Boolean> isStrikethrough){
+    public ItemBuilder setLore(List<String> loreText, List<Integer> rgbValues, List<Boolean> isBold,
+                               List<Boolean> isUnderlined, List<Boolean> isItalic, List<Boolean> isObfuscated,
+                               List<Boolean> isStrikethrough){
 
+        List<TextComponent> wordList = new ArrayList<> ();
         List<TextComponent> loreList = new ArrayList<> ();
 
-        //adding the actual lore to the item
+        //variable to keep track of how many times the nl command is called
+        int nlCalls = 0;
+
+        //adding the lore to the item
         for (int i = 0; i < loreText.size(); i++){
-            loreList.add(loreList.size(),(Component.text(loreText.get(i),
-                            TextColor.color(rgbValues.get(i*3), rgbValues.get(i*3+1), rgbValues.get(i*3+2)))
-                    .decoration(TextDecoration.BOLD, isBold.get(i))
-                    .decoration(TextDecoration.UNDERLINED, isUnderlined.get(i))
-                    .decoration(TextDecoration.ITALIC, isItalic.get(i))
-                    .decoration(TextDecoration.OBFUSCATED, isObfuscated.get(i))
-                    .decoration(TextDecoration.STRIKETHROUGH, isStrikethrough.get(i))));
+
+            //go to next line by adding the current line to the loreList and clearing the wordList
+            if (loreText.get(i).equals("nl")){
+                TextComponent lore = Component.empty();
+                for (TextComponent word : wordList){
+                    lore = lore.append(word);
+                }
+                loreList.add(lore);
+                wordList.clear();
+                nlCalls++;
+
+            //add the current word to the wordList
+            }else{
+                wordList.add(wordList.size(),(Component.text(loreText.get(i),
+                                TextColor.color(rgbValues.get((i-nlCalls)*3), rgbValues.get((i-nlCalls)*3+1), rgbValues.get((i-nlCalls)*3+2)))
+                        .decoration(TextDecoration.BOLD, isBold.get(i-nlCalls))
+                        .decoration(TextDecoration.UNDERLINED, isUnderlined.get(i-nlCalls))
+                        .decoration(TextDecoration.ITALIC, isItalic.get(i-nlCalls))
+                        .decoration(TextDecoration.OBFUSCATED, isObfuscated.get(i-nlCalls))
+                        .decoration(TextDecoration.STRIKETHROUGH, isStrikethrough.get(i-nlCalls))));
+            }
         }
+
+        //add the last line to the loreList
+        TextComponent lore = Component.empty();
+        for (TextComponent word : wordList){
+            lore = lore.append(word);
+        }
+        loreList.add(lore);
+
+        //add the last line to the loreList
         this.itemMeta.lore(loreList);
         return this;
     }
