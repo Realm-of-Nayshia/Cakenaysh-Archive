@@ -13,12 +13,8 @@ public class TestAbility extends ItemAbility {
         super(ability, item, stamina, cooldown);
     }
 
-    //executing the ability
     public void doAbility(Player player){
-        System.out.println("TestAbility");
         player.sendMessage(Component.text("TestAbility"));
         player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_AMBIENT, 1, 1);
     }
-
-
 }

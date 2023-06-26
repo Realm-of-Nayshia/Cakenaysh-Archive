@@ -58,40 +58,7 @@ public class PlayerInteractListener implements Listener {
 
                 player.openInventory(menu);
 
-
-
-
-
             }
-
-            ////DIAL_OF_THE_SUN
-            //if the player right clicks on air with the DIAL_OF_THE_SUN in hand
-            if (e.getItem().isSimilar(CustomItems.DIAL_OF_THE_SUN.getItemBuilder().build())){
-                if (e.getAction().isRightClick() && e.getClickedBlock() == null){
-
-                    //take away the dial and play a sound
-                    e.getItem().setAmount(e.getItem().getAmount() - 1);
-                    player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1, 100);
-
-                    //gradually set the time to dawn
-                    new BukkitRunnable() {
-                        long time = player.getWorld().getTime();
-                        @Override
-                        public void run() {
-                            if (time > 23800) {
-                                this.cancel();
-                                return;
-                            }
-                            time += 100;
-                            player.getWorld().setTime(time);
-                        }
-                    }.runTaskTimer(Main.getPlugin(Main.class), 0, 1);
-                }
-            }
-
-
-
-
         }
     }
 }

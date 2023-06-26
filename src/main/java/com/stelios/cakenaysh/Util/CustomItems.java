@@ -147,7 +147,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false))));
 
 
-    private ItemBuilder itemBuilder;
+    private final ItemBuilder itemBuilder;
 
     CustomItems(ItemBuilder itemBuilder){
         this.itemBuilder = itemBuilder;
@@ -170,6 +170,16 @@ public enum CustomItems {
             }
         }
         return null;
+    }
+
+    //gets all the itembuildres in the enum
+    //@return ArrayList<ItemBuilder> of all the items
+public static ArrayList<ItemBuilder> getAllItems(){
+        ArrayList<ItemBuilder> items = new ArrayList<>();
+        for (CustomItems item : CustomItems.values()){
+            items.add(item.itemBuilder);
+        }
+        return items;
     }
 
     //returns all the names of items in the enum

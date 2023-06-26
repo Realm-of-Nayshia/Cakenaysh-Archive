@@ -1,6 +1,5 @@
 com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility.class
 com\stelios\cakenaysh\Util\BattleItemBuilder.class
-com\stelios\cakenaysh\Listeners\PlayerInteractListener$1.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
 com\stelios\cakenaysh\Commands\SetAttributesCommand.class
 com\stelios\cakenaysh\Util\Database.class
@@ -9,6 +8,7 @@ com\stelios\cakenaysh\Commands\AddAttributesCommand.class
 com\stelios\cakenaysh\Commands\VanishCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\AddAttributesTabComplete.class
 com\stelios\cakenaysh\Commands\ResetAttributesCommand.class
+com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility$1.class
 com\stelios\cakenaysh\Commands\TabComplete\ResetAttributesTabComplete.class
 com\stelios\cakenaysh\Util\CustomPlayer.class
 com\stelios\cakenaysh\Util\CustomAbilities.class

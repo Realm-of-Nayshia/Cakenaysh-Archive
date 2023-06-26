@@ -7,32 +7,35 @@ public enum CustomAbilities {
 
 
     SPARTAN_WRATH(Component.text("Test Ability"), Component.text("This is a test ability"),
-            0, 1, ClickType.RIGHT,false);
+            ClickType.RIGHT,false,false),
+    GRADUAL_SET_DAY(Component.text("Gradual Set Day"), Component.text("Gradually sets the time to day."),
+            ClickType.RIGHT,false,true),
+
+
+
+    ;
 
 
     private final Component name;
     private final Component description;
-    private final int stamina;
-    private final long cooldown;
     private final ClickType clickType;
     private final Boolean hasSpecialCases;
+    private final Boolean removeItem;
 
-    CustomAbilities(Component name, Component description, int stamina, long cooldown, ClickType clickType, Boolean hasSpecialCases){
+    CustomAbilities(Component name, Component description, ClickType clickType, Boolean hasSpecialCases, Boolean removeItem){
         this.name = name;
         this.description = description;
-        this.stamina = stamina;
-        this.cooldown = cooldown;
         this.clickType = clickType;
         this.hasSpecialCases = hasSpecialCases;
+        this.removeItem = removeItem;
     }
 
     //getters
     public Component getName(){return this.name;}
     public Component getDescription(){return this.description;}
-    public int getStamina(){return this.stamina;}
-    public long getCooldown(){return this.cooldown;}
     public ClickType getClickType(){return this.clickType;}
     public Boolean getHasSpecialCases(){return this.hasSpecialCases;}
+    public Boolean getRemoveItem(){return this.removeItem;}
 
 
 
