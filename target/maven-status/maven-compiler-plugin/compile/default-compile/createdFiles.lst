@@ -1,6 +1,8 @@
+com\stelios\cakenaysh\Util\AttributeManager.class
 com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility.class
 com\stelios\cakenaysh\Util\BattleItemBuilder.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
+com\stelios\cakenaysh\Listeners\ConnectionListener$1.class
 com\stelios\cakenaysh\Commands\SetAttributesCommand.class
 com\stelios\cakenaysh\Util\Database.class
 com\stelios\cakenaysh\Util\PlayerManager.class
@@ -12,6 +14,7 @@ com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility$1.class
 com\stelios\cakenaysh\Util\Abilities\WrathOfSpartaAbility.class
 com\stelios\cakenaysh\Commands\TabComplete\ResetAttributesTabComplete.class
 com\stelios\cakenaysh\Util\CustomPlayer.class
+com\stelios\cakenaysh\Util\AttributeManager$1.class
 com\stelios\cakenaysh\Util\CustomAbilities.class
 com\stelios\cakenaysh\Util\ItemBuilder.class
 com\stelios\cakenaysh\Commands\GetAttributesCommand.class

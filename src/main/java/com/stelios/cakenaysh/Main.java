@@ -5,12 +5,9 @@ import com.stelios.cakenaysh.Commands.TabComplete.*;
 import com.stelios.cakenaysh.Listeners.ConnectionListener;
 import com.stelios.cakenaysh.Listeners.PlayerInteractListener;
 import com.stelios.cakenaysh.Listeners.ServerListPingListener;
+import com.stelios.cakenaysh.Util.*;
 import com.stelios.cakenaysh.Util.Abilities.DialOfTheSunAbility;
 import com.stelios.cakenaysh.Util.Abilities.WrathOfSpartaAbility;
-import com.stelios.cakenaysh.Util.CustomAbilities;
-import com.stelios.cakenaysh.Util.CustomItems;
-import com.stelios.cakenaysh.Util.Database;
-import com.stelios.cakenaysh.Util.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -48,6 +45,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
+        Bukkit.getPluginManager().registerEvents(new AttributeManager(this), this);
     }
 
     //registering commands
