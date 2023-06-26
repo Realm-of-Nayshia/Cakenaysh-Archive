@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 
@@ -36,19 +35,6 @@ public class ConnectionListener implements Listener {
                     TextColor.color(255,0,0)));
             ex.printStackTrace();
         }
-
-        //creating and updating the player's action bar
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                int health = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth();
-                int maxHealth = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth();
-                int stamina = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina();
-
-                player.sendActionBar(Component.text(health + " / " + maxHealth + " ❤     ", TextColor.color(255,0,0))
-                        .append(Component.text(stamina + " / 100 ⚡", TextColor.color(210,125,45))));
-            }
-        }.runTaskTimer(main, 0, 40);
 
     }
 
