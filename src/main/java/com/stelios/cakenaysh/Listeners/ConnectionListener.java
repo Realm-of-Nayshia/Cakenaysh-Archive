@@ -9,12 +9,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 
 public class ConnectionListener implements Listener {
 
-    private Main main;
+    private final Main main;
 
     public ConnectionListener(Main main){
         this.main = main;
@@ -24,9 +25,9 @@ public class ConnectionListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
 
-        //creates a new CustomPlayer for each joining player
         Player player = e.getPlayer();
 
+        //creates a new CustomPlayer for each joining player
         try {
             CustomPlayer playerData = new CustomPlayer(main, player.getUniqueId());
             main.getPlayerManager().addCustomPlayer(player.getUniqueId(), playerData);
@@ -36,6 +37,19 @@ public class ConnectionListener implements Listener {
             ex.printStackTrace();
         }
 
+        //creating and updating the player's action bar
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                int health = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth();
+                int maxHealth = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth();
+                int stamina = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina();
+
+                player.sendActionBar(Component.text(health + " / " + maxHealth + " ❤     ", TextColor.color(255,0,0))
+                        .append(Component.text(stamina + " / 100 ⚡", TextColor.color(210,125,45))));
+            }
+        }.runTaskTimer(main, 0, 40);
+
     }
 
     @EventHandler
@@ -43,6 +57,11 @@ public class ConnectionListener implements Listener {
 
         Player player = e.getPlayer();
 
+        //saving the players stamina and health in the database
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthDatabase(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth());
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaDatabase(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina());
+
+        //remove the custom player
         main.getPlayerManager().removeCustomPlayer(player.getUniqueId());
     }
 

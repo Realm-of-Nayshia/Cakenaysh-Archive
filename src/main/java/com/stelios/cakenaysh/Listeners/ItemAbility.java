@@ -23,11 +23,11 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ItemAbility implements Listener {
 
-    private CustomAbilities ability;
-    private ItemBuilder item;
-    private int stamina;
-    private Cache<UUID, Long> cooldown;
-    private long cooldownTime;
+    private final CustomAbilities ability;
+    private final ItemBuilder item;
+    private final int stamina;
+    private final Cache<UUID, Long> cooldown;
+    private final long cooldownTime;
     private static boolean firstEventRegistered= false;
 
     public ItemAbility(CustomAbilities ability, ItemBuilder item, int stamina, long cooldown) {
@@ -85,7 +85,7 @@ public abstract class ItemAbility implements Listener {
             //send the player a message and play an error sound
             player.sendMessage(Component.text("You do not have enough stamina!", TextColor.color(255,0,0)));
             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT,1, 1);
-            //SET THE ACTION BAR
+            player.sendActionBar(Component.text("NOT ENOUGH STAMINA!", TextColor.color(210,125,45)));
             return false;
         }
 
@@ -95,14 +95,14 @@ public abstract class ItemAbility implements Listener {
             long distance = cooldown.asMap().get(player.getUniqueId()) - System.currentTimeMillis();
             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT,1, 1);
             player.sendMessage(Component.text("You cannot use this ability for " + TimeUnit.MILLISECONDS.toSeconds(distance) + " more seconds!", TextColor.color(255,0,0)));
-            //SET THE ACTION BAR
+            player.sendActionBar(Component.text("ON COOLDOWN!", TextColor.color(255,0,0)));
             return false;
         }
 
         if (hasStaminaCost()){
             //remove the stamina and set the action bar
             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() - this.stamina);
-            //ACTION BAR CODE HERE
+            player.sendActionBar(Component.text("-" + stamina + " ⚡", TextColor.color(210,125,45)));
         }
 
         if (hasCooldown()) {
