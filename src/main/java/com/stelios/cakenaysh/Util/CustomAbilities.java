@@ -6,7 +6,7 @@ import org.bukkit.event.inventory.ClickType;
 public enum CustomAbilities {
 
 
-    SPARTAN_WRATH(Component.text("Test Ability"), Component.text("This is a test ability"),
+    SPARTAN_WRATH(Component.text("Spartan Wrath"), Component.text("THIS IS SPARTA!"),
             ClickType.RIGHT,false,false),
     GRADUAL_SET_DAY(Component.text("Gradual Set Day"), Component.text("Gradually sets the time to day."),
             ClickType.RIGHT,false,true),
