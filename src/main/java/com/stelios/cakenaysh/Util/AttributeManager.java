@@ -27,43 +27,35 @@ public class AttributeManager implements Listener {
             @Override
             public void run() {
 
-                //if over max stamina, set to max stamina
-                if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() > main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina()){
-                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina());
-                }
-
-                //if over max health, set to max health
-                if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() > main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()){
-                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth());
-                }
+                //player information
+                int healthRegen = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealthRegen();
+                int maxHealth = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth();
+                int staminaRegen = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStaminaRegen();
+                int maxStamina = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina();
 
                 //regenerate stamina if not at max
-                if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() < main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina()){
-                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addStaminaLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStaminaRegen());
-
-                    //if over max stamina, set to max stamina
-                    if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() > main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina()){
-                        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina());
-                    }
+                if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() < maxStamina){
+                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addStaminaLocal(staminaRegen);
                 }
 
                 //regenerate health if not at max
-                if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() < main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()){
-                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealthRegen());
+                if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() < maxHealth){
+                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(healthRegen);
+                }
 
-                    //if over max health, set to max health
-                    if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() > main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()){
-                        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth());
-                    }
+                //if over max stamina, set to max stamina
+                if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() > maxStamina){
+                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaLocal(maxStamina);
+                }
+
+                //if over max health, set to max health
+                if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() > maxHealth){
+                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthLocal(maxHealth);
                 }
 
                 //display the action bar
-                int health = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth();
-                int maxHealth = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth();
-                int stamina = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina();
-
-                player.sendActionBar(Component.text(health + " / " + maxHealth + " ❤     ", TextColor.color(255,0,0))
-                        .append(Component.text(stamina + " / 100 ⚡", TextColor.color(210,125,45))));
+                player.sendActionBar(Component.text(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() + " / " + maxHealth + " ❤     ", TextColor.color(255,0,0))
+                        .append(Component.text(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() + " / " + maxStamina + " ⚡", TextColor.color(210,125,45))));
 
             }
         }.runTaskTimer(main,0,40);
