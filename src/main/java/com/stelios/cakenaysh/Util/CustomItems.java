@@ -218,13 +218,13 @@ public enum CustomItems {
             new ArrayList<>(Arrays.asList(false, false, true)),
             new ArrayList<>(Arrays.asList(false, true, false)),
             new ArrayList<>(Arrays.asList(false, true, false)))
-            .setLore(new ArrayList<>(Arrays.asList("We make a few new items...", "nl", "we gotta test the system")),
-            new ArrayList<>(Arrays.asList(200,200,200,200,200,200)),
-            new ArrayList<>(Arrays.asList(false, false)),
-            new ArrayList<>(Arrays.asList(false, false)),
-            new ArrayList<>(Arrays.asList(false, false)),
-            new ArrayList<>(Arrays.asList(false, false)),
-            new ArrayList<>(Arrays.asList(false, false))))
+            .setLore(new ArrayList<>(Arrays.asList("We make", "a few new items...", "nl", "we gotta test the system")),
+            new ArrayList<>(Arrays.asList(45,26,135,200,200,200,200,200,200)),
+            new ArrayList<>(Arrays.asList(true, false, false)),
+            new ArrayList<>(Arrays.asList(false, true, false)),
+            new ArrayList<>(Arrays.asList(false, false, true)),
+            new ArrayList<>(Arrays.asList(false, false, false)),
+            new ArrayList<>(Arrays.asList(false, false, false)))),
 
     ;
 
