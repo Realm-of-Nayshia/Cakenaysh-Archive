@@ -8,9 +8,9 @@ public class Database {
 
     private final String HOST = "localhost";
     private final int PORT = 3306;
-    private final String DATABASE = "testserver_main_plugin";
+    private final String DATABASE = "50997";
     private final String USERNAME = "root";
-    private final String PASSWORD = "";
+    private final String PASSWORD = "GRUBBYGUSTARD123";
 
     private Connection connection;
 

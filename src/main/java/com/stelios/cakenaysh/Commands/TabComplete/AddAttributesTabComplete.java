@@ -32,8 +32,9 @@ public class AddAttributesTabComplete implements TabCompleter {
             //second argument: attribute name
         }else if (args.length == 2){
 
-            return StringUtil.copyPartialMatches(args[1], Arrays.asList("rank","playTime","xp","stamina","health"
-                    ,"maxHealth","speed", "meleeProficiency", "rangedProficiency", "wilsonCoin"), new ArrayList<>());
+            return StringUtil.copyPartialMatches(args[1], Arrays.asList("playTime","xp","strength","staminaRegen","stamina",
+                    "maxStamina","healthRegen","health","maxHealth","speed","defense","meleeProficiency","rangedProficiency",
+                    "wilsonCoin","piety","charisma","deception","agility","luck","stealth"), new ArrayList<>());
         }
 
         //return the list

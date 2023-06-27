@@ -69,8 +69,43 @@ public class AddAttributesCommand implements CommandExecutor {
                         }
                         break;
 
-                    //EXPERIMENTAL STARTS
+                    case "strength":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addStrength(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s strength has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s strength has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid strength
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid strength.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid strength.");
+                            }
+                        }
+                        break;
 
+                    case "staminaregen":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addStaminaRegen(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s stamina regen has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s stamina regen has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid stamina regen
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid stamina regen.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid stamina regen.");
+                            }
+                        }
+                        break;
 
                     case "stamina":
                         try{
@@ -87,6 +122,44 @@ public class AddAttributesCommand implements CommandExecutor {
                                 sender.sendMessage(Component.text("Invalid stamina.", TextColor.color(255,0,0)));
                             } else {
                                 System.out.println("Invalid stamina.");
+                            }
+                        }
+                        break;
+
+                    case "maxstamina":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addMaxStamina(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s max stamina has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s max stamina has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid max stamina
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid max stamina.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid max stamina.");
+                            }
+                        }
+                        break;
+
+                    case "healthregen":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthRegen(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s health regen has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s health regen has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid health regen
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid health regen.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid health regen.");
                             }
                         }
                         break;
@@ -110,13 +183,6 @@ public class AddAttributesCommand implements CommandExecutor {
                         }
                         break;
 
-
-
-
-
-                    //EXPERIMENTAL ENDS
-
-
                     case "maxhealth":
                         try{
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addMaxHealth(Integer.parseInt(args[2]));
@@ -132,6 +198,25 @@ public class AddAttributesCommand implements CommandExecutor {
                                 sender.sendMessage(Component.text("Invalid max health.", TextColor.color(255,0,0)));
                             } else {
                                 System.out.println("Invalid max health.");
+                            }
+                        }
+                        break;
+
+                    case "defense":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addDefense(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s defense has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s defense has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid defense
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid defense.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid defense.");
                             }
                         }
                         break;
@@ -208,6 +293,120 @@ public class AddAttributesCommand implements CommandExecutor {
                                 sender.sendMessage(Component.text("Invalid WilsonCoin.", TextColor.color(255,0,0)));
                             } else {
                                 System.out.println("Invalid WilsonCoin.");
+                            }
+                        }
+                        break;
+
+                    case "piety":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addPiety(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s piety has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s piety has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid piety
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid piety.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid piety.");
+                            }
+                        }
+                        break;
+
+                    case "charisma":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addCharisma(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s charisma has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s charisma has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid charisma
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid charisma.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid charisma.");
+                            }
+                        }
+                        break;
+
+                    case "deception":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addDeception(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s deception has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s deception has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid deception
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid deception.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid deception.");
+                            }
+                        }
+                        break;
+
+                    case "agility":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addAgility(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s agility has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s agility has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid agility
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid agility.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid agility.");
+                            }
+                        }
+                        break;
+
+                    case "luck":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addLuck(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s luck has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s luck has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid luck
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid luck.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid luck.");
+                            }
+                        }
+                        break;
+
+                    case "stealth":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addStealth(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s stealth has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s stealth has increased by " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid stealth
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid stealth.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid stealth.");
                             }
                         }
                         break;

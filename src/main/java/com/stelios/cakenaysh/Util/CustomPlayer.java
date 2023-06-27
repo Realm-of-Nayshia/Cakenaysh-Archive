@@ -19,112 +19,256 @@ public class CustomPlayer {
     private String joinDate;
     private float playTime;
     private int xp;
+    private int strength;
+    private int staminaRegen;
+    private int stamina;
+    private int maxStamina;
+    private int healthRegen;
+    private int health;
     private int maxHealth;
+    private int defense;
     private int speed;
     private int meleeProficiency;
     private int rangedProficiency;
     private int wilsonCoin;
+    private int piety;
+    private int charisma;
+    private int deception;
+    private int agility;
+    private int luck;
+    private int stealth;
 
 
-    private int stamina;
-    private int health;
-
-    public CustomPlayer(Main main, UUID uuid) throws SQLException{
+    public CustomPlayer(Main main, UUID uuid) throws SQLException {
         this.main = main;
 
         this.uuid = uuid;
 
         PreparedStatement statement = main.getDatabase().getConnection().prepareStatement(
-                "SELECT RANK, JOIN_DATE, PLAY_TIME, XP, STAMINA, HEALTH, MAX_HEALTH, SPEED, MELEE_PROFICIENCY, RANGED_PROFICIENCY, WILSONCOIN" +
+                "SELECT RANK, JOIN_DATE, PLAY_TIME, XP, STRENGTH, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
+                        "HEALTH, MAX_HEALTH, DEFENSE, SPEED, MELEE_PROFICIENCY, RANGED_PROFICIENCY, WILSONCOIN, PIETY, " +
+                        "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH" +
                         " FROM players WHERE UUID = ?;");
         statement.setString(1, uuid.toString());
         ResultSet rs = statement.executeQuery();
-        if (rs.next()){
+        if (rs.next()) {
             rank = rs.getString("RANK");
             joinDate = rs.getString("JOIN_DATE");
             playTime = rs.getFloat("PLAY_TIME");
             xp = rs.getInt("XP");
+            strength = rs.getInt("STRENGTH");
+            staminaRegen = rs.getInt("STAMINA_REGEN");
             stamina = rs.getInt("STAMINA");
+            maxStamina = rs.getInt("MAX_STAMINA");
+            healthRegen = rs.getInt("HEALTH_REGEN");
             health = rs.getInt("HEALTH");
             maxHealth = rs.getInt("MAX_HEALTH");
+            defense = rs.getInt("DEFENSE");
             speed = rs.getInt("SPEED");
             meleeProficiency = rs.getInt("MELEE_PROFICIENCY");
             rangedProficiency = rs.getInt("RANGED_PROFICIENCY");
             wilsonCoin = rs.getInt("WILSONCOIN");
+            piety = rs.getInt("PIETY");
+            charisma = rs.getInt("CHARISMA");
+            deception = rs.getInt("DECEPTION");
+            agility = rs.getInt("AGILITY");
+            luck = rs.getInt("LUCK");
+            stealth = rs.getInt("STEALTH");
         } else {
             rank = "GUEST";
             playTime = 0;
             xp = 0;
+            strength = 0;
+            staminaRegen = 1;
             stamina = 100;
+            maxStamina = 100;
+            healthRegen = 1;
             health = 100;
             maxHealth = 100;
+            defense = 0;
             speed = 100;
             meleeProficiency = 0;
             rangedProficiency = 0;
             wilsonCoin = 0;
+            piety = 0;
+            charisma = 0;
+            deception = 0;
+            agility = 0;
+            luck = 0;
+            stealth = 0;
             PreparedStatement insert = main.getDatabase().getConnection().prepareStatement(
-                    "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, XP, STAMINA, HEALTH, MAX_HEALTH, SPEED, MELEE_PROFICIENCY, " +
-                            "RANGED_PROFICIENCY, WILSONCOIN) VALUES (" +
+                    "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, XP, STRENGTH, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
+                            " HEALTH, MAX_HEALTH, DEFENSE, SPEED, MELEE_PROFICIENCY, RANGED_PROFICIENCY, WILSONCOIN, PIETY, " +
+                            " CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH) VALUES (" +
                             "default," +
                             "'" + uuid + "'," +
                             "'" + rank + "'," +
                             "'" + Calendar.getInstance().getTime() + "'," +
                             playTime + "," +
                             xp + "," +
+                            strength + "," +
+                            staminaRegen + "," +
                             stamina + "," +
+                            maxStamina + "," +
+                            healthRegen + "," +
                             health + "," +
                             maxHealth + "," +
+                            defense + "," +
                             speed + "," +
                             meleeProficiency + "," +
                             rangedProficiency + "," +
                             wilsonCoin +
+                            piety + "," +
+                            charisma + "," +
+                            deception + "," +
+                            agility + "," +
+                            luck + "," +
+                            stealth +
                             ");");
             insert.executeUpdate();
         }
     }
 
     ////getter methods
-    public String getRank() {return rank;}
-    public String getJoinDate() {return joinDate;}
-    public float getPlayTime() {return playTime;}
-    public int getXp() {return xp;}
-    public int getStamina() {return stamina;}
-    public int getHealth() {return health;}
-    public int getMaxHealth() {return maxHealth;}
-    public int getSpeed() {return speed;}
-    public int getMeleeProficiency() {return meleeProficiency;}
-    public int getRangedProficiency() {return rangedProficiency;}
-    public int getWilsonCoin() {return wilsonCoin;}
+    public String getRank() {
+        return rank;
+    }
+
+    public String getJoinDate() {
+        return joinDate;
+    }
+
+    public float getPlayTime() {
+        return playTime;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getStaminaRegen() {
+        return staminaRegen;
+    }
+
+    public int getStamina() {
+        return stamina;
+    }
+
+    public int getMaxStamina() {
+        return maxStamina;
+    }
+
+    public int getHealthRegen() {
+        return healthRegen;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getMeleeProficiency() {
+        return meleeProficiency;
+    }
+
+    public int getRangedProficiency() {
+        return rangedProficiency;
+    }
+
+    public int getWilsonCoin() {
+        return wilsonCoin;
+    }
+
+    public int getPiety() {
+        return piety;
+    }
+
+    public int getCharisma() {
+        return charisma;
+    }
+
+    public int getDeception() {
+        return deception;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public int getLuck() {
+        return luck;
+    }
+
+    public int getStealth() {
+        return stealth;
+    }
 
     //get all the attributes of the player
     //used for the /attributes command
-    public String getAttributes(){
-        return "Rank: " + rank + "\n" +
-                "Join Date: " + joinDate + "\n" +
-                "Play Time: " + playTime + "\n" +
-                "XP: " + xp + "\n" +
-                "Stamina: " + stamina + "\n" +
-                "Health: " + health + "\n" +
-                "Max Health: " + maxHealth + "\n" +
-                "Speed: " + speed + "\n" +
-                "Melee Proficiency: " + meleeProficiency + "\n" +
-                "Ranged Proficiency: " + rangedProficiency + "\n" +
-                "WilsonCoin: " + wilsonCoin;
+    public String getAttributes() {
+        return "Rank: " + rank +
+                "   Play Time: " + playTime + "\n" +
+                "Join Date: " + joinDate + "\n" + "\n" +
+                "XP: " + xp +
+                "   Strength: " + strength + "\n" +
+                "Stamina Regen: " + staminaRegen +
+                "   Stamina: " + stamina +
+                "   Max Stamina: " + maxStamina + "\n" +
+                "Health Regen: " + healthRegen +
+                "   Health: " + health +
+                "   Max Health: " + maxHealth + "\n" +
+                "Defense: " + defense +
+                "   Speed: " + speed + "\n" + "\n" +
+                "Melee Proficiency: " + meleeProficiency +
+                "   Ranged Proficiency: " + rangedProficiency + "\n" +
+                "WilsonCoin: " + wilsonCoin + "\n" + "\n" +
+                "Piety: " + piety +
+                "   Charisma: " + charisma +
+                "   Deception: " + deception + "\n" +
+                "Agility: " + agility +
+                "   Luck: " + luck +
+                "   Stealth: " + stealth + "\n";
     }
 
     ////setters
     //resets all the attributes of the player
-    public void resetAttributes(Main main, Player player){
+    public void resetAttributes(Main main, Player player) {
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setRank("Guest");
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setPlayTime(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setXp(0);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStrength(0);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaRegen(1);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaDatabase(100);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMaxStamina(100);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthRegen(1);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthDatabase(100);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMaxHealth(100);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setDefense(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setSpeed(100);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMeleeProficiency(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setRangedProficiency(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setWilsonCoin(0);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setPiety(0);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setCharisma(0);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setDeception(0);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setAgility(0);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setLuck(0);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStealth(0);
     }
 
     //sets the rank of the player
@@ -179,6 +323,32 @@ public class CustomPlayer {
         }
     }
 
+    //sets the strength of the player
+    //@param strength: the strength of the player
+    public void setStrength(int strength) {
+        this.strength = strength;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET STRENGTH = " + strength + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //sets the stamina regen of the player
+    //@param staminaRegen: the stamina regen of the player
+    public void setStaminaRegen(int staminaRegen) {
+        this.staminaRegen = staminaRegen;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET STAMINA_REGEN = " + staminaRegen + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     //sets the stamina of the player locally within the class
     //@param stamina: the stamina of the player
     public void setStaminaLocal(int stamina) {
@@ -192,6 +362,32 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET STAMINA = " + stamina + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //sets the max stamina of the player
+    //@param maxStamina: the max stamina of the player
+    public void setMaxStamina(int maxStamina) {
+        this.maxStamina = maxStamina;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET MAX_STAMINA = " + maxStamina + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //sets the health regen of the player
+    //@param healthRegen: the health regen of the player
+    public void setHealthRegen(int healthRegen) {
+        this.healthRegen = healthRegen;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET HEALTH_REGEN = " + healthRegen + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -243,6 +439,19 @@ public class CustomPlayer {
         }
     }
 
+    //sets the defense of the player
+    //@param defense: the defense of the player
+    public void setDefense(int defense) {
+        this.defense = defense;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET DEFENSE = " + defense + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     //sets the melee proficiency of the player
     //@param meleeProficiency: the melee proficiency of the player
     public void setMeleeProficiency(int meleeProficiency) {
@@ -282,6 +491,85 @@ public class CustomPlayer {
         }
     }
 
+    //sets the piety of the player
+    //@param piety: the piety of the player
+    public void setPiety(int piety) {
+        this.piety = piety;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET PIETY = " + piety + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //sets the charisma of the player
+    //@param charisma: the charisma of the player
+    public void setCharisma(int charisma) {
+        this.charisma = charisma;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET CHARISMA = " + charisma + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //sets the deception of the player
+    //@param deception: the deception of the player
+    public void setDeception(int deception) {
+        this.deception = deception;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET DECEPTION = " + deception + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //sets the agility of the player
+    //@param agility: the agility of the player
+    public void setAgility(int agility) {
+        this.agility = agility;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET AGILITY = " + agility + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //sets the luck of the player
+    //@param luck: the luck of the player
+    public void setLuck(int luck) {
+        this.luck = luck;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET LUCK = " + luck + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //sets the stealth of the player
+    //@param stealth: the stealth of the player
+    public void setStealth(int stealth) {
+        this.stealth = stealth;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET STEALTH = " + stealth + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     //adds play time to the player
     //@param playTime: the play time to add to the player
     public void addPlayTime(float playTime) {
@@ -308,6 +596,32 @@ public class CustomPlayer {
         }
     }
 
+    //adds strength to the player
+    //@param strength: the strength to add to the player
+    public void addStrength(int strength) {
+        this.strength += strength;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET STRENGTH = " + this.strength + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds stamina regen to the player
+    //@param staminaRegen: the stamina regen to add to the player
+    public void addStaminaRegen(int staminaRegen) {
+        this.staminaRegen += staminaRegen;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET STAMINA_REGEN = " + this.staminaRegen + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     //adds stamina to the player locally within the class
     //@param stamina: the stamina to add to the player
     public void addStaminaLocal(int stamina) {
@@ -321,6 +635,32 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET STAMINA = " + this.stamina + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds max stamina to the player
+    //@param maxStamina: the max stamina to add to the player
+    public void addMaxStamina(int maxStamina) {
+        this.maxStamina += maxStamina;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET MAX_STAMINA = " + this.maxStamina + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds health regen to the player
+    //@param healthRegen: the health regen to add to the player
+    public void addHealthRegen(int healthRegen) {
+        this.healthRegen += healthRegen;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET HEALTH_REGEN = " + this.healthRegen + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -353,6 +693,19 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET MAX_HEALTH = " + this.maxHealth + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds defense to the player
+    //@param defense: the defense to add to the player
+    public void addDefense(int defense) {
+        this.defense += defense;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET DEFENSE = " + this.defense + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -409,5 +762,85 @@ public class CustomPlayer {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    //adds piety to the player
+    //@param piety: the piety to add to the player
+    public void addPiety(int piety) {
+        this.piety += piety;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET PIETY = " + this.piety + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds charisma to the player
+    //@param charisma: the charisma to add to the player
+    public void addCharisma(int charisma) {
+        this.charisma += charisma;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET CHARISMA = " + this.charisma + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds deception to the player
+    //@param deception: the deception to add to the player
+    public void addDeception(int deception) {
+        this.deception += deception;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET DECEPTION = " + this.deception + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds agility to the player
+    //@param agility: the agility to add to the player
+    public void addAgility(int agility) {
+        this.agility += agility;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET AGILITY = " + this.agility + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds luck to the player
+    //@param luck: the luck to add to the player
+    public void addLuck(int luck) {
+        this.luck += luck;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET LUCK = " + this.luck + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds stealth to the player
+    //@param stealth: the stealth to add to the player
+    public void addStealth(int stealth) {
+        this.stealth += stealth;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET STEALTH = " + this.stealth + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
