@@ -2,7 +2,6 @@ com\stelios\cakenaysh\Util\AttributeManager.class
 com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility.class
 com\stelios\cakenaysh\Util\BattleItemBuilder.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
-com\stelios\cakenaysh\Listeners\ConnectionListener$1.class
 com\stelios\cakenaysh\Commands\SetAttributesCommand.class
 com\stelios\cakenaysh\Util\Database.class
 com\stelios\cakenaysh\Util\PlayerManager.class
