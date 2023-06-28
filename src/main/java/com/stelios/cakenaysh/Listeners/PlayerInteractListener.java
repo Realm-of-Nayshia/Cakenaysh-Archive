@@ -1,12 +1,10 @@
 package com.stelios.cakenaysh.Listeners;
 
-import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomItems;
 import com.stelios.cakenaysh.Util.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +12,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerInteractListener implements Listener {
 
