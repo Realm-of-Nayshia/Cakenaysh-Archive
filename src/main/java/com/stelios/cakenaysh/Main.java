@@ -30,7 +30,7 @@ public final class Main extends JavaPlugin {
             e.printStackTrace();
         }
 
-        //player manager setup
+        //managers setup
         playerManager = new PlayerManager();
 
         //registering important plugin info
@@ -80,7 +80,7 @@ public final class Main extends JavaPlugin {
     //gets and returns the database
     public Database getDatabase() {return database;}
 
-    //gets and returns the player manager
+    //returns the player manager
     public PlayerManager getPlayerManager() {return playerManager;}
 
 
