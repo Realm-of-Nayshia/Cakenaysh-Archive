@@ -43,12 +43,10 @@ public class ConnectionListener implements Listener {
 
         Player player = e.getPlayer();
 
-        //saving the players stamina and health in the database
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthDatabase(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth());
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaDatabase(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina());
-
-        //remove the custom player
-        main.getPlayerManager().removeCustomPlayer(player.getUniqueId());
+        //remove the custom player after waiting 1 second
+        main.getServer().getScheduler().runTaskLater(main, () -> {
+            main.getPlayerManager().removeCustomPlayer(player.getUniqueId());
+        }, 20);
     }
 
 }
