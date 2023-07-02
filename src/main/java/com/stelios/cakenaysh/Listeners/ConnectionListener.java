@@ -46,7 +46,7 @@ public class ConnectionListener implements Listener {
         //remove the custom player after waiting 1 second
         main.getServer().getScheduler().runTaskLater(main, () -> {
             main.getPlayerManager().removeCustomPlayer(player.getUniqueId());
-        }, 20);
+        }, 10);
     }
 
 }

@@ -4,6 +4,7 @@ import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerLoadEvent;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class AttributeManager implements Listener {
@@ -37,7 +39,6 @@ public class AttributeManager implements Listener {
 
                         //randomly increase the players saturation
                         if (Math.random() > 0.96) {
-                            player.sendMessage("Saturation increased");
                             player.setSaturation((player.getSaturation() + 1));
                         }
 
@@ -110,19 +111,69 @@ public class AttributeManager implements Listener {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
 
                 //reduce there health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((int) Math.round(e.getDamage()*-2.5));
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((int) Math.round(e.getDamage()*-3));
                 updateHearts(player);
                 displayActionBar(player);
 
                 //negate the normal damage
                 e.setDamage(0);
 
-
             //if the player took damage from hunger
             } else if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
 
                 //reduce there health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()/-20);
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()/-18);
+                updateHearts(player);
+                displayActionBar(player);
+
+                //negate the normal damage
+                e.setDamage(0);
+
+            //if the player took damage from drowning
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
+
+                //reduce there health, update the hearts, and display the action bar
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()/-18);
+                updateHearts(player);
+                displayActionBar(player);
+
+                //negate the normal damage
+                e.setDamage(0);
+
+            //if the player took damage from poison
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.POISON)){
+
+                //get the level of poison
+                int poisonLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.POISON)).findFirst().get().getAmplifier();
+
+                //reduce there health, update the hearts, and display the action bar
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth()-3*poisonLevel);
+                updateHearts(player);
+                displayActionBar(player);
+
+                //negate the normal damage
+                e.setDamage(0);
+
+            //if the player took damage from fire
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
+
+
+            //if the player took damage from fire tick
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)){
+
+
+            //if the player took damage from lava
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.LAVA)){
+
+
+            //if the player took damage from wither
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.WITHER)){
+
+                //get the level of wither
+                int witherLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.WITHER)).findFirst().get().getAmplifier();
+
+                //reduce there health, update the hearts, and display the action bar
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth()-3*witherLevel);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -130,6 +181,7 @@ public class AttributeManager implements Listener {
                 e.setDamage(0);
 
             }
+
 
 
         }
@@ -154,7 +206,6 @@ public class AttributeManager implements Listener {
         //display the action bar
         displayActionBar(player);
     }
-
 
     //cancel vanilla health regen
     @EventHandler
