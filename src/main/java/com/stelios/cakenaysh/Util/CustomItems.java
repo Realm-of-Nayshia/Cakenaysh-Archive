@@ -8,6 +8,60 @@ import java.util.Arrays;
 
 public enum CustomItems {
 
+
+    //BATTLE ITEMS
+    WRATH_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_SWORD, 1,69420,45,100,90
+            ,10,2,10)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Wrath of Sparta")),
+                    new ArrayList<>(Arrays.asList(255,215,0)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("THIS IS SPARTA!")),
+                    new ArrayList<>(Arrays.asList(255,215,0)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    SCYTHE_OF_INTELLIJ(new BattleItemBuilder(Material.GOLDEN_HOE, 1,60,11,120,5
+            ,0,0,0)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Scythe of Intellij")),
+                    new ArrayList<>(Arrays.asList(66,27,224)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("A divine weapon created by the ancient", "nl", "God of Intellect: Intellij")),
+                    new ArrayList<>(Arrays.asList(200,200,200,200,200,200)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)))),
+
+    TEST_ITEM(new BattleItemBuilder(Material.ACACIA_SLAB, 1,5,1,1,1
+            ,0,0,0,1,4,2,6,8,3,3,4,5,1,34,5,4,1)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Te","st"," Item")),
+                    new ArrayList<>(Arrays.asList(66,27,224,25,124,254,33,55,235)),
+                    new ArrayList<>(Arrays.asList(false, false, true)),
+                    new ArrayList<>(Arrays.asList(true, false, false)),
+                    new ArrayList<>(Arrays.asList(false, false, true)),
+                    new ArrayList<>(Arrays.asList(false, true, false)),
+                    new ArrayList<>(Arrays.asList(false, true, false)))
+            .setLore(new ArrayList<>(Arrays.asList("We make", "a few new items...", "nl", "we gotta test the system")),
+                    new ArrayList<>(Arrays.asList(45,26,135,200,200,200,200,200,200)),
+                    new ArrayList<>(Arrays.asList(true, false, false)),
+                    new ArrayList<>(Arrays.asList(false, true, false)),
+                    new ArrayList<>(Arrays.asList(false, false, true)),
+                    new ArrayList<>(Arrays.asList(false, false, false)),
+                    new ArrayList<>(Arrays.asList(false, false, false)))),
+
+
     //ITEM BUILDERS
     RPG_MENU(new ItemBuilder(Material.NETHER_STAR, 1)
             .setDisplayName(new ArrayList<>(Arrays.asList("Menu")),
@@ -172,60 +226,6 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false, false)),
                     new ArrayList<>(Arrays.asList(false, false, false)))),
 
-
-
-    //BATTLE ITEMS
-    WRATH_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_SWORD, 1,1000,45,100,90
-            ,10,2,10,1)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Wrath of Sparta")),
-                    new ArrayList<>(Arrays.asList(255,215,0)),
-                    new ArrayList<>(Arrays.asList(true)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("THIS IS SPARTA!")),
-                    new ArrayList<>(Arrays.asList(255,215,0)),
-                    new ArrayList<>(Arrays.asList(true)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))),
-
-    SCYTHE_OF_INTELLIJ(new BattleItemBuilder(Material.GOLDEN_HOE, 1,60,11,120,5
-            ,0,0,0,5)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Scythe of Intellij")),
-                    new ArrayList<>(Arrays.asList(66,27,224)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("A divine weapon created by the ancient", "nl", "God of Intellect: Intellij")),
-                    new ArrayList<>(Arrays.asList(200,200,200,200,200,200)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)))),
-
-    TEST_ITEM(new BattleItemBuilder(Material.ACACIA_SLAB, 1,5,1,1,1
-            ,0,0,0,0)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Testing"," da New"," Item creation system")),
-            new ArrayList<>(Arrays.asList(66,27,224,25,124,254,33,55,235)),
-            new ArrayList<>(Arrays.asList(false, false, true)),
-            new ArrayList<>(Arrays.asList(true, false, false)),
-            new ArrayList<>(Arrays.asList(false, false, true)),
-            new ArrayList<>(Arrays.asList(false, true, false)),
-            new ArrayList<>(Arrays.asList(false, true, false)))
-            .setLore(new ArrayList<>(Arrays.asList("We make", "a few new items...", "nl", "we gotta test the system")),
-            new ArrayList<>(Arrays.asList(45,26,135,200,200,200,200,200,200)),
-            new ArrayList<>(Arrays.asList(true, false, false)),
-            new ArrayList<>(Arrays.asList(false, true, false)),
-            new ArrayList<>(Arrays.asList(false, false, true)),
-            new ArrayList<>(Arrays.asList(false, false, false)),
-            new ArrayList<>(Arrays.asList(false, false, false)))),
-
     ;
 
 
@@ -254,9 +254,11 @@ public enum CustomItems {
         return null;
     }
 
-    //gets all the itembuildres in the enum
+    //
+
+    //gets all the itemBuilders in the enum
     //@return ArrayList<ItemBuilder> of all the items
-public static ArrayList<ItemBuilder> getAllItems(){
+    public static ArrayList<ItemBuilder> getAllItems(){
         ArrayList<ItemBuilder> items = new ArrayList<>();
         for (CustomItems item : CustomItems.values()){
             items.add(item.itemBuilder);

@@ -1,5 +1,7 @@
 com\stelios\cakenaysh\Util\AttributeManager.class
+com\stelios\cakenaysh\Util\Npc\Traits\TestTrait.class
 com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility.class
+com\stelios\cakenaysh\Listeners\CitizensEnableListener.class
 com\stelios\cakenaysh\Util\BattleItemBuilder.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
 com\stelios\cakenaysh\Commands\SetAttributesCommand.class
@@ -7,10 +9,12 @@ com\stelios\cakenaysh\Util\Database.class
 com\stelios\cakenaysh\Util\PlayerManager.class
 com\stelios\cakenaysh\Commands\AddAttributesCommand.class
 com\stelios\cakenaysh\Commands\VanishCommand.class
+com\stelios\cakenaysh\Util\Npc\NpcBuilder.class
 com\stelios\cakenaysh\Commands\TabComplete\AddAttributesTabComplete.class
 com\stelios\cakenaysh\Commands\ResetAttributesCommand.class
 com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility$1.class
 com\stelios\cakenaysh\Util\Abilities\WrathOfSpartaAbility.class
+com\stelios\cakenaysh\Util\Npc\Npcs.class
 com\stelios\cakenaysh\Commands\TabComplete\ResetAttributesTabComplete.class
 com\stelios\cakenaysh\Util\CustomPlayer.class
 com\stelios\cakenaysh\Util\AttributeManager$1.class

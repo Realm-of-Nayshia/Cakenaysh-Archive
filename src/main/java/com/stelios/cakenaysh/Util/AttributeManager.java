@@ -2,8 +2,11 @@ package com.stelios.cakenaysh.Util;
 
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import com.stelios.cakenaysh.Main;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,8 +17,11 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerLoadEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.mcmonkey.sentinel.SentinelTrait;
 
 public class AttributeManager implements Listener {
 
@@ -107,6 +113,9 @@ public class AttributeManager implements Listener {
 
             Player player = (Player) e.getEntity();
 
+            //negate the normal damage
+            e.setDamage(0);
+
             //if the player took fall damage
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
 
@@ -115,30 +124,23 @@ public class AttributeManager implements Listener {
                 updateHearts(player);
                 displayActionBar(player);
 
-                //negate the normal damage
-                e.setDamage(0);
-
             //if the player took damage from hunger
             } else if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
 
-                //reduce there health, update the hearts, and display the action bar
+                //reduce their health, update the hearts, and display the action bar
                 main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()/-18);
                 updateHearts(player);
                 displayActionBar(player);
 
-                //negate the normal damage
-                e.setDamage(0);
 
             //if the player took damage from drowning
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
 
-                //reduce there health, update the hearts, and display the action bar
+                //reduce their health, update the hearts, and display the action bar
                 main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()/-18);
                 updateHearts(player);
                 displayActionBar(player);
 
-                //negate the normal damage
-                e.setDamage(0);
 
             //if the player took damage from poison
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.POISON)){
@@ -146,16 +148,19 @@ public class AttributeManager implements Listener {
                 //get the level of poison
                 int poisonLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.POISON)).findFirst().get().getAmplifier();
 
-                //reduce there health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth()-3*poisonLevel);
+                //reduce their health, update the hearts, and display the action bar
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(-3*poisonLevel);
                 updateHearts(player);
                 displayActionBar(player);
 
-                //negate the normal damage
-                e.setDamage(0);
 
             //if the player took damage from fire
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
+
+                //reduce their health, update the hearts, and display the action bar
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()/-20);
+                updateHearts(player);
+                displayActionBar(player);
 
 
             //if the player took damage from fire tick
@@ -172,24 +177,100 @@ public class AttributeManager implements Listener {
                 //get the level of wither
                 int witherLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.WITHER)).findFirst().get().getAmplifier();
 
-                //reduce there health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth()-3*witherLevel);
+                //reduce their health, update the hearts, and display the action bar
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(-3*witherLevel);
                 updateHearts(player);
                 displayActionBar(player);
 
-                //negate the normal damage
-                e.setDamage(0);
-
             }
-
-
 
         }
     }
 
     @EventHandler
-    public void onHit(EntityDamageByEntityEvent e){
+    public void onHit(EntityDamageByEntityEvent e) {
 
+        //if the defending entity is a player or npc
+        if (e.getEntity() instanceof Player) {
+
+            //if the attacking entity is a sentinel
+            try {
+                if (CitizensAPI.getNPCRegistry().getNPC(e.getDamager()).hasTrait(SentinelTrait.class)) {
+
+                    //get the attacking npc
+                    NPC npc = CitizensAPI.getNPCRegistry().getNPC(e.getDamager());
+                    SentinelTrait sentinel = npc.getOrAddTrait(SentinelTrait.class);
+
+                    //calculate the damage
+                    double damage = sentinel.getDamage();
+
+                    //if the defender is a npc, reduce their health
+                   // if (CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class)) {
+
+                        //deal the damage to the npc
+                    //    e.setDamage(damage);
+
+
+                    //if the defender is a player, reduce their health, update the hearts, and display the action bar
+                    //}else{
+                        Player player = (Player) e.getEntity();
+                        e.setDamage(0);
+
+                        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((int) Math.round(-damage));
+                        updateHearts(player);
+                        displayActionBar(player);
+                    //}
+
+                    return;
+
+                }
+
+            }catch (NullPointerException ex){
+                //attack was not from a sentinel
+            }
+
+
+            //if the attacking entity is a player
+            if (e.getDamager() instanceof Player) {
+
+                //get the attacking player
+                Player player = (Player) e.getDamager();
+
+                ////calculate the damage
+                //default damage is 1
+                double damage = 1.0;
+
+                //get the item the player is holding if they are holding an item
+                if (player.getInventory().getItemInMainHand() != null){
+
+                    ItemStack item = player.getInventory().getItemInMainHand();
+
+                    //calculate the damage if the item is a battle item
+                    if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equals("battleItem")) {
+
+                        damage = item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT);
+
+                    }
+                }
+
+                //if the defender is a npc, reduce their health
+                if (CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class)) {
+
+                    //deal the damage to the npc
+                    e.setDamage(damage);
+                    player.sendMessage("npc damaged by: " + damage);
+
+                //if the defender is a player, reduce their health, update the hearts, and display the action bar
+                }else{
+                    e.setDamage(0);
+                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((int) Math.round(-damage));
+                    updateHearts(player);
+                    displayActionBar(player);
+                }
+
+
+            }
+        }
     }
 
     @EventHandler

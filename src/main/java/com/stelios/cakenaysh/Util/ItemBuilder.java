@@ -27,6 +27,9 @@ public class ItemBuilder {
     public ItemBuilder(Material material, int amount) {
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = this.itemStack.getItemMeta();
+
+        this.itemMeta.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"),
+                PersistentDataType.STRING, "regularItem");
     }
 
     //getters

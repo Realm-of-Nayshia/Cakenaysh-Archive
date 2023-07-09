@@ -1,10 +1,13 @@
 package com.stelios.cakenaysh.Util;
 
+import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +20,22 @@ public class BattleItemBuilder extends ItemBuilder{
     private float critChance;
     private float strength;
     private float health;
-    private float defense;
     private float speed;
+    private float infernalDefense;
+    private float infernalDamage;
+    private float undeadDefense;
+    private float undeadDamage;
+    private float aquaticDefense;
+    private float aquaticDamage;
+    private float aerialDefense;
+    private float aerialDamage;
+    private float meleeDefense;
+    private float meleeDamage;
+    private float rangedDefense;
+    private float rangedDamage;
+    private float magicDefense;
+    private float magicDamage;
+
 
     //@param material: The material of the item being built.
     //@param amount: The amount of the item being built.
@@ -27,10 +44,15 @@ public class BattleItemBuilder extends ItemBuilder{
     //@param critDamage: The crit damage of the item being built.
     //@param critChance: The crit chance of the item being built.
     //@param health: The health of the item being built.
-    //@param defense: The defense of the item being built.
     //@param speed: The speed of the item being built.
+    //@params defense: The defense of various types for the item being built.
+    //@params damage: The damage of various types for item being built.
     public BattleItemBuilder(Material material, int amount, float damage, float attackSpeed, float critDamage,
-                             float critChance, float strength, float health, float defense, float speed){
+                             float critChance, float strength, float health, float speed, float infernalDefense,
+                             float infernalDamage, float undeadDefense, float undeadDamage, float aquaticDefense,
+                             float aquaticDamage, float aerialDefense, float aerialDamage, float meleeDefense,
+                             float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
+                             float magicDamage){
         super(material, amount);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -38,9 +60,110 @@ public class BattleItemBuilder extends ItemBuilder{
         this.critChance = critChance;
         this.strength = strength;
         this.health = health;
-        this.defense = defense;
         this.speed = speed;
+        this.infernalDefense = infernalDefense;
+        this.infernalDamage = infernalDamage;
+        this.undeadDefense = undeadDefense;
+        this.undeadDamage = undeadDamage;
+        this.aquaticDefense = aquaticDefense;
+        this.aquaticDamage = aquaticDamage;
+        this.aerialDefense = aerialDefense;
+        this.aerialDamage = aerialDamage;
+        this.meleeDefense = meleeDefense;
+        this.meleeDamage = meleeDamage;
+        this.rangedDefense = rangedDefense;
+        this.rangedDamage = rangedDamage;
+        this.magicDefense = magicDefense;
+        this.magicDamage = magicDamage;
+
+
+        //setting pdc values for the item
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "itemType"), PersistentDataType.STRING, "battleItem");
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "damage"), PersistentDataType.FLOAT, damage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "attackSpeed"), PersistentDataType.FLOAT, attackSpeed);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "critDamage"), PersistentDataType.FLOAT, critDamage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "critChance"), PersistentDataType.FLOAT, critChance);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "strength"), PersistentDataType.FLOAT, strength);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "health"), PersistentDataType.FLOAT, health);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "speed"), PersistentDataType.FLOAT, speed);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "infernalDefense"), PersistentDataType.FLOAT, infernalDefense);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "infernalDamage"), PersistentDataType.FLOAT, infernalDamage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "undeadDefense"), PersistentDataType.FLOAT, undeadDefense);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "undeadDamage"), PersistentDataType.FLOAT, undeadDamage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "aquaticDefense"), PersistentDataType.FLOAT, aquaticDefense);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "aquaticDamage"), PersistentDataType.FLOAT, aquaticDamage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "aerialDefense"), PersistentDataType.FLOAT, aerialDefense);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "aerialDamage"), PersistentDataType.FLOAT, aerialDamage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "meleeDefense"), PersistentDataType.FLOAT, meleeDefense);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "meleeDamage"), PersistentDataType.FLOAT, meleeDamage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "rangedDefense"), PersistentDataType.FLOAT, rangedDefense);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "rangedDamage"), PersistentDataType.FLOAT, rangedDamage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "magicDefense"), PersistentDataType.FLOAT, magicDefense);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "magicDamage"), PersistentDataType.FLOAT, magicDamage);
     }
+
+    //@param material: The material of the item being built.
+    //@param amount: The amount of the item being built.
+    //@param damage: The damage of the item being built.
+    //@param attackSpeed: The attack speed of the item being built.
+    //@param critDamage: The crit damage of the item being built.
+    //@param critChance: The crit chance of the item being built.
+    //@param health: The health of the item being built.
+    //@param speed: The speed of the item being built.
+    public BattleItemBuilder(Material material, int amount, float damage, float attackSpeed, float critDamage,
+                             float critChance, float strength, float health, float speed){
+        super(material, amount);
+        this.damage = damage;
+        this.attackSpeed = attackSpeed;
+        this.critDamage = critDamage;
+        this.critChance = critChance;
+        this.strength = strength;
+        this.health = health;
+        this.speed = speed;
+
+
+        //setting pdc values for the item
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "itemType"), PersistentDataType.STRING, "battleItem");
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "damage"), PersistentDataType.FLOAT, damage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "attackSpeed"), PersistentDataType.FLOAT, attackSpeed);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "critDamage"), PersistentDataType.FLOAT, critDamage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "critChance"), PersistentDataType.FLOAT, critChance);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "strength"), PersistentDataType.FLOAT, strength);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "health"), PersistentDataType.FLOAT, health);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "speed"), PersistentDataType.FLOAT, speed);
+    }
+
+
 
     //getter
     //@param Stat: The stat being retrieved.
@@ -59,48 +182,38 @@ public class BattleItemBuilder extends ItemBuilder{
                 return this.strength;
             case "health":
                 return this.health;
-            case "defense":
-                return this.defense;
             case "speed":
                 return this.speed;
+            case "infernalDefense":
+                return this.infernalDefense;
+            case "infernalDamage":
+                return this.infernalDamage;
+            case "undeadDefense":
+                return this.undeadDefense;
+            case "undeadDamage":
+                return this.undeadDamage;
+            case "aquaticDefense":
+                return this.aquaticDefense;
+            case "aquaticDamage":
+                return this.aquaticDamage;
+            case "aerialDefense":
+                return this.aerialDefense;
+            case "aerialDamage":
+                return this.aerialDamage;
+            case "meleeDefense":
+                return this.meleeDefense;
+            case "meleeDamage":
+                return this.meleeDamage;
+            case "rangedDefense":
+                return this.rangedDefense;
+            case "rangedDamage":
+                return this.rangedDamage;
+            case "magicDefense":
+                return this.magicDefense;
+            case "magicDamage":
+                return this.magicDamage;
         }
-        System.out.println("Invalid stat");
         return 0;
-    }
-
-    //setter
-    //@param Stat: The stat being set.
-    //@param value: The value being set to the stat.
-    public void setStat(String Stat, float value){
-        switch(Stat){
-            case "damage":
-                this.damage = value;
-                break;
-            case "attackSpeed":
-                this.attackSpeed = value;
-                break;
-            case "critDamage":
-                this.critDamage = value;
-                break;
-            case "critChance":
-                this.critChance = value;
-                break;
-            case "strength":
-                this.strength = value;
-                break;
-            case "health":
-                this.health = value;
-                break;
-            case "defense":
-                this.defense = value;
-                break;
-            case "speed":
-                this.speed = value;
-                break;
-            default:
-                System.out.println("Invalid stat");
-                break;
-        }
     }
 
     //sets the lore of the item
@@ -155,6 +268,216 @@ public class BattleItemBuilder extends ItemBuilder{
 
         //adding the custom item attributes to the item lore
         loreList.add(0, Component.text(""));
+
+        if (this.getStat("infernalDefense") != 0){
+            //if the infernal defense is a whole number, don't add a decimal point
+            if (this.getStat("infernalDefense") % 1 == 0){
+                loreList.add(0, Component.text("Infernal Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("infernalDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Infernal Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("infernalDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("infernalDamage") != 0){
+            //if the infernal damage is a whole number, don't add a decimal point
+            if (this.getStat("infernalDamage") % 1 == 0){
+                loreList.add(0, Component.text("Infernal Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("infernalDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Infernal Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("infernalDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("undeadDefense") != 0){
+            //if the undead defense is a whole number, don't add a decimal point
+            if (this.getStat("undeadDefense") % 1 == 0){
+                loreList.add(0, Component.text("Undead Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("undeadDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Undead Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("undeadDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if(this.getStat("undeadDamage") != 0){
+            //if the undead damage is a whole number, don't add a decimal point
+            if (this.getStat("undeadDamage") % 1 == 0){
+                loreList.add(0, Component.text("Undead Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("undeadDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Undead Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("undeadDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("aquaticDefense") != 0){
+            //if the aquatic defense is a whole number, don't add a decimal point
+            if (this.getStat("aquaticDefense") % 1 == 0){
+                loreList.add(0, Component.text("Aquatic Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("aquaticDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Aquatic Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("aquaticDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("aquaticDamage") != 0){
+            //if the aquatic damage is a whole number, don't add a decimal point
+            if (this.getStat("aquaticDamage") % 1 == 0){
+                loreList.add(0, Component.text("Aquatic Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("aquaticDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Aquatic Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("aquaticDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("aerialDefense") != 0){
+            //if the arial defense is a whole number, don't add a decimal point
+            if (this.getStat("aerialDefense") % 1 == 0){
+                loreList.add(0, Component.text("Aerial Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("aerialDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Aerial Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("aerialDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("arialDamage") != 0){
+            //if the arial damage is a whole number, don't add a decimal point
+            if (this.getStat("aerialDamage") % 1 == 0){
+                loreList.add(0, Component.text("Arial Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("aerialDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Arial Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("aerialDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("meleeDefense") != 0){
+            //if the melee defense is a whole number, don't add a decimal point
+            if (this.getStat("meleeDefense") % 1 == 0){
+                loreList.add(0, Component.text("Melee Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("meleeDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Melee Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("meleeDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("meleeDamage") != 0){
+            //if the melee damage is a whole number, don't add a decimal point
+            if (this.getStat("meleeDamage") % 1 == 0){
+                loreList.add(0, Component.text("Melee Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("meleeDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Melee Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("meleeDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("rangedDefense") != 0){
+            //if the ranged defense is a whole number, don't add a decimal point
+            if (this.getStat("rangedDefense") % 1 == 0){
+                loreList.add(0, Component.text("Ranged Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("rangedDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Ranged Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("rangedDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("rangedDamage") != 0){
+            //if the ranged damage is a whole number, don't add a decimal point
+            if (this.getStat("rangedDamage") % 1 == 0){
+                loreList.add(0, Component.text("Ranged Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("rangedDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Ranged Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("rangedDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("magicDefense") != 0){
+            //if the magic defense is a whole number, don't add a decimal point
+            if (this.getStat("magicDefense") % 1 == 0){
+                loreList.add(0, Component.text("Magic Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("magicDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Magic Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("magicDefense") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("magicDamage") != 0){
+            //if the magic damage is a whole number, don't add a decimal point
+            if (this.getStat("magicDamage") % 1 == 0){
+                loreList.add(0, Component.text("Magic Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("magicDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Magic Damage: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("magicDamage"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
 
         if (this.getStat("speed") != 0){
             //if the speed is a whole number, don't add a decimal point
@@ -212,21 +535,6 @@ public class BattleItemBuilder extends ItemBuilder{
                 loreList.add(0, Component.text("Crit Chance: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("critChance") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("defense") != 0){
-            //if the defense is a whole number, don't add a decimal point
-            if (this.getStat("defense") % 1 == 0){
-                loreList.add(0, Component.text("Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("defense"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }else{
-                loreList.add(0, Component.text("Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("defense"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
             }
         }
