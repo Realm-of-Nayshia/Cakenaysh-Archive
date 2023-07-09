@@ -23,7 +23,7 @@ public class CustomPlayer {
     private int stamina;
     private int maxStamina;
     private int healthRegen;
-    private int health;
+    private float health;
     private int maxHealth;
     private int speed;
     private int meleeProficiency;
@@ -59,7 +59,7 @@ public class CustomPlayer {
             stamina = rs.getInt("STAMINA");
             maxStamina = rs.getInt("MAX_STAMINA");
             healthRegen = rs.getInt("HEALTH_REGEN");
-            health = rs.getInt("HEALTH");
+            health = rs.getFloat("HEALTH");
             maxHealth = rs.getInt("MAX_HEALTH");
             speed = rs.getInt("SPEED");
             meleeProficiency = rs.getInt("MELEE_PROFICIENCY");
@@ -158,7 +158,7 @@ public class CustomPlayer {
         return healthRegen;
     }
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 
@@ -374,13 +374,13 @@ public class CustomPlayer {
 
     //sets the health of the player locally within the class
     //@param health: the health of the player
-    public void setHealthLocal(int health) {
+    public void setHealthLocal(float health) {
         this.health = health;
     }
 
     //sets the health of the player in the database and locally within the class
     //@param health: the health of the player
-    public void setHealthDatabase(int health) {
+    public void setHealthDatabase(float health) {
         this.health = health;
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
@@ -634,13 +634,13 @@ public class CustomPlayer {
 
     //adds health to the player locally within the class
     //@param health: the health to add to the player
-    public void addHealthLocal(int health) {
+    public void addHealthLocal(float health) {
         this.health += health;
     }
 
     //adds health to the player in the database and locally within the class
     //@param health: the health to add to the player
-    public void addHealthDatabase(int health) {
+    public void addHealthDatabase(float health) {
         this.health += health;
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement

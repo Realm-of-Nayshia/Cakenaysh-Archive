@@ -120,7 +120,7 @@ public class AttributeManager implements Listener {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
 
                 //reduce there health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((int) Math.round(e.getDamage()*-3));
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) (e.getDamage()*-3));
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -128,7 +128,7 @@ public class AttributeManager implements Listener {
             } else if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
 
                 //reduce their health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()/-18);
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() /-18);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -137,7 +137,7 @@ public class AttributeManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
 
                 //reduce their health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()/-18);
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() /-18);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -158,7 +158,7 @@ public class AttributeManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
 
                 //reduce their health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth()/-20);
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() /-20);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -216,7 +216,7 @@ public class AttributeManager implements Listener {
                         Player player = (Player) e.getEntity();
                         e.setDamage(0);
 
-                        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((int) Math.round(-damage));
+                        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) -damage);
                         updateHearts(player);
                         displayActionBar(player);
                     //}
@@ -263,7 +263,7 @@ public class AttributeManager implements Listener {
                 //if the defender is a player, reduce their health, update the hearts, and display the action bar
                 }else{
                     e.setDamage(0);
-                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((int) Math.round(-damage));
+                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) -damage);
                     updateHearts(player);
                     displayActionBar(player);
                 }
@@ -305,7 +305,7 @@ public class AttributeManager implements Listener {
 
     //display the action bar
     public void displayActionBar(Player player){
-        player.sendActionBar(Component.text(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() + " / " + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() + " ❤     ", TextColor.color(255,0,0))
+        player.sendActionBar(Component.text(Math.round(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth()) + " / " + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() + " ❤     ", TextColor.color(255,0,0))
                 .append(Component.text(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() + " / " + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina() + " ⚡", TextColor.color(210,125,45))));
 
     }
@@ -318,12 +318,12 @@ public class AttributeManager implements Listener {
             player.setHealth(0);
 
         //if the player has super low health, set the health to 1/2 a heart
-        } else if ((double) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() > 0.0001 && (double) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() < 0.02){
+        } else if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() > 0.0001 && main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() < 0.02){
             player.setHealth(1);
 
         //else scale the hearts normally
         }else{
-            player.setHealth((double) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() * 40);
+            player.setHealth(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() * 40);
         }
     }
 }
