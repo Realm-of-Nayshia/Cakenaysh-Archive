@@ -19,17 +19,16 @@ public class CustomPlayer {
     private String joinDate;
     private float playTime;
     private int xp;
-    private int strength;
     private int staminaRegen;
     private int stamina;
     private int maxStamina;
     private int healthRegen;
     private int health;
     private int maxHealth;
-    private int defense;
     private int speed;
     private int meleeProficiency;
     private int rangedProficiency;
+    private int armorProficiency;
     private int wilsonCoin;
     private int piety;
     private int charisma;
@@ -45,8 +44,8 @@ public class CustomPlayer {
         this.uuid = uuid;
 
         PreparedStatement statement = main.getDatabase().getConnection().prepareStatement(
-                "SELECT RANK, JOIN_DATE, PLAY_TIME, XP, STRENGTH, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
-                        "HEALTH, MAX_HEALTH, DEFENSE, SPEED, MELEE_PROFICIENCY, RANGED_PROFICIENCY, WILSONCOIN, PIETY, " +
+                "SELECT RANK, JOIN_DATE, PLAY_TIME, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
+                        "HEALTH, MAX_HEALTH, SPEED, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY, " +
                         "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH" +
                         " FROM players WHERE UUID = ?;");
         statement.setString(1, uuid.toString());
@@ -56,17 +55,16 @@ public class CustomPlayer {
             joinDate = rs.getString("JOIN_DATE");
             playTime = rs.getFloat("PLAY_TIME");
             xp = rs.getInt("XP");
-            strength = rs.getInt("STRENGTH");
             staminaRegen = rs.getInt("STAMINA_REGEN");
             stamina = rs.getInt("STAMINA");
             maxStamina = rs.getInt("MAX_STAMINA");
             healthRegen = rs.getInt("HEALTH_REGEN");
             health = rs.getInt("HEALTH");
             maxHealth = rs.getInt("MAX_HEALTH");
-            defense = rs.getInt("DEFENSE");
             speed = rs.getInt("SPEED");
             meleeProficiency = rs.getInt("MELEE_PROFICIENCY");
             rangedProficiency = rs.getInt("RANGED_PROFICIENCY");
+            armorProficiency = rs.getInt("ARMOR_PROFICIENCY");
             wilsonCoin = rs.getInt("WILSONCOIN");
             piety = rs.getInt("PIETY");
             charisma = rs.getInt("CHARISMA");
@@ -78,17 +76,16 @@ public class CustomPlayer {
             rank = "GUEST";
             playTime = 0;
             xp = 0;
-            strength = 0;
             staminaRegen = 1;
             stamina = 100;
             maxStamina = 100;
             healthRegen = 1;
             health = 100;
             maxHealth = 100;
-            defense = 0;
             speed = 100;
             meleeProficiency = 0;
             rangedProficiency = 0;
+            armorProficiency = 0;
             wilsonCoin = 0;
             piety = 0;
             charisma = 0;
@@ -97,27 +94,26 @@ public class CustomPlayer {
             luck = 0;
             stealth = 0;
             PreparedStatement insert = main.getDatabase().getConnection().prepareStatement(
-                    "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, XP, STRENGTH, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
-                            " HEALTH, MAX_HEALTH, DEFENSE, SPEED, MELEE_PROFICIENCY, RANGED_PROFICIENCY, WILSONCOIN, PIETY, " +
-                            " CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH) VALUES (" +
+                    "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
+                            "HEALTH, MAX_HEALTH, SPEED, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY," +
+                            "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH) VALUES (" +
                             "default," +
                             "'" + uuid + "'," +
                             "'" + rank + "'," +
                             "'" + Calendar.getInstance().getTime() + "'," +
                             playTime + "," +
                             xp + "," +
-                            strength + "," +
                             staminaRegen + "," +
                             stamina + "," +
                             maxStamina + "," +
                             healthRegen + "," +
                             health + "," +
                             maxHealth + "," +
-                            defense + "," +
                             speed + "," +
                             meleeProficiency + "," +
                             rangedProficiency + "," +
-                            wilsonCoin +
+                            armorProficiency + "," +
+                            wilsonCoin + "," +
                             piety + "," +
                             charisma + "," +
                             deception + "," +
@@ -146,10 +142,6 @@ public class CustomPlayer {
         return xp;
     }
 
-    public int getStrength() {
-        return strength;
-    }
-
     public int getStaminaRegen() {
         return staminaRegen;
     }
@@ -174,10 +166,6 @@ public class CustomPlayer {
         return maxHealth;
     }
 
-    public int getDefense() {
-        return defense;
-    }
-
     public int getSpeed() {
         return speed;
     }
@@ -188,6 +176,10 @@ public class CustomPlayer {
 
     public int getRangedProficiency() {
         return rangedProficiency;
+    }
+
+    public int getArmorProficiency() {
+        return armorProficiency;
     }
 
     public int getWilsonCoin() {
@@ -224,18 +216,18 @@ public class CustomPlayer {
         return "Rank: " + rank +
                 "   Play Time: " + playTime + "\n" +
                 "Join Date: " + joinDate + "\n" + "\n" +
-                "XP: " + xp +
-                "   Strength: " + strength + "\n" +
+                "XP: " + xp + "\n" + "\n" +
                 "Stamina Regen: " + staminaRegen +
                 "   Stamina: " + stamina +
                 "   Max Stamina: " + maxStamina + "\n" +
                 "Health Regen: " + healthRegen +
                 "   Health: " + health +
                 "   Max Health: " + maxHealth + "\n" +
-                "Defense: " + defense +
-                "   Speed: " + speed + "\n" + "\n" +
-                "Melee Proficiency: " + meleeProficiency +
-                "   Ranged Proficiency: " + rangedProficiency + "\n" +
+                "Speed: " + speed + "\n" + "\n" +
+                "Proficiencies \n" +
+                "Melee: " + meleeProficiency +
+                "   Ranged: " + rangedProficiency +
+                "   Armor: " + armorProficiency + "\n" + "\n" +
                 "WilsonCoin: " + wilsonCoin + "\n" + "\n" +
                 "Piety: " + piety +
                 "   Charisma: " + charisma +
@@ -251,17 +243,16 @@ public class CustomPlayer {
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setRank("Guest");
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setPlayTime(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setXp(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStrength(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaRegen(1);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaDatabase(100);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMaxStamina(100);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthRegen(1);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthDatabase(100);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMaxHealth(100);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setDefense(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setSpeed(100);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMeleeProficiency(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setRangedProficiency(0);
+        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setArmorProficiency(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setWilsonCoin(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setPiety(0);
         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setCharisma(0);
@@ -317,19 +308,6 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET XP = " + xp + " WHERE UUID = '" + uuid + "';");
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //sets the strength of the player
-    //@param strength: the strength of the player
-    public void setStrength(int strength) {
-        this.strength = strength;
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET STRENGTH = " + strength + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -439,19 +417,6 @@ public class CustomPlayer {
         }
     }
 
-    //sets the defense of the player
-    //@param defense: the defense of the player
-    public void setDefense(int defense) {
-        this.defense = defense;
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET DEFENSE = " + defense + " WHERE UUID = '" + uuid + "';");
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     //sets the melee proficiency of the player
     //@param meleeProficiency: the melee proficiency of the player
     public void setMeleeProficiency(int meleeProficiency) {
@@ -472,6 +437,19 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET RANGED_PROFICIENCY = " + rangedProficiency + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //sets the armor proficiency of the player
+    //@param armorProficiency: the armor proficiency of the player
+    public void setArmorProficiency(int armorProficiency) {
+        this.armorProficiency = armorProficiency;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET ARMOR_PROFICIENCY = " + armorProficiency + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -596,19 +574,6 @@ public class CustomPlayer {
         }
     }
 
-    //adds strength to the player
-    //@param strength: the strength to add to the player
-    public void addStrength(int strength) {
-        this.strength += strength;
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET STRENGTH = " + this.strength + " WHERE UUID = '" + uuid + "';");
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     //adds stamina regen to the player
     //@param staminaRegen: the stamina regen to add to the player
     public void addStaminaRegen(int staminaRegen) {
@@ -699,19 +664,6 @@ public class CustomPlayer {
         }
     }
 
-    //adds defense to the player
-    //@param defense: the defense to add to the player
-    public void addDefense(int defense) {
-        this.defense += defense;
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET DEFENSE = " + this.defense + " WHERE UUID = '" + uuid + "';");
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     //adds speed to the player
     //@param speed: the speed to add to the player
     public void addSpeed(int speed) {
@@ -745,6 +697,19 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET RANGED_PROFICIENCY = " + this.rangedProficiency + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //adds armor proficiency to the player
+    //@param armorProficiency: the armor proficiency to add to the player
+    public void addArmorProficiency(int armorProficiency) {
+        this.armorProficiency += armorProficiency;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET ARMOR_PROFICIENCY = " + this.armorProficiency + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

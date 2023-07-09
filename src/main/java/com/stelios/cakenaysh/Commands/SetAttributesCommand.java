@@ -89,25 +89,6 @@ public class SetAttributesCommand implements CommandExecutor {
                         }
                         break;
 
-                    case "strength":
-                        try{
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStrength(Integer.parseInt(args[2]));
-                            //confirmation message
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Set " + player.getName() + "'s strength to " + args[2] + ".", TextColor.color(0, 255, 0)));
-                            } else {
-                                System.out.println("Set " + player.getName() + "'s strength to " + args[2] + ".");
-                            }
-                        }catch (NumberFormatException e){
-                            //error: invalid strength
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Invalid strength.", TextColor.color(255,0,0)));
-                            } else {
-                                System.out.println("Invalid strength.");
-                            }
-                        }
-                        break;
-
                     case "staminaregen":
                         try{
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaRegen(Integer.parseInt(args[2]));
@@ -222,25 +203,6 @@ public class SetAttributesCommand implements CommandExecutor {
                         }
                         break;
 
-                    case "defense":
-                        try{
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setDefense(Integer.parseInt(args[2]));
-                            //confirmation message
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Set " + player.getName() + "'s defense to " + args[2] + ".", TextColor.color(0, 255, 0)));
-                            } else {
-                                System.out.println("Set " + player.getName() + "'s defense to " + args[2] + ".");
-                            }
-                        }catch (NumberFormatException e){
-                            //error: invalid defense
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Invalid defense.", TextColor.color(255,0,0)));
-                            } else {
-                                System.out.println("Invalid defense.");
-                            }
-                        }
-                        break;
-
                     case "speed":
                         try{
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setSpeed(Integer.parseInt(args[2]));
@@ -294,6 +256,25 @@ public class SetAttributesCommand implements CommandExecutor {
                                 sender.sendMessage(Component.text("Invalid ranged proficiency.", TextColor.color(255,0,0)));
                             } else {
                                 System.out.println("Invalid ranged proficiency.");
+                            }
+                        }
+                        break;
+
+                    case "armorproficiency":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setArmorProficiency(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Set " + player.getName() + "'s armor proficiency to " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println("Set " + player.getName() + "'s armor proficiency to " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid armor proficiency
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid armor proficiency.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid armor proficiency.");
                             }
                         }
                         break;
