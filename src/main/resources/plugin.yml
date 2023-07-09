@@ -4,6 +4,8 @@ main: com.stelios.cakenaysh.Main
 api-version: '1.20'
 authors: [Stelios]
 description: Main plungin for the Cakenaysh Minecraft Server
+depend: [Citizens]
+softdepend: [Sentinel]
 commands:
   heal:
     description: Heals the player to max health.
