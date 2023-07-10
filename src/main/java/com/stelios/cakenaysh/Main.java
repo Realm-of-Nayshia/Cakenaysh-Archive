@@ -9,10 +9,14 @@ import com.stelios.cakenaysh.Listeners.ServerListPingListener;
 import com.stelios.cakenaysh.Util.*;
 import com.stelios.cakenaysh.Util.Abilities.DialOfTheSunAbility;
 import com.stelios.cakenaysh.Util.Abilities.WrathOfSpartaAbility;
+import com.stelios.cakenaysh.Util.Npc.Traits.NpcStats;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.trait.TraitInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 public final class Main extends JavaPlugin {
 
@@ -21,6 +25,13 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        //check if Citizens is present and enabled.
+        if(getServer().getPluginManager().getPlugin("Citizens") == null || !getServer().getPluginManager().getPlugin("Citizens").isEnabled()) {
+            getLogger().log(Level.SEVERE, "Citizens 2.0 not found or not enabled");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         ////plugin startup logic
         //database setup
@@ -38,6 +49,7 @@ public final class Main extends JavaPlugin {
         registerEvents();
         registerCommands();
         registerAbilities();
+        registerTraits();
 
     }
 
@@ -46,7 +58,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
-        Bukkit.getPluginManager().registerEvents(new AttributeManager(this), this);
+        Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
         Bukkit.getPluginManager().registerEvents(new CitizensEnableListener(),this);
     }
 
@@ -70,12 +82,20 @@ public final class Main extends JavaPlugin {
 
         getCommand("resetattributes").setExecutor(new ResetAttributesCommand());
         getCommand("resetattributes").setTabCompleter(new ResetAttributesTabComplete());
+
+        getCommand("setnpcstats").setExecutor(new SetNpcStatsCommand());
+        getCommand("setnpcstats").setTabCompleter(new SetNpcStatsTabComplete());
     }
 
     //registering abilities
     private void registerAbilities(){
         new WrathOfSpartaAbility(CustomAbilities.SPARTAN_WRATH, CustomItems.WRATH_OF_SPARTA.getItemBuilder(), 5, 5);
         new DialOfTheSunAbility(CustomAbilities.GRADUAL_SET_DAY, CustomItems.DIAL_OF_THE_SUN.getItemBuilder(), 25, 15);
+    }
+
+    //registering traits
+    private void registerTraits(){
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(NpcStats.class).withName("npcstats"));
     }
 
     ////getters

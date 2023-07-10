@@ -1,9 +1,6 @@
 package com.stelios.cakenaysh.Listeners;
 
-import com.stelios.cakenaysh.Util.Npc.Npcs;
 import net.citizensnpcs.api.event.CitizensEnableEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

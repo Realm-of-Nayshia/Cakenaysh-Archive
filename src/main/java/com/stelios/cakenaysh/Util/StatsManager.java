@@ -23,11 +23,11 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.mcmonkey.sentinel.SentinelTrait;
 
-public class AttributeManager implements Listener {
+public class StatsManager implements Listener {
 
     private final Main main;
 
-    public AttributeManager(Main main) {
+    public StatsManager(Main main) {
         this.main = main;
     }
 
@@ -200,22 +200,22 @@ public class AttributeManager implements Listener {
                     //calculate the damage
                     double damage = sentinel.getDamage();
 
-                    //if the defender is a npc, reduce their health
-                   // if (CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class)) {
+                    //if the defender is a npc, reduce its health
+                    if (CitizensAPI.getNPCRegistry().isNPC(e.getEntity())) {
 
                         //deal the damage to the npc
-                    //    e.setDamage(damage);
+                        e.setDamage(damage);
 
 
                     //if the defender is a player, reduce their health, update the hearts, and display the action bar
-                    //}else{
+                    }else{
                         Player player = (Player) e.getEntity();
                         e.setDamage(0);
 
                         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) -damage);
                         updateHearts(player);
                         displayActionBar(player);
-                    //}
+                    }
 
                     return;
 
@@ -227,47 +227,63 @@ public class AttributeManager implements Listener {
 
 
             //if the attacking entity is a player
-            if (e.getDamager() instanceof Player) {
+            //get the attacking player
+            Player player = (Player) e.getDamager();
 
-                //get the attacking player
-                Player player = (Player) e.getDamager();
+            ////calculate the damage
+            //default damage is 1
+            double damage = 1.0;
 
-                ////calculate the damage
-                //default damage is 1
-                double damage = 1.0;
+            //get the held item
+            ItemStack item = player.getInventory().getItemInMainHand();
 
-                //get the held item
-                ItemStack item = player.getInventory().getItemInMainHand();
+            if (CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class)) {
 
-                //if the player is holding an item
-                if (item.getItemMeta() != null){
+                //if the attacking player is holding an item
+                if (item.getItemMeta() != null) {
 
-                    //calculate the damage if the item is a battle item
-                    if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equals("battleItem")) {
+                    try {
+                        //calculate the damage if the item is a battle item
+                        if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equals("battleItem")) {
 
-                        //noinspection DataFlowIssue
-                        damage = item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT);
+                            damage = item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT);
 
+                        }
+
+                    } catch (NullPointerException ex) {
+                        //item is not a battle item
                     }
                 }
 
-                //if the defender is a npc, reduce their health
-                if (CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class)) {
+                //deal the damage to the npc
+                e.setDamage(damage);
+                player.sendMessage("npc damaged by: " + damage);
 
-                    //deal the damage to the npc
-                    e.setDamage(damage);
-                    player.sendMessage("npc damaged by: " + damage);
+            //if the defender is a player
+            }else{
 
-                //if the defender is a player, reduce their health, update the hearts, and display the action bar
-                }else{
-                    e.setDamage(0);
-                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) -damage);
-                    updateHearts(player);
-                    displayActionBar(player);
+                //if the attacking player is holding an item
+                if (item.getItemMeta() != null) {
+
+                    try {
+                        //calculate the damage if the item is a battle item
+                        if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equals("battleItem")) {
+
+                            damage = item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT);
+
+                        }
+
+                    } catch (NullPointerException ex) {
+                        //item is not a battle item
+                    }
                 }
 
-
-            }
+                //reduce the player defender's health, update the hearts, and display the action bar
+                e.setDamage(0);
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) -damage);
+                updateHearts(player);
+                displayActionBar(player);
+                }
         }
     }
 
