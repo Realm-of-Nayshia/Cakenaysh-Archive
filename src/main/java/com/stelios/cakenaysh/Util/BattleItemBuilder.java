@@ -374,15 +374,15 @@ public class BattleItemBuilder extends ItemBuilder{
             }
         }
 
-        if (this.getStat("arialDamage") != 0){
-            //if the arial damage is a whole number, don't add a decimal point
+        if (this.getStat("aerialDamage") != 0){
+            //if the aerial damage is a whole number, don't add a decimal point
             if (this.getStat("aerialDamage") % 1 == 0){
-                loreList.add(0, Component.text("Arial Damage: ", TextColor.color(200, 200, 200))
+                loreList.add(0, Component.text("Aerial Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("aerialDamage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
             }else{
-                loreList.add(0, Component.text("Arial Damage: ", TextColor.color(200, 200, 200))
+                loreList.add(0, Component.text("Aerial Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("aerialDamage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
