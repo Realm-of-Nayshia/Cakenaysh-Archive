@@ -132,7 +132,6 @@ public class AttributeManager implements Listener {
                 updateHearts(player);
                 displayActionBar(player);
 
-
             //if the player took damage from drowning
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
 
@@ -140,7 +139,6 @@ public class AttributeManager implements Listener {
                 main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() /-18);
                 updateHearts(player);
                 displayActionBar(player);
-
 
             //if the player took damage from poison
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.POISON)){
@@ -153,7 +151,6 @@ public class AttributeManager implements Listener {
                 updateHearts(player);
                 displayActionBar(player);
 
-
             //if the player took damage from fire
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
 
@@ -161,7 +158,6 @@ public class AttributeManager implements Listener {
                 main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() /-20);
                 updateHearts(player);
                 displayActionBar(player);
-
 
             //if the player took damage from fire tick
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)){
@@ -240,14 +236,16 @@ public class AttributeManager implements Listener {
                 //default damage is 1
                 double damage = 1.0;
 
-                //get the item the player is holding if they are holding an item
-                if (player.getInventory().getItemInMainHand() != null){
+                //get the held item
+                ItemStack item = player.getInventory().getItemInMainHand();
 
-                    ItemStack item = player.getInventory().getItemInMainHand();
+                //if the player is holding an item
+                if (item.getItemMeta() != null){
 
                     //calculate the damage if the item is a battle item
                     if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equals("battleItem")) {
 
+                        //noinspection DataFlowIssue
                         damage = item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT);
 
                     }
