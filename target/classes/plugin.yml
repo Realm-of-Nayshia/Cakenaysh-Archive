@@ -33,7 +33,15 @@ commands:
     description: Resets the attributes of the specified player.
     syntax: /resetattributes <player>
     permission: op
-  setNpcStats:
+  setNpcStat:
     description: Sets the specified stat of the selected npc to the specified value.
-    syntax: /setstats <stat> <value>
+    syntax: /setnpcstat <stat> <value>
+    permission: op
+  getNpcStats:
+    description: Gets the stats of the selected npc.
+    syntax: /getnpcstats
+    permission: op
+  resetNpcStats:
+    description: Resets the stats of the selected npc.
+    syntax: /resetnpcstats
     permission: op

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-public class SetNpcStatsCommand implements CommandExecutor {
+public class SetNpcStatCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -37,7 +37,7 @@ public class SetNpcStatsCommand implements CommandExecutor {
                         NpcStats npcStats = npc.getOrAddTrait(NpcStats.class);
 
                         //if the stat is valid
-                        if (Arrays.asList("critdamage","critchance","strength","infernaldefense","infernaldamage","undeaddefense",
+                        if (Arrays.asList("critdamage","critchance","strength","defense","infernaldefense","infernaldamage","undeaddefense",
                                 "undeaddamage","aquaticdefense","aquaticdamage","aerialdefense","aerialdamage","meleedefense",
                                 "meleedamage","rangeddefense","rangeddamage","magicdefense","magicdamage")
                                 .contains(args[0].toLowerCase())) {
@@ -77,7 +77,7 @@ public class SetNpcStatsCommand implements CommandExecutor {
 
             }else{
                 //error: incorrect usage
-                sender.sendMessage(Component.text("Incorrect usage! Use /setstats <stat> <value>.", TextColor.color(255,0,0)));
+                sender.sendMessage(Component.text("Incorrect usage! Use /setnpcstat <stat> <value>.", TextColor.color(255,0,0)));
             }
 
         }else{

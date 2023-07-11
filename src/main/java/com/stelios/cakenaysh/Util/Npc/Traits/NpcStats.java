@@ -16,6 +16,7 @@ public class NpcStats extends Trait {
     @Persist("critDamage") float critDamage = 0.0f;
     @Persist("critChance") float critChance = 0.0f;
     @Persist("strength") float strength = 0.0f;
+    @Persist("defense") float defense = 0.0f;
     @Persist("infernalDefense") float infernalDefense = 0.0f;
     @Persist("infernalDamage") float infernalDamage = 0.0f;
     @Persist("undeadDefense") float undeadDefense = 0.0f;
@@ -40,6 +41,9 @@ public class NpcStats extends Trait {
     }
     public float getStrength() {
         return strength;
+    }
+    public float getDefense() {
+        return defense;
     }
     public float getInfernalDefense() {
         return infernalDefense;
@@ -96,6 +100,9 @@ public class NpcStats extends Trait {
             case "strength":
                 strength = value;
                 break;
+            case "defense":
+                defense = value;
+                break;
             case "infernaldefense":
                 infernalDefense = value;
                 break;
@@ -139,6 +146,28 @@ public class NpcStats extends Trait {
                 magicDamage = value;
                 break;
         }
+    }
+
+    //resetting all stats
+    public void resetStats(){
+        critDamage = 0.0f;
+        critChance = 0.0f;
+        strength = 0.0f;
+        defense = 0.0f;
+        infernalDefense = 0.0f;
+        infernalDamage = 0.0f;
+        undeadDefense = 0.0f;
+        undeadDamage = 0.0f;
+        aquaticDefense = 0.0f;
+        aquaticDamage = 0.0f;
+        aerialDefense = 0.0f;
+        aerialDamage = 0.0f;
+        meleeDefense = 0.0f;
+        meleeDamage = 0.0f;
+        rangedDefense = 0.0f;
+        rangedDamage = 0.0f;
+        magicDefense = 0.0f;
+        magicDamage = 0.0f;
     }
 
 

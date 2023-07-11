@@ -30,9 +30,9 @@ public class GetAttributesCommand implements CommandExecutor {
 
                 //return the player's attributes
                 if (sender instanceof Player) {
-                    sender.sendMessage(Component.text(player.getName() + "'s attributes: \n" + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getAttributes(), TextColor.color(0,255,0)));
+                    sender.sendMessage(Component.text("\n" + player.getName() + "'s attributes: \n" + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getAttributes(), TextColor.color(0,255,0)));
                 } else {
-                    System.out.println(player.getName() + "'s attributes: \n" + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getAttributes());
+                    System.out.println("\n" + player.getName() + "'s attributes: \n" + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getAttributes());
                 }
 
             }else{

@@ -20,6 +20,7 @@ public class BattleItemBuilder extends ItemBuilder{
     private float critChance;
     private float strength;
     private float health;
+    private float defense;
     private float speed;
     private float infernalDefense;
     private float infernalDamage;
@@ -48,7 +49,7 @@ public class BattleItemBuilder extends ItemBuilder{
     //@params defense: The defense of various types for the item being built.
     //@params damage: The damage of various types for item being built.
     public BattleItemBuilder(Material material, int amount, float damage, float attackSpeed, float critDamage,
-                             float critChance, float strength, float health, float speed, float infernalDefense,
+                             float critChance, float strength, float health, float defense, float speed, float infernalDefense,
                              float infernalDamage, float undeadDefense, float undeadDamage, float aquaticDefense,
                              float aquaticDamage, float aerialDefense, float aerialDamage, float meleeDefense,
                              float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
@@ -60,6 +61,7 @@ public class BattleItemBuilder extends ItemBuilder{
         this.critChance = critChance;
         this.strength = strength;
         this.health = health;
+        this.defense = defense;
         this.speed = speed;
         this.infernalDefense = infernalDefense;
         this.infernalDamage = infernalDamage;
@@ -92,6 +94,8 @@ public class BattleItemBuilder extends ItemBuilder{
                 "strength"), PersistentDataType.FLOAT, strength);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "health"), PersistentDataType.FLOAT, health);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "defense"), PersistentDataType.FLOAT, defense);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "speed"), PersistentDataType.FLOAT, speed);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
@@ -133,7 +137,7 @@ public class BattleItemBuilder extends ItemBuilder{
     //@param health: The health of the item being built.
     //@param speed: The speed of the item being built.
     public BattleItemBuilder(Material material, int amount, float damage, float attackSpeed, float critDamage,
-                             float critChance, float strength, float health, float speed){
+                             float critChance, float strength, float health, float defense, float speed){
         super(material, amount);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -141,6 +145,7 @@ public class BattleItemBuilder extends ItemBuilder{
         this.critChance = critChance;
         this.strength = strength;
         this.health = health;
+        this.defense = defense;
         this.speed = speed;
 
 
@@ -159,6 +164,8 @@ public class BattleItemBuilder extends ItemBuilder{
                 "strength"), PersistentDataType.FLOAT, strength);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "health"), PersistentDataType.FLOAT, health);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "defense"), PersistentDataType.FLOAT, defense);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "speed"), PersistentDataType.FLOAT, speed);
     }
@@ -182,6 +189,8 @@ public class BattleItemBuilder extends ItemBuilder{
                 return this.strength;
             case "health":
                 return this.health;
+            case "defense":
+                return this.defense;
             case "speed":
                 return this.speed;
             case "infernalDefense":
@@ -535,6 +544,21 @@ public class BattleItemBuilder extends ItemBuilder{
                 loreList.add(0, Component.text("Crit Chance: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("critChance") + "%", TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
+        if (this.getStat("defense") != 0){
+            //if the defense is a whole number, don't add a decimal point
+            if (this.getStat("defense") % 1 == 0){
+                loreList.add(0, Component.text("Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("defense"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Defense: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("defense"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
             }
         }

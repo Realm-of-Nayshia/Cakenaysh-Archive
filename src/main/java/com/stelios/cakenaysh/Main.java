@@ -83,8 +83,10 @@ public final class Main extends JavaPlugin {
         getCommand("resetattributes").setExecutor(new ResetAttributesCommand());
         getCommand("resetattributes").setTabCompleter(new ResetAttributesTabComplete());
 
-        getCommand("setnpcstats").setExecutor(new SetNpcStatsCommand());
-        getCommand("setnpcstats").setTabCompleter(new SetNpcStatsTabComplete());
+        getCommand("resetnpcstats").setExecutor(new ResetNpcStatsCommand());
+        getCommand("getnpcstats").setExecutor(new GetNpcStatsCommand());
+        getCommand("setnpcstat").setExecutor(new SetNpcStatCommand());
+        getCommand("setnpcstat").setTabCompleter(new SetNpcStatTabComplete());
     }
 
     //registering abilities
