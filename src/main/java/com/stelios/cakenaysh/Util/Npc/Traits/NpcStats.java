@@ -13,6 +13,7 @@ public class NpcStats extends Trait {
     Main main;
 
     //stats
+    @Persist("xp") float xp = 0.0f;
     @Persist("critDamage") float critDamage = 0.0f;
     @Persist("critChance") float critChance = 0.0f;
     @Persist("strength") float strength = 0.0f;
@@ -33,6 +34,9 @@ public class NpcStats extends Trait {
     @Persist("magicDamage") float magicDamage = 0.0f;
 
     //getters
+    public float getXp() {
+        return xp;
+    }
     public float getCritDamage() {
         return critDamage;
     }
@@ -91,6 +95,9 @@ public class NpcStats extends Trait {
     //setting a stat
     public void setStat(String name, float value){
         switch(name){
+            case "xp":
+                xp = value;
+                break;
             case "critdamage":
                 critDamage = value;
                 break;
@@ -150,6 +157,7 @@ public class NpcStats extends Trait {
 
     //resetting all stats
     public void resetStats(){
+        xp = 0.0f;
         critDamage = 0.0f;
         critChance = 0.0f;
         strength = 0.0f;

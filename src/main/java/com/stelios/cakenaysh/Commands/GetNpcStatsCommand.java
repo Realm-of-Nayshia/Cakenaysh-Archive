@@ -35,7 +35,8 @@ public class GetNpcStatsCommand implements CommandExecutor {
                         NpcStats npcStats = npc.getOrAddTrait(NpcStats.class);
 
                         sender.sendMessage(Component.text("\n" + "NPC Stats:" + "\n" +
-                                "Crit Damage: " + npcStats.getCritDamage() +
+                                "XP: " + npcStats.getXp() +
+                                "   Crit Damage: " + npcStats.getCritDamage() +
                                 "   Crit Chance: " + npcStats.getCritChance() + "%" + "\n" +
                                 "Strength: " + npcStats.getStrength() +
                                 "   Defense: " + npcStats.getDefense() + "\n" + "\n" +
