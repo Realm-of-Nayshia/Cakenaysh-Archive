@@ -112,6 +112,16 @@ public class StatsManager implements Listener {
         Player player = e.getPlayer();
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
 
+        //remove the stats from the player's armor
+        for (ItemStack item : player.getInventory().getArmorContents()){
+
+            if (item != null){
+
+                //remove the stats from the armor
+                removePlayerArmorStats(player, item);
+            }
+        }
+
         //saving the players stamina and health to the database
         customPlayer.setHealthDatabase(customPlayer.getHealth());
         customPlayer.setStaminaDatabase(customPlayer.getStamina());
