@@ -58,6 +58,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
+        Bukkit.getPluginManager().registerEvents(new NpcStats(), this);
     }
 
     //registering commands
