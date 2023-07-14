@@ -1,5 +1,4 @@
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\GetAttributesCommand.java
-C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\SetNpcStatsCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\StatsManager.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\PlayerInteractListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\ConnectionListener.java
@@ -7,6 +6,7 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\CustomAbilities.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\SetAttributesTabComplete.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\ResetAttributesCommand.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\SetNpcStatTabComplete.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\VanishCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\Database.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\GetNpcStatsCommand.java
@@ -14,10 +14,11 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\Npc\Traits\NpcStats.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\AddAttributesCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\SetAttributesCommand.java
-C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\SetNpcStatsTabComplete.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\CustomPlayer.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\SetNpcStatCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\ResetNpcStatsCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\PlayerManager.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\GiveItemCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\ResetAttributesTabComplete.java
@@ -31,4 +32,3 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\Npc\NpcBuilder.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\Abilities\WrathOfSpartaAbility.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\ItemBuilder.java
-C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\CitizensEnableListener.java

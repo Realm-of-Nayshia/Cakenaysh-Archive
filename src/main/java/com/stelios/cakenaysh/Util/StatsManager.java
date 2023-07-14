@@ -1,7 +1,10 @@
 package com.stelios.cakenaysh.Util;
 
+import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import com.stelios.cakenaysh.Main;
+import com.stelios.cakenaysh.Util.Npc.Traits.NpcStats;
+import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.kyori.adventure.text.Component;
@@ -14,14 +17,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.mcmonkey.sentinel.SentinelTrait;
+
+import java.util.logging.Level;
 
 public class StatsManager implements Listener {
 
@@ -40,38 +47,43 @@ public class StatsManager implements Listener {
 
                 for (Player player : main.getServer().getOnlinePlayers()){
 
-                    //if the player has 0 health then don't regenerate health or stamina
-                    if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() > 0) {
+                    //get the custom player
+                    CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
 
-                        //randomly increase the players saturation
-                        if (Math.random() > 0.96) {
-                            player.setSaturation((player.getSaturation() + 1));
+                    //if the player has 0 health then don't regenerate health or stamina
+                    if (customPlayer.getHealth() > 0) {
+
+                        //randomly increase the players saturation (only if saturation is below 3)
+                        if (player.getSaturation() < 3) {
+                            if (Math.random() > 0.96) {
+                                player.setSaturation((player.getSaturation() + 1));
+                            }
                         }
 
                         //player information
-                        int healthRegen = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealthRegen();
-                        int maxHealth = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth();
-                        int staminaRegen = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStaminaRegen();
-                        int maxStamina = main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina();
+                        int healthRegen = customPlayer.getHealthRegen();
+                        int maxHealth = customPlayer.getMaxHealth();
+                        int staminaRegen = customPlayer.getStaminaRegen();
+                        int maxStamina = customPlayer.getMaxStamina();
 
                         //regenerate stamina if not at max
-                        if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() < maxStamina) {
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addStaminaLocal(staminaRegen);
+                        if (customPlayer.getStamina() < maxStamina) {
+                            customPlayer.addStaminaLocal(staminaRegen);
                         }
 
                         //regenerate health if not at max
-                        if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() < maxHealth) {
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(healthRegen);
+                        if (customPlayer.getHealth() < maxHealth) {
+                            customPlayer.addHealthLocal(healthRegen);
                         }
 
                         //if over max stamina, set to max stamina
-                        if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() > maxStamina) {
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaLocal(maxStamina);
+                        if (customPlayer.getStamina() > maxStamina) {
+                            customPlayer.setStaminaLocal(maxStamina);
                         }
 
                         //if over max health, set to max health
-                        if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() > maxHealth) {
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthLocal(maxHealth);
+                        if (customPlayer.getHealth() > maxHealth) {
+                            customPlayer.setHealthLocal(maxHealth);
                         }
 
                         updateHearts(player);
@@ -91,44 +103,46 @@ public class StatsManager implements Listener {
 
         //set player configurations
         Player player = e.getPlayer();
+
         setConfigurations(player);
-        updateHearts(player);
-        displayActionBar(player);
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
         Player player = e.getPlayer();
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
 
         //saving the players stamina and health to the database
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthDatabase(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth());
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaDatabase(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina());
+        customPlayer.setHealthDatabase(customPlayer.getHealth());
+        customPlayer.setStaminaDatabase(customPlayer.getStamina());
     }
 
     @EventHandler
     public void onDamaged(EntityDamageEvent e){
 
-        //if the entity is a player
-        if (e.getEntity() instanceof Player){
+        //if the entity is a player and not a npc
+        if (e.getEntity() instanceof Player && !CitizensAPI.getNPCRegistry().isNPC(e.getEntity())){
 
             Player player = (Player) e.getEntity();
-
-            //negate the normal damage
-            e.setDamage(0);
+            CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
 
             //if the player took fall damage
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
 
                 //reduce there health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) (e.getDamage()*-3));
+                customPlayer.addHealthLocal((float) (e.getDamage()*-3));
                 updateHearts(player);
                 displayActionBar(player);
+            }
+
+            //negate the normal damage
+            e.setDamage(0);
 
             //if the player took damage from hunger
-            } else if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
+            if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
 
                 //reduce their health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() /-18);
+                customPlayer.addHealthLocal((float) customPlayer.getMaxHealth() /-18);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -136,7 +150,7 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
 
                 //reduce their health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() /-18);
+                customPlayer.addHealthLocal((float) customPlayer.getMaxHealth() /-18);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -147,7 +161,7 @@ public class StatsManager implements Listener {
                 int poisonLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.POISON)).findFirst().get().getAmplifier();
 
                 //reduce their health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(-3*poisonLevel);
+                customPlayer.addHealthLocal(-3*poisonLevel);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -155,7 +169,7 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
 
                 //reduce their health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() /-20);
+                customPlayer.addHealthLocal((float) customPlayer.getMaxHealth() /-20);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -174,7 +188,7 @@ public class StatsManager implements Listener {
                 int witherLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.WITHER)).findFirst().get().getAmplifier();
 
                 //reduce their health, update the hearts, and display the action bar
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal(-3*witherLevel);
+                customPlayer.addHealthLocal(-3*witherLevel);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -183,107 +197,322 @@ public class StatsManager implements Listener {
         }
     }
 
+
     @EventHandler
     public void onHit(EntityDamageByEntityEvent e) {
 
-        //if the defending entity is a player or npc
-        if (e.getEntity() instanceof Player) {
+        //if the defending entity is a npc
+        if (CitizensAPI.getNPCRegistry().isNPC(e.getEntity())) {
 
-            //if the attacking entity is a sentinel
-            try {
-                if (CitizensAPI.getNPCRegistry().getNPC(e.getDamager()).hasTrait(SentinelTrait.class)) {
+            //set the default damage to 0
+            e.setDamage(0);
 
-                    //get the attacking npc
-                    NPC npc = CitizensAPI.getNPCRegistry().getNPC(e.getDamager());
-                    SentinelTrait sentinel = npc.getOrAddTrait(SentinelTrait.class);
+            //if the defending entity is a sentinel with the NpcStats trait
+            if (CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class) && CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(NpcStats.class)) {
 
-                    //calculate the damage
-                    double damage = sentinel.getDamage();
+                //get the npc defender and their stats
+                NPC defender = CitizensAPI.getNPCRegistry().getNPC(e.getEntity());
+                NpcStats defenderNpcStats = defender.getOrAddTrait(NpcStats.class);
 
-                    //if the defender is a npc, reduce its health
-                    if (CitizensAPI.getNPCRegistry().isNPC(e.getEntity())) {
+                float defenderThorns = defenderNpcStats.getThorns();
+                float defenderDefense = defenderNpcStats.getDefense();
+                float defenderInfernalDefense = defenderNpcStats.getInfernalDefense();
+                float defenderUndeadDefense = defenderNpcStats.getUndeadDefense();
+                float defenderAquaticDefense = defenderNpcStats.getAquaticDefense();
+                float defenderAerialDefense = defenderNpcStats.getAerialDefense();
+                float defenderMeleeDefense = defenderNpcStats.getMeleeDefense();
+                float defenderRangedDefense = defenderNpcStats.getRangedDefense();
+                float defenderMagicDefense = defenderNpcStats.getMagicDefense();
 
-                        //deal the damage to the npc
-                        e.setDamage(damage);
+                //if the attacking entity is a NPC
+                if (CitizensAPI.getNPCRegistry().isNPC(e.getDamager())) {
+
+                    //if the attacking entity is a npc with the NpcStats trait
+                    if (CitizensAPI.getNPCRegistry().getNPC(e.getDamager()).hasTrait(SentinelTrait.class) && CitizensAPI.getNPCRegistry().getNPC(e.getDamager()).hasTrait(NpcStats.class)) {
+
+                        //get the npc attacker and their stats
+                        NPC attacker = CitizensAPI.getNPCRegistry().getNPC(e.getDamager());
+                        SentinelTrait attackerSentinelTrait = attacker.getOrAddTrait(SentinelTrait.class);
+                        NpcStats attackerNpcStats = attacker.getOrAddTrait(NpcStats.class);
+
+                        float attackerBaseDamage = (float) attackerSentinelTrait.getDamage();
+                        float attackerCritChance = attackerNpcStats.getCritChance();
+                        float attackerCritDamage = attackerNpcStats.getCritDamage();
+                        float attackerStrength = attackerNpcStats.getStrength();
+                        float attackerDefense = attackerNpcStats.getDefense();
+                        float attackerInfernalDamage = attackerNpcStats.getInfernalDamage();
+                        float attackerUndeadDamage = attackerNpcStats.getUndeadDamage();
+                        float attackerAquaticDamage = attackerNpcStats.getAquaticDamage();
+                        float attackerAerialDamage = attackerNpcStats.getAerialDamage();
+                        float attackerMeleeDamage = attackerNpcStats.getMeleeDamage();
+                        float attackerRangedDamage = attackerNpcStats.getRangedDamage();
+                        float attackerMagicDamage = attackerNpcStats.getMagicDamage();
+
+                        ////calculate the damage
+                        //crit chance calculations
+                        if (e.isCritical()){
+                            attackerCritChance += 50;
+                        }
+                        if (Math.random() * 100 < attackerCritChance){
+                            attackerCritChance = 100;
+                        }else{
+                            attackerCritChance = 0;
+                        }
+
+                        //type damage calculations
+                        float typeDamage = attackerBaseDamage + attackerInfernalDamage * (1-defenderInfernalDefense/100) + attackerUndeadDamage * (1-defenderUndeadDefense/100) +
+                                attackerAquaticDamage * (1-defenderAquaticDefense/100) + attackerAerialDamage * (1-defenderAerialDefense/100) +
+                                attackerMeleeDamage * (1-defenderMeleeDefense/100) + attackerRangedDamage * (1-defenderRangedDefense/100) +
+                                attackerMagicDamage * (1-defenderMagicDefense/100);
+
+                        //crit damage and strength calculations
+                        if (attackerCritChance == 100){
+                            typeDamage = typeDamage * (1+attackerStrength/100) * (1+attackerCritDamage/100);
+                        }else{
+                            typeDamage = typeDamage * (1+attackerStrength/100);
+                        }
+
+                        //defense calculation
+                        float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+
+                        //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
+                        float noDefAttackerDamage = finalDefenderDamage * (defenderThorns/1000);
+                        float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
+
+                        //deal the damage
+                        e.setDamage(finalDefenderDamage);
+
+                        //THORNS CALCULATION FOR NPC
 
 
-                    //if the defender is a player, reduce their health, update the hearts, and display the action bar
-                    }else{
-                        Player player = (Player) e.getEntity();
-                        e.setDamage(0);
 
-                        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) -damage);
-                        updateHearts(player);
-                        displayActionBar(player);
+                    } else {
+                        //error: attacking entity either isn't a sentinel or doesn't have NpcStats trait
+                        main.getLogger().log(Level.WARNING, "ERROR: attacking entity either isn't a sentinel or doesn't have the NpcStats trait");
                     }
 
-                    return;
+                //if the attacking entity is a player
+                } else if (e.getDamager() instanceof Player){
+
+                    //get the player attacker and their stats
+                    Player player = (Player) e.getDamager();
+                    CustomPlayer attackerPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+
+                    float attackerBaseDamage = attackerPlayer.getDamage();
+                    float attackerCritChance = attackerPlayer.getCritChance();
+                    float attackerCritDamage = attackerPlayer.getCritDamage();
+                    float attackerStrength = attackerPlayer.getStrength();
+                    float attackerDefense = attackerPlayer.getDefense();
+                    float attackerInfernalDamage = attackerPlayer.getInfernalDamage();
+                    float attackerUndeadDamage = attackerPlayer.getUndeadDamage();
+                    float attackerAquaticDamage = attackerPlayer.getAquaticDamage();
+                    float attackerAerialDamage = attackerPlayer.getAerialDamage();
+                    float attackerMeleeDamage = attackerPlayer.getMeleeDamage();
+                    float attackerRangedDamage = attackerPlayer.getRangedDamage();
+                    float attackerMagicDamage = attackerPlayer.getMagicDamage();
+
+                    ////calculate the damage
+                    //crit chance calculations
+                    if (e.isCritical()){
+                        attackerCritChance += 50;
+                    }
+                    if (Math.random() * 100 < attackerCritChance){
+                        attackerCritChance = 100;
+                    }else{
+                        attackerCritChance = 0;
+                    }
+
+                    //type damage calculations
+                    float typeDamage = attackerBaseDamage + attackerInfernalDamage * (1-defenderInfernalDefense/100) + attackerUndeadDamage * (1-defenderUndeadDefense/100) +
+                            attackerAquaticDamage * (1-defenderAquaticDefense/100) + attackerAerialDamage * (1-defenderAerialDefense/100) +
+                            attackerMeleeDamage * (1-defenderMeleeDefense/100) + attackerRangedDamage * (1-defenderRangedDefense/100) +
+                            attackerMagicDamage * (1-defenderMagicDefense/100);
+
+                    //crit damage and strength calculations
+                    if (attackerCritChance == 100){
+                        typeDamage = typeDamage * (1+attackerStrength/100) * (1+attackerCritDamage/100);
+                    }else{
+                        typeDamage = typeDamage * (1+attackerStrength/100);
+                    }
+
+                    //defense calculation
+                    float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+
+                    //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
+                    float noDefAttackerDamage = finalDefenderDamage * (defenderThorns/1000);
+                    float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
+
+                    //deal the damage
+                    e.setDamage(finalDefenderDamage);
+                    attackerPlayer.setHealthLocal(attackerPlayer.getHealth() - finalAttackerDamage);
+
+                    //update the player's health bar
+                    displayActionBar(player);
+                    updateHearts(player);
 
                 }
 
-            }catch (NullPointerException ex){
-                //attack was not from a sentinel
+            } else {
+                //error: defending entity either isn't a sentinel or doesn't have NpcStats trait
+                main.getLogger().log(Level.WARNING, "ERROR: defending entity either isn't a sentinel or doesn't have the NpcStats trait");
             }
 
 
+        //if the defending entity is a player
+        } else if (e.getEntity() instanceof Player) {
+
+            //get the player defender and their stats
+            Player playerDefend = (Player) e.getEntity();
+            CustomPlayer defenderPlayer = main.getPlayerManager().getCustomPlayer(playerDefend.getUniqueId());
+
+            float defenderThorns = defenderPlayer.getThorns();
+            float defenderDefense = defenderPlayer.getDefense();
+            float defenderInfernalDefense = defenderPlayer.getInfernalDefense();
+            float defenderUndeadDefense = defenderPlayer.getUndeadDefense();
+            float defenderAquaticDefense = defenderPlayer.getAquaticDefense();
+            float defenderAerialDefense = defenderPlayer.getAerialDefense();
+            float defenderMeleeDefense = defenderPlayer.getMeleeDefense();
+            float defenderRangedDefense = defenderPlayer.getRangedDefense();
+            float defenderMagicDefense = defenderPlayer.getMagicDefense();
+
+            //if the attacking entity is a NPC
+            if (CitizensAPI.getNPCRegistry().isNPC(e.getDamager())) {
+
+                //if the attacking entity is a npc with the NpcStats trait
+                if (CitizensAPI.getNPCRegistry().getNPC(e.getDamager()).hasTrait(SentinelTrait.class) && CitizensAPI.getNPCRegistry().getNPC(e.getDamager()).hasTrait(NpcStats.class)) {
+
+                    //get the npc attacker and their stats
+                    NPC attacker = CitizensAPI.getNPCRegistry().getNPC(e.getDamager());
+                    SentinelTrait attackerSentinelTrait = attacker.getOrAddTrait(SentinelTrait.class);
+                    NpcStats attackerNpcStats = attacker.getOrAddTrait(NpcStats.class);
+
+                    float attackerBaseDamage = (float) attackerSentinelTrait.getDamage();
+                    float attackerCritChance = attackerNpcStats.getCritChance();
+                    float attackerCritDamage = attackerNpcStats.getCritDamage();
+                    float attackerStrength = attackerNpcStats.getStrength();
+                    float attackerDefense = attackerNpcStats.getDefense();
+                    float attackerInfernalDamage = attackerNpcStats.getInfernalDamage();
+                    float attackerUndeadDamage = attackerNpcStats.getUndeadDamage();
+                    float attackerAquaticDamage = attackerNpcStats.getAquaticDamage();
+                    float attackerAerialDamage = attackerNpcStats.getAerialDamage();
+                    float attackerMeleeDamage = attackerNpcStats.getMeleeDamage();
+                    float attackerRangedDamage = attackerNpcStats.getRangedDamage();
+                    float attackerMagicDamage = attackerNpcStats.getMagicDamage();
+
+                    ////calculate the damage
+                    //crit chance calculations
+                    if (e.isCritical()){
+                        attackerCritChance += 50;
+                    }
+                    if (Math.random() * 100 < attackerCritChance){
+                        attackerCritChance = 100;
+                    }else{
+                        attackerCritChance = 0;
+                    }
+
+                    //type damage calculations
+                    float typeDamage = attackerBaseDamage + attackerInfernalDamage * (1-defenderInfernalDefense/100) + attackerUndeadDamage * (1-defenderUndeadDefense/100) +
+                            attackerAquaticDamage * (1-defenderAquaticDefense/100) + attackerAerialDamage * (1-defenderAerialDefense/100) +
+                            attackerMeleeDamage * (1-defenderMeleeDefense/100) + attackerRangedDamage * (1-defenderRangedDefense/100) +
+                            attackerMagicDamage * (1-defenderMagicDefense/100);
+
+                    //crit damage and strength calculations
+                    if (attackerCritChance == 100){
+                        typeDamage = typeDamage * (1+attackerStrength/100) * (1+attackerCritDamage/100);
+                    }else{
+                        typeDamage = typeDamage * (1+attackerStrength/100);
+                    }
+
+                    //defense calculation
+                    float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+
+                    //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
+                    float noDefAttackerDamage = finalDefenderDamage * (defenderThorns/1000);
+                    float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
+
+                    //deal the damage
+                    e.setDamage(0);
+                    defenderPlayer.setHealthLocal(defenderPlayer.getHealth() - finalDefenderDamage);
+
+                    //update the player's health bar
+                    displayActionBar(playerDefend);
+                    updateHearts(playerDefend);
+
+                    //THORNS CALCULATION FOR NPC
+
+
+
+                } else {
+                    //error: attacking entity either isn't a sentinel or doesn't have NpcStats trait
+                    main.getLogger().log(Level.WARNING, "ERROR: attacking entity either isn't a sentinel or doesn't have the NpcStats trait");
+                }
+
             //if the attacking entity is a player
-            //get the attacking player
-            Player player = (Player) e.getDamager();
+            } else if (e.getDamager() instanceof Player){
 
-            ////calculate the damage
-            //default damage is 1
-            double damage = 1.0;
+                //get the player attacker and their stats
+                Player playerAttack = (Player) e.getDamager();
+                CustomPlayer attackerPlayer = main.getPlayerManager().getCustomPlayer(playerAttack.getUniqueId());
 
-            //get the held item
-            ItemStack item = player.getInventory().getItemInMainHand();
+                float attackerBaseDamage = attackerPlayer.getDamage();
+                float attackerCritChance = attackerPlayer.getCritChance();
+                float attackerCritDamage = attackerPlayer.getCritDamage();
+                float attackerStrength = attackerPlayer.getStrength();
+                float attackerDefense = attackerPlayer.getDefense();
+                float attackerInfernalDamage = attackerPlayer.getInfernalDamage();
+                float attackerUndeadDamage = attackerPlayer.getUndeadDamage();
+                float attackerAquaticDamage = attackerPlayer.getAquaticDamage();
+                float attackerAerialDamage = attackerPlayer.getAerialDamage();
+                float attackerMeleeDamage = attackerPlayer.getMeleeDamage();
+                float attackerRangedDamage = attackerPlayer.getRangedDamage();
+                float attackerMagicDamage = attackerPlayer.getMagicDamage();
 
-            if (CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class)) {
 
-                //if the attacking player is holding an item
-                if (item.getItemMeta() != null) {
-
-                    try {
-                        //calculate the damage if the item is a battle item
-                        if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equals("battleItem")) {
-
-                            damage = item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT);
-
-                        }
-
-                    } catch (NullPointerException ex) {
-                        //item is not a battle item
-                    }
+                ////calculate the damage
+                //crit chance calculations
+                if (e.isCritical()){
+                    attackerCritChance += 50;
+                }
+                if (Math.random() * 100 < attackerCritChance){
+                    attackerCritChance = 100;
+                }else{
+                    attackerCritChance = 0;
                 }
 
-                //deal the damage to the npc
-                e.setDamage(damage);
-                player.sendMessage("npc damaged by: " + damage);
+                //type damage calculations
+                float typeDamage = attackerBaseDamage + attackerInfernalDamage * (1-defenderInfernalDefense/100) + attackerUndeadDamage * (1-defenderUndeadDefense/100) +
+                        attackerAquaticDamage * (1-defenderAquaticDefense/100) + attackerAerialDamage * (1-defenderAerialDefense/100) +
+                        attackerMeleeDamage * (1-defenderMeleeDefense/100) + attackerRangedDamage * (1-defenderRangedDefense/100) +
+                        attackerMagicDamage * (1-defenderMagicDefense/100);
 
-            //if the defender is a player
-            }else{
-
-                //if the attacking player is holding an item
-                if (item.getItemMeta() != null) {
-
-                    try {
-                        //calculate the damage if the item is a battle item
-                        if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equals("battleItem")) {
-
-                            damage = item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT);
-
-                        }
-
-                    } catch (NullPointerException ex) {
-                        //item is not a battle item
-                    }
+                //crit damage and strength calculations
+                if (attackerCritChance == 100){
+                    typeDamage = typeDamage * (1+attackerStrength/100) * (1+attackerCritDamage/100);
+                }else{
+                    typeDamage = typeDamage * (1+attackerStrength/100);
                 }
 
-                //reduce the player defender's health, update the hearts, and display the action bar
-                e.setDamage(0);
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthLocal((float) -damage);
-                updateHearts(player);
-                displayActionBar(player);
-                }
+                //defense calculation
+                float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+
+                //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
+                float noDefAttackerDamage = finalDefenderDamage * (defenderThorns/1000);
+                float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
+
+                //deal the damage
+                e.setDamage(finalDefenderDamage);
+                playerDefend.sendMessage("You took " + finalDefenderDamage + " damage from " + playerAttack.getName());
+
+                //deal the thorns damage
+                attackerPlayer.setHealthLocal(attackerPlayer.getHealth() - finalAttackerDamage);
+
+                //update the player's health bar
+                displayActionBar(playerAttack);
+                updateHearts(playerAttack);
+                displayActionBar(playerDefend);
+                updateHearts(playerDefend);
+
+            }
         }
     }
 
@@ -292,11 +521,12 @@ public class StatsManager implements Listener {
 
         //set player configurations
         Player player = e.getPlayer();
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
         setConfigurations(player);
 
         //reset player health and stamina
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth());
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina());
+        customPlayer.setHealthLocal(customPlayer.getMaxHealth());
+        customPlayer.setStaminaLocal(customPlayer.getMaxStamina());
 
         //display the action bar
         displayActionBar(player);
@@ -308,13 +538,77 @@ public class StatsManager implements Listener {
         e.setCancelled(true);
     }
 
+    //update player stats when an item is moved into the main hand
+    @EventHandler
+    public void onInventorySlotChange(PlayerInventorySlotChangeEvent e){
 
+        Player player = e.getPlayer();
 
+        if (e.getSlot() == player.getInventory().getHeldItemSlot()){
+
+            //add the stats of the new item
+            addPlayerStats(player, e.getNewItemStack());
+
+            //remove the stats of the old item
+            removePlayerStats(player, e.getOldItemStack());
+
+            player.sendMessage("Item changed SLOT 1");
+
+        }
+    }
+
+    //update player stats when an item is equipped
+    @EventHandler
+    public void onChangedHeldItem(PlayerItemHeldEvent e){
+
+        Player player = e.getPlayer();
+
+        //save the player's held item before the player switches items
+        ItemStack oldItem = player.getInventory().getItemInMainHand();
+
+        //wait for 1 tick to allow the player to switch items
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+
+                //add the stats of the new item being held
+                addPlayerStats(player, player.getInventory().getItemInMainHand());
+            }
+        }.runTaskLater(main, 1);
+
+        //remove the stats from the item they were holding
+        removePlayerStats(player, oldItem);
+        player.sendMessage("Item changed");
+    }
+
+    //update player stats when armor is equipped
+    @EventHandler
+    public void onEquipArmor(PlayerArmorChangeEvent e){
+
+        Player player = e.getPlayer();
+
+        addPlayerArmorStats(player, e.getNewItem());
+        removePlayerArmorStats(player, e.getOldItem());
+        player.sendMessage("Armor changed");
+    }
 
 
     //set player configurations
     public void setConfigurations(Player player){
         player.setMaxHealth(40);
+    }
+
+    //manages the health of the player when equipping different items
+    public void manageHealth(CustomPlayer customPlayer, float healthBefore, float maxHealthBefore){
+        //if health is greater than max health, set health to max health
+        if (customPlayer.getHealth() > customPlayer.getMaxHealth()) {
+            customPlayer.setHealthLocal(customPlayer.getMaxHealth());
+        }
+
+        //if the player was at maximum health, set health to max health
+        if (healthBefore >= maxHealthBefore) {
+            customPlayer.setHealthLocal(customPlayer.getMaxHealth());
+        }
     }
 
     //display the action bar
@@ -340,4 +634,239 @@ public class StatsManager implements Listener {
             player.setHealth(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() * 40);
         }
     }
+
+
+
+
+    //add the stats of the item the player is holding
+    public void addPlayerStats(Player player, ItemStack item){
+
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+
+        //get the player's health beforehand
+        float healthBefore = customPlayer.getHealth();
+        float maxHealthBefore = customPlayer.getMaxHealth();
+
+        try {
+
+            //if the player is holding a weapon item
+            if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equalsIgnoreCase("regular")) {
+
+                PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
+
+                //add the item's stats to the player's stats
+                customPlayer.setDamage(customPlayer.getDamage() + itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
+                customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() + itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
+                customPlayer.setCritChance(customPlayer.getCritChance() + itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
+                customPlayer.setCritDamage(customPlayer.getCritDamage() + itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
+                customPlayer.setStrength(customPlayer.getStrength() + itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
+                customPlayer.setThorns(customPlayer.getThorns() + itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
+                customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() + itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                customPlayer.setDefense(customPlayer.getDefense() + itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
+                customPlayer.setSpeed(customPlayer.getSpeed() + itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
+                customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() + itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
+                customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() + itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
+                customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() + itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
+                customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() + itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
+                customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() + itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
+                customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() + itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
+                customPlayer.setAerialDefense(customPlayer.getAerialDefense() + itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
+                customPlayer.setAerialDamage(customPlayer.getAerialDamage() + itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
+                customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() + itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
+                customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() + itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
+                customPlayer.setRangedDefense(customPlayer.getRangedDefense() + itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
+                customPlayer.setRangedDamage(customPlayer.getRangedDamage() + itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
+                customPlayer.setMagicDefense(customPlayer.getMagicDefense() + itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
+                customPlayer.setMagicDamage(customPlayer.getMagicDamage() + itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+
+            }
+
+            manageHealth(customPlayer, healthBefore, maxHealthBefore);
+
+        } catch (NullPointerException e) {
+
+            manageHealth(customPlayer, healthBefore, maxHealthBefore);
+
+        }
+
+        //update the player's action bar and hearts
+        displayActionBar(player);
+        updateHearts(player);
+
+    }
+
+
+    //remove the stats of the item the player is holding
+    public void removePlayerStats(Player player, ItemStack item) {
+
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+
+        //get the player's health beforehand
+        float healthBefore = customPlayer.getHealth();
+        float maxHealthBefore = customPlayer.getMaxHealth();
+
+        try {
+
+            //if the player is holding a weapon item
+            if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equalsIgnoreCase("regular")) {
+
+                PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
+
+                //remove the item's stats from the player's stats
+                customPlayer.setDamage(customPlayer.getDamage() - itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
+                customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() - itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
+                customPlayer.setCritChance(customPlayer.getCritChance() - itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
+                customPlayer.setCritDamage(customPlayer.getCritDamage() - itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
+                customPlayer.setStrength(customPlayer.getStrength() - itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
+                customPlayer.setThorns(customPlayer.getThorns() - itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
+                customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() - itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                customPlayer.setDefense(customPlayer.getDefense() - itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
+                customPlayer.setSpeed(customPlayer.getSpeed() - itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
+                customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() - itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
+                customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() - itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
+                customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() - itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
+                customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() - itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
+                customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() - itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
+                customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() - itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
+                customPlayer.setAerialDefense(customPlayer.getAerialDefense() - itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
+                customPlayer.setAerialDamage(customPlayer.getAerialDamage() - itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
+                customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() - itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
+                customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() - itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
+                customPlayer.setRangedDefense(customPlayer.getRangedDefense() - itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
+                customPlayer.setRangedDamage(customPlayer.getRangedDamage() - itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
+                customPlayer.setMagicDefense(customPlayer.getMagicDefense() - itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
+                customPlayer.setMagicDamage(customPlayer.getMagicDamage() - itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+
+            }
+
+            manageHealth(customPlayer, healthBefore, maxHealthBefore);
+
+        } catch (NullPointerException e) {
+
+            manageHealth(customPlayer, healthBefore, maxHealthBefore);
+
+        }
+
+        //update the player's action bar and hearts
+        displayActionBar(player);
+        updateHearts(player);
+    }
+
+
+    //add the stats of the new item the player put on
+    public void addPlayerArmorStats(Player player, ItemStack item){
+
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+
+        //get the player's health beforehand
+        float healthBefore = customPlayer.getHealth();
+        float maxHealthBefore = customPlayer.getMaxHealth();
+
+        try {
+
+            //if the player's new item is an armor piece
+            if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equalsIgnoreCase("armor")) {
+
+                PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
+
+                //add the item's stats to the player's stats
+                customPlayer.setDamage(customPlayer.getDamage() + itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
+                customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() + itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
+                customPlayer.setCritChance(customPlayer.getCritChance() + itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
+                customPlayer.setCritDamage(customPlayer.getCritDamage() + itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
+                customPlayer.setStrength(customPlayer.getStrength() + itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
+                customPlayer.setThorns(customPlayer.getThorns() + itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
+                customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() + itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                customPlayer.setDefense(customPlayer.getDefense() + itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
+                customPlayer.setSpeed(customPlayer.getSpeed() + itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
+                customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() + itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
+                customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() + itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
+                customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() + itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
+                customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() + itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
+                customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() + itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
+                customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() + itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
+                customPlayer.setAerialDefense(customPlayer.getAerialDefense() + itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
+                customPlayer.setAerialDamage(customPlayer.getAerialDamage() + itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
+                customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() + itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
+                customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() + itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
+                customPlayer.setRangedDefense(customPlayer.getRangedDefense() + itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
+                customPlayer.setRangedDamage(customPlayer.getRangedDamage() + itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
+                customPlayer.setMagicDefense(customPlayer.getMagicDefense() + itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
+                customPlayer.setMagicDamage(customPlayer.getMagicDamage() + itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+            }
+
+            customPlayer.setHealthLocal(customPlayer.getMaxHealth() * (healthBefore/maxHealthBefore));
+
+        }catch (NullPointerException e){
+
+            customPlayer.setHealthLocal(customPlayer.getMaxHealth() * (healthBefore/maxHealthBefore));
+
+        }
+
+        //update the player's action bar and hearts
+        displayActionBar(player);
+        updateHearts(player);
+
+    }
+
+
+    //remove the stats of the old item the player had on
+    public void removePlayerArmorStats(Player player, ItemStack item){
+
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+
+        //get the player's health beforehand
+        float healthBefore = customPlayer.getHealth();
+        float maxHealthBefore = customPlayer.getMaxHealth();
+
+        try {
+
+            //if the player's old item is an armor piece
+            if (item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING).equalsIgnoreCase("armor")) {
+
+                PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
+
+                //remove the item's stats from the player's stats
+                customPlayer.setDamage(customPlayer.getDamage() - itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
+                customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() - itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
+                customPlayer.setCritChance(customPlayer.getCritChance() - itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
+                customPlayer.setCritDamage(customPlayer.getCritDamage() - itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
+                customPlayer.setStrength(customPlayer.getStrength() - itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
+                customPlayer.setThorns(customPlayer.getThorns() - itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
+                customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() - itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                customPlayer.setDefense(customPlayer.getDefense() - itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
+                customPlayer.setSpeed(customPlayer.getSpeed() - itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
+                customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() - itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
+                customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() - itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
+                customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() - itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
+                customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() - itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
+                customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() - itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
+                customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() - itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
+                customPlayer.setAerialDefense(customPlayer.getAerialDefense() - itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
+                customPlayer.setAerialDamage(customPlayer.getAerialDamage() - itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
+                customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() - itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
+                customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() - itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
+                customPlayer.setRangedDefense(customPlayer.getRangedDefense() - itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
+                customPlayer.setRangedDamage(customPlayer.getRangedDamage() - itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
+                customPlayer.setMagicDefense(customPlayer.getMagicDefense() - itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
+                customPlayer.setMagicDamage(customPlayer.getMagicDamage() - itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+            }
+
+            customPlayer.setHealthLocal(customPlayer.getMaxHealth() * (healthBefore/maxHealthBefore));
+
+        }catch (NullPointerException e){
+
+            customPlayer.setHealthLocal(customPlayer.getMaxHealth() * (healthBefore/maxHealthBefore));
+
+        }
+
+        //update the player's action bar and hearts
+        displayActionBar(player);
+        updateHearts(player);
+
+    }
+
+
+
+
 }

@@ -1,7 +1,7 @@
 com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility.class
-com\stelios\cakenaysh\Listeners\CitizensEnableListener.class
 com\stelios\cakenaysh\Util\BattleItemBuilder.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
+com\stelios\cakenaysh\Util\StatsManager$2.class
 com\stelios\cakenaysh\Commands\TabComplete\SetNpcStatTabComplete.class
 com\stelios\cakenaysh\Commands\SetAttributesCommand.class
 com\stelios\cakenaysh\Util\Database.class
