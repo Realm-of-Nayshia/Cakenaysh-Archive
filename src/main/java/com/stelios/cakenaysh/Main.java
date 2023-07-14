@@ -2,7 +2,6 @@ package com.stelios.cakenaysh;
 
 import com.stelios.cakenaysh.Commands.*;
 import com.stelios.cakenaysh.Commands.TabComplete.*;
-import com.stelios.cakenaysh.Listeners.CitizensEnableListener;
 import com.stelios.cakenaysh.Listeners.ConnectionListener;
 import com.stelios.cakenaysh.Listeners.PlayerInteractListener;
 import com.stelios.cakenaysh.Listeners.ServerListPingListener;
@@ -59,7 +58,6 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
-        Bukkit.getPluginManager().registerEvents(new CitizensEnableListener(),this);
     }
 
     //registering commands
