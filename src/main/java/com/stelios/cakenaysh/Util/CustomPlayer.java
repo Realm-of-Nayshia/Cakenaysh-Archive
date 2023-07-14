@@ -323,8 +323,8 @@ public class CustomPlayer {
     }
 
 
-    //resets all the attributes of the player
-    public void resetAttributes(Main main, Player player) {
+    //resets all the database attributes of the player
+    public void resetAttributes(Player player) {
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
         customPlayer.setRank("Guest");
         customPlayer.setPlayTime(0);
