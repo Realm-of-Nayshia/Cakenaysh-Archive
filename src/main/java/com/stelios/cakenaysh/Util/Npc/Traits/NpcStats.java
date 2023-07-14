@@ -1,8 +1,15 @@
 package com.stelios.cakenaysh.Util.Npc.Traits;
 
 import com.stelios.cakenaysh.Main;
+import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.persistence.Persist;
 import net.citizensnpcs.api.trait.Trait;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.mcmonkey.sentinel.SentinelTrait;
 
 public class NpcStats extends Trait {
     public NpcStats() {
@@ -17,6 +24,7 @@ public class NpcStats extends Trait {
     @Persist("critDamage") float critDamage = 0.0f;
     @Persist("critChance") float critChance = 0.0f;
     @Persist("strength") float strength = 0.0f;
+    @Persist("thorns") float thorns = 0.0f;
     @Persist("defense") float defense = 0.0f;
     @Persist("infernalDefense") float infernalDefense = 0.0f;
     @Persist("infernalDamage") float infernalDamage = 0.0f;
@@ -45,6 +53,9 @@ public class NpcStats extends Trait {
     }
     public float getStrength() {
         return strength;
+    }
+    public float getThorns() {
+        return thorns;
     }
     public float getDefense() {
         return defense;
@@ -107,6 +118,9 @@ public class NpcStats extends Trait {
             case "strength":
                 strength = value;
                 break;
+            case "thorns":
+                thorns = value;
+                break;
             case "defense":
                 defense = value;
                 break;
@@ -161,6 +175,7 @@ public class NpcStats extends Trait {
         critDamage = 0.0f;
         critChance = 0.0f;
         strength = 0.0f;
+        thorns = 0.0f;
         defense = 0.0f;
         infernalDefense = 0.0f;
         infernalDamage = 0.0f;
@@ -176,6 +191,31 @@ public class NpcStats extends Trait {
         rangedDamage = 0.0f;
         magicDefense = 0.0f;
         magicDamage = 0.0f;
+    }
+
+    //giving xp to the player that killed the npc
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent e){
+
+        //if the player is a npc with the sentinel and npc stats trait return
+        if(CitizensAPI.getNPCRegistry().isNPC(e.getEntity()) && CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class) && CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(NpcStats.class)){
+
+            //if the killer is null return
+            if(e.getEntity().getKiller() != null) return;
+
+            //if the killer is a player and not a npc
+            if(e.getEntity().getKiller() instanceof Player && !CitizensAPI.getNPCRegistry().isNPC(e.getEntity().getKiller())){
+
+                //get the player
+                Player player = e.getEntity().getKiller();
+
+                //add xp to the player
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addXp((int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp());
+                player.sendMessage(Component.text("+" + CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp() + "XP", TextColor.color(0, 255, 0)));
+            }
+
+        }
+
     }
 
 

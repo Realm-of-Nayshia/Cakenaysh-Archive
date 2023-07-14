@@ -39,6 +39,7 @@ public class GetNpcStatsCommand implements CommandExecutor {
                                 "   Crit Damage: " + npcStats.getCritDamage() +
                                 "   Crit Chance: " + npcStats.getCritChance() + "%" + "\n" +
                                 "Strength: " + npcStats.getStrength() +
+                                "   Thorns: " + npcStats.getThorns() +
                                 "   Defense: " + npcStats.getDefense() + "\n" + "\n" +
                                 "Infernal Defense: " + npcStats.getInfernalDefense() + "%" +
                                 "   Infernal Damage: " + npcStats.getInfernalDamage() + "\n" +

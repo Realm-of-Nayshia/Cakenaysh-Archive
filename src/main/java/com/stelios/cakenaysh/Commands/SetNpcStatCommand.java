@@ -37,7 +37,7 @@ public class SetNpcStatCommand implements CommandExecutor {
                         NpcStats npcStats = npc.getOrAddTrait(NpcStats.class);
 
                         //if the stat is valid
-                        if (Arrays.asList("critdamage","critchance","strength","defense","infernaldefense","infernaldamage","undeaddefense",
+                        if (Arrays.asList("xp","critdamage","critchance","strength","thorns","defense","infernaldefense","infernaldamage","undeaddefense",
                                 "undeaddamage","aquaticdefense","aquaticdamage","aerialdefense","aerialdamage","meleedefense",
                                 "meleedamage","rangeddefense","rangeddamage","magicdefense","magicdamage")
                                 .contains(args[0].toLowerCase())) {

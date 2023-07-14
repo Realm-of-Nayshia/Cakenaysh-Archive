@@ -17,7 +17,7 @@ public class SetNpcStatTabComplete implements org.bukkit.command.TabCompleter{
         if (args.length == 1) {
 
             return org.bukkit.util.StringUtil.copyPartialMatches(args[0], java.util.Arrays.asList("xp","critdamage","critchance",
-                    "strength","defense","infernaldefense","infernaldamage","undeaddefense","undeaddamage","aquaticdefense",
+                    "strength","thorns","defense","infernaldefense","infernaldamage","undeaddefense","undeaddamage","aquaticdefense",
                     "aquaticdamage","aerialdefense","aerialdamage","meleedefense", "meleedamage", "rangeddefense",
                     "rangeddamage","magicdefense","magicdamage"), new ArrayList<>());
         }
