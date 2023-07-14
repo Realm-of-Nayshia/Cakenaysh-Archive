@@ -183,25 +183,6 @@ public class AddAttributesCommand implements CommandExecutor {
                         }
                         break;
 
-                    case "speed":
-                        try{
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addSpeed(Integer.parseInt(args[2]));
-                            //confirmation message
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text(player.getName() + "'s speed has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
-                            } else {
-                                System.out.println(player.getName() + "'s speed has increased by " + args[2] + ".");
-                            }
-                        }catch (NumberFormatException e){
-                            //error: invalid speed
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Invalid speed.", TextColor.color(255,0,0)));
-                            } else {
-                                System.out.println("Invalid speed.");
-                            }
-                        }
-                        break;
-
                     case "meleeproficiency":
                         try{
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addMeleeProficiency(Integer.parseInt(args[2]));

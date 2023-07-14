@@ -203,25 +203,6 @@ public class SetAttributesCommand implements CommandExecutor {
                         }
                         break;
 
-                    case "speed":
-                        try{
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setSpeed(Integer.parseInt(args[2]));
-                            //confirmation message
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Set " + player.getName() + "'s speed to " + args[2] + ".", TextColor.color(0, 255, 0)));
-                            } else {
-                                System.out.println("Set " + player.getName() + "'s speed to " + args[2] + ".");
-                            }
-                        }catch (NumberFormatException e){
-                            //error: invalid speed
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Invalid speed.", TextColor.color(255,0,0)));
-                            } else {
-                                System.out.println("Invalid speed.");
-                            }
-                        }
-                        break;
-
                     case "meleeproficiency":
                         try{
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMeleeProficiency(Integer.parseInt(args[2]));
