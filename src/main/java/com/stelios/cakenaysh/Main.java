@@ -3,6 +3,7 @@ package com.stelios.cakenaysh;
 import com.stelios.cakenaysh.Commands.*;
 import com.stelios.cakenaysh.Commands.TabComplete.*;
 import com.stelios.cakenaysh.Listeners.ConnectionListener;
+import com.stelios.cakenaysh.Listeners.EntityDeathListener;
 import com.stelios.cakenaysh.Listeners.PlayerInteractListener;
 import com.stelios.cakenaysh.Listeners.ServerListPingListener;
 import com.stelios.cakenaysh.Util.*;
@@ -58,7 +59,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
-        Bukkit.getPluginManager().registerEvents(new NpcStats(), this);
+        Bukkit.getPluginManager().registerEvents(new EntityDeathListener(this), this);
     }
 
     //registering commands
