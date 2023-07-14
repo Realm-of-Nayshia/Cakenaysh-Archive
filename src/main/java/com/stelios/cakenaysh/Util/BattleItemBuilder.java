@@ -22,6 +22,7 @@ public class BattleItemBuilder extends ItemBuilder{
     private float health;
     private float defense;
     private float speed;
+    private float thorns;
     private float infernalDefense;
     private float infernalDamage;
     private float undeadDefense;
@@ -36,6 +37,11 @@ public class BattleItemBuilder extends ItemBuilder{
     private float rangedDamage;
     private float magicDefense;
     private float magicDamage;
+    private int meleeProficiency;
+    private int rangedProficiency;
+    private int armorProficiency;
+    private boolean isArmor;
+
 
 
     //@param material: The material of the item being built.
@@ -48,12 +54,17 @@ public class BattleItemBuilder extends ItemBuilder{
     //@param speed: The speed of the item being built.
     //@params defense: The defense of various types for the item being built.
     //@params damage: The damage of various types for item being built.
+    //@params meleeProficiency: The melee proficiency of the item being built.
+    //@params rangedProficiency: The ranged proficiency of the item being built.
+    //@params armorProficiency: The armor proficiency of the item being built.
+    //@params isArmor: Whether or not the item being built is armor.
     public BattleItemBuilder(Material material, int amount, float damage, float attackSpeed, float critDamage,
-                             float critChance, float strength, float health, float defense, float speed, float infernalDefense,
-                             float infernalDamage, float undeadDefense, float undeadDamage, float aquaticDefense,
-                             float aquaticDamage, float aerialDefense, float aerialDamage, float meleeDefense,
-                             float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
-                             float magicDamage){
+                             float critChance, float strength, float health, float defense, float speed, float thorns,
+                             float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
+                             float aquaticDefense, float aquaticDamage, float aerialDefense, float aerialDamage,
+                             float meleeDefense, float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
+                             float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency,
+                             boolean isArmor){
         super(material, amount);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -62,6 +73,7 @@ public class BattleItemBuilder extends ItemBuilder{
         this.strength = strength;
         this.health = health;
         this.defense = defense;
+        this.thorns = thorns;
         this.speed = speed;
         this.infernalDefense = infernalDefense;
         this.infernalDamage = infernalDamage;
@@ -77,11 +89,21 @@ public class BattleItemBuilder extends ItemBuilder{
         this.rangedDamage = rangedDamage;
         this.magicDefense = magicDefense;
         this.magicDamage = magicDamage;
+        this.meleeProficiency = meleeProficiency;
+        this.rangedProficiency = rangedProficiency;
+        this.armorProficiency = armorProficiency;
+        this.isArmor = isArmor;
 
+
+        //setting the pdc weapon type
+        String itemType = "regular";
+        if (isArmor){
+            itemType = "armor";
+        }
 
         //setting pdc values for the item
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "itemType"), PersistentDataType.STRING, "battleItem");
+                "itemType"), PersistentDataType.STRING, itemType);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "damage"), PersistentDataType.FLOAT, damage);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
@@ -98,6 +120,8 @@ public class BattleItemBuilder extends ItemBuilder{
                 "defense"), PersistentDataType.FLOAT, defense);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "speed"), PersistentDataType.FLOAT, speed);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "thorns"), PersistentDataType.FLOAT, thorns);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "infernalDefense"), PersistentDataType.FLOAT, infernalDefense);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
@@ -126,6 +150,12 @@ public class BattleItemBuilder extends ItemBuilder{
                 "magicDefense"), PersistentDataType.FLOAT, magicDefense);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "magicDamage"), PersistentDataType.FLOAT, magicDamage);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
     }
 
     //@param material: The material of the item being built.
@@ -137,7 +167,8 @@ public class BattleItemBuilder extends ItemBuilder{
     //@param health: The health of the item being built.
     //@param speed: The speed of the item being built.
     public BattleItemBuilder(Material material, int amount, float damage, float attackSpeed, float critDamage,
-                             float critChance, float strength, float health, float defense, float speed){
+                             float critChance, float strength, float health, float defense, float speed, float thorns,
+                             int meleeProficiency, int rangedProficiency, int armorProficiency, boolean isArmor){
         super(material, amount);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -147,11 +178,21 @@ public class BattleItemBuilder extends ItemBuilder{
         this.health = health;
         this.defense = defense;
         this.speed = speed;
+        this.thorns = thorns;
+        this.meleeProficiency = meleeProficiency;
+        this.rangedProficiency = rangedProficiency;
+        this.armorProficiency = armorProficiency;
+        this.isArmor = isArmor;
 
+        //setting the pdc weapon type
+        String itemType = "regular";
+        if (isArmor){
+            itemType = "armor";
+        }
 
         //setting pdc values for the item
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "itemType"), PersistentDataType.STRING, "battleItem");
+                "itemType"), PersistentDataType.STRING, itemType);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "damage"), PersistentDataType.FLOAT, damage);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
@@ -168,6 +209,14 @@ public class BattleItemBuilder extends ItemBuilder{
                 "defense"), PersistentDataType.FLOAT, defense);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "speed"), PersistentDataType.FLOAT, speed);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "thorns"), PersistentDataType.FLOAT, thorns);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
+        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
+                "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
     }
 
 
@@ -193,6 +242,8 @@ public class BattleItemBuilder extends ItemBuilder{
                 return this.defense;
             case "speed":
                 return this.speed;
+            case "thorns":
+                return this.thorns;
             case "infernalDefense":
                 return this.infernalDefense;
             case "infernalDamage":
@@ -221,6 +272,12 @@ public class BattleItemBuilder extends ItemBuilder{
                 return this.magicDefense;
             case "magicDamage":
                 return this.magicDamage;
+            case "meleeProficiency":
+                return this.meleeProficiency;
+            case "rangedProficiency":
+                return this.rangedProficiency;
+            case "armorProficiency":
+                return this.armorProficiency;
         }
         return 0;
     }
@@ -488,6 +545,21 @@ public class BattleItemBuilder extends ItemBuilder{
             }
         }
 
+        if (this.getStat("thorns") != 0){
+            //if the thorns is a whole number, don't add a decimal point
+            if (this.getStat("thorns") % 1 == 0){
+                loreList.add(0, Component.text("Thorns: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + (int) this.getStat("thorns"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }else{
+                loreList.add(0, Component.text("Thorns: ", TextColor.color(200, 200, 200))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text("+" + this.getStat("thorns"), TextColor.color(240, 40, 50)))
+                        .decoration(TextDecoration.ITALIC, false));
+            }
+        }
+
         if (this.getStat("speed") != 0){
             //if the speed is a whole number, don't add a decimal point
             if (this.getStat("speed") % 1 == 0){
@@ -606,6 +678,27 @@ public class BattleItemBuilder extends ItemBuilder{
                         .append(Component.text("+" + this.getStat("damage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
             }
+        }
+
+        if (this.getStat("armorProficiency") != 0){
+            loreList.add(0, Component.text("Armor Proficiency: ", TextColor.color(200, 200, 200))
+                    .decoration(TextDecoration.ITALIC, false)
+                    .append(Component.text(this.getStat("armorProficiency"), TextColor.color(240, 40, 50)))
+                    .decoration(TextDecoration.ITALIC, false));
+        }
+
+        if (this.getStat("rangedProficiency") != 0){
+            loreList.add(0, Component.text("Ranged Proficiency: ", TextColor.color(200, 200, 200))
+                    .decoration(TextDecoration.ITALIC, false)
+                    .append(Component.text(this.getStat("rangedProficiency"), TextColor.color(240, 40, 50)))
+                    .decoration(TextDecoration.ITALIC, false));
+        }
+
+        if (this.getStat("meleeProficiency") != 0){
+            loreList.add(0, Component.text("Melee Proficiency: ", TextColor.color(200, 200, 200))
+                    .decoration(TextDecoration.ITALIC, false)
+                    .append(Component.text(this.getStat("meleeProficiency"), TextColor.color(240, 40, 50)))
+                    .decoration(TextDecoration.ITALIC, false));
         }
 
         //setting the lore of the item
