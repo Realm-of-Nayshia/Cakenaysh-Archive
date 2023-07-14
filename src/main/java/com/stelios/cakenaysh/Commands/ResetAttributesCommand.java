@@ -29,7 +29,7 @@ public class ResetAttributesCommand implements CommandExecutor {
                 Main main = Main.getPlugin(Main.class);
 
                 //reset the player's attributes
-                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).resetAttributes(main, player);
+                main.getPlayerManager().getCustomPlayer(player.getUniqueId()).resetAttributes(player);
 
                 //confirmation message
                 if (sender instanceof Player) {
