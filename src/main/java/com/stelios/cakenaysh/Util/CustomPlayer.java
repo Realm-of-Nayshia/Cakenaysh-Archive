@@ -14,6 +14,7 @@ public class CustomPlayer {
     private final Main main;
 
 
+    //info from database
     private final UUID uuid;
     private String rank;
     private String joinDate;
@@ -25,7 +26,6 @@ public class CustomPlayer {
     private int healthRegen;
     private float health;
     private int maxHealth;
-    private int speed;
     private int meleeProficiency;
     private int rangedProficiency;
     private int armorProficiency;
@@ -37,6 +37,30 @@ public class CustomPlayer {
     private int luck;
     private int stealth;
 
+    //info from items
+    private float damage;
+    private float attackSpeed;
+    private float critDamage;
+    private float critChance;
+    private float strength;
+    private float defense;
+    private float speed;
+    private float thorns;
+    private float infernalDefense;
+    private float infernalDamage;
+    private float undeadDefense;
+    private float undeadDamage;
+    private float aquaticDefense;
+    private float aquaticDamage;
+    private float aerialDefense;
+    private float aerialDamage;
+    private float meleeDefense;
+    private float meleeDamage;
+    private float rangedDefense;
+    private float rangedDamage;
+    private float magicDefense;
+    private float magicDamage;
+
 
     public CustomPlayer(Main main, UUID uuid) throws SQLException {
         this.main = main;
@@ -45,7 +69,7 @@ public class CustomPlayer {
 
         PreparedStatement statement = main.getDatabase().getConnection().prepareStatement(
                 "SELECT RANK, JOIN_DATE, PLAY_TIME, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
-                        "HEALTH, MAX_HEALTH, SPEED, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY, " +
+                        "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY, " +
                         "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH" +
                         " FROM players WHERE UUID = ?;");
         statement.setString(1, uuid.toString());
@@ -61,7 +85,6 @@ public class CustomPlayer {
             healthRegen = rs.getInt("HEALTH_REGEN");
             health = rs.getFloat("HEALTH");
             maxHealth = rs.getInt("MAX_HEALTH");
-            speed = rs.getInt("SPEED");
             meleeProficiency = rs.getInt("MELEE_PROFICIENCY");
             rangedProficiency = rs.getInt("RANGED_PROFICIENCY");
             armorProficiency = rs.getInt("ARMOR_PROFICIENCY");
@@ -82,7 +105,6 @@ public class CustomPlayer {
             healthRegen = 1;
             health = 100;
             maxHealth = 100;
-            speed = 100;
             meleeProficiency = 0;
             rangedProficiency = 0;
             armorProficiency = 0;
@@ -95,7 +117,7 @@ public class CustomPlayer {
             stealth = 0;
             PreparedStatement insert = main.getDatabase().getConnection().prepareStatement(
                     "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
-                            "HEALTH, MAX_HEALTH, SPEED, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY," +
+                            "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY," +
                             "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH) VALUES (" +
                             "default," +
                             "'" + uuid + "'," +
@@ -109,7 +131,6 @@ public class CustomPlayer {
                             healthRegen + "," +
                             health + "," +
                             maxHealth + "," +
-                            speed + "," +
                             meleeProficiency + "," +
                             rangedProficiency + "," +
                             armorProficiency + "," +
@@ -166,10 +187,6 @@ public class CustomPlayer {
         return maxHealth;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
     public int getMeleeProficiency() {
         return meleeProficiency;
     }
@@ -210,6 +227,75 @@ public class CustomPlayer {
         return stealth;
     }
 
+
+    public float getDamage() {
+        return damage;
+    }
+    public float getAttackSpeed() {
+        return attackSpeed;
+    }
+    public float getCritChance() {
+        return critChance;
+    }
+    public float getCritDamage() {
+        return critDamage;
+    }
+    public float getStrength() {
+        return strength;
+    }
+    public float getDefense() {
+        return defense;
+    }
+    public float getSpeed() {
+        return speed;
+    }
+    public float getThorns() {
+        return thorns;
+    }
+    public float getInfernalDefense() {
+        return infernalDefense;
+    }
+    public float getInfernalDamage() {
+        return infernalDamage;
+    }
+    public float getUndeadDefense() {
+        return undeadDefense;
+    }
+    public float getUndeadDamage() {
+        return undeadDamage;
+    }
+    public float getAquaticDefense() {
+        return aquaticDefense;
+    }
+    public float getAquaticDamage() {
+        return aquaticDamage;
+    }
+    public float getAerialDefense() {
+        return aerialDefense;
+    }
+    public float getAerialDamage() {
+        return aerialDamage;
+    }
+    public float getMeleeDefense() {
+        return meleeDefense;
+    }
+    public float getMeleeDamage() {
+        return meleeDamage;
+    }
+    public float getRangedDefense() {
+        return rangedDefense;
+    }
+    public float getRangedDamage() {
+        return rangedDamage;
+    }
+    public float getMagicDefense() {
+        return magicDefense;
+    }
+    public float getMagicDamage() {
+        return magicDamage;
+    }
+
+
     //get all the attributes of the player
     //used for the /attributes command
     public String getAttributes() {
@@ -222,8 +308,7 @@ public class CustomPlayer {
                 "   Max Stamina: " + maxStamina + "\n" +
                 "Health Regen: " + healthRegen +
                 "   Health: " + health +
-                "   Max Health: " + maxHealth + "\n" +
-                "Speed: " + speed + "\n" + "\n" +
+                "   Max Health: " + maxHealth + "\n" + "\n" +
                 "Proficiencies \n" +
                 "Melee: " + meleeProficiency +
                 "   Ranged: " + rangedProficiency +
@@ -237,30 +322,99 @@ public class CustomPlayer {
                 "   Stealth: " + stealth + "\n";
     }
 
-    ////setters
+
     //resets all the attributes of the player
     public void resetAttributes(Main main, Player player) {
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setRank("Guest");
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setPlayTime(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setXp(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaRegen(1);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaDatabase(100);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMaxStamina(100);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthRegen(1);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthDatabase(100);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMaxHealth(100);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setSpeed(100);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMeleeProficiency(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setRangedProficiency(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setArmorProficiency(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setWilsonCoin(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setPiety(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setCharisma(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setDeception(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setAgility(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setLuck(0);
-        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStealth(0);
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+        customPlayer.setRank("Guest");
+        customPlayer.setPlayTime(0);
+        customPlayer.setXp(0);
+        customPlayer.setStaminaRegen(1);
+        customPlayer.setStaminaDatabase(100);
+        customPlayer.setMaxStamina(100);
+        customPlayer.setHealthRegen(1);
+        customPlayer.setHealthDatabase(100);
+        customPlayer.setMaxHealth(100);
+        customPlayer.setMeleeProficiency(0);
+        customPlayer.setRangedProficiency(0);
+        customPlayer.setArmorProficiency(0);
+        customPlayer.setWilsonCoin(0);
+        customPlayer.setPiety(0);
+        customPlayer.setCharisma(0);
+        customPlayer.setDeception(0);
+        customPlayer.setAgility(0);
+        customPlayer.setLuck(0);
+        customPlayer.setStealth(0);
     }
+
+    ////setters
+    public void setDamage(float damage){
+        this.damage = damage;
+    }
+    public void setAttackSpeed(float attackSpeed){
+        this.attackSpeed = attackSpeed;
+    }
+    public void setCritChance(float critChance){
+        this.critChance = critChance;
+    }
+    public void setCritDamage(float critDamage){
+        this.critDamage = critDamage;
+    }
+    public void setStrength(float strength){
+        this.strength = strength;
+    }
+    public void setDefense(float defense){
+        this.defense = defense;
+    }
+    public void setSpeed(float speed){
+        this.speed = speed;
+    }
+    public void setThorns(float thorns){
+        this.thorns = thorns;
+    }
+    public void setInfernalDefense(float infernalDefense){
+        this.infernalDefense = infernalDefense;
+    }
+    public void setInfernalDamage(float infernalDamage){
+        this.infernalDamage = infernalDamage;
+    }
+    public void setUndeadDefense(float undeadDefense){
+        this.undeadDefense = undeadDefense;
+    }
+    public void setUndeadDamage(float undeadDamage){
+        this.undeadDamage = undeadDamage;
+    }
+    public void setAquaticDefense(float aquaticDefense){
+        this.aquaticDefense = aquaticDefense;
+    }
+    public void setAquaticDamage(float aquaticDamage){
+        this.aquaticDamage = aquaticDamage;
+    }
+    public void setAerialDefense(float aerialDefense){
+        this.aerialDefense = aerialDefense;
+    }
+    public void setAerialDamage(float aerialDamage){
+        this.aerialDamage = aerialDamage;
+    }
+    public void setMeleeDefense(float meleeDefense){
+        this.meleeDefense = meleeDefense;
+    }
+    public void setMeleeDamage(float meleeDamage){
+        this.meleeDamage = meleeDamage;
+    }
+    public void setRangedDefense(float rangedDefense){
+        this.rangedDefense = rangedDefense;
+    }
+    public void setRangedDamage(float rangedDamage){
+        this.rangedDamage = rangedDamage;
+    }
+    public void setMagicDefense(float magicDefense){
+        this.magicDefense = magicDefense;
+    }
+    public void setMagicDamage(float magicDamage){
+        this.magicDamage = magicDamage;
+    }
+
 
     //sets the rank of the player
     //@param rank: the rank of the player
@@ -398,19 +552,6 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET MAX_HEALTH = " + maxHealth + " WHERE UUID = '" + uuid + "';");
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //sets the speed of the player
-    //@param speed: the speed of the player
-    public void setSpeed(int speed) {
-        this.speed = speed;
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET SPEED = " + speed + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -658,19 +799,6 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET MAX_HEALTH = " + this.maxHealth + " WHERE UUID = '" + uuid + "';");
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //adds speed to the player
-    //@param speed: the speed to add to the player
-    public void addSpeed(int speed) {
-        this.speed += speed;
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET SPEED = " + this.speed + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
