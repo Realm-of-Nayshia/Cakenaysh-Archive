@@ -110,7 +110,7 @@ public class SetAttributesCommand implements CommandExecutor {
 
                     case "stamina":
                         try{
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaDatabase(Integer.parseInt(args[2]));
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStamina(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
                                 sender.sendMessage(Component.text("Set " + player.getName() + "'s stamina to " + args[2] + ".", TextColor.color(0, 255, 0)));
@@ -167,7 +167,7 @@ public class SetAttributesCommand implements CommandExecutor {
 
                     case "health":
                         try{
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealthDatabase(Integer.parseInt(args[2]));
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setHealth(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
                                 sender.sendMessage(Component.text("Set " + player.getName() + "'s health to " + args[2] + ".", TextColor.color(0, 255, 0)));

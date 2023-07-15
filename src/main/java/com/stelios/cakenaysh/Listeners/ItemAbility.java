@@ -144,7 +144,7 @@ public abstract class ItemAbility implements Listener {
 
         if (hasStaminaCost()){
             //remove the stamina and set the action bar
-            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStaminaLocal(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() - this.stamina);
+            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setStamina(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() - this.stamina);
             player.sendActionBar(Component.text("-" + stamina + " ⚡", TextColor.color(210,125,45)));
         }
 

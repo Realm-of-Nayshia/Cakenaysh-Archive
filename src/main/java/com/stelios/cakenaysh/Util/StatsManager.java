@@ -17,7 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -71,22 +70,22 @@ public class StatsManager implements Listener {
 
                         //regenerate stamina if not at max
                         if (customPlayer.getStamina() < maxStamina) {
-                            customPlayer.addStaminaLocal(staminaRegen);
+                            customPlayer.addStamina(staminaRegen);
                         }
 
                         //regenerate health if not at max
                         if (customPlayer.getHealth() < maxHealth) {
-                            customPlayer.addHealthLocal(healthRegen);
+                            customPlayer.addHealth(healthRegen);
                         }
 
                         //if over max stamina, set to max stamina
                         if (customPlayer.getStamina() > maxStamina) {
-                            customPlayer.setStaminaLocal(maxStamina);
+                            customPlayer.setStamina(maxStamina);
                         }
 
                         //if over max health, set to max health
                         if (customPlayer.getHealth() > maxHealth) {
-                            customPlayer.setHealthLocal(maxHealth);
+                            customPlayer.setHealth(maxHealth);
                         }
 
                         updateHearts(player);
@@ -132,9 +131,8 @@ public class StatsManager implements Listener {
             }
         }
 
-        //saving the players stamina and health to the database
-        customPlayer.setHealthDatabase(customPlayer.getHealth());
-        customPlayer.setStaminaDatabase(customPlayer.getStamina());
+        //saving the player's stats to the database
+        customPlayer.saveAttributesToDatabase(player);
     }
 
     @EventHandler
@@ -150,7 +148,7 @@ public class StatsManager implements Listener {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
 
                 //reduce there health, update the hearts, and display the action bar
-                customPlayer.addHealthLocal((float) (e.getDamage()*-3));
+                customPlayer.addHealth((float) (e.getDamage()*-3));
                 updateHearts(player);
                 displayActionBar(player);
             }
@@ -162,7 +160,7 @@ public class StatsManager implements Listener {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealthLocal((float) customPlayer.getMaxHealth() /-18);
+                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-18);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -170,7 +168,7 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealthLocal((float) customPlayer.getMaxHealth() /-18);
+                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-18);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -181,7 +179,7 @@ public class StatsManager implements Listener {
                 int poisonLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.POISON)).findFirst().get().getAmplifier();
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealthLocal(-3*poisonLevel);
+                customPlayer.addHealth(-3*poisonLevel);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -189,7 +187,7 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealthLocal((float) customPlayer.getMaxHealth() /-20);
+                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-20);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -208,7 +206,7 @@ public class StatsManager implements Listener {
                 int witherLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.WITHER)).findFirst().get().getAmplifier();
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealthLocal(-3*witherLevel);
+                customPlayer.addHealth(-3*witherLevel);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -364,7 +362,7 @@ public class StatsManager implements Listener {
 
                     //deal the damage
                     e.setDamage(finalDefenderDamage);
-                    attackerPlayer.setHealthLocal(attackerPlayer.getHealth() - finalAttackerDamage);
+                    attackerPlayer.setHealth(attackerPlayer.getHealth() - finalAttackerDamage);
 
                     //update the player's health bar
                     displayActionBar(player);
@@ -452,7 +450,7 @@ public class StatsManager implements Listener {
 
                     //deal the damage
                     e.setDamage(0);
-                    defenderPlayer.setHealthLocal(defenderPlayer.getHealth() - finalDefenderDamage);
+                    defenderPlayer.setHealth(defenderPlayer.getHealth() - finalDefenderDamage);
 
                     //update the player's health bar
                     displayActionBar(playerDefend);
@@ -524,7 +522,7 @@ public class StatsManager implements Listener {
                 playerDefend.sendMessage("You took " + finalDefenderDamage + " damage from " + playerAttack.getName());
 
                 //deal the thorns damage
-                attackerPlayer.setHealthLocal(attackerPlayer.getHealth() - finalAttackerDamage);
+                attackerPlayer.setHealth(attackerPlayer.getHealth() - finalAttackerDamage);
 
                 //update the player's health bar
                 displayActionBar(playerAttack);
@@ -545,8 +543,8 @@ public class StatsManager implements Listener {
         setConfigurations(player);
 
         //reset player health and stamina
-        customPlayer.setHealthLocal(customPlayer.getMaxHealth());
-        customPlayer.setStaminaLocal(customPlayer.getMaxStamina());
+        customPlayer.setHealth(customPlayer.getMaxHealth());
+        customPlayer.setStamina(customPlayer.getMaxStamina());
 
         //display the action bar
         displayActionBar(player);
@@ -682,12 +680,12 @@ public class StatsManager implements Listener {
     public void manageHealth(CustomPlayer customPlayer, float healthBefore, float maxHealthBefore){
         //if health is greater than max health, set health to max health
         if (customPlayer.getHealth() > customPlayer.getMaxHealth()) {
-            customPlayer.setHealthLocal(customPlayer.getMaxHealth());
+            customPlayer.setHealth(customPlayer.getMaxHealth());
         }
 
         //if the player was at maximum health, set health to max health
         if (healthBefore >= maxHealthBefore) {
-            customPlayer.setHealthLocal(customPlayer.getMaxHealth());
+            customPlayer.setHealth(customPlayer.getMaxHealth());
         }
     }
 

@@ -90,7 +90,7 @@ public class AddAttributesCommand implements CommandExecutor {
 
                     case "stamina":
                         try{
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addStaminaDatabase(Integer.parseInt(args[2]));
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addStamina(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
                                 sender.sendMessage(Component.text(player.getName() + "'s stamina has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
@@ -147,7 +147,7 @@ public class AddAttributesCommand implements CommandExecutor {
 
                     case "health":
                         try{
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealthDatabase(Integer.parseInt(args[2]));
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addHealth(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
                                 sender.sendMessage(Component.text(player.getName() + "'s health has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
