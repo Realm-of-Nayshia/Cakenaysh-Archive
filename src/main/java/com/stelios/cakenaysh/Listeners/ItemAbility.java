@@ -3,10 +3,12 @@ package com.stelios.cakenaysh.Listeners;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.stelios.cakenaysh.Util.CustomAbilities;
+import com.stelios.cakenaysh.Util.CustomPlayer;
 import com.stelios.cakenaysh.Util.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,6 +19,8 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +32,7 @@ public abstract class ItemAbility implements Listener {
     private final int stamina;
     private final Cache<UUID, Long> cooldown;
     private final long cooldownTime;
-    private static boolean firstEventRegistered= false;
+    private static boolean firstEventRegistered = false;
 
     public ItemAbility(CustomAbilities ability, ItemBuilder item, int stamina, long cooldown) {
 
@@ -37,8 +41,8 @@ public abstract class ItemAbility implements Listener {
             Bukkit.getPluginManager().registerEvents(this, Main.getPlugin(Main.class));
             firstEventRegistered = true;
 
-        //unregister the previous event and register the new one
-        }else{
+            //unregister the previous event and register the new one
+        } else {
             unregister();
             Bukkit.getPluginManager().registerEvents(this, Main.getPlugin(Main.class));
         }
@@ -51,33 +55,72 @@ public abstract class ItemAbility implements Listener {
     }
 
     //getters
-    public CustomAbilities getAbility() {return ability;}
-    public ItemStack getItem() {return item.getItemStack();}
-    public Boolean hasStaminaCost() {return stamina > 0;}
-    public int getStamina() {return stamina;}
-    public Cache<UUID, Long> getCooldown() {return cooldown;}
-    public Boolean hasCooldown() {return cooldownTime > 0;}
+    public CustomAbilities getAbility() {
+        return ability;
+    }
+
+    public ItemStack getItem() {
+        return item.getItemStack();
+    }
+
+    public Boolean hasStaminaCost() {
+        return stamina > 0;
+    }
+
+    public int getStamina() {
+        return stamina;
+    }
+
+    public Cache<UUID, Long> getCooldown() {
+        return cooldown;
+    }
+
+    public Boolean hasCooldown() {
+        return cooldownTime > 0;
+    }
 
     //abstract method for executing the ability
     public abstract void doAbility(Player player);
 
     //executing the ability
-    public void executeAbility(Player player){
-        if (canUseAbility(player)){
+    public void executeAbility(Player player) {
+        if (canUseAbility(player)) {
             doAbility(player);
         }
     }
 
     //unregister all events
-    public void unregister(){
+    public void unregister() {
         HandlerList.unregisterAll(this);
     }
 
     //can use ability both stam and cooldown
-    public boolean canUseAbility(Player player){
+    public boolean canUseAbility(Player player) {
 
         //get the main class
         Main main = Main.getPlugin(Main.class);
+
+        //check if the player doesn't meet the proficiency requirements
+        try {
+            CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+            PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
+
+            //if the item is a battle item
+            if (!(itemData.get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING) == "regularItem")) {
+
+                //if the player doesn't meet the item requirements, return false
+                if (itemData.get(new NamespacedKey(main, "meleeProficiency"), PersistentDataType.INTEGER) > customPlayer.getMeleeProficiency() ||
+                        itemData.get(new NamespacedKey(main, "rangedProficiency"), PersistentDataType.INTEGER) > customPlayer.getRangedProficiency() ||
+                        itemData.get(new NamespacedKey(main, "armorProficiency"), PersistentDataType.INTEGER) > customPlayer.getArmorProficiency()) {
+                    player.sendMessage(Component.text("You do not meet the requirements to use this item.", TextColor.color(255, 0, 0)));
+                    return false;
+                }
+            }
+
+        //if the item is not a regular or battle item do nothing
+        }catch(NullPointerException ex){
+            //do nothing
+        }
 
         //if the stamina is below the requirement
         if (hasStaminaCost() && main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() < this.stamina){
