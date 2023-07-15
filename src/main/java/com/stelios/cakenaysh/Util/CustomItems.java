@@ -11,7 +11,7 @@ public enum CustomItems {
 
     //BATTLE ITEMS
     HELM_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_HELMET, 1,0,0,0,0
-            ,10,10000,10000,0,0,0,0,0, true)
+            ,10,10000,10000,0,0,1,0,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Helmet of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -28,7 +28,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)))),
 
     CHEST_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_CHESTPLATE, 1,0,0,0,0
-            ,10,10000,10000,0,0,0,0,0, true)
+            ,10,10000,10000,0,0,0,0,1, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Chestplate of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -45,7 +45,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)))),
 
     LEGS_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_LEGGINGS, 1,0,0,0,0
-            ,10,10000,10000,0,0,0,0,0, true)
+            ,10,10000,10000,0,0,0,1,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Leggings of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -96,7 +96,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)))),
 
     WRATH_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_SWORD, 1,69420,45,100,90
-            ,10,2,10,10,2, 0,0,0, false)
+            ,10,2,10,10,2, 4,0,0, false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Wrath of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
