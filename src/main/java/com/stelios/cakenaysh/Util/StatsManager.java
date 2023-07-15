@@ -17,6 +17,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -100,6 +103,13 @@ public class StatsManager implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
+
+        //wait 1 tick then set the player's configurations
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+            }
+        }.runTaskLater(main,1);
 
         //set player configurations
         Player player = e.getPlayer();
@@ -548,12 +558,39 @@ public class StatsManager implements Listener {
         e.setCancelled(true);
     }
 
+    //disallow the player to equip items that they don't have the required stats for
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e){
+
+        //if the inventory is that of a players
+        if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
+
+            //get the player and the item
+            Player player = (Player) e.getWhoClicked();
+            ItemStack item = e.getCursor();
+
+            //if the player doesn't have the required stats for the item
+            if (!meetsItemRequirements(player, item, false)) {
+
+                //if the item is being moved into the armor slots
+                if (e.getSlotType() == InventoryType.SlotType.ARMOR) {
+
+                    //cancel the event
+                    player.sendMessage(Component.text("You do not meet the requirements to equip this item.", TextColor.color(255, 0, 0)));
+                    e.setCancelled(true);
+                }
+            }
+        }
+
+    }
+
     //update player stats when an item is moved into the main hand
     @EventHandler
     public void onInventorySlotChange(PlayerInventorySlotChangeEvent e){
 
         Player player = e.getPlayer();
 
+        //if the item is being moved into the main hand
         if (e.getSlot() == player.getInventory().getHeldItemSlot()){
 
             //add the stats of the new item
@@ -563,7 +600,6 @@ public class StatsManager implements Listener {
             removePlayerStats(player, e.getOldItemStack());
 
             player.sendMessage("Item changed SLOT 1");
-
         }
     }
 
@@ -606,6 +642,40 @@ public class StatsManager implements Listener {
     //set player configurations
     public void setConfigurations(Player player){
         player.setMaxHealth(40);
+    }
+
+    //returns true if the player has met the requirements to equip an item
+    public boolean meetsItemRequirements(Player player, ItemStack item, Boolean sendMessage){
+
+        try {
+
+            CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+            PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
+
+            try {
+                //if the player meets the item requirements, return true
+                if (itemData.get(new NamespacedKey(main, "meleeProficiency"), PersistentDataType.INTEGER) <= customPlayer.getMeleeProficiency()) {
+                    if (itemData.get(new NamespacedKey(main, "rangedProficiency"), PersistentDataType.INTEGER) <= customPlayer.getRangedProficiency()) {
+                        if (itemData.get(new NamespacedKey(main, "armorProficiency"), PersistentDataType.INTEGER) <= customPlayer.getArmorProficiency()) {
+                            return true;
+                        }
+                    }
+                }
+                //if there is an error the item is not a battle item, return true
+            } catch (NullPointerException ex) {
+                return true;
+            }
+
+            //else return false
+            if (sendMessage){
+                player.sendMessage(Component.text("You do not meet the requirements to equip this item.", TextColor.color(255, 0, 0)));
+            }
+            return false;
+
+        //if the item is null return true
+        }catch (NullPointerException ex){
+            return true;
+        }
     }
 
     //manages the health of the player when equipping different items
@@ -664,31 +734,35 @@ public class StatsManager implements Listener {
 
                 PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
 
-                //add the item's stats to the player's stats
-                customPlayer.setDamage(customPlayer.getDamage() + itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
-                customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() + itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
-                customPlayer.setCritChance(customPlayer.getCritChance() + itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
-                customPlayer.setCritDamage(customPlayer.getCritDamage() + itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
-                customPlayer.setStrength(customPlayer.getStrength() + itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
-                customPlayer.setThorns(customPlayer.getThorns() + itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
-                customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() + itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
-                customPlayer.setDefense(customPlayer.getDefense() + itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
-                customPlayer.setSpeed(customPlayer.getSpeed() + itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
-                customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() + itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
-                customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() + itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
-                customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() + itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
-                customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() + itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
-                customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() + itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
-                customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() + itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
-                customPlayer.setAerialDefense(customPlayer.getAerialDefense() + itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
-                customPlayer.setAerialDamage(customPlayer.getAerialDamage() + itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
-                customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() + itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
-                customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() + itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
-                customPlayer.setRangedDefense(customPlayer.getRangedDefense() + itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
-                customPlayer.setRangedDamage(customPlayer.getRangedDamage() + itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
-                customPlayer.setMagicDefense(customPlayer.getMagicDefense() + itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
-                customPlayer.setMagicDamage(customPlayer.getMagicDamage() + itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+                //if the player meets the item requirements
+                if (meetsItemRequirements(player, item, true)) {
 
+                    //add the item's stats to the player's stats
+                    customPlayer.setDamage(customPlayer.getDamage() + itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
+                    customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() + itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
+                    customPlayer.setCritChance(customPlayer.getCritChance() + itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
+                    customPlayer.setCritDamage(customPlayer.getCritDamage() + itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setStrength(customPlayer.getStrength() + itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
+                    customPlayer.setThorns(customPlayer.getThorns() + itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
+                    customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() + itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                    customPlayer.setDefense(customPlayer.getDefense() + itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
+                    customPlayer.setSpeed(customPlayer.getSpeed() + itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
+                    customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() + itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() + itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() + itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() + itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() + itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() + itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setAerialDefense(customPlayer.getAerialDefense() + itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setAerialDamage(customPlayer.getAerialDamage() + itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() + itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() + itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setRangedDefense(customPlayer.getRangedDefense() + itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setRangedDamage(customPlayer.getRangedDamage() + itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setMagicDefense(customPlayer.getMagicDefense() + itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setMagicDamage(customPlayer.getMagicDamage() + itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+
+                }
             }
 
             manageHealth(customPlayer, healthBefore, maxHealthBefore);
@@ -722,31 +796,35 @@ public class StatsManager implements Listener {
 
                 PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
 
-                //remove the item's stats from the player's stats
-                customPlayer.setDamage(customPlayer.getDamage() - itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
-                customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() - itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
-                customPlayer.setCritChance(customPlayer.getCritChance() - itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
-                customPlayer.setCritDamage(customPlayer.getCritDamage() - itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
-                customPlayer.setStrength(customPlayer.getStrength() - itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
-                customPlayer.setThorns(customPlayer.getThorns() - itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
-                customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() - itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
-                customPlayer.setDefense(customPlayer.getDefense() - itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
-                customPlayer.setSpeed(customPlayer.getSpeed() - itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
-                customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() - itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
-                customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() - itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
-                customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() - itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
-                customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() - itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
-                customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() - itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
-                customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() - itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
-                customPlayer.setAerialDefense(customPlayer.getAerialDefense() - itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
-                customPlayer.setAerialDamage(customPlayer.getAerialDamage() - itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
-                customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() - itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
-                customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() - itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
-                customPlayer.setRangedDefense(customPlayer.getRangedDefense() - itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
-                customPlayer.setRangedDamage(customPlayer.getRangedDamage() - itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
-                customPlayer.setMagicDefense(customPlayer.getMagicDefense() - itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
-                customPlayer.setMagicDamage(customPlayer.getMagicDamage() - itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+                //if the player meets the item requirements
+                if (meetsItemRequirements(player, item, false)) {
 
+                    //remove the item's stats from the player's stats
+                    customPlayer.setDamage(customPlayer.getDamage() - itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
+                    customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() - itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
+                    customPlayer.setCritChance(customPlayer.getCritChance() - itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
+                    customPlayer.setCritDamage(customPlayer.getCritDamage() - itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setStrength(customPlayer.getStrength() - itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
+                    customPlayer.setThorns(customPlayer.getThorns() - itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
+                    customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() - itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                    customPlayer.setDefense(customPlayer.getDefense() - itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
+                    customPlayer.setSpeed(customPlayer.getSpeed() - itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
+                    customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() - itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() - itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() - itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() - itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() - itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() - itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setAerialDefense(customPlayer.getAerialDefense() - itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setAerialDamage(customPlayer.getAerialDamage() - itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() - itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() - itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setRangedDefense(customPlayer.getRangedDefense() - itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setRangedDamage(customPlayer.getRangedDamage() - itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setMagicDefense(customPlayer.getMagicDefense() - itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setMagicDamage(customPlayer.getMagicDamage() - itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+
+                }
             }
 
             manageHealth(customPlayer, healthBefore, maxHealthBefore);
@@ -779,37 +857,41 @@ public class StatsManager implements Listener {
 
                 PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
 
-                //add the item's stats to the player's stats
-                customPlayer.setDamage(customPlayer.getDamage() + itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
-                customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() + itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
-                customPlayer.setCritChance(customPlayer.getCritChance() + itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
-                customPlayer.setCritDamage(customPlayer.getCritDamage() + itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
-                customPlayer.setStrength(customPlayer.getStrength() + itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
-                customPlayer.setThorns(customPlayer.getThorns() + itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
-                customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() + itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
-                customPlayer.setDefense(customPlayer.getDefense() + itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
-                customPlayer.setSpeed(customPlayer.getSpeed() + itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
-                customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() + itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
-                customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() + itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
-                customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() + itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
-                customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() + itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
-                customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() + itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
-                customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() + itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
-                customPlayer.setAerialDefense(customPlayer.getAerialDefense() + itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
-                customPlayer.setAerialDamage(customPlayer.getAerialDamage() + itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
-                customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() + itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
-                customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() + itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
-                customPlayer.setRangedDefense(customPlayer.getRangedDefense() + itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
-                customPlayer.setRangedDamage(customPlayer.getRangedDamage() + itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
-                customPlayer.setMagicDefense(customPlayer.getMagicDefense() + itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
-                customPlayer.setMagicDamage(customPlayer.getMagicDamage() + itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+                //if the player meets the item requirements
+                if (meetsItemRequirements(player, item, true)) {
+
+                    //add the item's stats to the player's stats
+                    customPlayer.setDamage(customPlayer.getDamage() + itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
+                    customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() + itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
+                    customPlayer.setCritChance(customPlayer.getCritChance() + itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
+                    customPlayer.setCritDamage(customPlayer.getCritDamage() + itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setStrength(customPlayer.getStrength() + itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
+                    customPlayer.setThorns(customPlayer.getThorns() + itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
+                    customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() + itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                    customPlayer.setDefense(customPlayer.getDefense() + itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
+                    customPlayer.setSpeed(customPlayer.getSpeed() + itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
+                    customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() + itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() + itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() + itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() + itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() + itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() + itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setAerialDefense(customPlayer.getAerialDefense() + itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setAerialDamage(customPlayer.getAerialDamage() + itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() + itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() + itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setRangedDefense(customPlayer.getRangedDefense() + itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setRangedDamage(customPlayer.getRangedDamage() + itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setMagicDefense(customPlayer.getMagicDefense() + itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setMagicDamage(customPlayer.getMagicDamage() + itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+                }
             }
 
-            customPlayer.setHealthLocal(customPlayer.getMaxHealth() * (healthBefore/maxHealthBefore));
+            manageHealth(customPlayer, healthBefore, maxHealthBefore);
 
         }catch (NullPointerException e){
 
-            customPlayer.setHealthLocal(customPlayer.getMaxHealth() * (healthBefore/maxHealthBefore));
+            manageHealth(customPlayer, healthBefore, maxHealthBefore);
 
         }
 
@@ -836,37 +918,41 @@ public class StatsManager implements Listener {
 
                 PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
 
-                //remove the item's stats from the player's stats
-                customPlayer.setDamage(customPlayer.getDamage() - itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
-                customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() - itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
-                customPlayer.setCritChance(customPlayer.getCritChance() - itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
-                customPlayer.setCritDamage(customPlayer.getCritDamage() - itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
-                customPlayer.setStrength(customPlayer.getStrength() - itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
-                customPlayer.setThorns(customPlayer.getThorns() - itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
-                customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() - itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
-                customPlayer.setDefense(customPlayer.getDefense() - itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
-                customPlayer.setSpeed(customPlayer.getSpeed() - itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
-                customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() - itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
-                customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() - itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
-                customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() - itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
-                customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() - itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
-                customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() - itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
-                customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() - itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
-                customPlayer.setAerialDefense(customPlayer.getAerialDefense() - itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
-                customPlayer.setAerialDamage(customPlayer.getAerialDamage() - itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
-                customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() - itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
-                customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() - itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
-                customPlayer.setRangedDefense(customPlayer.getRangedDefense() - itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
-                customPlayer.setRangedDamage(customPlayer.getRangedDamage() - itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
-                customPlayer.setMagicDefense(customPlayer.getMagicDefense() - itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
-                customPlayer.setMagicDamage(customPlayer.getMagicDamage() - itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+                //if the player meets the item requirements
+                if (meetsItemRequirements(player, item, false)) {
+
+                    //remove the item's stats from the player's stats
+                    customPlayer.setDamage(customPlayer.getDamage() - itemData.get(new NamespacedKey(main, "damage"), PersistentDataType.FLOAT));
+                    customPlayer.setAttackSpeed(customPlayer.getAttackSpeed() - itemData.get(new NamespacedKey(main, "attackSpeed"), PersistentDataType.FLOAT));
+                    customPlayer.setCritChance(customPlayer.getCritChance() - itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
+                    customPlayer.setCritDamage(customPlayer.getCritDamage() - itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setStrength(customPlayer.getStrength() - itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
+                    customPlayer.setThorns(customPlayer.getThorns() - itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
+                    customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() - itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                    customPlayer.setDefense(customPlayer.getDefense() - itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
+                    customPlayer.setSpeed(customPlayer.getSpeed() - itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
+                    customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() - itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setInfernalDamage(customPlayer.getInfernalDamage() - itemData.get(new NamespacedKey(main, "infernalDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setUndeadDefense(customPlayer.getUndeadDefense() - itemData.get(new NamespacedKey(main, "undeadDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setUndeadDamage(customPlayer.getUndeadDamage() - itemData.get(new NamespacedKey(main, "undeadDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setAquaticDefense(customPlayer.getAquaticDefense() - itemData.get(new NamespacedKey(main, "aquaticDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setAquaticDamage(customPlayer.getAquaticDamage() - itemData.get(new NamespacedKey(main, "aquaticDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setAerialDefense(customPlayer.getAerialDefense() - itemData.get(new NamespacedKey(main, "aerialDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setAerialDamage(customPlayer.getAerialDamage() - itemData.get(new NamespacedKey(main, "aerialDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setMeleeDefense(customPlayer.getMeleeDefense() - itemData.get(new NamespacedKey(main, "meleeDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setMeleeDamage(customPlayer.getMeleeDamage() - itemData.get(new NamespacedKey(main, "meleeDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setRangedDefense(customPlayer.getRangedDefense() - itemData.get(new NamespacedKey(main, "rangedDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setRangedDamage(customPlayer.getRangedDamage() - itemData.get(new NamespacedKey(main, "rangedDamage"), PersistentDataType.FLOAT));
+                    customPlayer.setMagicDefense(customPlayer.getMagicDefense() - itemData.get(new NamespacedKey(main, "magicDefense"), PersistentDataType.FLOAT));
+                    customPlayer.setMagicDamage(customPlayer.getMagicDamage() - itemData.get(new NamespacedKey(main, "magicDamage"), PersistentDataType.FLOAT));
+                }
             }
 
-            customPlayer.setHealthLocal(customPlayer.getMaxHealth() * (healthBefore/maxHealthBefore));
+            manageHealth(customPlayer, healthBefore, maxHealthBefore);
 
         }catch (NullPointerException e){
 
-            customPlayer.setHealthLocal(customPlayer.getMaxHealth() * (healthBefore/maxHealthBefore));
+            manageHealth(customPlayer, healthBefore, maxHealthBefore);
 
         }
 
