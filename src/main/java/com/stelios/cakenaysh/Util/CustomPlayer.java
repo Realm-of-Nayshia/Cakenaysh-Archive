@@ -297,9 +297,9 @@ public class CustomPlayer {
     //get all the attributes of the player
     //used for the /attributes command
     public String getAttributes() {
-        return "Rank: " + rank +
+        return "\n" + "Rank: " + rank +
                 "   Play Time: " + playTime + "\n" +
-                "Join Date: " + joinDate + "\n" + "\n" +
+                "Join Date: " + joinDate + "\n" +
                 "XP: " + xp + "\n" + "\n" +
                 "Stamina Regen: " + staminaRegen +
                 "   Stamina: " + stamina +
