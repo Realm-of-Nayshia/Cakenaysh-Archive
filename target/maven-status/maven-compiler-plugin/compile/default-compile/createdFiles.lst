@@ -33,6 +33,7 @@ com\stelios\cakenaysh\Listeners\ItemAbility.class
 com\stelios\cakenaysh\Commands\HealCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\SetAttributesTabComplete.class
 com\stelios\cakenaysh\Main.class
+com\stelios\cakenaysh\Util\StatsManager$3.class
 com\stelios\cakenaysh\Commands\ResetNpcStatsCommand.class
 com\stelios\cakenaysh\Commands\GiveItemCommand.class
 com\stelios\cakenaysh\Listeners\PlayerInteractListener.class
