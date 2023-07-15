@@ -50,6 +50,25 @@ public class AddAttributesCommand implements CommandExecutor {
                         }
                         break;
 
+                    case "level":
+                        try {
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addLevel(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text(player.getName() + "'s level has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println(player.getName() + "'s level has increased by " + args[2] + ".");
+                            }
+                        } catch (NumberFormatException e) {
+                            //error: invalid level
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid level.", TextColor.color(255, 0, 0)));
+                            } else {
+                                System.out.println("Invalid level.");
+                            }
+                        }
+                        break;
+
                     case "xp":
                         try{
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addXp(Integer.parseInt(args[2]));

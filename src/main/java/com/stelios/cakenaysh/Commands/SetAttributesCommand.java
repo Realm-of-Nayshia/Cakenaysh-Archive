@@ -70,6 +70,25 @@ public class SetAttributesCommand implements CommandExecutor {
                         }
                         break;
 
+                    case "level":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setLevel(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Set " + player.getName() + "'s level to " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println("Set " + player.getName() + "'s level to " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid level
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid level.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid level.");
+                            }
+                        }
+                        break;
+
                     case "xp":
                         try{
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setXp(Integer.parseInt(args[2]));

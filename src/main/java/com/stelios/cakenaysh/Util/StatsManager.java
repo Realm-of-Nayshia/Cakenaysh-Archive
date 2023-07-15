@@ -62,30 +62,24 @@ public class StatsManager implements Listener {
                             }
                         }
 
-                        //player information
-                        int healthRegen = customPlayer.getHealthRegen();
-                        int maxHealth = customPlayer.getMaxHealth();
-                        int staminaRegen = customPlayer.getStaminaRegen();
-                        int maxStamina = customPlayer.getMaxStamina();
-
                         //regenerate stamina if not at max
-                        if (customPlayer.getStamina() < maxStamina) {
-                            customPlayer.addStamina(staminaRegen);
+                        if (customPlayer.getStamina() < customPlayer.getMaxStamina()) {
+                            customPlayer.addStamina(customPlayer.getStaminaRegen());
                         }
 
                         //regenerate health if not at max
-                        if (customPlayer.getHealth() < maxHealth) {
-                            customPlayer.addHealth(healthRegen);
+                        if (customPlayer.getHealth() < customPlayer.getMaxHealth()) {
+                            customPlayer.addHealth(customPlayer.getHealthRegen());
                         }
 
                         //if over max stamina, set to max stamina
-                        if (customPlayer.getStamina() > maxStamina) {
-                            customPlayer.setStamina(maxStamina);
+                        if (customPlayer.getStamina() > customPlayer.getMaxStamina()) {
+                            customPlayer.setStamina(customPlayer.getMaxStamina());
                         }
 
                         //if over max health, set to max health
-                        if (customPlayer.getHealth() > maxHealth) {
-                            customPlayer.setHealth(maxHealth);
+                        if (customPlayer.getHealth() > customPlayer.getMaxHealth()) {
+                            customPlayer.setHealth(customPlayer.getMaxHealth());
                         }
 
                         updateHearts(player);
@@ -102,13 +96,6 @@ public class StatsManager implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
-
-        //wait 1 tick then set the player's configurations
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-            }
-        }.runTaskLater(main,1);
 
         //set player configurations
         Player player = e.getPlayer();
@@ -130,6 +117,9 @@ public class StatsManager implements Listener {
                 removePlayerArmorStats(player, item);
             }
         }
+
+        //remove the stats from the main hand
+        removePlayerStats(player, player.getInventory().getItemInMainHand());
 
         //saving the player's stats to the database
         customPlayer.saveAttributesToDatabase(player);
@@ -596,8 +586,6 @@ public class StatsManager implements Listener {
 
             //remove the stats of the old item
             removePlayerStats(player, e.getOldItemStack());
-
-            player.sendMessage("Item changed SLOT 1");
         }
     }
 
@@ -622,7 +610,6 @@ public class StatsManager implements Listener {
 
         //remove the stats from the item they were holding
         removePlayerStats(player, oldItem);
-        player.sendMessage("Item changed");
     }
 
     //update player stats when armor is equipped
@@ -633,7 +620,6 @@ public class StatsManager implements Listener {
 
         addPlayerArmorStats(player, e.getNewItem());
         removePlayerArmorStats(player, e.getOldItem());
-        player.sendMessage("Armor changed");
     }
 
 

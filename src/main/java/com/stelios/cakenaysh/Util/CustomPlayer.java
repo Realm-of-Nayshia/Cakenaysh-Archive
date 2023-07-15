@@ -19,6 +19,7 @@ public class CustomPlayer {
     private String rank;
     private String joinDate;
     private float playTime;
+    private int level;
     private int xp;
     private int staminaRegen;
     private int stamina;
@@ -68,7 +69,7 @@ public class CustomPlayer {
         this.uuid = uuid;
 
         PreparedStatement statement = main.getDatabase().getConnection().prepareStatement(
-                "SELECT RANK, JOIN_DATE, PLAY_TIME, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
+                "SELECT RANK, JOIN_DATE, PLAY_TIME, LEVEL, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
                         "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY, " +
                         "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH" +
                         " FROM players WHERE UUID = ?;");
@@ -78,6 +79,7 @@ public class CustomPlayer {
             rank = rs.getString("RANK");
             joinDate = rs.getString("JOIN_DATE");
             playTime = rs.getFloat("PLAY_TIME");
+            level = rs.getInt("LEVEL");
             xp = rs.getInt("XP");
             staminaRegen = rs.getInt("STAMINA_REGEN");
             stamina = rs.getInt("STAMINA");
@@ -98,6 +100,7 @@ public class CustomPlayer {
         } else {
             rank = "GUEST";
             playTime = 0;
+            level = 0;
             xp = 0;
             staminaRegen = 1;
             stamina = 100;
@@ -116,7 +119,7 @@ public class CustomPlayer {
             luck = 0;
             stealth = 0;
             PreparedStatement insert = main.getDatabase().getConnection().prepareStatement(
-                    "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
+                    "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, LEVEL, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
                             "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY," +
                             "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH) VALUES (" +
                             "default," +
@@ -124,6 +127,7 @@ public class CustomPlayer {
                             "'" + rank + "'," +
                             "'" + Calendar.getInstance().getTime() + "'," +
                             playTime + "," +
+                            level + "," +
                             xp + "," +
                             staminaRegen + "," +
                             stamina + "," +
@@ -150,79 +154,63 @@ public class CustomPlayer {
     public String getRank() {
         return rank;
     }
-
     public String getJoinDate() {
         return joinDate;
     }
-
     public float getPlayTime() {
         return playTime;
     }
-
+    public int getLevel() {
+        return level;
+    }
     public int getXp() {
         return xp;
     }
-
     public int getStaminaRegen() {
         return staminaRegen;
     }
-
     public int getStamina() {
         return stamina;
     }
-
     public int getMaxStamina() {
         return maxStamina;
     }
-
     public int getHealthRegen() {
         return healthRegen;
     }
-
     public float getHealth() {
         return health;
     }
-
     public int getMaxHealth() {
         return maxHealth;
     }
-
     public int getMeleeProficiency() {
         return meleeProficiency;
     }
-
     public int getRangedProficiency() {
         return rangedProficiency;
     }
-
     public int getArmorProficiency() {
         return armorProficiency;
     }
-
     public int getWilsonCoin() {
         return wilsonCoin;
     }
-
     public int getPiety() {
         return piety;
     }
-
     public int getCharisma() {
         return charisma;
     }
-
     public int getDeception() {
         return deception;
     }
-
     public int getAgility() {
         return agility;
     }
-
     public int getLuck() {
         return luck;
     }
-
     public int getStealth() {
         return stealth;
     }
@@ -300,12 +288,13 @@ public class CustomPlayer {
         return "\n" + "Rank: " + rank +
                 "   Play Time: " + playTime + "\n" +
                 "Join Date: " + joinDate + "\n" +
-                "XP: " + xp + "\n" + "\n" +
+                "Level: " + level +
+                "   XP: " + xp + "\n" + "\n" +
                 "Stamina Regen: " + staminaRegen +
                 "   Stamina: " + stamina +
                 "   Max Stamina: " + maxStamina + "\n" +
                 "Health Regen: " + healthRegen +
-                "   Health: " + health +
+                "   Health: " + (int) health +
                 "   Max Health: " + maxHealth + "\n" + "\n" +
                 "Proficiencies \n" +
                 "Melee: " + meleeProficiency +
@@ -326,6 +315,7 @@ public class CustomPlayer {
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
         customPlayer.setRank("Guest");
         customPlayer.setPlayTime(0);
+        customPlayer.setLevel(0);
         customPlayer.setXp(0);
         customPlayer.setStaminaRegen(1);
         customPlayer.setStamina(100);
@@ -351,6 +341,7 @@ public class CustomPlayer {
         customPlayer.setRankDatabase(customPlayer.getRank());
         customPlayer.setJoinDateDatabase(customPlayer.getJoinDate());
         customPlayer.setPlayTimeDatabase(customPlayer.getPlayTime());
+        customPlayer.setLevelDatabase(customPlayer.getLevel());
         customPlayer.setXpDatabase(customPlayer.getXp());
         customPlayer.setStaminaRegenDatabase(customPlayer.getStaminaRegen());
         customPlayer.setStaminaDatabase(customPlayer.getStamina());
@@ -467,6 +458,17 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET PLAY_TIME = " + playTime + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setLevelDatabase(int level){
+        this.level = level;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET LEVEL = " + level + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -670,6 +672,9 @@ public class CustomPlayer {
     public void setPlayTime(float playTime) {
         this.playTime = playTime;
     }
+    public void setLevel(int level) {
+        this.level = level;
+    }
     public void setXp(int xp) {
         this.xp = xp;
     }
@@ -726,6 +731,9 @@ public class CustomPlayer {
     //adding stats to the player locally within the class
     public void addPlayTime(float playTime) {
         this.playTime += playTime;
+    }
+    public void addLevel(int level) {
+        this.level += level;
     }
     public void addXp(int xp) {
         this.xp += xp;
