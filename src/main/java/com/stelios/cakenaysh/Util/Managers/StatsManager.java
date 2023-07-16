@@ -2,6 +2,7 @@ package com.stelios.cakenaysh.Util.Managers;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
+import com.stelios.cakenaysh.Events.SpeedChangedEvent;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import com.stelios.cakenaysh.Util.Npc.Traits.NpcStats;
@@ -535,6 +536,13 @@ public class StatsManager implements Listener {
             }
         }
     }
+
+
+    @EventHandler
+    public void onSpeedChanged(SpeedChangedEvent e){
+        e.getPlayer().setWalkSpeed(0.2F * ((e.getSpeed() + 100) / 100));
+    }
+
 
     @EventHandler
     public void onRespawn(PlayerPostRespawnEvent e){
