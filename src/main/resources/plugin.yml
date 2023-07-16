@@ -45,3 +45,6 @@ commands:
     description: Resets the stats of the selected npc.
     syntax: /resetnpcstats
     permission: op
+  menu:
+    description: Opens the rpg menu.
+    syntax: /menu
