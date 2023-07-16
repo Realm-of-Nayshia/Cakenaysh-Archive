@@ -694,9 +694,8 @@ public class StatsManager implements Listener {
 
     //display the action bar
     public void displayActionBar(Player player){
-        player.sendActionBar(Component.text(Math.round(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth()) + " / " + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() + " ❤     ", TextColor.color(255,0,0))
-                .append(Component.text(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() + " / " + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina() + " ⚡", TextColor.color(210,125,45))));
-
+        player.sendActionBar(Component.text(Math.round(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth()) + " / " + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() + " ❤     ", TextColor.color(255,51,51))
+                .append(Component.text(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getStamina() + " / " + main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxStamina() + " ⚡", TextColor.color(255,135,51))));
     }
 
     //update the player's hearts
