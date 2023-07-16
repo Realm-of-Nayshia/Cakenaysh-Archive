@@ -1,10 +1,15 @@
 package com.stelios.cakenaysh.Util.Managers;
 
+import com.stelios.cakenaysh.Events.XpGainEvent;
 import com.stelios.cakenaysh.Main;
+import com.stelios.cakenaysh.Util.CustomPlayer;
 import com.stelios.cakenaysh.Util.Npc.Traits.NpcStats;
 import net.citizensnpcs.api.CitizensAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.title.Title;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,6 +41,10 @@ public class LevelManager implements Listener {
                     //add xp to the player
                     main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addXp((int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp());
                     player.sendMessage(Component.text("+" + (int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp() + "XP", TextColor.color(0, 255, 0)));
+
+                    //call the xp gain event
+                    Bukkit.getPluginManager().callEvent(new XpGainEvent(player, (int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp(), CitizensAPI.getNPCRegistry().getNPC(e.getEntity())));
+
                 }
             }catch (NullPointerException ex){
                 //do nothing
@@ -43,5 +52,29 @@ public class LevelManager implements Listener {
         }
 
     }
+
+    //checking if the player has enough xp to level up
+    @EventHandler
+    public void onXpGain(XpGainEvent e){
+
+        //get the player and custom player
+        Player player = e.getPlayer();
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+
+        //if the player has enough xp to level up
+        if (customPlayer.howManyLevelUps() > 0){
+
+            int levelUps = customPlayer.howManyLevelUps();
+
+            //level up the player
+            customPlayer.addLevels(levelUps);
+            player.sendMessage(Component.text("You leveled up to level " + customPlayer.getLevel() + " !", TextColor.color(0, 255, 0)));
+            player.showTitle(Title.title(Component.text(" LEVEL UP! ", TextColor.color(0, 255, 0)), Component.text(customPlayer.getLevel()-levelUps + " -----> " + customPlayer.getLevel(), TextColor.color(0, 255, 0))));
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+            customPlayer.addInvestmentPoints(levelUps);
+        }
+
+    }
+
 
 }
