@@ -1,15 +1,22 @@
 package com.stelios.cakenaysh.Util.MenuCreation.Menus;
 
+import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomItems;
+import com.stelios.cakenaysh.Util.CustomPlayer;
 import com.stelios.cakenaysh.Util.ItemBuilder;
 import com.stelios.cakenaysh.Util.MenuCreation.Menu;
 import com.stelios.cakenaysh.Util.MenuCreation.MenuButton;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class PlayerInfoMain extends Menu{
 
@@ -22,9 +29,43 @@ public class PlayerInfoMain extends Menu{
         setInventoryOpened(opened -> opened.sendMessage("Inventory opened"));
         setInventoryClosed(closed -> closed.sendMessage("Inventory closed"));
 
+        //getting the custom player
+        CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(player.getUniqueId());
+
         ////registering clickable buttons
         //profile button
-        ItemBuilder profile = CustomItems.PROFILE.getItemBuilder();
+        ItemBuilder profile = new ItemBuilder(Material.PLAYER_HEAD, 1)
+                .setDisplayName(new ArrayList<>(Collections.singletonList(player.getName() + "'s Profile")),
+                        new ArrayList<>(Arrays.asList(153,255,51)),
+                        new ArrayList<>(Collections.singletonList(false)),
+                        new ArrayList<>(Collections.singletonList(false)),
+                        new ArrayList<>(Collections.singletonList(false)),
+                        new ArrayList<>(Collections.singletonList(false)),
+                        new ArrayList<>(Collections.singletonList(false)))
+                .setLore(new ArrayList<>(Arrays.asList(String.valueOf(customPlayer.getRank()), "nl", "nl",
+                                "Level ", String.valueOf(customPlayer.getLevel()), "nl",
+                                "\uD83D\uDF9B Experience ", String.valueOf(customPlayer.getXp()), "nl",
+                                "❤ Health ", String.valueOf((int) customPlayer.getHealth()), "nl",
+                                "❤ Health Regen ", String.valueOf(customPlayer.getHealthRegen()), "nl",
+                                "⚡ Stamina ", String.valueOf(customPlayer.getStamina()), "nl",
+                                "⚡ Stamina Regen ", String.valueOf(customPlayer.getStaminaRegen()), "nl",
+                                "✦ Speed ",String.valueOf((int) customPlayer.getSpeed() + 100)
+                                )),
+                        new ArrayList<>(Arrays.asList(255,255,255,
+                                153,255,51, 255,255,255,
+                                153,255,51, 255,255,255,
+                                255,51,51, 255,255,255,
+                                255,51,51, 255,255,255,
+                                255,135,51, 255,255,255,
+                                255,135,51, 255,255,255,
+                                255,255,255, 255,255,255)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)));
+
+
         ItemStack profileItem = profile.build();
         SkullMeta profileMeta = (SkullMeta) profileItem.getItemMeta();
         profileMeta.setOwningPlayer(player);
@@ -40,7 +81,7 @@ public class PlayerInfoMain extends Menu{
         //stats button
         MenuButton statsButton = new MenuButton(CustomItems.STATS.getItemBuilder().build());
         statsButton.setWhenClicked(clicked ->
-                clicked.sendMessage("You clicked on your stats"));
+                new PlayerInfoStats(player).open(clicked));
 
         registerButton(statsButton, 20);
 
