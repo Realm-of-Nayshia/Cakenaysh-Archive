@@ -1,6 +1,8 @@
 package com.stelios.cakenaysh.Util;
 
+import com.stelios.cakenaysh.Events.SpeedChangedEvent;
 import com.stelios.cakenaysh.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -418,6 +420,7 @@ public class CustomPlayer {
     }
     public void setSpeed(float speed){
         this.speed = speed;
+        Bukkit.getPluginManager().callEvent(new SpeedChangedEvent(Bukkit.getPlayer(uuid), speed));
     }
     public void setThorns(float thorns){
         this.thorns = thorns;
