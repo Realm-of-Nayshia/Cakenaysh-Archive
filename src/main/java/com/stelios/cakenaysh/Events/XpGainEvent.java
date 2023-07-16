@@ -4,8 +4,7 @@ import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-
-import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 public class XpGainEvent extends Event {
 
@@ -34,7 +33,7 @@ public class XpGainEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 
