@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -20,6 +22,7 @@ public class CustomPlayer {
     private String joinDate;
     private float playTime;
     private int level;
+    private int investmentPoints;
     private int xp;
     private int staminaRegen;
     private int stamina;
@@ -69,7 +72,7 @@ public class CustomPlayer {
         this.uuid = uuid;
 
         PreparedStatement statement = main.getDatabase().getConnection().prepareStatement(
-                "SELECT RANK, JOIN_DATE, PLAY_TIME, LEVEL, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
+                "SELECT RANK, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
                         "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY, " +
                         "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH" +
                         " FROM players WHERE UUID = ?;");
@@ -80,6 +83,7 @@ public class CustomPlayer {
             joinDate = rs.getString("JOIN_DATE");
             playTime = rs.getFloat("PLAY_TIME");
             level = rs.getInt("LEVEL");
+            investmentPoints = rs.getInt("INVESTMENT_POINTS");
             xp = rs.getInt("XP");
             staminaRegen = rs.getInt("STAMINA_REGEN");
             stamina = rs.getInt("STAMINA");
@@ -101,6 +105,7 @@ public class CustomPlayer {
             rank = "GUEST";
             playTime = 0;
             level = 0;
+            investmentPoints = 0;
             xp = 0;
             staminaRegen = 1;
             stamina = 100;
@@ -119,7 +124,7 @@ public class CustomPlayer {
             luck = 0;
             stealth = 0;
             PreparedStatement insert = main.getDatabase().getConnection().prepareStatement(
-                    "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, LEVEL, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
+                    "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
                             "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY," +
                             "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH) VALUES (" +
                             "default," +
@@ -128,6 +133,7 @@ public class CustomPlayer {
                             "'" + Calendar.getInstance().getTime() + "'," +
                             playTime + "," +
                             level + "," +
+                            investmentPoints + "," +
                             xp + "," +
                             staminaRegen + "," +
                             stamina + "," +
@@ -162,6 +168,9 @@ public class CustomPlayer {
     }
     public int getLevel() {
         return level;
+    }
+    public int getInvestmentPoints() {
+        return investmentPoints;
     }
     public int getXp() {
         return xp;
@@ -289,6 +298,7 @@ public class CustomPlayer {
                 "   Play Time: " + playTime + "\n" +
                 "Join Date: " + joinDate + "\n" +
                 "Level: " + level +
+                "   Investment Points: " + investmentPoints +
                 "   XP: " + xp + "\n" + "\n" +
                 "Stamina Regen: " + staminaRegen +
                 "   Stamina: " + stamina +
@@ -316,6 +326,7 @@ public class CustomPlayer {
         customPlayer.setRank("Guest");
         customPlayer.setPlayTime(0);
         customPlayer.setLevel(0);
+        customPlayer.setInvestmentPoints(0);
         customPlayer.setXp(0);
         customPlayer.setStaminaRegen(1);
         customPlayer.setStamina(100);
@@ -342,6 +353,7 @@ public class CustomPlayer {
         customPlayer.setJoinDateDatabase(customPlayer.getJoinDate());
         customPlayer.setPlayTimeDatabase(customPlayer.getPlayTime());
         customPlayer.setLevelDatabase(customPlayer.getLevel());
+        customPlayer.setInvestmentPointsDatabase(customPlayer.getInvestmentPoints());
         customPlayer.setXpDatabase(customPlayer.getXp());
         customPlayer.setStaminaRegenDatabase(customPlayer.getStaminaRegen());
         customPlayer.setStaminaDatabase(customPlayer.getStamina());
@@ -359,6 +371,30 @@ public class CustomPlayer {
         customPlayer.setAgilityDatabase(customPlayer.getAgility());
         customPlayer.setLuckDatabase(customPlayer.getLuck());
         customPlayer.setStealthDatabase(customPlayer.getStealth());
+    }
+
+    //gets the amount of xp needed to level up
+    public int howManyLevelUps(){
+
+        if (level < 50){
+
+            ArrayList<Integer> xpRequirementsPerLevel = new ArrayList<>(Arrays.asList(0, 10, 15, 20, 35, 50, 75, 115, 170, 255, 385, 480, 600, 750, 940,
+                    1170, 1470, 1800, 2300, 2850, 3600, 4100, 4750, 5450, 6250, 7200, 8300, 9500, 11000, 12600, 14500, 16000, 17500, 19200, 21200,
+                    23300, 25600, 28200, 31000, 34000, 37500, 41300, 45500, 50000, 55000, 60000, 67000, 73000, 80000, 89000, 100000));
+
+            //if the player has enough xp to level up
+            for (int i = level+1; i < xpRequirementsPerLevel.size(); i++){
+                if (xp > xpRequirementsPerLevel.get(i) && xp > xpRequirementsPerLevel.get(i + 1)){
+
+                } else if (xp >= xpRequirementsPerLevel.get(i) && xp < xpRequirementsPerLevel.get(i + 1)){
+                    return i-level;
+                }
+            }
+
+            return 0;
+        }
+
+        return 0;
     }
 
     ////setters
@@ -469,6 +505,17 @@ public class CustomPlayer {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET LEVEL = " + level + " WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setInvestmentPointsDatabase(int investmentPoints){
+        this.investmentPoints = investmentPoints;
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE players SET INVESTMENT_POINTS = " + investmentPoints + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -675,6 +722,9 @@ public class CustomPlayer {
     public void setLevel(int level) {
         this.level = level;
     }
+    public void setInvestmentPoints(int investmentPoints) {
+        this.investmentPoints = investmentPoints;
+    }
     public void setXp(int xp) {
         this.xp = xp;
     }
@@ -732,8 +782,11 @@ public class CustomPlayer {
     public void addPlayTime(float playTime) {
         this.playTime += playTime;
     }
-    public void addLevel(int level) {
+    public void addLevels(int level) {
         this.level += level;
+    }
+    public void addInvestmentPoints(int investmentPoints) {
+        this.investmentPoints += investmentPoints;
     }
     public void addXp(int xp) {
         this.xp += xp;

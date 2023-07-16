@@ -1,5 +1,6 @@
 package com.stelios.cakenaysh.Commands;
 
+import com.stelios.cakenaysh.Events.XpGainEvent;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -89,11 +90,34 @@ public class SetAttributesCommand implements CommandExecutor {
                         }
                         break;
 
+                    case "investmentpoints":
+                        try{
+                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setInvestmentPoints(Integer.parseInt(args[2]));
+                            //confirmation message
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Set " + player.getName() + "'s investment points to " + args[2] + ".", TextColor.color(0, 255, 0)));
+                            } else {
+                                System.out.println("Set " + player.getName() + "'s investment points to " + args[2] + ".");
+                            }
+                        }catch (NumberFormatException e){
+                            //error: invalid investment points
+                            if (sender instanceof Player) {
+                                sender.sendMessage(Component.text("Invalid investment points.", TextColor.color(255,0,0)));
+                            } else {
+                                System.out.println("Invalid investment points.");
+                            }
+                        }
+                        break;
+
                     case "xp":
                         try{
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setXp(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
+
+                                //call the xp gain event
+                                main.getServer().getPluginManager().callEvent(new XpGainEvent(player, Integer.parseInt(args[2])-main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getXp(), null));
+
                                 sender.sendMessage(Component.text("Set " + player.getName() + "'s xp to " + args[2] + ".", TextColor.color(0, 255, 0)));
                             } else {
                                 System.out.println("Set " + player.getName() + "'s xp to " + args[2] + ".");
