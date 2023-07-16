@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import com.stelios.cakenaysh.Main;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -173,13 +174,19 @@ public abstract class ItemAbility implements Listener {
             //only fire the event if the correct item is in the main hand
             if (e.getHand() == EquipmentSlot.HAND && e.getItem().isSimilar(item.build())) {
 
-                //if the player right clicks and the ability is a right click ability
-                if (e.getAction().isRightClick() && ability.getClickType() == ClickType.RIGHT) {
+                //if the player left clicks and the ability is a left click ability
+                if (e.getAction().isLeftClick() && ability.getClickType() == ClickType.LEFT){
                     executeAbility(player);
 
-                //if the player left clicks and the ability is a left click ability
-                }else if (e.getAction().isLeftClick() && ability.getClickType() == ClickType.LEFT){
-                        executeAbility(player);
+                //if the player right clicks and the ability is a right click ability
+                }else if (e.getAction().isRightClick() && ability.getClickType() == ClickType.RIGHT) {
+
+                    //if the player is trying to interact with a block that is interactable
+                    if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType().isInteractable()){
+                        return;
+                    }
+
+                    executeAbility(player);
                 }
             }
         }
