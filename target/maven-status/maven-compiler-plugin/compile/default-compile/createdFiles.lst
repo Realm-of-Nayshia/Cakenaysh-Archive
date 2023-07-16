@@ -4,7 +4,9 @@ com\stelios\cakenaysh\Util\BattleItemBuilder.class
 com\stelios\cakenaysh\Util\MenuCreation\Menu.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
 com\stelios\cakenaysh\Commands\MenuCommand.class
+com\stelios\cakenaysh\Util\MenuCreation\Menus\PlayerInfoStats.class
 com\stelios\cakenaysh\Commands\TabComplete\SetNpcStatTabComplete.class
+com\stelios\cakenaysh\Events\XpGainEvent.class
 com\stelios\cakenaysh\Commands\SetAttributesCommand.class
 com\stelios\cakenaysh\Util\Database.class
 com\stelios\cakenaysh\Commands\AddAttributesCommand.class
