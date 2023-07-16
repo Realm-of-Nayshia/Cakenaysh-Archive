@@ -147,39 +147,6 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false, false)))),
 
 
-    //ITEM BUILDERS
-    RPG_MENU(new ItemBuilder(Material.NETHER_STAR, 1)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Menu")),
-                    new ArrayList<>(Arrays.asList(0,255,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("View all your RPG progress, including", "nl", "your stats, skills, quests, and more!")),
-                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)))),
-
-    PROFILE(new ItemBuilder(Material.PLAYER_HEAD, 1)
-            .setDisplayName(new ArrayList<>(Arrays.asList("RPG Profile")),
-                    new ArrayList<>(Arrays.asList(0,255,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("WIP")),
-                    new ArrayList<>(Arrays.asList(128,128,128)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))),
-
     STATS(new ItemBuilder(Material.DIAMOND_SWORD, 1)
             .setDisplayName(new ArrayList<>(Arrays.asList("Stats")),
                     new ArrayList<>(Arrays.asList(0,255,0)),
