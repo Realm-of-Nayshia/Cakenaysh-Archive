@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Listeners;
+package com.stelios.cakenaysh.Util.Managers;
 
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.Npc.Traits.NpcStats;
@@ -11,11 +11,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.mcmonkey.sentinel.SentinelTrait;
 
-public class EntityDeathListener implements Listener {
+public class LevelManager implements Listener {
 
     Main main;
 
-    public EntityDeathListener(Main main){
+    public LevelManager(Main main){
         this.main = main;
     }
 

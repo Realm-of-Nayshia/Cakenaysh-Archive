@@ -1,4 +1,6 @@
-package com.stelios.cakenaysh.Util;
+package com.stelios.cakenaysh.Util.Managers;
+
+import com.stelios.cakenaysh.Util.CustomPlayer;
 
 import java.util.HashMap;
 import java.util.UUID;

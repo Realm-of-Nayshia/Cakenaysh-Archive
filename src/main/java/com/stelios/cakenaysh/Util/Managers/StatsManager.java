@@ -1,8 +1,9 @@
-package com.stelios.cakenaysh.Util;
+package com.stelios.cakenaysh.Util.Managers;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import com.stelios.cakenaysh.Main;
+import com.stelios.cakenaysh.Util.CustomPlayer;
 import com.stelios.cakenaysh.Util.Npc.Traits.NpcStats;
 import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import net.citizensnpcs.api.CitizensAPI;
@@ -138,7 +139,7 @@ public class StatsManager implements Listener {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
 
                 //reduce there health, update the hearts, and display the action bar
-                customPlayer.addHealth((float) (e.getDamage()*-3));
+                customPlayer.addHealth((float) (e.getDamage()*-5));
                 updateHearts(player);
                 displayActionBar(player);
             }
@@ -177,17 +178,25 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-20);
+                customPlayer.addHealth(((float) customPlayer.getMaxHealth() / -20) * (1 - customPlayer.getInfernalDefense()));
                 updateHearts(player);
                 displayActionBar(player);
 
             //if the player took damage from fire tick
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)){
 
+                //reduce their health, update the hearts, and display the action bar
+                customPlayer.addHealth(((float) customPlayer.getMaxHealth() / -40) * (1 - customPlayer.getInfernalDefense()));
+                updateHearts(player);
+                displayActionBar(player);
 
             //if the player took damage from lava
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.LAVA)){
 
+                //reduce their health, update the hearts, and display the action bar
+                customPlayer.addHealth(((float) customPlayer.getMaxHealth() / -12) * (1 - customPlayer.getInfernalDefense()));
+                updateHearts(player);
+                displayActionBar(player);
 
             //if the player took damage from wither
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.WITHER)){
@@ -223,6 +232,7 @@ public class StatsManager implements Listener {
                 NpcStats defenderNpcStats = defender.getOrAddTrait(NpcStats.class);
 
                 float defenderThorns = defenderNpcStats.getThorns();
+                float defenderStrength = defenderNpcStats.getStrength();
                 float defenderDefense = defenderNpcStats.getDefense();
                 float defenderInfernalDefense = defenderNpcStats.getInfernalDefense();
                 float defenderUndeadDefense = defenderNpcStats.getUndeadDefense();
@@ -284,7 +294,7 @@ public class StatsManager implements Listener {
                         float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
                         //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
-                        float noDefAttackerDamage = finalDefenderDamage * (defenderThorns/1000);
+                        float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                         float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
 
                         //deal the damage
@@ -347,7 +357,7 @@ public class StatsManager implements Listener {
                     float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
                     //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
-                    float noDefAttackerDamage = finalDefenderDamage * (defenderThorns/1000);
+                    float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                     float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
 
                     //deal the damage
@@ -374,6 +384,7 @@ public class StatsManager implements Listener {
             CustomPlayer defenderPlayer = main.getPlayerManager().getCustomPlayer(playerDefend.getUniqueId());
 
             float defenderThorns = defenderPlayer.getThorns();
+            float defenderStrength = defenderPlayer.getStrength();
             float defenderDefense = defenderPlayer.getDefense();
             float defenderInfernalDefense = defenderPlayer.getInfernalDefense();
             float defenderUndeadDefense = defenderPlayer.getUndeadDefense();
@@ -435,7 +446,7 @@ public class StatsManager implements Listener {
                     float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
                     //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
-                    float noDefAttackerDamage = finalDefenderDamage * (defenderThorns/1000);
+                    float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                     float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
 
                     //deal the damage
@@ -504,12 +515,13 @@ public class StatsManager implements Listener {
                 float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
                 //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
-                float noDefAttackerDamage = finalDefenderDamage * (defenderThorns/1000);
+                float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                 float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
 
                 //deal the damage
                 e.setDamage(finalDefenderDamage);
                 playerDefend.sendMessage("You took " + finalDefenderDamage + " damage from " + playerAttack.getName());
+                playerAttack.sendMessage("You dealt " + finalAttackerDamage + " damage to " + playerDefend.getName());
 
                 //deal the thorns damage
                 attackerPlayer.setHealth(attackerPlayer.getHealth() - finalAttackerDamage);
@@ -550,22 +562,26 @@ public class StatsManager implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e){
 
-        //if the inventory is that of a players
-        if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
+        //if the inventory isn't null
+        if (e.getClickedInventory() != null) {
 
-            //get the player and the item
-            Player player = (Player) e.getWhoClicked();
-            ItemStack item = e.getCursor();
+            //if the inventory is that of a players
+            if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
 
-            //if the player doesn't have the required stats for the item
-            if (!meetsItemRequirements(player, item, false)) {
+                //get the player and the item
+                Player player = (Player) e.getWhoClicked();
+                ItemStack item = e.getCursor();
 
-                //if the item is being moved into the armor slots
-                if (e.getSlotType() == InventoryType.SlotType.ARMOR) {
+                //if the player doesn't have the required stats for the item
+                if (!meetsItemRequirements(player, item, false)) {
 
-                    //cancel the event
-                    player.sendMessage(Component.text("You do not meet the requirements to equip this item.", TextColor.color(255, 0, 0)));
-                    e.setCancelled(true);
+                    //if the item is being moved into the armor slots
+                    if (e.getSlotType() == InventoryType.SlotType.ARMOR) {
+
+                        //cancel the event
+                        player.sendMessage(Component.text("You do not meet the requirements to equip this item.", TextColor.color(255, 0, 0)));
+                        e.setCancelled(true);
+                    }
                 }
             }
         }
@@ -645,7 +661,8 @@ public class StatsManager implements Listener {
                         }
                     }
                 }
-                //if there is an error the item is not a battle item, return true
+
+            //if there is an error the item is not a battle item, return true
             } catch (NullPointerException ex) {
                 return true;
             }
