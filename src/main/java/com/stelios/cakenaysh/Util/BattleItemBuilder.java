@@ -7,10 +7,14 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class BattleItemBuilder extends ItemBuilder{
 
@@ -57,7 +61,7 @@ public class BattleItemBuilder extends ItemBuilder{
     //@params meleeProficiency: The melee proficiency of the item being built.
     //@params rangedProficiency: The ranged proficiency of the item being built.
     //@params armorProficiency: The armor proficiency of the item being built.
-    //@params isArmor: Whether or not the item being built is armor.
+    //@params isArmor: Whether the item being built is armor.
     public BattleItemBuilder(Material material, int amount, float damage, float attackSpeed, float critDamage,
                              float critChance, float strength, float health, float defense, float speed, float thorns,
                              float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
@@ -94,11 +98,12 @@ public class BattleItemBuilder extends ItemBuilder{
         this.armorProficiency = armorProficiency;
         this.isArmor = isArmor;
 
-
         //setting the pdc weapon type
         String itemType = "regular";
         if (isArmor){
             itemType = "armor";
+        }else{
+            implementAttackSpeed();
         }
 
         //setting pdc values for the item
@@ -188,6 +193,8 @@ public class BattleItemBuilder extends ItemBuilder{
         String itemType = "regular";
         if (isArmor){
             itemType = "armor";
+        }else{
+            implementAttackSpeed();
         }
 
         //setting pdc values for the item
@@ -218,7 +225,6 @@ public class BattleItemBuilder extends ItemBuilder{
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
     }
-
 
 
     //getter
@@ -281,6 +287,53 @@ public class BattleItemBuilder extends ItemBuilder{
         }
         return 0;
     }
+
+    //set the attackSpeed attribute modifier depending on the vanilla attackSpeed of the item
+    public void implementAttackSpeed(){
+
+        float baseAttackSpeed = 4.0f;
+        Material itemType = this.getItemStack().getType();
+
+        //get the base attack speed of the item based on the material
+        if (itemType == Material.WOODEN_SWORD || itemType == Material.STONE_SWORD
+                || itemType == Material.GOLDEN_SWORD || itemType == Material.IRON_SWORD
+                || itemType == Material.DIAMOND_SWORD || itemType == Material.NETHERITE_SWORD){
+            baseAttackSpeed = 1.6f;
+        }else if (itemType == Material.WOODEN_SHOVEL || itemType == Material.STONE_SHOVEL
+                || itemType == Material.GOLDEN_SHOVEL || itemType == Material.IRON_SHOVEL
+                || itemType == Material.DIAMOND_SHOVEL || itemType == Material.NETHERITE_SHOVEL){
+            baseAttackSpeed = 1.0f;
+        }else if (itemType == Material.WOODEN_PICKAXE || itemType == Material.STONE_PICKAXE
+                || itemType == Material.GOLDEN_PICKAXE || itemType == Material.IRON_PICKAXE
+                || itemType == Material.DIAMOND_PICKAXE || itemType == Material.NETHERITE_PICKAXE){
+            baseAttackSpeed = 1.2f;
+        }else if (itemType == Material.TRIDENT){
+            baseAttackSpeed = 1.1f;
+        }else if (itemType == Material.WOODEN_AXE || itemType == Material.STONE_AXE){
+            baseAttackSpeed = 0.8f;
+        }else if (itemType == Material.IRON_AXE){
+            baseAttackSpeed = 0.9f;
+        }else if (itemType == Material.GOLDEN_AXE || itemType == Material.DIAMOND_AXE
+                || itemType == Material.NETHERITE_AXE || itemType == Material.WOODEN_HOE
+                || itemType == Material.GOLDEN_HOE){
+            baseAttackSpeed = 1.0f;
+        }else if (itemType == Material.STONE_HOE){
+            baseAttackSpeed = 2.0f;
+        }else if (itemType == Material.IRON_HOE){
+            baseAttackSpeed = 3.0f;
+        }
+
+        //setting the swing speed in the main hand and the off hand
+        AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(),"generic.attackSpeed", attackSpeed * 0.1 - baseAttackSpeed,
+                AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
+        this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
+
+        AttributeModifier swingSpeedOffHand = new AttributeModifier(UUID.randomUUID(),"generic.attackSpeed", attackSpeed * 0.1 - baseAttackSpeed,
+                AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND);
+        this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedOffHand);
+    }
+
+
 
     //sets the lore of the item
     //@param loreText: The text of the lore being set to the item.
