@@ -32,6 +32,7 @@ com\stelios\cakenaysh\Util\MenuCreation\MenuButton.class
 com\stelios\cakenaysh\Util\ItemBuilder.class
 com\stelios\cakenaysh\Commands\GetAttributesCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.class
+com\stelios\cakenaysh\Events\SpeedChangedEvent.class
 com\stelios\cakenaysh\Util\CustomItems.class
 com\stelios\cakenaysh\Commands\TabComplete\GetAttributesTabComplete.class
 com\stelios\cakenaysh\Listeners\ConnectionListener.class
