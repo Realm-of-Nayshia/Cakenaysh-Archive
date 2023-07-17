@@ -30,6 +30,8 @@ public class ItemBuilder {
 
         this.itemMeta.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"),
                 PersistentDataType.STRING, "regularItem");
+
+        addItemFlags();
     }
 
     //getters
@@ -139,16 +141,15 @@ public class ItemBuilder {
     //removes an itemFlag from the item
     //@param itemFlag: The itemFlag being removed from the item.
     //@return the ItemBuilder
-    public ItemBuilder removeFlag(ItemFlag itemFlag){
-        this.itemMeta.removeItemFlags(itemFlag);
-        return this;
+    public void addItemFlags(){
+        this.itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
     }
 
     //controls if the item is unbreakable
     //@param value: Is the item unbreakable?
     //@return the ItemBuilder
-    public ItemBuilder setUnbreakable(Boolean value){
-        this.itemMeta.setUnbreakable(value);
+    public ItemBuilder setUnbreakable(){
+        this.itemMeta.setUnbreakable(true);
         return this;
     }
 

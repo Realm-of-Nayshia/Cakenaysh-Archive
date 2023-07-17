@@ -161,6 +161,8 @@ public class BattleItemBuilder extends ItemBuilder{
                 "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
+
+        addItemFlags();
     }
 
     //@param material: The material of the item being built.
@@ -224,6 +226,8 @@ public class BattleItemBuilder extends ItemBuilder{
                 "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
         this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
                 "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
+
+        addItemFlags();
     }
 
 
@@ -323,7 +327,7 @@ public class BattleItemBuilder extends ItemBuilder{
             baseAttackSpeed = 3.0f;
         }
 
-        //setting the swing speed in the main hand and the off hand
+        //setting the swing speed in the main hand and the offhand
         AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(),"generic.attackSpeed", attackSpeed * 0.1 - baseAttackSpeed,
                 AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
         this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
