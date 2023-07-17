@@ -10,6 +10,23 @@ public enum CustomItems {
 
 
     //BATTLE ITEMS
+    SPEED_BOOTS(new BattleItemBuilder(Material.CHAINMAIL_BOOTS, 1,0,0,0,0
+            ,0,20,0,100,0,0,0,0, true)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Speed Boots")),
+                    new ArrayList<>(Arrays.asList(119, 218, 230)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("We do a little running...")),
+                    new ArrayList<>(Arrays.asList(113, 121, 122)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
     HELM_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_HELMET, 1,0,0,0,0
             ,10,10000,10000,0,0,1,0,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Helmet of Sparta")),
@@ -95,8 +112,9 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    WRATH_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_SWORD, 1,69420,45,100,90
+    WRATH_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_SWORD, 1,50000,40,100,90
             ,10,2,10,10,2, 4,0,0, false)
+            .setUnbreakable(true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Wrath of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -112,7 +130,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    SCYTHE_OF_INTELLIJ(new BattleItemBuilder(Material.GOLDEN_HOE, 1,60,11,120,5
+    SCYTHE_OF_INTELLIJ(new BattleItemBuilder(Material.GOLDEN_HOE, 1,60,20,120,5
             ,0,0,0,0,0,0,0,0, false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Scythe of Intellij")),
                     new ArrayList<>(Arrays.asList(66,27,224)),
@@ -129,7 +147,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false)),
                     new ArrayList<>(Arrays.asList(false, false)))),
 
-    TEST_ITEM(new BattleItemBuilder(Material.ACACIA_SLAB, 1,5,1,1,1
+    TEST_ITEM(new BattleItemBuilder(Material.ACACIA_SLAB, 1,5,5,1,1
             ,2,1,1,2,1,4,2,6,8,3,3,4,5,1,34,5,4,1,2,1,1,1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Te","st"," Item")),
                     new ArrayList<>(Arrays.asList(66,27,224,25,124,254,33,55,235)),
