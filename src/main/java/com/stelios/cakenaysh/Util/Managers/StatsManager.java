@@ -355,7 +355,7 @@ public class StatsManager implements Listener {
                     }
 
                     //defense calculation
-                    float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+                    float finalDefenderDamage = player.getAttackCooldown() * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
                     //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
                     float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
@@ -513,7 +513,7 @@ public class StatsManager implements Listener {
                 }
 
                 //defense calculation
-                float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+                float finalDefenderDamage = playerAttack.getAttackCooldown() * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
                 //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
                 float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
