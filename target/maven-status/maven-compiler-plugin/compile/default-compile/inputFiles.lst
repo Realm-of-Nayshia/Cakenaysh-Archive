@@ -1,4 +1,5 @@
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\GetAttributesCommand.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\MenuCreation\MenuBuilder.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Events\XpGainEvent.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\PlayerInteractListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\MenuCreation\Menus\PlayerInfoStats.java
@@ -19,7 +20,6 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\Npc\Traits\NpcStats.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\AddAttributesCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\SetAttributesCommand.java
-C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\MenuCreation\Menu.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\MenuCreation\Menus\PlayerInfoMain.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\CustomPlayer.java
@@ -28,11 +28,11 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\MenuListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\ResetNpcStatsCommand.java
-C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\MenuCreation\MenuButton.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\GiveItemCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\ResetAttributesTabComplete.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\ServerListPingListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\Managers\StatsManager.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Util\MenuCreation\MenuButtonBuilder.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\HealCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\GetAttributesTabComplete.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\ItemAbility.java

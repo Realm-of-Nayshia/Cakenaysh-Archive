@@ -1,7 +1,6 @@
 com\stelios\cakenaysh\Util\Managers\StatsManager.class
 com\stelios\cakenaysh\Util\Abilities\DialOfTheSunAbility.class
 com\stelios\cakenaysh\Util\BattleItemBuilder.class
-com\stelios\cakenaysh\Util\MenuCreation\Menu.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
 com\stelios\cakenaysh\Commands\MenuCommand.class
 com\stelios\cakenaysh\Util\MenuCreation\Menus\PlayerInfoStats.class
@@ -28,7 +27,6 @@ com\stelios\cakenaysh\Util\Managers\LevelManager.class
 com\stelios\cakenaysh\Util\Managers\PlayerManager.class
 com\stelios\cakenaysh\Util\CustomAbilities.class
 com\stelios\cakenaysh\Listeners\MenuListener.class
-com\stelios\cakenaysh\Util\MenuCreation\MenuButton.class
 com\stelios\cakenaysh\Util\ItemBuilder.class
 com\stelios\cakenaysh\Commands\GetAttributesCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.class
@@ -37,8 +35,10 @@ com\stelios\cakenaysh\Util\CustomItems.class
 com\stelios\cakenaysh\Commands\TabComplete\GetAttributesTabComplete.class
 com\stelios\cakenaysh\Listeners\ConnectionListener.class
 com\stelios\cakenaysh\Util\Managers\StatsManager$2.class
+com\stelios\cakenaysh\Util\MenuCreation\MenuBuilder.class
 com\stelios\cakenaysh\Listeners\ItemAbility.class
 com\stelios\cakenaysh\Util\Managers\MenuManager.class
+com\stelios\cakenaysh\Util\MenuCreation\MenuButtonBuilder.class
 com\stelios\cakenaysh\Commands\HealCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\SetAttributesTabComplete.class
 com\stelios\cakenaysh\Main.class
