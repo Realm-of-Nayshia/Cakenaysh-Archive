@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -103,6 +104,8 @@ public class StatsManager implements Listener {
         Player player = e.getPlayer();
 
         setConfigurations(player);
+        displayActionBar(player);
+        updateHearts(player);
     }
 
     @EventHandler
@@ -209,6 +212,14 @@ public class StatsManager implements Listener {
                 customPlayer.addHealth(-3*witherLevel);
                 updateHearts(player);
                 displayActionBar(player);
+
+            //if the player took damage from the void
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.VOID)){
+
+                    //reduce their health, update the hearts, and display the action bar
+                    customPlayer.addHealth((float) customPlayer.getMaxHealth() /-10);
+                    updateHearts(player);
+                    displayActionBar(player);
 
             }
 
@@ -595,6 +606,21 @@ public class StatsManager implements Listener {
         }
 
     }
+
+    //remove the stats from the main hand item when any inventory is opened
+    @EventHandler
+    public void onInventoryOpen(InventoryOpenEvent e){
+
+        //get the player and their main hand item
+        Player player = (Player) e.getPlayer();
+        ItemStack item = player.getInventory().getItemInMainHand();
+
+        //remove the stats from the item if it's a battle item and the player meets the requirements for it
+        if (meetsItemRequirements(player, item, false)){
+            removePlayerStats(player, item);
+        }
+    }
+
 
     //update player stats when an item is moved into the main hand
     @EventHandler

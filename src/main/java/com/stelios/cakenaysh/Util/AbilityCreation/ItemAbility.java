@@ -1,10 +1,10 @@
-package com.stelios.cakenaysh.Listeners;
+package com.stelios.cakenaysh.Util.AbilityCreation;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.stelios.cakenaysh.Util.CustomAbilities;
+import com.stelios.cakenaysh.Util.AbilityCreation.CustomAbilities;
 import com.stelios.cakenaysh.Util.CustomPlayer;
-import com.stelios.cakenaysh.Util.ItemBuilder;
+import com.stelios.cakenaysh.Util.Items.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;

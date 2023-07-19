@@ -4,14 +4,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Consumer;
 
-public class MenuButton {
+public class MenuButtonBuilder {
 
     private ItemStack itemStack;
     private Consumer<Player> whenClicked;
 
     //menu button constructor
     //@param itemStack: the itemStack of the button
-    public MenuButton(ItemStack itemStack){
+    public MenuButtonBuilder(ItemStack itemStack){
         this.itemStack = itemStack;
     }
 

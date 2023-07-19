@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Util;
+package com.stelios.cakenaysh.Util.Items;
 
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
@@ -20,23 +20,32 @@ public class ItemBuilder {
 
     private final ItemStack itemStack;
     private final ItemMeta itemMeta;
+    private final boolean unstackable;
 
 
     //@param material: The material of the item being built.
     //@param amount: The amount of the item being built.
-    public ItemBuilder(Material material, int amount) {
+    public ItemBuilder(Material material, int amount, boolean unstackable) {
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = this.itemStack.getItemMeta();
+        this.unstackable = unstackable;
 
         this.itemMeta.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"),
                 PersistentDataType.STRING, "regularItem");
 
         addItemFlags();
+
+        //if the item is unstackable, add a unique identifier to the item
+        if (unstackable){
+            this.itemMeta.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"),
+                    PersistentDataType.STRING, UUID.randomUUID().toString());
+        }
     }
 
     //getters
     public ItemStack getItemStack(){return this.itemStack;}
     public ItemMeta getItemMeta(){return this.itemMeta;}
+    public boolean getUnstackable(){return this.unstackable;}
 
     //updates the itemMeta of the item
     public void updateItemMeta(){
@@ -150,14 +159,6 @@ public class ItemBuilder {
     //@return the ItemBuilder
     public ItemBuilder setUnbreakable(){
         this.itemMeta.setUnbreakable(true);
-        return this;
-    }
-
-
-    //makes the item unstackable by giving it a random UUID
-    //return the ItemBuilder
-    public ItemBuilder makeUnstackable(){
-        this.itemStack.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "UUID"), PersistentDataType.STRING, String.valueOf(UUID.randomUUID()));
         return this;
     }
 

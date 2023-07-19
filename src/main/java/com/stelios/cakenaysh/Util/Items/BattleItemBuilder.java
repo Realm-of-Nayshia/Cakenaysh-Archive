@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Util;
+package com.stelios.cakenaysh.Util.Items;
 
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class BattleItemBuilder extends ItemBuilder{
+public class BattleItemBuilder extends ItemBuilder {
 
     private float damage;
     private float attackSpeed;
@@ -62,14 +62,14 @@ public class BattleItemBuilder extends ItemBuilder{
     //@params rangedProficiency: The ranged proficiency of the item being built.
     //@params armorProficiency: The armor proficiency of the item being built.
     //@params isArmor: Whether the item being built is armor.
-    public BattleItemBuilder(Material material, int amount, float damage, float attackSpeed, float critDamage,
+    public BattleItemBuilder(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage,
                              float critChance, float strength, float health, float defense, float speed, float thorns,
                              float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
                              float aquaticDefense, float aquaticDamage, float aerialDefense, float aerialDamage,
                              float meleeDefense, float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
                              float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency,
                              boolean isArmor){
-        super(material, amount);
+        super(material, amount, unstackable);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
         this.critDamage = critDamage;
@@ -97,6 +97,12 @@ public class BattleItemBuilder extends ItemBuilder{
         this.rangedProficiency = rangedProficiency;
         this.armorProficiency = armorProficiency;
         this.isArmor = isArmor;
+
+        //if the item is unstackable, add a unique identifier to the item
+        if (unstackable){
+            this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"),
+                    PersistentDataType.STRING, UUID.randomUUID().toString());
+        }
 
         //setting the pdc weapon type
         String itemType = "regular";
@@ -173,10 +179,10 @@ public class BattleItemBuilder extends ItemBuilder{
     //@param critChance: The crit chance of the item being built.
     //@param health: The health of the item being built.
     //@param speed: The speed of the item being built.
-    public BattleItemBuilder(Material material, int amount, float damage, float attackSpeed, float critDamage,
+    public BattleItemBuilder(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage,
                              float critChance, float strength, float health, float defense, float speed, float thorns,
                              int meleeProficiency, int rangedProficiency, int armorProficiency, boolean isArmor){
-        super(material, amount);
+        super(material, amount, unstackable);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
         this.critDamage = critDamage;
@@ -190,6 +196,12 @@ public class BattleItemBuilder extends ItemBuilder{
         this.rangedProficiency = rangedProficiency;
         this.armorProficiency = armorProficiency;
         this.isArmor = isArmor;
+
+        //if the item is unstackable, add a unique identifier to the item
+        if (unstackable){
+            this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"),
+                    PersistentDataType.STRING, UUID.randomUUID().toString());
+        }
 
         //setting the pdc weapon type
         String itemType = "regular";
@@ -737,24 +749,26 @@ public class BattleItemBuilder extends ItemBuilder{
             }
         }
 
+        loreList.add(0,Component.text(""));
+
         if (this.getStat("armorProficiency") != 0){
             loreList.add(0, Component.text("Armor Proficiency: ", TextColor.color(200, 200, 200))
                     .decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text((int) this.getStat("armorProficiency"), TextColor.color(240, 40, 50)))
+                    .append(Component.text((int) this.getStat("armorProficiency"), TextColor.color(240, 185, 85)))
                     .decoration(TextDecoration.ITALIC, false));
         }
 
         if (this.getStat("rangedProficiency") != 0){
             loreList.add(0, Component.text("Ranged Proficiency: ", TextColor.color(200, 200, 200))
                     .decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text((int) this.getStat("rangedProficiency"), TextColor.color(240, 40, 50)))
+                    .append(Component.text((int) this.getStat("rangedProficiency"), TextColor.color(240, 185, 85)))
                     .decoration(TextDecoration.ITALIC, false));
         }
 
         if (this.getStat("meleeProficiency") != 0){
             loreList.add(0, Component.text("Melee Proficiency: ", TextColor.color(200, 200, 200))
                     .decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text((int) this.getStat("meleeProficiency"), TextColor.color(240, 40, 50)))
+                    .append(Component.text((int) this.getStat("meleeProficiency"), TextColor.color(240, 185, 85)))
                     .decoration(TextDecoration.ITALIC, false));
         }
 

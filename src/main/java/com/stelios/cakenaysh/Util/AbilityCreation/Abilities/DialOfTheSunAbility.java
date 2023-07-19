@@ -1,9 +1,9 @@
-package com.stelios.cakenaysh.Util.Abilities;
+package com.stelios.cakenaysh.Util.AbilityCreation.Abilities;
 
-import com.stelios.cakenaysh.Listeners.ItemAbility;
+import com.stelios.cakenaysh.Util.AbilityCreation.ItemAbility;
 import com.stelios.cakenaysh.Main;
-import com.stelios.cakenaysh.Util.CustomAbilities;
-import com.stelios.cakenaysh.Util.ItemBuilder;
+import com.stelios.cakenaysh.Util.AbilityCreation.CustomAbilities;
+import com.stelios.cakenaysh.Util.Items.ItemBuilder;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

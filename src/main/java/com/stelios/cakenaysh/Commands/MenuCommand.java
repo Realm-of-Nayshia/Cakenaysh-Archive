@@ -1,7 +1,7 @@
 package com.stelios.cakenaysh.Commands;
 
 import com.stelios.cakenaysh.Main;
-import com.stelios.cakenaysh.Util.MenuCreation.Menu;
+import com.stelios.cakenaysh.Util.MenuCreation.MenuBuilder;
 import com.stelios.cakenaysh.Util.MenuCreation.Menus.PlayerInfoMain;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +23,7 @@ public class MenuCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             //open the rpg menu
-            Menu menu = new PlayerInfoMain(player);
+            MenuBuilder menu = new PlayerInfoMain(player);
             menu.open(player);
 
         }else{

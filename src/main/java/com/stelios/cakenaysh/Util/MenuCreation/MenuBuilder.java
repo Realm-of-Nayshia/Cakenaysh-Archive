@@ -12,17 +12,17 @@ import org.bukkit.util.Consumer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Menu {
+public class MenuBuilder {
 
     private Inventory inventory;
-    private Map<Integer, MenuButton> buttonMap;
+    private Map<Integer, MenuButtonBuilder> buttonMap;
     private Consumer<Player> inventoryClosed;
     private Consumer<Player> inventoryOpened;
 
     //menu constructor
     //@param title: the title of the menu
     //@param rows: the amount of rows the menu has
-    public Menu(Component title, int rows){
+    public MenuBuilder(Component title, int rows){
 
         //checks if the menu is valid
         if (rows > 6 || rows < 1){
@@ -34,7 +34,7 @@ public class Menu {
     }
 
     //registers the button in the specified slot
-    public void registerButton(MenuButton button, int slot){
+    public void registerButton(MenuButtonBuilder button, int slot){
         buttonMap.put(slot, button);
     }
 

@@ -1,16 +1,19 @@
-package com.stelios.cakenaysh.Util;
+package com.stelios.cakenaysh.Util.Items;
 
+import com.stelios.cakenaysh.Main;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
+import org.bukkit.NamespacedKey;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 public enum CustomItems {
 
 
     //BATTLE ITEMS
-    SPEED_BOOTS(new BattleItemBuilder(Material.CHAINMAIL_BOOTS, 1,0,0,0,0
+    SPEED_BOOTS(new BattleItemBuilder(Material.CHAINMAIL_BOOTS, 1,false,0,0,0,0
             ,0,20,0,100,0,0,0,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Speed Boots")),
                     new ArrayList<>(Arrays.asList(119, 218, 230)),
@@ -27,7 +30,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    HELM_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_HELMET, 1,0,0,0,0
+    HELM_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_HELMET, 1,false,0,0,0,0
             ,10,10000,10000,0,0,1,0,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Helmet of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
@@ -44,7 +47,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    CHEST_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_CHESTPLATE, 1,0,0,0,0
+    CHEST_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_CHESTPLATE, 1,false,0,0,0,0
             ,10,10000,10000,0,0,0,0,1, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Chestplate of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
@@ -61,7 +64,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    LEGS_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_LEGGINGS, 1,0,0,0,0
+    LEGS_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_LEGGINGS, 1,false,0,0,0,0
             ,10,10000,10000,0,0,0,1,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Leggings of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
@@ -78,7 +81,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    BOOTS_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_BOOTS, 1,0,0,0,0
+    BOOTS_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_BOOTS, 1,false,0,0,0,0
             ,10,10000,10000,0,0,0,0,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Boots of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
@@ -95,7 +98,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    TEST_HELM(new BattleItemBuilder(Material.NETHERITE_HELMET, 1,0,0,1000,0
+    TEST_HELM(new BattleItemBuilder(Material.NETHERITE_HELMET, 1,false,0,0,1000,0
             ,0,0,1000,0,0,0,0,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Test Helm")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
@@ -112,7 +115,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    WRATH_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_SWORD, 1,50000,40,100,90
+    WRATH_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_SWORD, 1,false,50000,40,100,90
             ,10,2,10,10,2, 4,0,0, false)
             .setUnbreakable()
             .setDisplayName(new ArrayList<>(Arrays.asList("Wrath of Sparta")),
@@ -130,8 +133,9 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    SCYTHE_OF_INTELLIJ(new BattleItemBuilder(Material.GOLDEN_HOE, 1,60,20,120,5
+    SCYTHE_OF_INTELLIJ(new BattleItemBuilder(Material.GOLDEN_HOE, 1,false,60,20,120,5
             ,0,0,0,0,0,0,0,0, false)
+            .setUnbreakable()
             .setDisplayName(new ArrayList<>(Arrays.asList("Scythe of Intellij")),
                     new ArrayList<>(Arrays.asList(66,27,224)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -147,7 +151,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false)),
                     new ArrayList<>(Arrays.asList(false, false)))),
 
-    TEST_ITEM(new BattleItemBuilder(Material.ACACIA_SLAB, 1,5,5,1,1
+    TEST_ITEM(new BattleItemBuilder(Material.ACACIA_SLAB,1,true,5,5,1,1
             ,2,1,1,2,1,4,2,6,8,3,3,4,5,1,34,5,4,1,2,1,1,1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Te","st"," Item")),
                     new ArrayList<>(Arrays.asList(66,27,224,25,124,254,33,55,235)),
@@ -164,88 +168,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false, false)),
                     new ArrayList<>(Arrays.asList(false, false, false)))),
 
-
-    STATS(new ItemBuilder(Material.DIAMOND_SWORD, 1)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Stats")),
-                    new ArrayList<>(Arrays.asList(0,255,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("View and level up your stats.")),
-                    new ArrayList<>(Arrays.asList(128,128,128)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))),
-
-    SKILLS(new ItemBuilder(Material.END_CRYSTAL, 1)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Skills")),
-                    new ArrayList<>(Arrays.asList(0,255,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("View and level up your skills.")),
-                    new ArrayList<>(Arrays.asList(128,128,128)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))),
-
-    QUESTS(new ItemBuilder(Material.WRITABLE_BOOK, 1)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Quest Log")),
-                    new ArrayList<>(Arrays.asList(0,255,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("View your active quests,", "nl", "progress, and rewards.")),
-                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)))),
-
-    RECIPE_BOOK(new ItemBuilder(Material.WRITTEN_BOOK, 1)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Recipe Book")),
-                    new ArrayList<>(Arrays.asList(0,255,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("View special crating recipes", "nl", "for items you have unlocked.")),
-                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)),
-                    new ArrayList<>(Arrays.asList(false, false)))),
-
-    CHARACTER_MANAGEMENT(new ItemBuilder(Material.NAME_TAG, 1)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Character Management")),
-                    new ArrayList<>(Arrays.asList(0,255,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("You can have multiple", "nl", "characters on this server.", "nl", "nl", "View and manage them here.")),
-                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128,128,128,128,128,128,128)),
-                    new ArrayList<>(Arrays.asList(false, false, false)),
-                    new ArrayList<>(Arrays.asList(false, false, false)),
-                    new ArrayList<>(Arrays.asList(false, false, false)),
-                    new ArrayList<>(Arrays.asList(false, false, false)),
-                    new ArrayList<>(Arrays.asList(false, false, false)))),
-
-    CLOSE(new ItemBuilder(Material.BARRIER, 1)
+    CLOSE(new ItemBuilder(Material.BARRIER, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Close")),
                     new ArrayList<>(Arrays.asList(255,0,0)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -254,7 +177,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    SETTINGS(new ItemBuilder(Material.REDSTONE_TORCH, 1)
+    SETTINGS(new ItemBuilder(Material.REDSTONE_TORCH, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Settings")),
                     new ArrayList<>(Arrays.asList(0,255,0)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -270,7 +193,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    BLANK_BLACK_PANE(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE, 1)
+    BLANK_BLACK_PANE(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("")),
                     new ArrayList<>(Arrays.asList(0,0,0)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -279,7 +202,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    DIAL_OF_THE_SUN(new ItemBuilder(Material.CLOCK, 1)
+    DIAL_OF_THE_SUN(new ItemBuilder(Material.CLOCK, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Dial of the Sun")),
                     new ArrayList<>(Arrays.asList(255,255,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -317,6 +240,12 @@ public enum CustomItems {
     public static ItemBuilder getItem(String name){
         for (CustomItems item : CustomItems.values()){
             if (item.name().equalsIgnoreCase(name)){
+
+                //if the item is unstackable, make it unstackable
+                if (item.getItemBuilder().getUnstackable()){
+                    item.itemBuilder.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"),
+                            PersistentDataType.STRING, UUID.randomUUID().toString());
+                }
                 return item.itemBuilder;
             }
         }
