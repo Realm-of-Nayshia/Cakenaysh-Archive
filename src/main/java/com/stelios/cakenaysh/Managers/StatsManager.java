@@ -1,11 +1,11 @@
-package com.stelios.cakenaysh.Util.Managers;
+package com.stelios.cakenaysh.Managers;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
 import com.stelios.cakenaysh.Events.SpeedChangedEvent;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
-import com.stelios.cakenaysh.Util.Npc.Traits.NpcStats;
+import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;

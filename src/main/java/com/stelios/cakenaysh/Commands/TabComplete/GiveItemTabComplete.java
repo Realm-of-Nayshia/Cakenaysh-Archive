@@ -1,6 +1,6 @@
 package com.stelios.cakenaysh.Commands.TabComplete;
 
-import com.stelios.cakenaysh.Util.Items.CustomItems;
+import com.stelios.cakenaysh.Items.CustomItems;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

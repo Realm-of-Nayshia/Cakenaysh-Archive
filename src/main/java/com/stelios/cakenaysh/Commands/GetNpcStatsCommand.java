@@ -1,6 +1,6 @@
 package com.stelios.cakenaysh.Commands;
 
-import com.stelios.cakenaysh.Util.Npc.Traits.NpcStats;
+import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.kyori.adventure.text.Component;

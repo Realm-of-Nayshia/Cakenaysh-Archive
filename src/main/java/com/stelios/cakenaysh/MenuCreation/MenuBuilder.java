@@ -1,6 +1,6 @@
-package com.stelios.cakenaysh.Util.MenuCreation;
+package com.stelios.cakenaysh.MenuCreation;
 
-import com.stelios.cakenaysh.Util.Managers.MenuManager;
+import com.stelios.cakenaysh.Managers.MenuManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

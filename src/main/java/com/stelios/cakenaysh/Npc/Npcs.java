@@ -1,6 +1,5 @@
-package com.stelios.cakenaysh.Util.Npc;
+package com.stelios.cakenaysh.Npc;
 
-import com.stelios.cakenaysh.Util.Npc.NpcBuilder;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Location;

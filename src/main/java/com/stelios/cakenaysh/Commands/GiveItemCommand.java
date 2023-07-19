@@ -1,6 +1,6 @@
 package com.stelios.cakenaysh.Commands;
 
-import com.stelios.cakenaysh.Util.Items.CustomItems;
+import com.stelios.cakenaysh.Items.CustomItems;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;

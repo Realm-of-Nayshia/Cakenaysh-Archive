@@ -1,11 +1,11 @@
-package com.stelios.cakenaysh.Util.MenuCreation.Menus;
+package com.stelios.cakenaysh.MenuCreation.Menus;
 
 import com.stelios.cakenaysh.Main;
-import com.stelios.cakenaysh.Util.Items.CustomItems;
+import com.stelios.cakenaysh.Items.CustomItems;
 import com.stelios.cakenaysh.Util.CustomPlayer;
-import com.stelios.cakenaysh.Util.Items.ItemBuilder;
-import com.stelios.cakenaysh.Util.MenuCreation.MenuBuilder;
-import com.stelios.cakenaysh.Util.MenuCreation.MenuButtonBuilder;
+import com.stelios.cakenaysh.Items.ItemBuilder;
+import com.stelios.cakenaysh.MenuCreation.MenuBuilder;
+import com.stelios.cakenaysh.MenuCreation.MenuButtonBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;

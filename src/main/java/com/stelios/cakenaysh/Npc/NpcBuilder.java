@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Util.Npc;
+package com.stelios.cakenaysh.Npc;
 
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;

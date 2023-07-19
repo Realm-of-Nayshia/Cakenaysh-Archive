@@ -1,6 +1,6 @@
-package com.stelios.cakenaysh.Util.Managers;
+package com.stelios.cakenaysh.Managers;
 
-import com.stelios.cakenaysh.Util.MenuCreation.MenuBuilder;
+import com.stelios.cakenaysh.MenuCreation.MenuBuilder;
 
 import java.util.HashMap;
 import java.util.Map;

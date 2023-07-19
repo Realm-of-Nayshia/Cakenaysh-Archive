@@ -1,8 +1,8 @@
 package com.stelios.cakenaysh.Commands;
 
 import com.stelios.cakenaysh.Main;
-import com.stelios.cakenaysh.Util.MenuCreation.MenuBuilder;
-import com.stelios.cakenaysh.Util.MenuCreation.Menus.PlayerInfoMain;
+import com.stelios.cakenaysh.MenuCreation.MenuBuilder;
+import com.stelios.cakenaysh.MenuCreation.Menus.PlayerInfoMain;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

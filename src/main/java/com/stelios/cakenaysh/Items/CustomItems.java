@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Util.Items;
+package com.stelios.cakenaysh.Items;
 
 import com.stelios.cakenaysh.Main;
 import org.bukkit.Material;

@@ -1,9 +1,9 @@
-package com.stelios.cakenaysh.Util.Managers;
+package com.stelios.cakenaysh.Managers;
 
 import com.stelios.cakenaysh.Events.XpGainEvent;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
-import com.stelios.cakenaysh.Util.Npc.Traits.NpcStats;
+import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import net.citizensnpcs.api.CitizensAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;

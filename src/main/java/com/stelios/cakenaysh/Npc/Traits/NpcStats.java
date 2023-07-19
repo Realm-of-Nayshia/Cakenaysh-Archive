@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Util.Npc.Traits;
+package com.stelios.cakenaysh.Npc.Traits;
 
 import com.stelios.cakenaysh.Main;
 import net.citizensnpcs.api.persistence.Persist;

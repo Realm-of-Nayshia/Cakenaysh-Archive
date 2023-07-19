@@ -1,8 +1,8 @@
-package com.stelios.cakenaysh.Util.AbilityCreation.Abilities;
+package com.stelios.cakenaysh.AbilityCreation.Abilities;
 
-import com.stelios.cakenaysh.Util.AbilityCreation.ItemAbility;
-import com.stelios.cakenaysh.Util.AbilityCreation.CustomAbilities;
-import com.stelios.cakenaysh.Util.Items.ItemBuilder;
+import com.stelios.cakenaysh.AbilityCreation.ItemAbility;
+import com.stelios.cakenaysh.AbilityCreation.CustomAbilities;
+import com.stelios.cakenaysh.Items.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Sound;

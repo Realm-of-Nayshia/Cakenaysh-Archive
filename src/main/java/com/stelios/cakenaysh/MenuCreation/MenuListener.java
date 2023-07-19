@@ -1,7 +1,6 @@
-package com.stelios.cakenaysh.Util.MenuCreation;
+package com.stelios.cakenaysh.MenuCreation;
 
-import com.stelios.cakenaysh.Util.Managers.MenuManager;
-import com.stelios.cakenaysh.Util.MenuCreation.MenuBuilder;
+import com.stelios.cakenaysh.Managers.MenuManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Util.AbilityCreation;
+package com.stelios.cakenaysh.AbilityCreation;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.inventory.ClickType;

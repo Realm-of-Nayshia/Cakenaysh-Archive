@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Util.Managers;
+package com.stelios.cakenaysh.Managers;
 
 import com.stelios.cakenaysh.Util.CustomPlayer;
 

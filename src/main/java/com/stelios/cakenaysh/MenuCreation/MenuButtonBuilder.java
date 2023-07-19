@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Util.MenuCreation;
+package com.stelios.cakenaysh.MenuCreation;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
