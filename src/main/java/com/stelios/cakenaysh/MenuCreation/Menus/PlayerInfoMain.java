@@ -114,8 +114,8 @@ public class PlayerInfoMain extends MenuBuilder {
                         new ArrayList<>(Arrays.asList(128,128,128,
                                 255,51,51, 255,255,255,
                                 255,51,51, 255,255,255,
-                                20,28,140, 255,255,255,
-                                20,28,140, 255,255,255,
+                                66,64,219, 255,255,255,
+                                66,64,219, 255,255,255,
                                 255,51,51, 255,255,255,
                                 255,255,255, 255,255,255,
                                 255,255,255, 255,255,255,
@@ -146,92 +146,28 @@ public class PlayerInfoMain extends MenuBuilder {
         registerButton(statsButton, 20);
 
         //skills button
-        ItemBuilder skills = new ItemBuilder(Material.END_CRYSTAL, 1,false)
-                .setDisplayName(new ArrayList<>(Arrays.asList("Skills")),
-                        new ArrayList<>(Arrays.asList(0,255,0)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)))
-                .setLore(new ArrayList<>(Arrays.asList("View and level up your skills.")),
-                        new ArrayList<>(Arrays.asList(128,128,128)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)));
-
-        MenuButtonBuilder skillsButton = new MenuButtonBuilder(skills.build());
+        MenuButtonBuilder skillsButton = new MenuButtonBuilder(CustomItems.SKILLS.getItemBuilder().build());
         skillsButton.setWhenClicked(clicked ->
-                clicked.sendMessage("You clicked on your skills"));
+                new PlayerInfoSkills(player).open(clicked));
 
         registerButton(skillsButton, 21);
 
         //quests button
-        ItemBuilder quests = new ItemBuilder(Material.WRITABLE_BOOK, 1,false)
-                .setDisplayName(new ArrayList<>(Arrays.asList("Quest Log")),
-                        new ArrayList<>(Arrays.asList(0,255,0)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)))
-                .setLore(new ArrayList<>(Arrays.asList("View your active quests,", "nl", "progress, and rewards.")),
-                        new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
-                        new ArrayList<>(Arrays.asList(false, false)),
-                        new ArrayList<>(Arrays.asList(false, false)),
-                        new ArrayList<>(Arrays.asList(false, false)),
-                        new ArrayList<>(Arrays.asList(false, false)),
-                        new ArrayList<>(Arrays.asList(false, false)));
-
-        MenuButtonBuilder questsButton = new MenuButtonBuilder(quests.build());
+        MenuButtonBuilder questsButton = new MenuButtonBuilder(CustomItems.QUESTS.getItemBuilder().build());
         questsButton.setWhenClicked(clicked ->
                 clicked.sendMessage("You clicked on your quests"));
 
         registerButton(questsButton, 23);
 
         //recipe book button
-        ItemBuilder recipeBook = new ItemBuilder(Material.WRITTEN_BOOK, 1,false)
-                .setDisplayName(new ArrayList<>(Arrays.asList("Recipe Book")),
-                        new ArrayList<>(Arrays.asList(0,255,0)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)))
-                .setLore(new ArrayList<>(Arrays.asList("View special crating recipes", "nl", "for items you have unlocked.")),
-                        new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
-                        new ArrayList<>(Arrays.asList(false, false)),
-                        new ArrayList<>(Arrays.asList(false, false)),
-                        new ArrayList<>(Arrays.asList(false, false)),
-                        new ArrayList<>(Arrays.asList(false, false)),
-                        new ArrayList<>(Arrays.asList(false, false)));
-
-        MenuButtonBuilder recipeBookButton = new MenuButtonBuilder(recipeBook.build());
+        MenuButtonBuilder recipeBookButton = new MenuButtonBuilder(CustomItems.RECIPE_BOOK.getItemBuilder().build());
         recipeBookButton.setWhenClicked(clicked ->
                 clicked.sendMessage("You clicked on your recipe book"));
 
         registerButton(recipeBookButton, 24);
 
         //character management button
-        ItemBuilder characterManagement = new ItemBuilder(Material.NAME_TAG, 1,false)
-                .setDisplayName(new ArrayList<>(Arrays.asList("Character Management")),
-                        new ArrayList<>(Arrays.asList(0,255,0)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)))
-                .setLore(new ArrayList<>(Arrays.asList("You can have multiple", "nl", "characters on this server.", "nl", "nl", "View and manage them here.")),
-                        new ArrayList<>(Arrays.asList(128,128,128,128,128,128,128,128,128,128,128,128)),
-                        new ArrayList<>(Arrays.asList(false, false, false)),
-                        new ArrayList<>(Arrays.asList(false, false, false)),
-                        new ArrayList<>(Arrays.asList(false, false, false)),
-                        new ArrayList<>(Arrays.asList(false, false, false)),
-                        new ArrayList<>(Arrays.asList(false, false, false)));
-
-        MenuButtonBuilder characterManagementButton = new MenuButtonBuilder(characterManagement.build());
+        MenuButtonBuilder characterManagementButton = new MenuButtonBuilder(CustomItems.CHARACTER_MANAGEMENT.getItemBuilder().build());
         characterManagementButton.setWhenClicked(clicked ->
                 clicked.sendMessage("You clicked on your character management"));
 
@@ -250,7 +186,8 @@ public class PlayerInfoMain extends MenuBuilder {
 
         registerButton(closeButton, 40);
 
-        //registering non-clickable buttons
+        ////registering non-clickable buttons
+        //blank panes
         for(int i: new int[]{0,1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
                 22,25,26,27,28,29,30,31,32,33,34,35,36,37,38,42,43,44}){
             registerButton(new MenuButtonBuilder(CustomItems.BLANK_BLACK_PANE.getItemBuilder().build()), i);
