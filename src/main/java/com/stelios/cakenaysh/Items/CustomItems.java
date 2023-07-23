@@ -84,13 +84,6 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("Go back to the previous menu.")),
-                    new ArrayList<>(Arrays.asList(255,255,255)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
     CLOSE(new ItemBuilder(Material.BARRIER, 1,false)
