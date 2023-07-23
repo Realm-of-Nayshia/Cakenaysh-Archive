@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class PlayerInfoStats extends MenuBuilder {
 
     public PlayerInfoStats(Player player) {
-        super(Component.text( player.getName() + "'s Combat Stats", TextColor.color(0,0,0), TextDecoration.BOLD), 6);
+        super(Component.text( "Your Combat Stats", TextColor.color(0,0,0), TextDecoration.BOLD), 6);
 
         //set inventory consumers
         //setInventoryOpened(opened -> opened.sendMessage("Inventory opened"));
@@ -29,34 +29,24 @@ public class PlayerInfoStats extends MenuBuilder {
 
         ////registering clickable buttons
         //back button
-        ItemBuilder back = new ItemBuilder(Material.ARROW, 1,false)
-                .setDisplayName(new ArrayList<>(Arrays.asList("Back")),
-                        new ArrayList<>(Arrays.asList(255,255,255)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)))
-                .setLore(new ArrayList<>(Arrays.asList("Go back to the previous menu.")),
-                        new ArrayList<>(Arrays.asList(255,255,255)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)),
-                        new ArrayList<>(Arrays.asList(false)));
-
-        MenuButtonBuilder backButton = new MenuButtonBuilder(back.build());
+        MenuButtonBuilder backButton = new MenuButtonBuilder(CustomItems.BACK_BUTTON.getItemBuilder().build());
         backButton.setWhenClicked(clicked -> {
             new PlayerInfoMain(clicked).open(clicked);
         });
 
         registerButton(backButton, 45);
 
+        //close button
+        MenuButtonBuilder closeButton = new MenuButtonBuilder(CustomItems.CLOSE.getItemBuilder().build());
+        closeButton.setWhenClicked(clicked -> clicked.closeInventory());
+
+        registerButton(closeButton, 49);
+
+
 
 
 
         ////registering non-clickable buttons
-
         //combat stats
         ItemBuilder combatStats = new ItemBuilder(Material.DIAMOND_SWORD, 1,false)
                 .setDisplayName(new ArrayList<>(Arrays.asList("Combat Stats")),
@@ -72,7 +62,6 @@ public class PlayerInfoStats extends MenuBuilder {
                                 "Crit Damage ", String.valueOf(customPlayer.getCritDamage()), "nl",
                                 "Crit Chance ", String.valueOf(customPlayer.getCritChance()), "nl",
                                 "Strength ", String.valueOf(customPlayer.getStrength()), "nl",
-                                "Speed ", String.valueOf(customPlayer.getSpeed()), "nl",
                                 "Thorns ", String.valueOf(customPlayer.getThorns()), "nl",
                                 "Defense ", String.valueOf(customPlayer.getDefense()), "nl",
                                 "Infernal Defense ", String.valueOf(customPlayer.getInfernalDefense()), "nl",
@@ -90,42 +79,34 @@ public class PlayerInfoStats extends MenuBuilder {
                                 "Magic Defense ", String.valueOf(customPlayer.getMagicDefense()), "nl",
                                 "Magic Damage ", String.valueOf(customPlayer.getMagicDamage()), "nl")),
                         new ArrayList<>(Arrays.asList(128,128,128,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255,
-                                128,128,128, 255,255,255)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)));
+                                255,51,51, 255,255,255,
+                                255,51,51, 255,255,255,
+                                66,64,219, 255,255,255,
+                                66,64,219, 255,255,255,
+                                255,51,51, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255,
+                                255,255,255, 255,255,255)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)));
 
         registerButton(new MenuButtonBuilder(combatStats.build()), 4);
-
-        //close button
-        //close button
-        MenuButtonBuilder closeButton = new MenuButtonBuilder(CustomItems.CLOSE.getItemBuilder().build());
-        closeButton.setWhenClicked(clicked -> clicked.closeInventory());
-
-        registerButton(closeButton, 49);
 
         //blank panes
         for(int i: new int[]{0,1,2,3,5,6,7,8,9,17,18,26,27,35,36,41,42,43,44,46,47,48,50,51,52,53}){
