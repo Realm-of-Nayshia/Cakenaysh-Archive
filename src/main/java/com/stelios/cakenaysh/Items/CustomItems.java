@@ -12,7 +12,143 @@ import java.util.UUID;
 public enum CustomItems {
 
 
+    //GUI ITEMS
+    SKILLS(new ItemBuilder(Material.END_CRYSTAL, 1,false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Skills")),
+                    new ArrayList<>(Arrays.asList(0,255,0)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("View and level up your skills.")),
+                    new ArrayList<>(Arrays.asList(128,128,128)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    QUESTS(new ItemBuilder(Material.WRITABLE_BOOK, 1,false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Quest Log")),
+                    new ArrayList<>(Arrays.asList(0,255,0)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("View your active quests,", "nl", "progress, and rewards.")),
+                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)))),
+
+    RECIPE_BOOK(new ItemBuilder(Material.WRITTEN_BOOK, 1,false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Recipe Book")),
+                    new ArrayList<>(Arrays.asList(0,255,0)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("View special crating recipes", "nl", "for items you have unlocked.")),
+                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)))),
+
+    CHARACTER_MANAGEMENT(new ItemBuilder(Material.NAME_TAG, 1,false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Character Management")),
+                    new ArrayList<>(Arrays.asList(0,255,0)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("You can have multiple", "nl", "characters on this server.", "nl", "nl", "View and manage them here.")),
+                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128,128,128,128,128,128,128)),
+                    new ArrayList<>(Arrays.asList(false, false, false)),
+                    new ArrayList<>(Arrays.asList(false, false, false)),
+                    new ArrayList<>(Arrays.asList(false, false, false)),
+                    new ArrayList<>(Arrays.asList(false, false, false)),
+                    new ArrayList<>(Arrays.asList(false, false, false)))),
+
+    BACK_BUTTON(new ItemBuilder(Material.ARROW, 1,false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Back")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("Go back to the previous menu.")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    CLOSE(new ItemBuilder(Material.BARRIER, 1,false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Close")),
+                    new ArrayList<>(Arrays.asList(255,0,0)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    SETTINGS(new ItemBuilder(Material.REDSTONE_TORCH, 1,false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Settings")),
+                    new ArrayList<>(Arrays.asList(0,255,0)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("View and edit RPG settings.")),
+                    new ArrayList<>(Arrays.asList(128,128,128)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    BLANK_BLACK_PANE(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE, 1,false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("")),
+                    new ArrayList<>(Arrays.asList(0,0,0)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+
+
+
+
     //BATTLE ITEMS
+    JAZZ_HANDS(new BattleItemBuilder(Material.GOLDEN_BOOTS, 1,false,-50,40,0,0
+            ,0,20,0,100,0,0,0,0, true)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Jazz Hands")),
+                    new ArrayList<>(Arrays.asList(255, 0, 251)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("Jazz", "Hands are a great way", "nl", "to distract your enemies.")),
+                    new ArrayList<>(Arrays.asList(30, 41, 235, 141, 49, 148, 65, 26, 112)),
+                    new ArrayList<>(Arrays.asList(false,true,false)),
+                    new ArrayList<>(Arrays.asList(false,true,false)),
+                    new ArrayList<>(Arrays.asList(false,false,false)),
+                    new ArrayList<>(Arrays.asList(false,false,false)),
+                    new ArrayList<>(Arrays.asList(false,false,false)))),
+
     SPEED_BOOTS(new BattleItemBuilder(Material.CHAINMAIL_BOOTS, 1,false,0,0,0,0
             ,0,20,0,100,0,0,0,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Speed Boots")),
@@ -168,40 +304,8 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false, false)),
                     new ArrayList<>(Arrays.asList(false, false, false)))),
 
-    CLOSE(new ItemBuilder(Material.BARRIER, 1,false)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Close")),
-                    new ArrayList<>(Arrays.asList(255,0,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))),
 
-    SETTINGS(new ItemBuilder(Material.REDSTONE_TORCH, 1,false)
-            .setDisplayName(new ArrayList<>(Arrays.asList("Settings")),
-                    new ArrayList<>(Arrays.asList(0,255,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("View and edit RPG settings.")),
-                    new ArrayList<>(Arrays.asList(128,128,128)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))),
-
-    BLANK_BLACK_PANE(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE, 1,false)
-            .setDisplayName(new ArrayList<>(Arrays.asList("")),
-                    new ArrayList<>(Arrays.asList(0,0,0)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)),
-                    new ArrayList<>(Arrays.asList(false)))),
-
+    //REGULAR ITEMS
     DIAL_OF_THE_SUN(new ItemBuilder(Material.CLOCK, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Dial of the Sun")),
                     new ArrayList<>(Arrays.asList(255,255,0)),
