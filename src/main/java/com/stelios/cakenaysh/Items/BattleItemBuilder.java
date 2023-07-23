@@ -756,7 +756,7 @@ public class BattleItemBuilder extends ItemBuilder {
         if (this.getStat("armorProficiency") != 0){
             loreList.add(0, Component.text("Armor Proficiency: ", TextColor.color(200, 200, 200))
                     .decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text((int) this.getStat("armorProficiency"), TextColor.color(240, 185, 85)))
+                    .append(Component.text((int) this.getStat("armorProficiency"), TextColor.color(77,85,92)))
                     .decoration(TextDecoration.ITALIC, false));
         }
 
@@ -770,7 +770,7 @@ public class BattleItemBuilder extends ItemBuilder {
         if (this.getStat("meleeProficiency") != 0){
             loreList.add(0, Component.text("Melee Proficiency: ", TextColor.color(200, 200, 200))
                     .decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text((int) this.getStat("meleeProficiency"), TextColor.color(240, 185, 85)))
+                    .append(Component.text((int) this.getStat("meleeProficiency"), TextColor.color(214,88,88)))
                     .decoration(TextDecoration.ITALIC, false));
         }
 
