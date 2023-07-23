@@ -361,21 +361,21 @@ public class BattleItemBuilder extends ItemBuilder {
     //@param isStrikethrough: Makes the lore strikethrough.
     //@return the ItemBuilder
     public BattleItemBuilder setLore(List<String> loreText, List<Integer> rgbValues, List<Boolean> isBold, List<Boolean> isUnderlined,
-                                     List<Boolean> isItalic, List<Boolean> isObfuscated, List<Boolean> isStrikethrough){
+                                     List<Boolean> isItalic, List<Boolean> isObfuscated, List<Boolean> isStrikethrough) {
 
-        List<TextComponent> wordList = new ArrayList<> ();
-        List<TextComponent> loreList = new ArrayList<> ();
+        List<TextComponent> wordList = new ArrayList<>();
+        List<TextComponent> loreList = new ArrayList<>();
 
         //variable to keep track of how many times the nl command is called
         int nlCalls = 0;
 
         //adding the lore to the item
-        for (int i = 0; i < loreText.size(); i++){
+        for (int i = 0; i < loreText.size(); i++) {
 
             //go to next line by adding the current line to the loreList and clearing the wordList
-            if (loreText.get(i).equals("nl")){
+            if (loreText.get(i).equals("nl")) {
                 TextComponent lore = Component.empty();
-                for (TextComponent word : wordList){
+                for (TextComponent word : wordList) {
                     lore = lore.append(word);
                 }
                 loreList.add(lore);
@@ -383,20 +383,20 @@ public class BattleItemBuilder extends ItemBuilder {
                 nlCalls++;
 
                 //add the current word to the wordList
-            }else{
-                wordList.add(wordList.size(),(Component.text(loreText.get(i),
-                                TextColor.color(rgbValues.get((i-nlCalls)*3), rgbValues.get((i-nlCalls)*3+1), rgbValues.get((i-nlCalls)*3+2)))
-                        .decoration(TextDecoration.BOLD, isBold.get(i-nlCalls))
-                        .decoration(TextDecoration.UNDERLINED, isUnderlined.get(i-nlCalls))
-                        .decoration(TextDecoration.ITALIC, isItalic.get(i-nlCalls))
-                        .decoration(TextDecoration.OBFUSCATED, isObfuscated.get(i-nlCalls))
-                        .decoration(TextDecoration.STRIKETHROUGH, isStrikethrough.get(i-nlCalls))));
+            } else {
+                wordList.add(wordList.size(), (Component.text(loreText.get(i),
+                                TextColor.color(rgbValues.get((i - nlCalls) * 3), rgbValues.get((i - nlCalls) * 3 + 1), rgbValues.get((i - nlCalls) * 3 + 2)))
+                        .decoration(TextDecoration.BOLD, isBold.get(i - nlCalls))
+                        .decoration(TextDecoration.UNDERLINED, isUnderlined.get(i - nlCalls))
+                        .decoration(TextDecoration.ITALIC, isItalic.get(i - nlCalls))
+                        .decoration(TextDecoration.OBFUSCATED, isObfuscated.get(i - nlCalls))
+                        .decoration(TextDecoration.STRIKETHROUGH, isStrikethrough.get(i - nlCalls))));
             }
         }
 
         //add the last line to the loreList
         TextComponent lore = Component.empty();
-        for (TextComponent word : wordList){
+        for (TextComponent word : wordList) {
             lore = lore.append(word);
         }
         loreList.add(lore);
@@ -404,14 +404,14 @@ public class BattleItemBuilder extends ItemBuilder {
         //adding the custom item attributes to the item lore
         loreList.add(0, Component.text(""));
 
-        if (this.getStat("infernalDefense") != 0){
+        if (this.getStat("infernalDefense") != 0) {
             //if the infernal defense is a whole number, don't add a decimal point
-            if (this.getStat("infernalDefense") % 1 == 0){
+            if (this.getStat("infernalDefense") % 1 == 0) {
                 loreList.add(0, Component.text("Infernal Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("infernalDefense") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Infernal Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("infernalDefense") + "%", TextColor.color(240, 40, 50)))
@@ -419,14 +419,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("infernalDamage") != 0){
+        if (this.getStat("infernalDamage") != 0) {
             //if the infernal damage is a whole number, don't add a decimal point
-            if (this.getStat("infernalDamage") % 1 == 0){
+            if (this.getStat("infernalDamage") % 1 == 0) {
                 loreList.add(0, Component.text("Infernal Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("infernalDamage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Infernal Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("infernalDamage"), TextColor.color(240, 40, 50)))
@@ -434,14 +434,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("undeadDefense") != 0){
+        if (this.getStat("undeadDefense") != 0) {
             //if the undead defense is a whole number, don't add a decimal point
-            if (this.getStat("undeadDefense") % 1 == 0){
+            if (this.getStat("undeadDefense") % 1 == 0) {
                 loreList.add(0, Component.text("Undead Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("undeadDefense") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Undead Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("undeadDefense") + "%", TextColor.color(240, 40, 50)))
@@ -449,14 +449,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if(this.getStat("undeadDamage") != 0){
+        if (this.getStat("undeadDamage") != 0) {
             //if the undead damage is a whole number, don't add a decimal point
-            if (this.getStat("undeadDamage") % 1 == 0){
+            if (this.getStat("undeadDamage") % 1 == 0) {
                 loreList.add(0, Component.text("Undead Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("undeadDamage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Undead Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("undeadDamage"), TextColor.color(240, 40, 50)))
@@ -464,14 +464,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("aquaticDefense") != 0){
+        if (this.getStat("aquaticDefense") != 0) {
             //if the aquatic defense is a whole number, don't add a decimal point
-            if (this.getStat("aquaticDefense") % 1 == 0){
+            if (this.getStat("aquaticDefense") % 1 == 0) {
                 loreList.add(0, Component.text("Aquatic Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("aquaticDefense") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Aquatic Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("aquaticDefense") + "%", TextColor.color(240, 40, 50)))
@@ -479,14 +479,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("aquaticDamage") != 0){
+        if (this.getStat("aquaticDamage") != 0) {
             //if the aquatic damage is a whole number, don't add a decimal point
-            if (this.getStat("aquaticDamage") % 1 == 0){
+            if (this.getStat("aquaticDamage") % 1 == 0) {
                 loreList.add(0, Component.text("Aquatic Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("aquaticDamage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Aquatic Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("aquaticDamage"), TextColor.color(240, 40, 50)))
@@ -494,14 +494,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("aerialDefense") != 0){
+        if (this.getStat("aerialDefense") != 0) {
             //if the arial defense is a whole number, don't add a decimal point
-            if (this.getStat("aerialDefense") % 1 == 0){
+            if (this.getStat("aerialDefense") % 1 == 0) {
                 loreList.add(0, Component.text("Aerial Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("aerialDefense") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Aerial Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("aerialDefense") + "%", TextColor.color(240, 40, 50)))
@@ -509,14 +509,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("aerialDamage") != 0){
+        if (this.getStat("aerialDamage") != 0) {
             //if the aerial damage is a whole number, don't add a decimal point
-            if (this.getStat("aerialDamage") % 1 == 0){
+            if (this.getStat("aerialDamage") % 1 == 0) {
                 loreList.add(0, Component.text("Aerial Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("aerialDamage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Aerial Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("aerialDamage"), TextColor.color(240, 40, 50)))
@@ -524,14 +524,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("meleeDefense") != 0){
+        if (this.getStat("meleeDefense") != 0) {
             //if the melee defense is a whole number, don't add a decimal point
-            if (this.getStat("meleeDefense") % 1 == 0){
+            if (this.getStat("meleeDefense") % 1 == 0) {
                 loreList.add(0, Component.text("Melee Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("meleeDefense") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Melee Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("meleeDefense") + "%", TextColor.color(240, 40, 50)))
@@ -539,14 +539,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("meleeDamage") != 0){
+        if (this.getStat("meleeDamage") != 0) {
             //if the melee damage is a whole number, don't add a decimal point
-            if (this.getStat("meleeDamage") % 1 == 0){
+            if (this.getStat("meleeDamage") % 1 == 0) {
                 loreList.add(0, Component.text("Melee Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("meleeDamage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Melee Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("meleeDamage"), TextColor.color(240, 40, 50)))
@@ -554,14 +554,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("rangedDefense") != 0){
+        if (this.getStat("rangedDefense") != 0) {
             //if the ranged defense is a whole number, don't add a decimal point
-            if (this.getStat("rangedDefense") % 1 == 0){
+            if (this.getStat("rangedDefense") % 1 == 0) {
                 loreList.add(0, Component.text("Ranged Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("rangedDefense") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Ranged Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("rangedDefense") + "%", TextColor.color(240, 40, 50)))
@@ -569,14 +569,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("rangedDamage") != 0){
+        if (this.getStat("rangedDamage") != 0) {
             //if the ranged damage is a whole number, don't add a decimal point
-            if (this.getStat("rangedDamage") % 1 == 0){
+            if (this.getStat("rangedDamage") % 1 == 0) {
                 loreList.add(0, Component.text("Ranged Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("rangedDamage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Ranged Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("rangedDamage"), TextColor.color(240, 40, 50)))
@@ -584,14 +584,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("magicDefense") != 0){
+        if (this.getStat("magicDefense") != 0) {
             //if the magic defense is a whole number, don't add a decimal point
-            if (this.getStat("magicDefense") % 1 == 0){
+            if (this.getStat("magicDefense") % 1 == 0) {
                 loreList.add(0, Component.text("Magic Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("magicDefense") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Magic Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("magicDefense") + "%", TextColor.color(240, 40, 50)))
@@ -599,14 +599,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("magicDamage") != 0){
+        if (this.getStat("magicDamage") != 0) {
             //if the magic damage is a whole number, don't add a decimal point
-            if (this.getStat("magicDamage") % 1 == 0){
+            if (this.getStat("magicDamage") % 1 == 0) {
                 loreList.add(0, Component.text("Magic Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("magicDamage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Magic Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("magicDamage"), TextColor.color(240, 40, 50)))
@@ -614,14 +614,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("thorns") != 0){
+        if (this.getStat("thorns") != 0) {
             //if the thorns is a whole number, don't add a decimal point
-            if (this.getStat("thorns") % 1 == 0){
+            if (this.getStat("thorns") % 1 == 0) {
                 loreList.add(0, Component.text("Thorns: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("thorns"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Thorns: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("thorns"), TextColor.color(240, 40, 50)))
@@ -629,29 +629,29 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("speed") != 0){
+        if (this.getStat("speed") != 0) {
             //if the speed is a whole number, don't add a decimal point
-            if (this.getStat("speed") % 1 == 0){
+            if (this.getStat("speed") % 1 == 0) {
                 loreList.add(0, Component.text("Speed: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("speed"), TextColor.color(240, 40, 50)))
+                        .append(Component.text("+" + (int) this.getStat("speed") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Speed: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("speed"), TextColor.color(240, 40, 50)))
+                        .append(Component.text("+" + this.getStat("speed") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
             }
         }
 
-        if (this.getStat("attackSpeed") != 0){
+        if (this.getStat("attackSpeed") != 0) {
             //if the attack speed is a whole number, don't add a decimal point
-            if (this.getStat("attackSpeed") % 1 == 0){
+            if (this.getStat("attackSpeed") % 1 == 0) {
                 loreList.add(0, Component.text("Attack Speed: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("attackSpeed"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Attack Speed: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("attackSpeed"), TextColor.color(240, 40, 50)))
@@ -659,14 +659,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("critDamage") != 0){
+        if (this.getStat("critDamage") != 0) {
             //if the crit damage is a whole number, don't add a decimal point
-            if (this.getStat("critDamage") % 1 == 0){
+            if (this.getStat("critDamage") % 1 == 0) {
                 loreList.add(0, Component.text("Crit Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("critDamage") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Crit Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("critDamage") + "%", TextColor.color(240, 40, 50)))
@@ -674,14 +674,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("critChance") != 0){
+        if (this.getStat("critChance") != 0) {
             //if the crit chance is a whole number, don't add a decimal point
-            if (this.getStat("critChance") % 1 == 0){
+            if (this.getStat("critChance") % 1 == 0) {
                 loreList.add(0, Component.text("Crit Chance: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) getStat("critChance") + "%", TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Crit Chance: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("critChance") + "%", TextColor.color(240, 40, 50)))
@@ -689,14 +689,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("defense") != 0){
+        if (this.getStat("defense") != 0) {
             //if the defense is a whole number, don't add a decimal point
-            if (this.getStat("defense") % 1 == 0){
+            if (this.getStat("defense") % 1 == 0) {
                 loreList.add(0, Component.text("Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("defense"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Defense: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("defense"), TextColor.color(240, 40, 50)))
@@ -704,14 +704,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("health") != 0){
+        if (this.getStat("health") != 0) {
             //if the health is a whole number, don't add a decimal point
-            if (this.getStat("health") % 1 == 0){
+            if (this.getStat("health") % 1 == 0) {
                 loreList.add(0, Component.text("Health: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("health"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Health: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("health"), TextColor.color(240, 40, 50)))
@@ -719,14 +719,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("strength") != 0){
+        if (this.getStat("strength") != 0) {
             //if the Strength is a whole number, don't add a decimal point
-            if (this.getStat("strength") % 1 == 0){
+            if (this.getStat("strength") % 1 == 0) {
                 loreList.add(0, Component.text("Strength: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("strength"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Strength: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("strength"), TextColor.color(240, 40, 50)))
@@ -734,14 +734,14 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        if (this.getStat("damage") != 0){
+        if (this.getStat("damage") != 0) {
             //if the damage is a whole number, don't add a decimal point
-            if (this.getStat("damage") % 1 == 0){
+            if (this.getStat("damage") % 1 == 0) {
                 loreList.add(0, Component.text("Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + (int) this.getStat("damage"), TextColor.color(240, 40, 50)))
                         .decoration(TextDecoration.ITALIC, false));
-            }else{
+            } else {
                 loreList.add(0, Component.text("Damage: ", TextColor.color(200, 200, 200))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component.text("+" + this.getStat("damage"), TextColor.color(240, 40, 50)))
@@ -749,7 +749,9 @@ public class BattleItemBuilder extends ItemBuilder {
             }
         }
 
-        loreList.add(0,Component.text(""));
+        if (this.getStat("meleeProficiency") != 0 || this.getStat("rangedProficiency") != 0 || this.getStat("armorProficiency") != 0){
+            loreList.add(0, Component.text(""));
+        }
 
         if (this.getStat("armorProficiency") != 0){
             loreList.add(0, Component.text("Armor Proficiency: ", TextColor.color(200, 200, 200))
