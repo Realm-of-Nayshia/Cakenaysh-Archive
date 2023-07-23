@@ -2,6 +2,7 @@ package com.stelios.cakenaysh.Managers;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
+import com.stelios.cakenaysh.Events.ProficiencyChangedEvent;
 import com.stelios.cakenaysh.Events.SpeedChangedEvent;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
@@ -33,8 +34,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.mcmonkey.sentinel.SentinelTrait;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 
 public class StatsManager implements Listener {
@@ -592,6 +591,31 @@ public class StatsManager implements Listener {
         e.getPlayer().setWalkSpeed(0.2F * ((e.getSpeed() + 100) / 100));
     }
 
+    @EventHandler
+    public void onProficiencyChanged(ProficiencyChangedEvent e){
+        Player player = e.getPlayer();
+
+        //remove the player's stats before the proficiency is changed
+        removePlayerStats(player, player.getInventory().getItemInMainHand());
+        removePlayerArmorStats(player, player.getInventory().getHelmet());
+        removePlayerArmorStats(player, player.getInventory().getChestplate());
+        removePlayerArmorStats(player, player.getInventory().getLeggings());
+        removePlayerArmorStats(player, player.getInventory().getBoots());
+
+        //wait 2 ticks to allow the proficiency to be changed
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+
+                //recalculate the player's stats after the proficiency has been changed
+                addPlayerStats(player, player.getInventory().getItemInMainHand());
+                addPlayerArmorStats(player, player.getInventory().getHelmet());
+                addPlayerArmorStats(player, player.getInventory().getChestplate());
+                addPlayerArmorStats(player, player.getInventory().getLeggings());
+                addPlayerArmorStats(player, player.getInventory().getBoots());
+            }
+        }.runTaskLater(main, 2);
+    }
 
     @EventHandler
     public void onRespawn(PlayerPostRespawnEvent e){
