@@ -11,9 +11,9 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -33,6 +33,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.mcmonkey.sentinel.SentinelTrait;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 
 public class StatsManager implements Listener {
@@ -296,8 +298,10 @@ public class StatsManager implements Listener {
                                 attackerMagicDamage * (1-defenderMagicDefense/100);
 
                         //crit damage and strength calculations
+                        boolean isCritical = false;
                         if (attackerCritChance == 100){
                             typeDamage = typeDamage * (1+attackerStrength/100) * (1+attackerCritDamage/100);
+                            isCritical = true;
                         }else{
                             typeDamage = typeDamage * (1+attackerStrength/100);
                         }
@@ -308,6 +312,9 @@ public class StatsManager implements Listener {
                         //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
                         float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                         float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
+
+                        //display the damage
+                        displayDamage(defender.getEntity(), (int) finalDefenderDamage, isCritical, defender.getStoredLocation());
 
                         //deal the damage
                         e.setDamage(finalDefenderDamage);
@@ -359,18 +366,31 @@ public class StatsManager implements Listener {
                             attackerMagicDamage * (1-defenderMagicDefense/100);
 
                     //crit damage and strength calculations
+                    boolean isCritical = false;
                     if (attackerCritChance == 100){
                         typeDamage = typeDamage * (1+attackerStrength/100) * (1+attackerCritDamage/100);
+                        isCritical = true;
                     }else{
                         typeDamage = typeDamage * (1+attackerStrength/100);
                     }
 
+                    //cooldown debuff calculations
+                    float cooldownDebuff;
+                    if (player.getAttackCooldown() < 0.8){
+                        cooldownDebuff = player.getAttackCooldown()/1.5f;
+                    }else{
+                        cooldownDebuff = player.getAttackCooldown();
+                    }
+
                     //defense calculation
-                    float finalDefenderDamage = player.getAttackCooldown() * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+                    float finalDefenderDamage = cooldownDebuff * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
                     //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
                     float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                     float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
+
+                    //display the damage
+                    displayDamage(player, (int) finalDefenderDamage, isCritical, defender.getStoredLocation());
 
                     //deal the damage
                     e.setDamage(finalDefenderDamage);
@@ -448,8 +468,10 @@ public class StatsManager implements Listener {
                             attackerMagicDamage * (1-defenderMagicDefense/100);
 
                     //crit damage and strength calculations
+                    boolean isCritical = false;
                     if (attackerCritChance == 100){
                         typeDamage = typeDamage * (1+attackerStrength/100) * (1+attackerCritDamage/100);
+                        isCritical = true;
                     }else{
                         typeDamage = typeDamage * (1+attackerStrength/100);
                     }
@@ -460,6 +482,9 @@ public class StatsManager implements Listener {
                     //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
                     float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                     float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
+
+                    //display the damage
+                    displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
                     //deal the damage
                     e.setDamage(0);
@@ -517,14 +542,24 @@ public class StatsManager implements Listener {
                         attackerMagicDamage * (1-defenderMagicDefense/100);
 
                 //crit damage and strength calculations
+                boolean isCritical = false;
                 if (attackerCritChance == 100){
                     typeDamage = typeDamage * (1+attackerStrength/100) * (1+attackerCritDamage/100);
+                    isCritical = true;
                 }else{
                     typeDamage = typeDamage * (1+attackerStrength/100);
                 }
 
+                //cooldown debuff calculations
+                float cooldownDebuff;
+                if (playerAttack.getAttackCooldown() < 0.8){
+                    cooldownDebuff = playerAttack.getAttackCooldown()/1.5f;
+                }else{
+                    cooldownDebuff = playerAttack.getAttackCooldown();
+                }
+
                 //defense calculation
-                float finalDefenderDamage = playerAttack.getAttackCooldown() * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+                float finalDefenderDamage = cooldownDebuff * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
                 //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
                 float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
@@ -537,6 +572,9 @@ public class StatsManager implements Listener {
 
                 //deal the thorns damage
                 attackerPlayer.setHealth(attackerPlayer.getHealth() - finalAttackerDamage);
+
+                //display the damage
+                displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
                 //update the player's health bar
                 displayActionBar(playerAttack);
@@ -711,6 +749,38 @@ public class StatsManager implements Listener {
         }catch (NullPointerException ex){
             return true;
         }
+    }
+
+    //display a hologram for the damage
+    public void displayDamage(Entity entity, int damage, boolean isCritical, Location location){
+
+        //slightly offset the location
+        location.add(((Math.random()*-2)+1)/2, ((Math.random()*-2)+1)/2 - 1, ((Math.random()*-2)+1)/2);
+
+        //create the damage component
+        Component damageComponent;
+        if (isCritical){
+            damageComponent = Component.text("⚔" + damage, TextColor.color(255,51,51));
+        }else{
+            damageComponent = Component.text(damage, TextColor.color(204,0,0));
+        }
+
+        //spawn the hologram
+        ArmorStand armorStand = (ArmorStand) entity.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        armorStand.setInvisible(true);
+        armorStand.setGravity(false);
+        armorStand.setInvulnerable(true);
+        armorStand.setCustomNameVisible(true);
+        armorStand.customName(damageComponent);
+
+        //despawn the armor stand after 1 second
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                armorStand.remove();
+            }
+        }.runTaskLater(main, 20);
+
     }
 
     //manages the health of the player when equipping different items
