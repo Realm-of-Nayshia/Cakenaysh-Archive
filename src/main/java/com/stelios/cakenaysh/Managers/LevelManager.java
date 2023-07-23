@@ -1,6 +1,6 @@
 package com.stelios.cakenaysh.Managers;
 
-import com.stelios.cakenaysh.Events.XpGainEvent;
+import com.stelios.cakenaysh.Events.XpChangedEvent;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import com.stelios.cakenaysh.Npc.Traits.NpcStats;
@@ -43,7 +43,7 @@ public class LevelManager implements Listener {
                     player.sendMessage(Component.text("+" + (int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp() + "XP", TextColor.color(0, 255, 0)));
 
                     //call the xp gain event
-                    Bukkit.getPluginManager().callEvent(new XpGainEvent(player, (int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp(), CitizensAPI.getNPCRegistry().getNPC(e.getEntity())));
+                    Bukkit.getPluginManager().callEvent(new XpChangedEvent(player, (int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp(), CitizensAPI.getNPCRegistry().getNPC(e.getEntity())));
 
                 }
             }catch (NullPointerException ex){
@@ -55,7 +55,7 @@ public class LevelManager implements Listener {
 
     //checking if the player has enough xp to level up
     @EventHandler
-    public void onXpGain(XpGainEvent e){
+    public void onXpGain(XpChangedEvent e){
 
         //get the player and custom player
         Player player = e.getPlayer();

@@ -6,7 +6,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class XpGainEvent extends Event {
+public class XpChangedEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
@@ -15,7 +15,7 @@ public class XpGainEvent extends Event {
     private final NPC npc;
 
 
-    public XpGainEvent(Player player, int xpGained, NPC npc){
+    public XpChangedEvent(Player player, int xpGained, NPC npc){
         this.player = player;
         this.xpGained = xpGained;
         this.npc = npc;
