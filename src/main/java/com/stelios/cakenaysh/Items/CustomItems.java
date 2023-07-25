@@ -244,8 +244,8 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    WRATH_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_SWORD, 1,false,50000,40,100,90
-            ,10,2,10,10,2, 4,0,0, false)
+    WRATH_OF_SPARTA(new BattleItemBuilder(Material.GOLDEN_SWORD, 1,false,50000,40,100,50
+            ,10,2,10,10,0, 4,0,0, false)
             .setUnbreakable()
             .setDisplayName(new ArrayList<>(Arrays.asList("Wrath of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
