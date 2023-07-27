@@ -41,10 +41,9 @@ public class BattleItemBuilder extends ItemBuilder {
     private float rangedDamage;
     private float magicDefense;
     private float magicDamage;
-    private int meleeProficiency;
-    private int rangedProficiency;
-    private int armorProficiency;
-    private boolean isArmor;
+    private final int meleeProficiency;
+    private final int rangedProficiency;
+    private final int armorProficiency;
 
 
 
@@ -96,7 +95,6 @@ public class BattleItemBuilder extends ItemBuilder {
         this.meleeProficiency = meleeProficiency;
         this.rangedProficiency = rangedProficiency;
         this.armorProficiency = armorProficiency;
-        this.isArmor = isArmor;
 
         //if the item is unstackable, add a unique identifier to the item
         if (unstackable){
@@ -195,7 +193,6 @@ public class BattleItemBuilder extends ItemBuilder {
         this.meleeProficiency = meleeProficiency;
         this.rangedProficiency = rangedProficiency;
         this.armorProficiency = armorProficiency;
-        this.isArmor = isArmor;
 
         //if the item is unstackable, add a unique identifier to the item
         if (unstackable){
@@ -403,380 +400,109 @@ public class BattleItemBuilder extends ItemBuilder {
 
         //adding the custom item attributes to the item lore
         loreList.add(0, Component.text(""));
-
-        if (this.getStat("infernalDefense") != 0) {
-            //if the infernal defense is a whole number, don't add a decimal point
-            if (this.getStat("infernalDefense") % 1 == 0) {
-                loreList.add(0, Component.text("Infernal Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("infernalDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Infernal Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("infernalDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("infernalDamage") != 0) {
-            //if the infernal damage is a whole number, don't add a decimal point
-            if (this.getStat("infernalDamage") % 1 == 0) {
-                loreList.add(0, Component.text("Infernal Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("infernalDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Infernal Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("infernalDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("undeadDefense") != 0) {
-            //if the undead defense is a whole number, don't add a decimal point
-            if (this.getStat("undeadDefense") % 1 == 0) {
-                loreList.add(0, Component.text("Undead Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("undeadDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Undead Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("undeadDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("undeadDamage") != 0) {
-            //if the undead damage is a whole number, don't add a decimal point
-            if (this.getStat("undeadDamage") % 1 == 0) {
-                loreList.add(0, Component.text("Undead Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("undeadDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Undead Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("undeadDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("aquaticDefense") != 0) {
-            //if the aquatic defense is a whole number, don't add a decimal point
-            if (this.getStat("aquaticDefense") % 1 == 0) {
-                loreList.add(0, Component.text("Aquatic Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("aquaticDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Aquatic Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("aquaticDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("aquaticDamage") != 0) {
-            //if the aquatic damage is a whole number, don't add a decimal point
-            if (this.getStat("aquaticDamage") % 1 == 0) {
-                loreList.add(0, Component.text("Aquatic Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("aquaticDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Aquatic Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("aquaticDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("aerialDefense") != 0) {
-            //if the arial defense is a whole number, don't add a decimal point
-            if (this.getStat("aerialDefense") % 1 == 0) {
-                loreList.add(0, Component.text("Aerial Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("aerialDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Aerial Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("aerialDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("aerialDamage") != 0) {
-            //if the aerial damage is a whole number, don't add a decimal point
-            if (this.getStat("aerialDamage") % 1 == 0) {
-                loreList.add(0, Component.text("Aerial Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("aerialDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Aerial Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("aerialDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("meleeDefense") != 0) {
-            //if the melee defense is a whole number, don't add a decimal point
-            if (this.getStat("meleeDefense") % 1 == 0) {
-                loreList.add(0, Component.text("Melee Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("meleeDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Melee Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("meleeDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("meleeDamage") != 0) {
-            //if the melee damage is a whole number, don't add a decimal point
-            if (this.getStat("meleeDamage") % 1 == 0) {
-                loreList.add(0, Component.text("Melee Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("meleeDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Melee Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("meleeDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("rangedDefense") != 0) {
-            //if the ranged defense is a whole number, don't add a decimal point
-            if (this.getStat("rangedDefense") % 1 == 0) {
-                loreList.add(0, Component.text("Ranged Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("rangedDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Ranged Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("rangedDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("rangedDamage") != 0) {
-            //if the ranged damage is a whole number, don't add a decimal point
-            if (this.getStat("rangedDamage") % 1 == 0) {
-                loreList.add(0, Component.text("Ranged Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("rangedDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Ranged Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("rangedDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("magicDefense") != 0) {
-            //if the magic defense is a whole number, don't add a decimal point
-            if (this.getStat("magicDefense") % 1 == 0) {
-                loreList.add(0, Component.text("Magic Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("magicDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Magic Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("magicDefense") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("magicDamage") != 0) {
-            //if the magic damage is a whole number, don't add a decimal point
-            if (this.getStat("magicDamage") % 1 == 0) {
-                loreList.add(0, Component.text("Magic Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("magicDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Magic Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("magicDamage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("thorns") != 0) {
-            //if the thorns is a whole number, don't add a decimal point
-            if (this.getStat("thorns") % 1 == 0) {
-                loreList.add(0, Component.text("Thorns: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("thorns"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Thorns: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("thorns"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("speed") != 0) {
-            //if the speed is a whole number, don't add a decimal point
-            if (this.getStat("speed") % 1 == 0) {
-                loreList.add(0, Component.text("Speed: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("speed") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Speed: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("speed") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("attackSpeed") != 0) {
-            //if the attack speed is a whole number, don't add a decimal point
-            if (this.getStat("attackSpeed") % 1 == 0) {
-                loreList.add(0, Component.text("Attack Speed: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("attackSpeed"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Attack Speed: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("attackSpeed"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("critDamage") != 0) {
-            //if the crit damage is a whole number, don't add a decimal point
-            if (this.getStat("critDamage") % 1 == 0) {
-                loreList.add(0, Component.text("Crit Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("critDamage") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Crit Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("critDamage") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("critChance") != 0) {
-            //if the crit chance is a whole number, don't add a decimal point
-            if (this.getStat("critChance") % 1 == 0) {
-                loreList.add(0, Component.text("Crit Chance: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) getStat("critChance") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Crit Chance: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("critChance") + "%", TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("defense") != 0) {
-            //if the defense is a whole number, don't add a decimal point
-            if (this.getStat("defense") % 1 == 0) {
-                loreList.add(0, Component.text("Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("defense"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Defense: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("defense"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("health") != 0) {
-            //if the health is a whole number, don't add a decimal point
-            if (this.getStat("health") % 1 == 0) {
-                loreList.add(0, Component.text("Health: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("health"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Health: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("health"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("strength") != 0) {
-            //if the Strength is a whole number, don't add a decimal point
-            if (this.getStat("strength") % 1 == 0) {
-                loreList.add(0, Component.text("Strength: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("strength"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Strength: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("strength"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
-
-        if (this.getStat("damage") != 0) {
-            //if the damage is a whole number, don't add a decimal point
-            if (this.getStat("damage") % 1 == 0) {
-                loreList.add(0, Component.text("Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + (int) this.getStat("damage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            } else {
-                loreList.add(0, Component.text("Damage: ", TextColor.color(200, 200, 200))
-                        .decoration(TextDecoration.ITALIC, false)
-                        .append(Component.text("+" + this.getStat("damage"), TextColor.color(240, 40, 50)))
-                        .decoration(TextDecoration.ITALIC, false));
-            }
-        }
+        makeLoreLine(loreList, "Infernal Defense: ", this.getStat("infernalDefense"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Infernal Damage: ", this.getStat("infernalDamage"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Undead Defense: ", this.getStat("undeadDefense"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Undead Damage: ", this.getStat("undeadDamage"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Aquatic Defense: ", this.getStat("aquaticDefense"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Aquatic Damage: ", this.getStat("aquaticDamage"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Aerial Defense: ", this.getStat("aerialDefense"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Aerial Damage: ", this.getStat("aerialDamage"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Melee Defense: ", this.getStat("meleeDefense"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Melee Damage: ", this.getStat("meleeDamage"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Ranged Defense: ", this.getStat("rangedDefense"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Ranged Damage: ", this.getStat("rangedDamage"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Magic Defense: ", this.getStat("magicDefense"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Magic Damage: ", this.getStat("magicDamage"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Thorns: ", this.getStat("thorns"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Speed: ", this.getStat("speed"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Attack Speed: ", this.getStat("attackSpeed"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Crit Damage: ", this.getStat("critDamage"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Crit Chance: ", this.getStat("critChance"), true, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Defense: ", this.getStat("defense"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Health: ", this.getStat("health"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Strength: ", this.getStat("strength"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Damage: ", this.getStat("damage"), false, false, 240, 40, 50, 200, 200, 200);
 
         if (this.getStat("meleeProficiency") != 0 || this.getStat("rangedProficiency") != 0 || this.getStat("armorProficiency") != 0){
             loreList.add(0, Component.text(""));
         }
 
-        if (this.getStat("armorProficiency") != 0){
-            loreList.add(0, Component.text("Armor Proficiency: ", TextColor.color(200, 200, 200))
-                    .decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text((int) this.getStat("armorProficiency"), TextColor.color(77,85,92)))
-                    .decoration(TextDecoration.ITALIC, false));
-        }
-
-        if (this.getStat("rangedProficiency") != 0){
-            loreList.add(0, Component.text("Ranged Proficiency: ", TextColor.color(200, 200, 200))
-                    .decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text((int) this.getStat("rangedProficiency"), TextColor.color(240, 185, 85)))
-                    .decoration(TextDecoration.ITALIC, false));
-        }
-
-        if (this.getStat("meleeProficiency") != 0){
-            loreList.add(0, Component.text("Melee Proficiency: ", TextColor.color(200, 200, 200))
-                    .decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text((int) this.getStat("meleeProficiency"), TextColor.color(214,88,88)))
-                    .decoration(TextDecoration.ITALIC, false));
-        }
+        makeLoreLine(loreList, "Melee Proficiency: ", this.getStat("armorProficiency"), false, true, 77,85,92, 200, 200, 200);
+        makeLoreLine(loreList, "Ranged Proficiency: ", this.getStat("rangedProficiency"), false, true, 240, 185, 85, 200, 200, 200);
+        makeLoreLine(loreList, "Armor Proficiency: ", this.getStat("meleeProficiency"), false, true, 214,88,88, 200, 200, 200);
 
         //setting the lore of the item
         super.getItemMeta().lore(loreList);
         return this;
+    }
+
+    //makes a lore line
+    //@param loreList: The list of lore lines
+    //@param statName: The name of the stat
+    //@param spacedStatName: The name of the stat with spaces
+    //@param isPercent: If the stat needs a percent sign
+    //@param red,green,blue(number): the rgb color of the number itself
+    //@param red,green,blue(stat): the rgb color of the stat itself
+    public void makeLoreLine(List<TextComponent> loreList, String spacedStatName, float statValue, boolean isPercent, boolean isProficiency,
+                             int redNumber, int greenNumber, int blueNumber, int redStat, int greenStat, int blueStat) {
+
+        //if the stat value is zero do nothing
+        if (statValue != 0) {
+
+            //create the to be returned text component
+            TextComponent loreLine;
+
+            //set the sign
+            String sign;
+            if (statValue < 0) {
+                sign = "-";
+            } else {
+                sign = "+";
+            }
+
+            //if a stat is a proficiency, remove the + or - sign
+            if (!isProficiency) {
+
+                //if the stat needs a percent sign
+                if (isPercent) {
+
+                    //if the stat is a whole number, don't add a decimal point
+                    if (statValue % 1 == 0) {
+                        loreLine = Component.text(spacedStatName, TextColor.color(redStat, greenStat, blueStat))
+                                .decoration(TextDecoration.ITALIC, false)
+                                .append(Component.text(sign + (int) statValue + "%", TextColor.color(redNumber, greenNumber, blueNumber)))
+                                .decoration(TextDecoration.ITALIC, false);
+                    } else {
+                        loreLine = Component.text(spacedStatName, TextColor.color(redStat, greenStat, blueStat))
+                                .decoration(TextDecoration.ITALIC, false)
+                                .append(Component.text(sign + statValue + "%", TextColor.color(redNumber, greenNumber, blueNumber)))
+                                .decoration(TextDecoration.ITALIC, false);
+                    }
+                } else {
+
+                    //if the stat is a whole number, don't add a decimal point
+                    if (statValue % 1 == 0) {
+                        loreLine = Component.text(spacedStatName, TextColor.color(redStat, greenStat, blueStat))
+                                .decoration(TextDecoration.ITALIC, false)
+                                .append(Component.text(sign + (int) statValue, TextColor.color(redNumber, greenNumber, blueNumber)))
+                                .decoration(TextDecoration.ITALIC, false);
+                    } else {
+                        loreLine = Component.text(spacedStatName, TextColor.color(redStat, greenStat, blueStat))
+                                .decoration(TextDecoration.ITALIC, false)
+                                .append(Component.text(sign + statValue, TextColor.color(redNumber, greenNumber, blueNumber)))
+                                .decoration(TextDecoration.ITALIC, false);
+                    }
+                }
+            }else{
+                loreLine = Component.text(spacedStatName, TextColor.color(redStat, greenStat, blueStat))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text((int) statValue, TextColor.color(redNumber, greenNumber, blueNumber)))
+                        .decoration(TextDecoration.ITALIC, false);
+            }
+
+            loreList.add(0, loreLine);
+        }
     }
 
 }
