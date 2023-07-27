@@ -454,10 +454,8 @@ public class BattleItemBuilder extends ItemBuilder {
             TextComponent loreLine;
 
             //set the sign
-            String sign;
-            if (statValue < 0) {
-                sign = "-";
-            } else {
+            String sign = "";
+            if (statValue > 0) {
                 sign = "+";
             }
 
