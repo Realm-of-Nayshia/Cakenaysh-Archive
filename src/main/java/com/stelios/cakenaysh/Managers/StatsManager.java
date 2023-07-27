@@ -312,6 +312,11 @@ public class StatsManager implements Listener {
                         float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                         float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
 
+                        //if the damage is negative set it to zero
+                        if (finalDefenderDamage < 0){
+                            finalDefenderDamage = 0;
+                        }
+
                         //display the damage
                         displayDamage(defender.getEntity(), (int) finalDefenderDamage, isCritical, defender.getStoredLocation());
 
@@ -387,6 +392,11 @@ public class StatsManager implements Listener {
                     //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
                     float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                     float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
+
+                    //if the damage is negative set it to zero
+                    if (finalDefenderDamage < 0){
+                        finalDefenderDamage = 0;
+                    }
 
                     //display the damage
                     displayDamage(player, (int) finalDefenderDamage, isCritical, defender.getStoredLocation());
@@ -482,6 +492,11 @@ public class StatsManager implements Listener {
                     float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                     float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
 
+                    //if the damage is negative set it to zero
+                    if (finalDefenderDamage < 0){
+                        finalDefenderDamage = 0;
+                    }
+
                     //display the damage
                     displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
@@ -563,6 +578,11 @@ public class StatsManager implements Listener {
                 //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
                 float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
                 float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
+
+                //if the damage is negative set it to zero
+                if (finalDefenderDamage < 0){
+                    finalDefenderDamage = 0;
+                }
 
                 //deal the damage
                 e.setDamage(finalDefenderDamage);
