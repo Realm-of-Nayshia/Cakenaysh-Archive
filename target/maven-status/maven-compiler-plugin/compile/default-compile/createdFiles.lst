@@ -1,4 +1,3 @@
-com\stelios\cakenaysh\MenuCreation\MenuBuilder.class
 com\stelios\cakenaysh\Npc\NpcBuilder.class
 com\stelios\cakenaysh\AbilityCreation\ItemAbility.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
@@ -11,6 +10,7 @@ com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoMain.class
 com\stelios\cakenaysh\Commands\SetNpcStatCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\AddAttributesTabComplete.class
 com\stelios\cakenaysh\Commands\ResetAttributesCommand.class
+com\stelios\cakenaysh\MenuCreation\MenuButton.class
 com\stelios\cakenaysh\Commands\GetNpcStatsCommand.class
 com\stelios\cakenaysh\AbilityCreation\Abilities\DialOfTheSunAbility.class
 com\stelios\cakenaysh\AbilityCreation\CustomAbilities.class
@@ -25,11 +25,12 @@ com\stelios\cakenaysh\Listeners\ConnectionListener.class
 com\stelios\cakenaysh\Commands\TabComplete\SetAttributesTabComplete.class
 com\stelios\cakenaysh\Main.class
 com\stelios\cakenaysh\Commands\ResetNpcStatsCommand.class
+com\stelios\cakenaysh\Items\Item.class
 com\stelios\cakenaysh\Listeners\PlayerInteractListener.class
 com\stelios\cakenaysh\Managers\StatsManager$3.class
 com\stelios\cakenaysh\Managers\StatsManager$4.class
+com\stelios\cakenaysh\MenuCreation\Menu.class
 com\stelios\cakenaysh\Managers\LevelManager.class
-com\stelios\cakenaysh\MenuCreation\MenuButtonBuilder.class
 com\stelios\cakenaysh\Events\XpChangedEvent.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoStats.class
 com\stelios\cakenaysh\Managers\StatsManager$1.class
@@ -37,15 +38,14 @@ com\stelios\cakenaysh\Commands\TabComplete\SetNpcStatTabComplete.class
 com\stelios\cakenaysh\Util\Database.class
 com\stelios\cakenaysh\Commands\VanishCommand.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoSkills.class
-com\stelios\cakenaysh\Items\ItemBuilder.class
 com\stelios\cakenaysh\Managers\StatsManager.class
 com\stelios\cakenaysh\Events\ProficiencyChangedEvent.class
 com\stelios\cakenaysh\Util\CustomPlayer.class
+com\stelios\cakenaysh\Items\BattleItem.class
 com\stelios\cakenaysh\Npc\Traits\NpcStats.class
 com\stelios\cakenaysh\Commands\GetAttributesCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.class
 com\stelios\cakenaysh\Npc\Npcs.class
 com\stelios\cakenaysh\Commands\HealCommand.class
 com\stelios\cakenaysh\Commands\GiveItemCommand.class
-com\stelios\cakenaysh\Items\BattleItemBuilder.class
 com\stelios\cakenaysh\AbilityCreation\Abilities\DialOfTheSunAbility$1.class
