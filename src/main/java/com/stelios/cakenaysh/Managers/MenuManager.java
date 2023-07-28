@@ -1,6 +1,6 @@
 package com.stelios.cakenaysh.Managers;
 
-import com.stelios.cakenaysh.MenuCreation.MenuBuilder;
+import com.stelios.cakenaysh.MenuCreation.Menu;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class MenuManager {
 
-    private final Map<UUID, MenuBuilder> openMenus;
+    private final Map<UUID, Menu> openMenus;
     private static MenuManager instance;
 
     public MenuManager(){
@@ -23,7 +23,7 @@ public class MenuManager {
     }
 
     //register a menu to the user
-    public void registerMenu(UUID uuid, MenuBuilder menu){
+    public void registerMenu(UUID uuid, Menu menu){
         openMenus.put(uuid, menu);
     }
 
@@ -33,7 +33,7 @@ public class MenuManager {
     }
 
     //find a menu
-    public MenuBuilder matchMenu(UUID uuid){
+    public Menu matchMenu(UUID uuid){
         return openMenus.get(uuid);
     }
 }

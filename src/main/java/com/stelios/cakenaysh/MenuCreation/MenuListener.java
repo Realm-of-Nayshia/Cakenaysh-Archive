@@ -13,7 +13,7 @@ public class MenuListener implements Listener {
     @EventHandler
     public void inventoryClick(InventoryClickEvent e){
 
-        MenuBuilder matchedMenu = MenuManager.getInstance().matchMenu(e.getWhoClicked().getUniqueId());
+        Menu matchedMenu = MenuManager.getInstance().matchMenu(e.getWhoClicked().getUniqueId());
 
         if (matchedMenu != null){
             e.setCancelled(true);
@@ -24,7 +24,7 @@ public class MenuListener implements Listener {
     @EventHandler
     public void inventoryClose(InventoryCloseEvent e){
 
-        MenuBuilder matchedMenu = MenuManager.getInstance().matchMenu(e.getPlayer().getUniqueId());
+        Menu matchedMenu = MenuManager.getInstance().matchMenu(e.getPlayer().getUniqueId());
 
         if (matchedMenu != null){
             matchedMenu.handleClosed((Player) e.getPlayer());
@@ -36,7 +36,7 @@ public class MenuListener implements Listener {
 
     @EventHandler
     public void playerQuit(PlayerQuitEvent e){
-        MenuBuilder matchedMenu = MenuManager.getInstance().matchMenu(e.getPlayer().getUniqueId());
+        Menu matchedMenu = MenuManager.getInstance().matchMenu(e.getPlayer().getUniqueId());
 
         if (matchedMenu != null){
             matchedMenu.handleClosed(e.getPlayer());
