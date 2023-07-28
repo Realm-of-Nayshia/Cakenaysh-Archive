@@ -2,8 +2,8 @@ package com.stelios.cakenaysh.AbilityCreation;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.stelios.cakenaysh.Items.Item;
 import com.stelios.cakenaysh.Util.CustomPlayer;
-import com.stelios.cakenaysh.Items.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -28,13 +28,13 @@ import java.util.concurrent.TimeUnit;
 public abstract class ItemAbility implements Listener {
 
     private final CustomAbilities ability;
-    private final ItemBuilder item;
+    private final Item item;
     private final int stamina;
     private final Cache<UUID, Long> cooldown;
     private final long cooldownTime;
     private static boolean firstEventRegistered = false;
 
-    public ItemAbility(CustomAbilities ability, ItemBuilder item, int stamina, long cooldown) {
+    public ItemAbility(CustomAbilities ability, Item item, int stamina, long cooldown) {
 
         //register the first event
         if (!firstEventRegistered) {

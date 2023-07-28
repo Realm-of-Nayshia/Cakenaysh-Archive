@@ -2,7 +2,7 @@ package com.stelios.cakenaysh.AbilityCreation.Abilities;
 
 import com.stelios.cakenaysh.AbilityCreation.ItemAbility;
 import com.stelios.cakenaysh.AbilityCreation.CustomAbilities;
-import com.stelios.cakenaysh.Items.ItemBuilder;
+import com.stelios.cakenaysh.Items.Item;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Sound;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 public class WrathOfSpartaAbility extends ItemAbility {
 
-    public WrathOfSpartaAbility(CustomAbilities ability, ItemBuilder item, int stamina, long cooldown) {
+    public WrathOfSpartaAbility(CustomAbilities ability, Item item, int stamina, long cooldown) {
         super(ability, item, stamina, cooldown);
     }
 
