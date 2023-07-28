@@ -26,7 +26,7 @@ public class PlayerInfoStats extends Menu {
 
         ////registering clickable buttons
         //back button
-        MenuButton backButton = new MenuButton(CustomItems.BACK_BUTTON.getItemBuilder().build());
+        MenuButton backButton = new MenuButton(CustomItems.BACK_BUTTON.getItem().build());
         backButton.setWhenClicked(clicked -> {
             new PlayerInfoMain(clicked).open(clicked);
         });
@@ -34,7 +34,7 @@ public class PlayerInfoStats extends Menu {
         registerButton(backButton, 45);
 
         //close button
-        MenuButton closeButton = new MenuButton(CustomItems.CLOSE.getItemBuilder().build());
+        MenuButton closeButton = new MenuButton(CustomItems.CLOSE.getItem().build());
         closeButton.setWhenClicked(clicked -> clicked.closeInventory());
 
         registerButton(closeButton, 49);
@@ -110,7 +110,7 @@ public class PlayerInfoStats extends Menu {
 
             //if there is no button registered in the current inventory slot, register a blank pane
             if (!this.getButtonMap().containsKey(i)){
-                MenuButton blankPane = new MenuButton(CustomItems.BLANK_BLACK_PANE.getItemBuilder().build());
+                MenuButton blankPane = new MenuButton(CustomItems.BLANK_BLACK_PANE.getItem().build());
                 registerButton(blankPane, i);
             }
         }

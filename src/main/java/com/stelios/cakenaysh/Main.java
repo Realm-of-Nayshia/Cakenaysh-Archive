@@ -99,8 +99,8 @@ public final class Main extends JavaPlugin {
 
     //registering abilities
     private void registerAbilities(){
-        new WrathOfSpartaAbility(CustomAbilities.SPARTAN_WRATH, CustomItems.WRATH_OF_SPARTA.getItemBuilder(), 5, 5);
-        new DialOfTheSunAbility(CustomAbilities.GRADUAL_SET_DAY, CustomItems.DIAL_OF_THE_SUN.getItemBuilder(), 25, 15);
+        new WrathOfSpartaAbility(CustomAbilities.SPARTAN_WRATH, CustomItems.WRATH_OF_SPARTA.getItem(), 5, 5);
+        new DialOfTheSunAbility(CustomAbilities.GRADUAL_SET_DAY, CustomItems.DIAL_OF_THE_SUN.getItem(), 25, 15);
     }
 
     //registering traits

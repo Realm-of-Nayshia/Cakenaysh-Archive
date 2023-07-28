@@ -115,42 +115,42 @@ public class PlayerInfoMain extends Menu {
         registerButton(statsButton, 20);
 
         //skills button
-        MenuButton skillsButton = new MenuButton(CustomItems.SKILLS.getItemBuilder().build());
+        MenuButton skillsButton = new MenuButton(CustomItems.SKILLS.getItem().build());
         skillsButton.setWhenClicked(clicked ->
                 new PlayerInfoSkills(player).open(clicked));
 
         registerButton(skillsButton, 21);
 
         //quests button
-        MenuButton questsButton = new MenuButton(CustomItems.QUESTS.getItemBuilder().build());
+        MenuButton questsButton = new MenuButton(CustomItems.QUESTS.getItem().build());
         questsButton.setWhenClicked(clicked ->
                 clicked.sendMessage("You clicked on your quests"));
 
         registerButton(questsButton, 23);
 
         //recipe book button
-        MenuButton recipeBookButton = new MenuButton(CustomItems.RECIPE_BOOK.getItemBuilder().build());
+        MenuButton recipeBookButton = new MenuButton(CustomItems.RECIPE_BOOK.getItem().build());
         recipeBookButton.setWhenClicked(clicked ->
                 clicked.sendMessage("You clicked on your recipe book"));
 
         registerButton(recipeBookButton, 24);
 
         //character management button
-        MenuButton characterManagementButton = new MenuButton(CustomItems.CHARACTER_MANAGEMENT.getItemBuilder().build());
+        MenuButton characterManagementButton = new MenuButton(CustomItems.CHARACTER_MANAGEMENT.getItem().build());
         characterManagementButton.setWhenClicked(clicked ->
                 clicked.sendMessage("You clicked on your character management"));
 
         registerButton(characterManagementButton, 39);
 
         //settings button
-        MenuButton settingsButton = new MenuButton(CustomItems.SETTINGS.getItemBuilder().build());
+        MenuButton settingsButton = new MenuButton(CustomItems.SETTINGS.getItem().build());
         settingsButton.setWhenClicked(clicked ->
                 clicked.sendMessage("You clicked on your settings"));
 
         registerButton(settingsButton, 41);
 
         //close button
-        MenuButton closeButton = new MenuButton(CustomItems.CLOSE.getItemBuilder().build());
+        MenuButton closeButton = new MenuButton(CustomItems.CLOSE.getItem().build());
         closeButton.setWhenClicked(clicked -> clicked.closeInventory());
 
         registerButton(closeButton, 40);
@@ -161,7 +161,7 @@ public class PlayerInfoMain extends Menu {
 
             //if there is no button registered in the current inventory slot, register a blank pane
             if (!this.getButtonMap().containsKey(i)){
-                MenuButton blankPane = new MenuButton(CustomItems.BLANK_BLACK_PANE.getItemBuilder().build());
+                MenuButton blankPane = new MenuButton(CustomItems.BLANK_BLACK_PANE.getItem().build());
                 registerButton(blankPane, i);
             }
         }
