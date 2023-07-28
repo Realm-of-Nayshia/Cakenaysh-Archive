@@ -48,17 +48,17 @@ public class GiveItemCommand implements CommandExecutor {
                 if(db) {
 
                     //if the item exists
-                    if (CustomItems.getItem(args[1]) != null) {
+                    if (CustomItems.getItemFromName(args[1]) != null) {
 
                         //play a sound,give the items, and send a message
                         player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 
                         if (args.length == 3) {
                             for (int i = 0; i < Integer.parseInt(args[2]); i++) {
-                                player.getInventory().addItem(CustomItems.getItem(args[1]).build());
+                                player.getInventory().addItem(CustomItems.getItemFromName(args[1]).build());
                             }
                         } else {
-                            player.getInventory().addItem(CustomItems.getItem(args[1]).build());
+                            player.getInventory().addItem(CustomItems.getItemFromName(args[1]).build());
                         }
 
                         if (sender instanceof Player) {
