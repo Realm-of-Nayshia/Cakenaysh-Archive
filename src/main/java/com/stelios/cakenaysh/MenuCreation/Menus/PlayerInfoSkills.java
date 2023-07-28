@@ -2,10 +2,10 @@ package com.stelios.cakenaysh.MenuCreation.Menus;
 
 import com.stelios.cakenaysh.Events.ProficiencyChangedEvent;
 import com.stelios.cakenaysh.Items.CustomItems;
-import com.stelios.cakenaysh.Items.ItemBuilder;
+import com.stelios.cakenaysh.Items.Item;
 import com.stelios.cakenaysh.Main;
-import com.stelios.cakenaysh.MenuCreation.MenuBuilder;
-import com.stelios.cakenaysh.MenuCreation.MenuButtonBuilder;
+import com.stelios.cakenaysh.MenuCreation.Menu;
+import com.stelios.cakenaysh.MenuCreation.MenuButton;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -20,21 +20,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class PlayerInfoSkills extends MenuBuilder {
+public class PlayerInfoSkills extends Menu {
 
     public PlayerInfoSkills(Player player){
         super( Component.text("Your Skills", TextColor.color(0,0,0), TextDecoration.BOLD), 5);
-
-        //set inventory consumers
-        //setInventoryOpened(opened -> opened.sendMessage("Inventory opened"));
-        //setInventoryClosed(closed -> closed.sendMessage("Inventory closed"));
 
         //getting the custom player
         CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(player.getUniqueId());
 
         ////registering clickable buttons
         //back button
-        MenuButtonBuilder backButton = new MenuButtonBuilder(CustomItems.BACK_BUTTON.getItemBuilder().build());
+        MenuButton backButton = new MenuButton(CustomItems.BACK_BUTTON.getItemBuilder().build());
         backButton.setWhenClicked(clicked -> {
             new PlayerInfoMain(clicked).open(clicked);
         });
@@ -42,13 +38,13 @@ public class PlayerInfoSkills extends MenuBuilder {
         registerButton(backButton, 36);
 
         //close button
-        MenuButtonBuilder closeButton = new MenuButtonBuilder(CustomItems.CLOSE.getItemBuilder().build());
+        MenuButton closeButton = new MenuButton(CustomItems.CLOSE.getItemBuilder().build());
         closeButton.setWhenClicked(clicked -> clicked.closeInventory());
 
         registerButton(closeButton, 40);
 
         //melee proficiency
-        ItemBuilder meleeProficiency = new ItemBuilder(Material.IRON_SWORD, 1, false)
+        Item meleeProficiency = new Item(Material.IRON_SWORD, 1, false)
                 .setDisplayName(new ArrayList<>(Arrays.asList("Melee Level ", String.valueOf(customPlayer.getMeleeProficiency()))),
                         new ArrayList<>(Arrays.asList(214,88,88, 214,88,88)),
                         new ArrayList<>(Arrays.asList(false,false)),
@@ -67,7 +63,7 @@ public class PlayerInfoSkills extends MenuBuilder {
                         new ArrayList<>(Arrays.asList(false,false,false,false)),
                         new ArrayList<>(Arrays.asList(false,false,false,false)));
 
-        MenuButtonBuilder meleeProficiencyButton = new MenuButtonBuilder(meleeProficiency.build());
+        MenuButton meleeProficiencyButton = new MenuButton(meleeProficiency.build());
         meleeProficiencyButton.setWhenClicked(clicked -> {
             if (customPlayer.getInvestmentPoints() > 0) {
 
@@ -85,7 +81,7 @@ public class PlayerInfoSkills extends MenuBuilder {
 
 
         //ranged proficiency
-        ItemBuilder rangedProficiency = new ItemBuilder(Material.BOW, 1, false)
+        Item rangedProficiency = new Item(Material.BOW, 1, false)
                 .setDisplayName(new ArrayList<>(Arrays.asList("Ranged Level ", String.valueOf(customPlayer.getRangedProficiency()))),
                         new ArrayList<>(Arrays.asList(240,185,85, 240,185,85)),
                         new ArrayList<>(Arrays.asList(false,false)),
@@ -104,7 +100,7 @@ public class PlayerInfoSkills extends MenuBuilder {
                         new ArrayList<>(Arrays.asList(false,false,false,false)),
                         new ArrayList<>(Arrays.asList(false,false,false,false)));
 
-        MenuButtonBuilder rangedProficiencyButton = new MenuButtonBuilder(rangedProficiency.build());
+        MenuButton rangedProficiencyButton = new MenuButton(rangedProficiency.build());
         rangedProficiencyButton.setWhenClicked(clicked -> {
             if(customPlayer.getInvestmentPoints() > 0) {
 
@@ -121,7 +117,7 @@ public class PlayerInfoSkills extends MenuBuilder {
         registerButton(rangedProficiencyButton, 20);
 
         //armor proficiency
-        ItemBuilder armorProficiency = new ItemBuilder(Material.IRON_CHESTPLATE, 1, false)
+        Item armorProficiency = new Item(Material.IRON_CHESTPLATE, 1, false)
                 .setDisplayName(new ArrayList<>(Arrays.asList("Armor Level ", String.valueOf(customPlayer.getArmorProficiency()))),
                         new ArrayList<>(Arrays.asList(77,85,92, 77,85,92)),
                         new ArrayList<>(Arrays.asList(false,false)),
@@ -140,7 +136,7 @@ public class PlayerInfoSkills extends MenuBuilder {
                         new ArrayList<>(Arrays.asList(false,false,false,false)),
                         new ArrayList<>(Arrays.asList(false,false,false,false)));
 
-        MenuButtonBuilder armorProficiencyButton = new MenuButtonBuilder(armorProficiency.build());
+        MenuButton armorProficiencyButton = new MenuButton(armorProficiency.build());
         armorProficiencyButton.setWhenClicked(clicked -> {
             if(customPlayer.getInvestmentPoints() > 0) {
 
@@ -158,7 +154,7 @@ public class PlayerInfoSkills extends MenuBuilder {
 
 
         //reset proficiencies button
-        ItemBuilder resetProficiencies = new ItemBuilder(Material.REDSTONE_TORCH, 1, false)
+        Item resetProficiencies = new Item(Material.REDSTONE_TORCH, 1, false)
                 .setDisplayName(new ArrayList<>(Arrays.asList("Click to reset all proficiencies")),
                         new ArrayList<>(Arrays.asList(255,0,0)),
                         new ArrayList<>(Collections.singletonList(false)),
@@ -174,7 +170,7 @@ public class PlayerInfoSkills extends MenuBuilder {
                         new ArrayList<>(Collections.singletonList(false)),
                         new ArrayList<>(Collections.singletonList(false)));
 
-        MenuButtonBuilder resetProficienciesButton = new MenuButtonBuilder(resetProficiencies.build());
+        MenuButton resetProficienciesButton = new MenuButton(resetProficiencies.build());
         resetProficienciesButton.setWhenClicked(clicked -> {
             customPlayer.setMeleeProficiency(0);
             customPlayer.setRangedProficiency(0);
@@ -194,7 +190,7 @@ public class PlayerInfoSkills extends MenuBuilder {
 
         ////registering non-clickable buttons
         //proficiency information
-        ItemBuilder proficiency = new ItemBuilder(Material.PLAYER_HEAD, 1,false)
+        Item proficiency = new Item(Material.PLAYER_HEAD, 1,false)
                 .setDisplayName(new ArrayList<>(Arrays.asList("Current Proficiency Levels")),
                         new ArrayList<>(Arrays.asList(153,255,51)),
                         new ArrayList<>(Collections.singletonList(false)),
@@ -227,18 +223,20 @@ public class PlayerInfoSkills extends MenuBuilder {
         profileMeta.setOwningPlayer(player);
         profileItem.setItemMeta(profileMeta);
 
-        registerButton(new MenuButtonBuilder(profileItem), 11);
+        registerButton(new MenuButton(profileItem), 11);
 
         //skills info
-        registerButton(new MenuButtonBuilder(CustomItems.SKILLS.getItemBuilder().build()), 4);
+        registerButton(new MenuButton(CustomItems.SKILLS.getItemBuilder().build()), 4);
 
         //blank panes
-        for(int i: new int[]{0,1,2,3,5,6,7,8,9,10,12,13,14,15,16,17,18,
-                22,23,24,25,26,27,28,30,31,32,33,34,35,37,38,39,41,42,43,44}){
-            registerButton(new MenuButtonBuilder(CustomItems.BLANK_BLACK_PANE.getItemBuilder().build()), i);
+        for (int i = 0; i < this.getInventory().getSize(); i++){
+
+            //if there is no button registered in the current inventory slot, register a blank pane
+            if (!this.getButtonMap().containsKey(i)){
+                MenuButton blankPane = new MenuButton(CustomItems.BLANK_BLACK_PANE.getItemBuilder().build());
+                registerButton(blankPane, i);
+            }
         }
-
-
 
     }
 

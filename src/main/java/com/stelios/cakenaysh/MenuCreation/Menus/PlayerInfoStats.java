@@ -3,9 +3,9 @@ package com.stelios.cakenaysh.MenuCreation.Menus;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Items.CustomItems;
 import com.stelios.cakenaysh.Util.CustomPlayer;
-import com.stelios.cakenaysh.Items.ItemBuilder;
-import com.stelios.cakenaysh.MenuCreation.MenuBuilder;
-import com.stelios.cakenaysh.MenuCreation.MenuButtonBuilder;
+import com.stelios.cakenaysh.Items.Item;
+import com.stelios.cakenaysh.MenuCreation.Menu;
+import com.stelios.cakenaysh.MenuCreation.MenuButton;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -16,21 +16,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class PlayerInfoStats extends MenuBuilder {
+public class PlayerInfoStats extends Menu {
 
     public PlayerInfoStats(Player player) {
         super(Component.text( "Your Combat Stats", TextColor.color(0,0,0), TextDecoration.BOLD), 6);
-
-        //set inventory consumers
-        //setInventoryOpened(opened -> opened.sendMessage("Inventory opened"));
-        //setInventoryClosed(closed -> closed.sendMessage("Inventory closed"));
 
         //getting the custom player
         CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(player.getUniqueId());
 
         ////registering clickable buttons
         //back button
-        MenuButtonBuilder backButton = new MenuButtonBuilder(CustomItems.BACK_BUTTON.getItemBuilder().build());
+        MenuButton backButton = new MenuButton(CustomItems.BACK_BUTTON.getItemBuilder().build());
         backButton.setWhenClicked(clicked -> {
             new PlayerInfoMain(clicked).open(clicked);
         });
@@ -38,7 +34,7 @@ public class PlayerInfoStats extends MenuBuilder {
         registerButton(backButton, 45);
 
         //close button
-        MenuButtonBuilder closeButton = new MenuButtonBuilder(CustomItems.CLOSE.getItemBuilder().build());
+        MenuButton closeButton = new MenuButton(CustomItems.CLOSE.getItemBuilder().build());
         closeButton.setWhenClicked(clicked -> clicked.closeInventory());
 
         registerButton(closeButton, 49);
@@ -49,7 +45,7 @@ public class PlayerInfoStats extends MenuBuilder {
 
         ////registering non-clickable buttons
         //combat stats
-        ItemBuilder combatStats = new ItemBuilder(Material.DIAMOND_SWORD, 1,false)
+        Item combatStats = new Item(Material.DIAMOND_SWORD, 1,false)
                 .setDisplayName(new ArrayList<>(Collections.singletonList("Combat Stats")),
                         new ArrayList<>(Arrays.asList(0,255,0)),
                         new ArrayList<>(Collections.singletonList(false)),
@@ -107,11 +103,16 @@ public class PlayerInfoStats extends MenuBuilder {
                         new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
                         new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)));
 
-        registerButton(new MenuButtonBuilder(combatStats.build()), 4);
+        registerButton(new MenuButton(combatStats.build()), 4);
 
         //blank panes
-        for(int i: new int[]{0,1,2,3,5,6,7,8,9,17,18,26,27,35,36,41,42,43,44,46,47,48,50,51,52,53}){
-            registerButton(new MenuButtonBuilder(CustomItems.BLANK_BLACK_PANE.getItemBuilder().build()), i);
+        for (int i = 0; i < this.getInventory().getSize(); i++){
+
+            //if there is no button registered in the current inventory slot, register a blank pane
+            if (!this.getButtonMap().containsKey(i)){
+                MenuButton blankPane = new MenuButton(CustomItems.BLANK_BLACK_PANE.getItemBuilder().build());
+                registerButton(blankPane, i);
+            }
         }
 
     }
