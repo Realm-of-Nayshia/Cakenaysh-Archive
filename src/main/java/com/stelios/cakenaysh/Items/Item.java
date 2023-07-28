@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ItemBuilder {
+public class Item {
 
     private final ItemStack itemStack;
     private final ItemMeta itemMeta;
@@ -25,7 +25,7 @@ public class ItemBuilder {
 
     //@param material: The material of the item being built.
     //@param amount: The amount of the item being built.
-    public ItemBuilder(Material material, int amount, boolean unstackable) {
+    public Item(Material material, int amount, boolean unstackable) {
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = this.itemStack.getItemMeta();
         this.unstackable = unstackable;
@@ -62,10 +62,10 @@ public class ItemBuilder {
     //@param isItalic: makes the name italic.
     //@param isObfuscated: Makes the name obfuscated.
     //@param isStrikethrough: Makes the name strikethrough.
-    //@return the ItemBuilder
-    public ItemBuilder setDisplayName(List<String> nameText, List<Integer> rgbValues, List<Boolean> isBold,
-                                      List<Boolean> isUnderlined, List<Boolean> isItalic, List<Boolean> isObfuscated,
-                                      List<Boolean> isStrikethrough){
+    //@return the Item
+    public Item setDisplayName(List<String> nameText, List<Integer> rgbValues, List<Boolean> isBold,
+                               List<Boolean> isUnderlined, List<Boolean> isItalic, List<Boolean> isObfuscated,
+                               List<Boolean> isStrikethrough){
 
         //list to store every word of the item name
         List<TextComponent> nameList = new ArrayList<> ();
@@ -99,10 +99,10 @@ public class ItemBuilder {
     //@param isItalic: makes the lore italic.
     //@param isObfuscated: Makes the lore obfuscated.
     //@param isStrikethrough: Makes the lore strikethrough.
-    //@return the ItemBuilder
-    public ItemBuilder setLore(List<String> loreText, List<Integer> rgbValues, List<Boolean> isBold,
-                               List<Boolean> isUnderlined, List<Boolean> isItalic, List<Boolean> isObfuscated,
-                               List<Boolean> isStrikethrough){
+    //@return the Item
+    public Item setLore(List<String> loreText, List<Integer> rgbValues, List<Boolean> isBold,
+                        List<Boolean> isUnderlined, List<Boolean> isItalic, List<Boolean> isObfuscated,
+                        List<Boolean> isStrikethrough){
 
         List<TextComponent> wordList = new ArrayList<> ();
         List<TextComponent> loreList = new ArrayList<> ();
@@ -149,15 +149,15 @@ public class ItemBuilder {
 
     //removes an itemFlag from the item
     //@param itemFlag: The itemFlag being removed from the item.
-    //@return the ItemBuilder
+    //@return the Item
     public void addItemFlags(){
         this.itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
     }
 
     //controls if the item is unbreakable
     //@param value: Is the item unbreakable?
-    //@return the ItemBuilder
-    public ItemBuilder setUnbreakable(){
+    //@return the Item
+    public Item setUnbreakable(){
         this.itemMeta.setUnbreakable(true);
         return this;
     }
