@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class BattleItemBuilder extends ItemBuilder {
+public class BattleItem extends Item {
 
     private float damage;
     private float attackSpeed;
@@ -61,13 +61,13 @@ public class BattleItemBuilder extends ItemBuilder {
     //@params rangedProficiency: The ranged proficiency of the item being built.
     //@params armorProficiency: The armor proficiency of the item being built.
     //@params isArmor: Whether the item being built is armor.
-    public BattleItemBuilder(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage,
-                             float critChance, float strength, float health, float defense, float speed, float thorns,
-                             float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
-                             float aquaticDefense, float aquaticDamage, float aerialDefense, float aerialDamage,
-                             float meleeDefense, float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
-                             float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency,
-                             boolean isArmor){
+    public BattleItem(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage,
+                      float critChance, float strength, float health, float defense, float speed, float thorns,
+                      float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
+                      float aquaticDefense, float aquaticDamage, float aerialDefense, float aerialDamage,
+                      float meleeDefense, float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
+                      float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency,
+                      boolean isArmor){
         super(material, amount, unstackable);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -177,9 +177,9 @@ public class BattleItemBuilder extends ItemBuilder {
     //@param critChance: The crit chance of the item being built.
     //@param health: The health of the item being built.
     //@param speed: The speed of the item being built.
-    public BattleItemBuilder(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage,
-                             float critChance, float strength, float health, float defense, float speed, float thorns,
-                             int meleeProficiency, int rangedProficiency, int armorProficiency, boolean isArmor){
+    public BattleItem(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage,
+                      float critChance, float strength, float health, float defense, float speed, float thorns,
+                      int meleeProficiency, int rangedProficiency, int armorProficiency, boolean isArmor){
         super(material, amount, unstackable);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -356,9 +356,9 @@ public class BattleItemBuilder extends ItemBuilder {
     //@param isItalic: makes the lore italic.
     //@param isObfuscated: Makes the lore obfuscated.
     //@param isStrikethrough: Makes the lore strikethrough.
-    //@return the ItemBuilder
-    public BattleItemBuilder setLore(List<String> loreText, List<Integer> rgbValues, List<Boolean> isBold, List<Boolean> isUnderlined,
-                                     List<Boolean> isItalic, List<Boolean> isObfuscated, List<Boolean> isStrikethrough) {
+    //@return the Item
+    public BattleItem setLore(List<String> loreText, List<Integer> rgbValues, List<Boolean> isBold, List<Boolean> isUnderlined,
+                              List<Boolean> isItalic, List<Boolean> isObfuscated, List<Boolean> isStrikethrough) {
 
         List<TextComponent> wordList = new ArrayList<>();
         List<TextComponent> loreList = new ArrayList<>();
