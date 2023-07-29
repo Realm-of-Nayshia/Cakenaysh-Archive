@@ -72,6 +72,7 @@ public final class Main extends JavaPlugin {
     @SuppressWarnings("DataFlowIssue")
     private void registerCommands(){
         getCommand("heal").setExecutor(new HealCommand());
+        getCommand("kill").setExecutor(new KillCommand());
         getCommand("vanish").setExecutor(new VanishCommand());
 
         getCommand("giveitem").setExecutor(new GiveItemCommand());

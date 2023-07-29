@@ -11,8 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class HealCommand implements CommandExecutor {
-
+public class KillCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
@@ -20,26 +19,23 @@ public class HealCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            //if there is no target for the command, heal the player
+            //if there is no target for the command, kill the player
             if (args.length == 0) {
                 CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(player.getUniqueId());
-                customPlayer.setHealth(customPlayer.getMaxHealth());
-                player.sendMessage(Component.text("You have been healed!", TextColor.color(0, 255, 0)));
+                customPlayer.setHealth(0);
 
-            //if there is a valid target for the command, heal the target
+            //if there is a valid target for the command, kill the target
             } else if (args.length == 1) {
                 if(Bukkit.getOnlinePlayers().contains(Bukkit.getServer().getPlayer(args[0]))){
                     Player target = Bukkit.getServer().getPlayer(args[0]);
                     CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(target.getUniqueId());
-                    customPlayer.setHealth(customPlayer.getMaxHealth());
-                    player.sendMessage(Component.text("You have healed " + target.getName() + "!", TextColor.color(0, 255, 0)));
-                    target.sendMessage(Component.text("You have been healed!", TextColor.color(0, 255, 0)));
+                    customPlayer.setHealth(0);
                 }else{
                     player.sendMessage(Component.text("Target player isn't online.", TextColor.color(255, 0, 0)));
                 }
 
             }else{
-                player.sendMessage(Component.text("Invalid arguments! Use /heal <player>.", TextColor.color(255, 0, 0)));
+                player.sendMessage(Component.text("Invalid arguments! Use /kill <player>.", TextColor.color(255, 0, 0)));
             }
         }
         return false;

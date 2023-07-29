@@ -49,4 +49,5 @@ com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.class
 com\stelios\cakenaysh\Npc\Npcs.class
 com\stelios\cakenaysh\Commands\HealCommand.class
 com\stelios\cakenaysh\Commands\GiveItemCommand.class
+com\stelios\cakenaysh\Commands\KillCommand.class
 com\stelios\cakenaysh\AbilityCreation\Abilities\DialOfTheSunAbility$1.class

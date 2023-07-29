@@ -8,7 +8,12 @@ depend: [Citizens]
 softdepend: [Sentinel]
 commands:
   heal:
-    description: Heals the player to max health.
+    description: Heals the target player to max health.
+    syntax: /heal <player>
+    permission: op
+  kill:
+    description: Kills the target player.
+    syntax: /kill <player>
     permission: op
   vanish:
     description: Makes the player undetectable and invisible.
