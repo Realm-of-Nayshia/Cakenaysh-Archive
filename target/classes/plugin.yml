@@ -53,3 +53,6 @@ commands:
   menu:
     description: Opens the rpg menu.
     syntax: /menu
+  stash:
+    description: Claims stashed items.
+    syntax: /stash

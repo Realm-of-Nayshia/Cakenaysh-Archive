@@ -1,5 +1,6 @@
 com\stelios\cakenaysh\Npc\NpcBuilder.class
 com\stelios\cakenaysh\AbilityCreation\ItemAbility.class
+com\stelios\cakenaysh\Managers\StatsManager$6.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
 com\stelios\cakenaysh\Commands\MenuCommand.class
 com\stelios\cakenaysh\Managers\StatsManager$2.class
@@ -20,6 +21,7 @@ com\stelios\cakenaysh\AbilityCreation\Abilities\WrathOfSpartaAbility.class
 com\stelios\cakenaysh\Managers\PlayerManager.class
 com\stelios\cakenaysh\Items\CustomItems.class
 com\stelios\cakenaysh\Events\SpeedChangedEvent.class
+com\stelios\cakenaysh\Commands\StashCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\GetAttributesTabComplete.class
 com\stelios\cakenaysh\Listeners\ConnectionListener.class
 com\stelios\cakenaysh\Commands\TabComplete\SetAttributesTabComplete.class
