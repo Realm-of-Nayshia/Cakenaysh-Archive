@@ -53,6 +53,19 @@ public class StatsManager implements Listener {
             public void run() {
                 for (Player player : main.getServer().getOnlinePlayers()){
                     updateDatabaseStats(player);
+
+                    //add the stats back to the player's armor
+                    for (ItemStack item : player.getInventory().getArmorContents()){
+
+                        if (item != null){
+
+                            //remove the stats from the armor
+                            addPlayerArmorStats(player, item);
+                        }
+                    }
+
+                    //add the stats back to the main hand
+                    addPlayerStats(player, player.getInventory().getItemInMainHand());
                 }
             }
         }.runTaskTimerAsynchronously(main, 0, 20*900);
