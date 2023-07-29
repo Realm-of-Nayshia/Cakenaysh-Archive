@@ -1,6 +1,7 @@
 package com.stelios.cakenaysh.Util;
 
 import com.stelios.cakenaysh.Events.SpeedChangedEvent;
+import com.stelios.cakenaysh.Events.XpChangedEvent;
 import com.stelios.cakenaysh.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -351,28 +352,28 @@ public class CustomPlayer {
     //saves all the attributes to the database
     public void saveAttributesToDatabase(Player player){
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
-        customPlayer.setRankDatabase(customPlayer.getRank());
-        customPlayer.setJoinDateDatabase(customPlayer.getJoinDate());
-        customPlayer.setPlayTimeDatabase(customPlayer.getPlayTime());
-        customPlayer.setLevelDatabase(customPlayer.getLevel());
-        customPlayer.setInvestmentPointsDatabase(customPlayer.getInvestmentPoints());
-        customPlayer.setXpDatabase(customPlayer.getXp());
-        customPlayer.setStaminaRegenDatabase(customPlayer.getStaminaRegen());
-        customPlayer.setStaminaDatabase(customPlayer.getStamina());
-        customPlayer.setMaxStaminaDatabase(customPlayer.getMaxStamina());
-        customPlayer.setHealthRegenDatabase(customPlayer.getHealthRegen());
-        customPlayer.setHealthDatabase(customPlayer.getHealth());
-        customPlayer.setMaxHealthDatabase(customPlayer.getMaxHealth());
-        customPlayer.setMeleeProficiencyDatabase(customPlayer.getMeleeProficiency());
-        customPlayer.setRangedProficiencyDatabase(customPlayer.getRangedProficiency());
-        customPlayer.setArmorProficiencyDatabase(customPlayer.getArmorProficiency());
-        customPlayer.setWilsonCoinDatabase(customPlayer.getWilsonCoin());
-        customPlayer.setPietyDatabase(customPlayer.getPiety());
-        customPlayer.setCharismaDatabase(customPlayer.getCharisma());
-        customPlayer.setDeceptionDatabase(customPlayer.getDeception());
-        customPlayer.setAgilityDatabase(customPlayer.getAgility());
-        customPlayer.setLuckDatabase(customPlayer.getLuck());
-        customPlayer.setStealthDatabase(customPlayer.getStealth());
+        customPlayer.setRankDatabase();
+        customPlayer.setJoinDateDatabase();
+        customPlayer.setPlayTimeDatabase();
+        customPlayer.setLevelDatabase();
+        customPlayer.setInvestmentPointsDatabase();
+        customPlayer.setXpDatabase();
+        customPlayer.setStaminaRegenDatabase();
+        customPlayer.setStaminaDatabase();
+        customPlayer.setMaxStaminaDatabase();
+        customPlayer.setHealthRegenDatabase();
+        customPlayer.setHealthDatabase();
+        customPlayer.setMaxHealthDatabase();
+        customPlayer.setMeleeProficiencyDatabase();
+        customPlayer.setRangedProficiencyDatabase();
+        customPlayer.setArmorProficiencyDatabase();
+        customPlayer.setWilsonCoinDatabase();
+        customPlayer.setPietyDatabase();
+        customPlayer.setCharismaDatabase();
+        customPlayer.setDeceptionDatabase();
+        customPlayer.setAgilityDatabase();
+        customPlayer.setLuckDatabase();
+        customPlayer.setStealthDatabase();
     }
 
     //gets the amount of xp needed to level up
@@ -470,8 +471,7 @@ public class CustomPlayer {
 
 
     //setting player stats in the database and locally within the class
-    public void setRankDatabase(String rank) {
-        this.rank = rank;
+    public void setRankDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET RANK = '" + rank + "' WHERE UUID = '" + uuid + "';");
@@ -481,8 +481,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setJoinDateDatabase(String joinDate) {
-        this.joinDate = joinDate;
+    public void setJoinDateDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET JOIN_DATE = '" + joinDate + "' WHERE UUID = '" + uuid + "';");
@@ -492,8 +491,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setPlayTimeDatabase(float playTime) {
-        this.playTime = playTime;
+    public void setPlayTimeDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET PLAY_TIME = " + playTime + " WHERE UUID = '" + uuid + "';");
@@ -503,8 +501,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setLevelDatabase(int level){
-        this.level = level;
+    public void setLevelDatabase(){
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET LEVEL = " + level + " WHERE UUID = '" + uuid + "';");
@@ -514,8 +511,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setInvestmentPointsDatabase(int investmentPoints){
-        this.investmentPoints = investmentPoints;
+    public void setInvestmentPointsDatabase(){
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET INVESTMENT_POINTS = " + investmentPoints + " WHERE UUID = '" + uuid + "';");
@@ -525,8 +521,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setXpDatabase(int xp) {
-        this.xp = xp;
+    public void setXpDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET XP = " + xp + " WHERE UUID = '" + uuid + "';");
@@ -536,8 +531,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setStaminaRegenDatabase(int staminaRegen) {
-        this.staminaRegen = staminaRegen;
+    public void setStaminaRegenDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET STAMINA_REGEN = " + staminaRegen + " WHERE UUID = '" + uuid + "';");
@@ -547,8 +541,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setStaminaDatabase(int stamina) {
-        this.stamina = stamina;
+    public void setStaminaDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET STAMINA = " + stamina + " WHERE UUID = '" + uuid + "';");
@@ -558,8 +551,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setMaxStaminaDatabase(int maxStamina) {
-        this.maxStamina = maxStamina;
+    public void setMaxStaminaDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET MAX_STAMINA = " + maxStamina + " WHERE UUID = '" + uuid + "';");
@@ -569,8 +561,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setHealthRegenDatabase(int healthRegen) {
-        this.healthRegen = healthRegen;
+    public void setHealthRegenDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET HEALTH_REGEN = " + healthRegen + " WHERE UUID = '" + uuid + "';");
@@ -580,8 +571,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setHealthDatabase(float health) {
-        this.health = health;
+    public void setHealthDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET HEALTH = " + health + " WHERE UUID = '" + uuid + "';");
@@ -591,8 +581,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setMaxHealthDatabase(int maxHealth) {
-        this.maxHealth = maxHealth;
+    public void setMaxHealthDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET MAX_HEALTH = " + maxHealth + " WHERE UUID = '" + uuid + "';");
@@ -602,8 +591,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setMeleeProficiencyDatabase(int meleeProficiency) {
-        this.meleeProficiency = meleeProficiency;
+    public void setMeleeProficiencyDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET MELEE_PROFICIENCY = " + meleeProficiency + " WHERE UUID = '" + uuid + "';");
@@ -613,8 +601,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setRangedProficiencyDatabase(int rangedProficiency) {
-        this.rangedProficiency = rangedProficiency;
+    public void setRangedProficiencyDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET RANGED_PROFICIENCY = " + rangedProficiency + " WHERE UUID = '" + uuid + "';");
@@ -624,8 +611,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setArmorProficiencyDatabase(int armorProficiency) {
-        this.armorProficiency = armorProficiency;
+    public void setArmorProficiencyDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET ARMOR_PROFICIENCY = " + armorProficiency + " WHERE UUID = '" + uuid + "';");
@@ -635,8 +621,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setWilsonCoinDatabase(int wilsonCoin) {
-        this.wilsonCoin = wilsonCoin;
+    public void setWilsonCoinDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET WILSONCOIN = " + wilsonCoin + " WHERE UUID = '" + uuid + "';");
@@ -646,8 +631,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setPietyDatabase(int piety) {
-        this.piety = piety;
+    public void setPietyDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET PIETY = " + piety + " WHERE UUID = '" + uuid + "';");
@@ -657,8 +641,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setCharismaDatabase(int charisma) {
-        this.charisma = charisma;
+    public void setCharismaDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET CHARISMA = " + charisma + " WHERE UUID = '" + uuid + "';");
@@ -668,8 +651,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setDeceptionDatabase(int deception) {
-        this.deception = deception;
+    public void setDeceptionDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET DECEPTION = " + deception + " WHERE UUID = '" + uuid + "';");
@@ -679,8 +661,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setAgilityDatabase(int agility) {
-        this.agility = agility;
+    public void setAgilityDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET AGILITY = " + agility + " WHERE UUID = '" + uuid + "';");
@@ -690,8 +671,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setLuckDatabase(int luck) {
-        this.luck = luck;
+    public void setLuckDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET LUCK = " + luck + " WHERE UUID = '" + uuid + "';");
@@ -701,8 +681,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setStealthDatabase(int stealth) {
-        this.stealth = stealth;
+    public void setStealthDatabase() {
         try{
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE players SET STEALTH = " + stealth + " WHERE UUID = '" + uuid + "';");
@@ -729,7 +708,11 @@ public class CustomPlayer {
         this.investmentPoints = investmentPoints;
     }
     public void setXp(int xp) {
+        int oldXp = this.xp;
         this.xp = xp;
+
+        //call the xp gain event
+        main.getServer().getPluginManager().callEvent(new XpChangedEvent(Bukkit.getPlayer(uuid), xp-oldXp, null));
     }
     public void setStaminaRegen(int staminaRegen) {
         this.staminaRegen = staminaRegen;
@@ -793,6 +776,9 @@ public class CustomPlayer {
     }
     public void addXp(int xp) {
         this.xp += xp;
+
+        //call the xp gain event
+        main.getServer().getPluginManager().callEvent(new XpChangedEvent(Bukkit.getPlayer(uuid), xp, null));
     }
     public void addStaminaRegen(int staminaRegen) {
         this.staminaRegen += staminaRegen;
