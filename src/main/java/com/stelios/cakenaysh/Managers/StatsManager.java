@@ -245,9 +245,6 @@ public class StatsManager implements Listener {
         //if the defending entity is a npc
         if (CitizensAPI.getNPCRegistry().isNPC(e.getEntity())) {
 
-            //set the default damage to 0
-            e.setDamage(0);
-
             //if the defending entity is a sentinel with the NpcStats trait
             if (CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class) && CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(NpcStats.class)) {
 
@@ -431,6 +428,9 @@ public class StatsManager implements Listener {
         //if the defending entity is a player
         } else if (e.getEntity() instanceof Player) {
 
+            //set the default damage to zero
+            e.setDamage(0.01);
+
             //get the player defender and their stats
             Player playerDefend = (Player) e.getEntity();
             CustomPlayer defenderPlayer = main.getPlayerManager().getCustomPlayer(playerDefend.getUniqueId());
@@ -512,7 +512,6 @@ public class StatsManager implements Listener {
                     displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
                     //deal the damage
-                    e.setDamage(0);
                     defenderPlayer.setHealth(defenderPlayer.getHealth() - finalDefenderDamage);
 
                     //update the player's health bar
@@ -596,7 +595,7 @@ public class StatsManager implements Listener {
                 }
 
                 //deal the damage
-                e.setDamage(finalDefenderDamage);
+                defenderPlayer.setHealth(defenderPlayer.getHealth() - finalDefenderDamage);
                 playerDefend.sendMessage("You took " + finalDefenderDamage + " damage from " + playerAttack.getName());
                 playerAttack.sendMessage("You dealt " + finalAttackerDamage + " damage to " + playerDefend.getName());
 
