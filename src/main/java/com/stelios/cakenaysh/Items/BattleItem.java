@@ -336,14 +336,10 @@ public class BattleItem extends Item {
             baseAttackSpeed = 3.0f;
         }
 
-        //setting the swing speed in the main hand and the offhand
+        //setting the swing speed in the main hand
         AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(),"generic.attackSpeed", attackSpeed * 0.1 - baseAttackSpeed,
                 AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
         this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
-
-        AttributeModifier swingSpeedOffHand = new AttributeModifier(UUID.randomUUID(),"generic.attackSpeed", attackSpeed * 0.1 - baseAttackSpeed,
-                AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND);
-        this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedOffHand);
     }
 
 
