@@ -14,6 +14,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,6 +28,7 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerLoadEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -34,6 +36,12 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.mcmonkey.sentinel.SentinelTrait;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 
 public class StatsManager implements Listener {
@@ -760,14 +768,79 @@ public class StatsManager implements Listener {
 
         Player player = e.getPlayer();
 
-        addPlayerArmorStats(player, e.getNewItem());
-        removePlayerArmorStats(player, e.getOldItem());
+        //if the player doesn't have the required proficiencies for the item put it in their inventory
+        if (!meetsItemRequirements(player, e.getNewItem(), false)){
+
+            //remove the item from the player's armor slot
+            if (player.getInventory().getItem(EquipmentSlot.HEAD).equals(e.getNewItem())) {
+                player.getInventory().setHelmet(null);
+            }else if (player.getInventory().getItem(EquipmentSlot.CHEST).equals(e.getNewItem())) {
+                player.getInventory().setChestplate(null);
+            }else if (player.getInventory().getItem(EquipmentSlot.LEGS).equals(e.getNewItem())) {
+                player.getInventory().setLeggings(null);
+            }else if (player.getInventory().getItem(EquipmentSlot.FEET).equals(e.getNewItem())) {
+                player.getInventory().setBoots(null);
+            }else if (player.getInventory().getItem(EquipmentSlot.OFF_HAND).equals(e.getNewItem())) {
+                player.getInventory().setItemInMainHand(null);
+            }
+
+            //send the player a message
+            player.sendMessage(Component.text("You do not meet the requirements to equip this item.", TextColor.color(255, 0, 0)));
+
+            //wait a second
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+
+                    //if the player's inventory isn't full add the item to their inventory
+                    if (player.getInventory().firstEmpty() != -1) {
+                        player.getInventory().addItem(e.getNewItem());
+
+                    //add the item to the player's stash
+                    }else{
+                        addItemsToStash(player, new ArrayList<ItemStack> (Collections.singletonList(e.getNewItem())));
+                    }
+                }
+            }.runTaskLater(main, 20);
+
+        }else{
+            addPlayerArmorStats(player, e.getNewItem());
+            removePlayerArmorStats(player, e.getOldItem());
+        }
     }
 
 
     //set player configurations
     public void setConfigurations(Player player){
         player.setMaxHealth(40);
+    }
+
+    //adds an item to the player's stash
+    public void addItemsToStash(Player player, ArrayList<ItemStack> items){
+
+        //get the stash yml file
+        File file = new File(main.getDataFolder(), "stashes.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        String key = player.getUniqueId().toString();
+
+        List<ItemStack> stash = (List<ItemStack>) config.getList(key);
+
+        //if the player doesn't have a stash create one
+        if (stash == null) {
+            stash = new ArrayList<ItemStack>();
+        }
+
+        //add each item to the stash
+        stash.addAll(items);
+        config.set(key, stash);
+
+        player.sendMessage(Component.text("Your inventory is full. "+ stash.size() + " items are in your stash.\nType /stash to collect your items.", TextColor.color(255, 0, 0)));
+
+        try {
+            config.save(file);
+        } catch (IOException ex) {
+            main.getLogger().log(Level.SEVERE, "Could not save stash.yml");
+        }
     }
 
     //update database stats
