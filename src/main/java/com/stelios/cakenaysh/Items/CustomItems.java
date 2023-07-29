@@ -193,7 +193,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    LEGS_OF_SPARTA(new BattleItem(Material.GOLDEN_LEGGINGS, 1,false,0,0,0,0
+    LEGS_OF_SPARTA(new BattleItem(Material.GOLDEN_LEGGINGS, 1,false,0,40,0,0
             ,10,10000,10000,0,0,0,1,0, true)
             .setDisplayName(new ArrayList<>(Arrays.asList("Leggings of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
