@@ -1,5 +1,6 @@
 package com.stelios.cakenaysh.Commands;
 
+import com.stelios.cakenaysh.Events.ProficiencyChangedEvent;
 import com.stelios.cakenaysh.Events.XpChangedEvent;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
@@ -228,6 +229,10 @@ public class AddAttributesCommand implements CommandExecutor {
 
                     case "meleeproficiency":
                         try{
+                            //fire the proficiency changed event
+                            Bukkit.getPluginManager().callEvent(new ProficiencyChangedEvent(player, "melee"));
+
+                            //change the proficiency
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addMeleeProficiency(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
@@ -247,6 +252,10 @@ public class AddAttributesCommand implements CommandExecutor {
 
                     case "rangedproficiency":
                         try{
+                            //fire the proficiency changed event
+                            Bukkit.getPluginManager().callEvent(new ProficiencyChangedEvent(player, "ranged"));
+
+                            //change the proficiency
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addRangedProficiency(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
@@ -266,6 +275,10 @@ public class AddAttributesCommand implements CommandExecutor {
 
                     case "armorproficiency":
                         try{
+                            //fire the proficiency changed event
+                            Bukkit.getPluginManager().callEvent(new ProficiencyChangedEvent(player, "armor"));
+
+                            //change the proficiency
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addArmorProficiency(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {

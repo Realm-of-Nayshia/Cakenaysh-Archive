@@ -1,5 +1,6 @@
 package com.stelios.cakenaysh.Commands;
 
+import com.stelios.cakenaysh.Events.ProficiencyChangedEvent;
 import com.stelios.cakenaysh.Events.XpChangedEvent;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
@@ -248,6 +249,10 @@ public class SetAttributesCommand implements CommandExecutor {
 
                     case "meleeproficiency":
                         try{
+                            //fire the proficiency changed event
+                            Bukkit.getPluginManager().callEvent(new ProficiencyChangedEvent(player, "melee"));
+
+                            //change the proficiency
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setMeleeProficiency(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
@@ -267,6 +272,10 @@ public class SetAttributesCommand implements CommandExecutor {
 
                     case "rangedproficiency":
                         try{
+                            //fire the proficiency changed event
+                            Bukkit.getPluginManager().callEvent(new ProficiencyChangedEvent(player, "ranged"));
+
+                            //change the proficiency
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setRangedProficiency(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
@@ -286,7 +295,12 @@ public class SetAttributesCommand implements CommandExecutor {
 
                     case "armorproficiency":
                         try{
+                            //fire the proficiency changed event
+                            Bukkit.getPluginManager().callEvent(new ProficiencyChangedEvent(player, "armor"));
+
+                            //change the proficiency
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setArmorProficiency(Integer.parseInt(args[2]));
+
                             //confirmation message
                             if (sender instanceof Player) {
                                 sender.sendMessage(Component.text("Set " + player.getName() + "'s armor proficiency to " + args[2] + ".", TextColor.color(0, 255, 0)));

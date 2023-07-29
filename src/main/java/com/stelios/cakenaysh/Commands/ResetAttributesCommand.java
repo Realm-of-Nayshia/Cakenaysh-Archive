@@ -1,5 +1,6 @@
 package com.stelios.cakenaysh.Commands;
 
+import com.stelios.cakenaysh.Events.ProficiencyChangedEvent;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -27,6 +28,9 @@ public class ResetAttributesCommand implements CommandExecutor {
 
                 //get the main class
                 Main main = Main.getPlugin(Main.class);
+
+                //fire the proficiency changed event
+                Bukkit.getPluginManager().callEvent(new ProficiencyChangedEvent(player, "all"));
 
                 //reset the player's attributes
                 main.getPlayerManager().getCustomPlayer(player.getUniqueId()).resetAttributes(player);
