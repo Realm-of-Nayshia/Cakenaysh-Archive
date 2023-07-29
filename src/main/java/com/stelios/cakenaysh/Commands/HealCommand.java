@@ -1,5 +1,7 @@
 package com.stelios.cakenaysh.Commands;
 
+import com.stelios.cakenaysh.Main;
+import com.stelios.cakenaysh.Util.CustomPlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.Command;
@@ -15,7 +17,8 @@ public class HealCommand implements CommandExecutor {
 
         if (sender instanceof Player){
             Player player = (Player) sender;
-            player.setHealth(20);
+            CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(player.getUniqueId());
+            customPlayer.setHealth(customPlayer.getMaxHealth());
             player.sendMessage(Component.text("You have been healed!", TextColor.color(0,255,0)));
         }
 
