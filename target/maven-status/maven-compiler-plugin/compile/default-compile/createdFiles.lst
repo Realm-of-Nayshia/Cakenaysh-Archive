@@ -41,6 +41,7 @@ com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoSkills.class
 com\stelios\cakenaysh\Managers\StatsManager.class
 com\stelios\cakenaysh\Events\ProficiencyChangedEvent.class
 com\stelios\cakenaysh\Util\CustomPlayer.class
+com\stelios\cakenaysh\Managers\StatsManager$5.class
 com\stelios\cakenaysh\Items\BattleItem.class
 com\stelios\cakenaysh\Npc\Traits\NpcStats.class
 com\stelios\cakenaysh\Commands\GetAttributesCommand.class

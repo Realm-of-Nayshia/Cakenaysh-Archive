@@ -45,6 +45,21 @@ public class StatsManager implements Listener {
     }
 
     @EventHandler
+    public void onStart(ServerLoadEvent e){
+
+        //saving player stats every 30 minutes
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                for (Player player : main.getServer().getOnlinePlayers()){
+                    updateDatabaseStats(player);
+                }
+            }
+        }.runTaskTimerAsynchronously(main, 0, 20*900);
+    }
+
+
+    @EventHandler
     public void onStartup(ServerLoadEvent e){
 
         new BukkitRunnable(){
@@ -111,24 +126,7 @@ public class StatsManager implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
-        Player player = e.getPlayer();
-        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
-
-        //remove the stats from the player's armor
-        for (ItemStack item : player.getInventory().getArmorContents()){
-
-            if (item != null){
-
-                //remove the stats from the armor
-                removePlayerArmorStats(player, item);
-            }
-        }
-
-        //remove the stats from the main hand
-        removePlayerStats(player, player.getInventory().getItemInMainHand());
-
-        //saving the player's stats to the database
-        customPlayer.saveAttributesToDatabase(player);
+        updateDatabaseStats(e.getPlayer());
     }
 
     @EventHandler
@@ -758,6 +756,27 @@ public class StatsManager implements Listener {
     //set player configurations
     public void setConfigurations(Player player){
         player.setMaxHealth(40);
+    }
+
+    //update database stats
+    public void updateDatabaseStats(Player player){
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+
+        //remove the stats from the player's armor
+        for (ItemStack item : player.getInventory().getArmorContents()){
+
+            if (item != null){
+
+                //remove the stats from the armor
+                removePlayerArmorStats(player, item);
+            }
+        }
+
+        //remove the stats from the main hand
+        removePlayerStats(player, player.getInventory().getItemInMainHand());
+
+        //saving the player's stats to the database
+        customPlayer.saveAttributesToDatabase(player);
     }
 
     //returns true if the player has met the requirements to equip an item
