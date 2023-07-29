@@ -1,7 +1,6 @@
 package com.stelios.cakenaysh.Commands;
 
 import com.stelios.cakenaysh.Events.ProficiencyChangedEvent;
-import com.stelios.cakenaysh.Events.XpChangedEvent;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -115,10 +114,6 @@ public class SetAttributesCommand implements CommandExecutor {
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setXp(Integer.parseInt(args[2]));
                             //confirmation message
                             if (sender instanceof Player) {
-
-                                //call the xp gain event
-                                main.getServer().getPluginManager().callEvent(new XpChangedEvent(player, Integer.parseInt(args[2])-main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getXp(), null));
-
                                 sender.sendMessage(Component.text("Set " + player.getName() + "'s xp to " + args[2] + ".", TextColor.color(0, 255, 0)));
                             } else {
                                 System.out.println("Set " + player.getName() + "'s xp to " + args[2] + ".");
