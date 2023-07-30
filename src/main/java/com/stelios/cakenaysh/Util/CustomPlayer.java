@@ -22,6 +22,7 @@ public class CustomPlayer {
     //info from database
     private final UUID uuid;
     private String rank;
+    private String faction;
     private String joinDate;
     private float playTime;
     private int level;
@@ -31,7 +32,7 @@ public class CustomPlayer {
     private int stamina;
     private int maxStamina;
     private int healthRegen;
-    private float health;
+    private int health;
     private int maxHealth;
     private int meleeProficiency;
     private int rangedProficiency;
@@ -75,14 +76,15 @@ public class CustomPlayer {
         this.uuid = uuid;
 
         PreparedStatement statement = main.getDatabase().getConnection().prepareStatement(
-                "SELECT RANK, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
+                "SELECT RANK, FACTION, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
                         "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY, " +
                         "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH" +
-                        " FROM players WHERE UUID = ?;");
+                        " FROM player_stats WHERE UUID = ?;");
         statement.setString(1, uuid.toString());
         ResultSet rs = statement.executeQuery();
         if (rs.next()) {
             rank = rs.getString("RANK");
+            faction = rs.getString("FACTION");
             joinDate = rs.getString("JOIN_DATE");
             playTime = rs.getFloat("PLAY_TIME");
             level = rs.getInt("LEVEL");
@@ -92,7 +94,7 @@ public class CustomPlayer {
             stamina = rs.getInt("STAMINA");
             maxStamina = rs.getInt("MAX_STAMINA");
             healthRegen = rs.getInt("HEALTH_REGEN");
-            health = rs.getFloat("HEALTH");
+            health = rs.getInt("HEALTH");
             maxHealth = rs.getInt("MAX_HEALTH");
             meleeProficiency = rs.getInt("MELEE_PROFICIENCY");
             rangedProficiency = rs.getInt("RANGED_PROFICIENCY");
@@ -105,7 +107,9 @@ public class CustomPlayer {
             luck = rs.getInt("LUCK");
             stealth = rs.getInt("STEALTH");
         } else {
-            rank = "GUEST";
+            rank = "Guest";
+            faction = "None";
+            joinDate = Calendar.getInstance().getTime().toString();
             playTime = 0;
             level = 0;
             investmentPoints = 0;
@@ -127,12 +131,13 @@ public class CustomPlayer {
             luck = 0;
             stealth = 0;
             PreparedStatement insert = main.getDatabase().getConnection().prepareStatement(
-                    "INSERT INTO players (ID, UUID, RANK, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
+                    "INSERT INTO player_stats (ID, UUID, RANK, FACTION, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
                             "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY," +
                             "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH) VALUES (" +
                             "default," +
                             "'" + uuid + "'," +
                             "'" + rank + "'," +
+                            "'" + faction + "'," +
                             "'" + Calendar.getInstance().getTime() + "'," +
                             playTime + "," +
                             level + "," +
@@ -163,6 +168,9 @@ public class CustomPlayer {
     public String getRank() {
         return rank;
     }
+    public String getFaction() {
+        return faction;
+    }
     public String getJoinDate() {
         return joinDate;
     }
@@ -190,7 +198,7 @@ public class CustomPlayer {
     public int getHealthRegen() {
         return healthRegen;
     }
-    public float getHealth() {
+    public int getHealth() {
         return health;
     }
     public int getMaxHealth() {
@@ -298,22 +306,23 @@ public class CustomPlayer {
     //used for the /attributes command
     public String getAttributes() {
         return "\n" + "Rank: " + rank +
-                "   Play Time: " + playTime + "\n" +
+                "   Faction: " + faction + "\n\n" +
+                "Play Time: " + playTime + "\n\n" +
                 "Join Date: " + joinDate + "\n" +
                 "Level: " + level +
                 "   Investment Points: " + investmentPoints +
-                "   XP: " + xp + "\n" + "\n" +
+                "   XP: " + xp + "\n\n" +
                 "Stamina Regen: " + staminaRegen +
                 "   Stamina: " + stamina +
                 "   Max Stamina: " + maxStamina + "\n" +
                 "Health Regen: " + healthRegen +
                 "   Health: " + (int) health +
-                "   Max Health: " + maxHealth + "\n" + "\n" +
+                "   Max Health: " + maxHealth + "\n\n" +
                 "Proficiencies \n" +
                 "Melee: " + meleeProficiency +
                 "   Ranged: " + rangedProficiency +
-                "   Armor: " + armorProficiency + "\n" + "\n" +
-                "WilsonCoin: " + wilsonCoin + "\n" + "\n" +
+                "   Armor: " + armorProficiency + "\n\n" +
+                "WilsonCoin: " + wilsonCoin + "\n\n" +
                 "Piety: " + piety +
                 "   Charisma: " + charisma +
                 "   Deception: " + deception + "\n" +
@@ -327,6 +336,7 @@ public class CustomPlayer {
     public void resetAttributes(Player player) {
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
         customPlayer.setRank("Guest");
+        customPlayer.setFaction("None");
         customPlayer.setPlayTime(0);
         customPlayer.setLevel(0);
         customPlayer.setInvestmentPoints(0);
@@ -353,6 +363,7 @@ public class CustomPlayer {
     public void saveAttributesToDatabase(Player player){
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
         customPlayer.setRankDatabase();
+        customPlayer.setFactionDatabase();
         customPlayer.setJoinDateDatabase();
         customPlayer.setPlayTimeDatabase();
         customPlayer.setLevelDatabase();
@@ -474,7 +485,17 @@ public class CustomPlayer {
     public void setRankDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET RANK = '" + rank + "' WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET RANK = '" + rank + "' WHERE UUID = '" + uuid + "';");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setFactionDatabase(){
+        try {
+            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
+                    ("UPDATE player_stats SET FACTION = '" + faction + "' WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -484,7 +505,7 @@ public class CustomPlayer {
     public void setJoinDateDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET JOIN_DATE = '" + joinDate + "' WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET JOIN_DATE = '" + joinDate + "' WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -494,7 +515,7 @@ public class CustomPlayer {
     public void setPlayTimeDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET PLAY_TIME = " + playTime + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET PLAY_TIME = " + playTime + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -504,7 +525,7 @@ public class CustomPlayer {
     public void setLevelDatabase(){
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET LEVEL = " + level + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET LEVEL = " + level + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -514,7 +535,7 @@ public class CustomPlayer {
     public void setInvestmentPointsDatabase(){
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET INVESTMENT_POINTS = " + investmentPoints + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET INVESTMENT_POINTS = " + investmentPoints + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -524,7 +545,7 @@ public class CustomPlayer {
     public void setXpDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET XP = " + xp + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET XP = " + xp + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -534,7 +555,7 @@ public class CustomPlayer {
     public void setStaminaRegenDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET STAMINA_REGEN = " + staminaRegen + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET STAMINA_REGEN = " + staminaRegen + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -544,7 +565,7 @@ public class CustomPlayer {
     public void setStaminaDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET STAMINA = " + stamina + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET STAMINA = " + stamina + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -554,7 +575,7 @@ public class CustomPlayer {
     public void setMaxStaminaDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET MAX_STAMINA = " + maxStamina + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET MAX_STAMINA = " + maxStamina + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -564,7 +585,7 @@ public class CustomPlayer {
     public void setHealthRegenDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET HEALTH_REGEN = " + healthRegen + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET HEALTH_REGEN = " + healthRegen + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -574,7 +595,7 @@ public class CustomPlayer {
     public void setHealthDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET HEALTH = " + health + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET HEALTH = " + health + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -584,7 +605,7 @@ public class CustomPlayer {
     public void setMaxHealthDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET MAX_HEALTH = " + maxHealth + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET MAX_HEALTH = " + maxHealth + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -594,7 +615,7 @@ public class CustomPlayer {
     public void setMeleeProficiencyDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET MELEE_PROFICIENCY = " + meleeProficiency + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET MELEE_PROFICIENCY = " + meleeProficiency + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -604,7 +625,7 @@ public class CustomPlayer {
     public void setRangedProficiencyDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET RANGED_PROFICIENCY = " + rangedProficiency + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET RANGED_PROFICIENCY = " + rangedProficiency + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -614,7 +635,7 @@ public class CustomPlayer {
     public void setArmorProficiencyDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET ARMOR_PROFICIENCY = " + armorProficiency + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET ARMOR_PROFICIENCY = " + armorProficiency + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -624,7 +645,7 @@ public class CustomPlayer {
     public void setWilsonCoinDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET WILSONCOIN = " + wilsonCoin + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET WILSONCOIN = " + wilsonCoin + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -634,7 +655,7 @@ public class CustomPlayer {
     public void setPietyDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET PIETY = " + piety + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET PIETY = " + piety + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -644,7 +665,7 @@ public class CustomPlayer {
     public void setCharismaDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET CHARISMA = " + charisma + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET CHARISMA = " + charisma + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -654,7 +675,7 @@ public class CustomPlayer {
     public void setDeceptionDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET DECEPTION = " + deception + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET DECEPTION = " + deception + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -664,7 +685,7 @@ public class CustomPlayer {
     public void setAgilityDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET AGILITY = " + agility + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET AGILITY = " + agility + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -674,7 +695,7 @@ public class CustomPlayer {
     public void setLuckDatabase() {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET LUCK = " + luck + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET LUCK = " + luck + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -684,7 +705,7 @@ public class CustomPlayer {
     public void setStealthDatabase() {
         try{
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE players SET STEALTH = " + stealth + " WHERE UUID = '" + uuid + "';");
+                    ("UPDATE player_stats SET STEALTH = " + stealth + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -694,6 +715,9 @@ public class CustomPlayer {
     //setting player stats locally within the class
     public void setRank(String rank) {
         this.rank = rank;
+    }
+    public void setFaction(String faction) {
+        this.faction = faction;
     }
     public void setJoinDate(String joinDate) {
         this.joinDate = joinDate;
@@ -726,7 +750,7 @@ public class CustomPlayer {
     public void setHealthRegen(int healthRegen) {
         this.healthRegen = healthRegen;
     }
-    public void setHealth(float health) {
+    public void setHealth(int health) {
         this.health = health;
     }
     public void setMaxHealth(int maxHealth) {
@@ -792,7 +816,7 @@ public class CustomPlayer {
     public void addHealthRegen(int healthRegen) {
         this.healthRegen += healthRegen;
     }
-    public void addHealth(float health) {
+    public void addHealth(int health) {
         this.health += health;
     }
     public void addMaxHealth(int maxHealth) {
