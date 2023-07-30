@@ -163,7 +163,7 @@ public class StatsManager implements Listener {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
 
                 //reduce there health, update the hearts, and display the action bar
-                customPlayer.addHealth((float) (e.getDamage()*-5));
+                customPlayer.addHealth((int) (e.getDamage()*-5));
                 updateHearts(player);
                 displayActionBar(player);
             }
@@ -175,7 +175,7 @@ public class StatsManager implements Listener {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-18);
+                customPlayer.addHealth(customPlayer.getMaxHealth() /-18);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -183,7 +183,7 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-18);
+                customPlayer.addHealth(customPlayer.getMaxHealth() /-18);
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -202,7 +202,7 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealth(((float) customPlayer.getMaxHealth() / -20) * (1 - customPlayer.getInfernalDefense()));
+                customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -20) * (1 - customPlayer.getInfernalDefense())));
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -210,7 +210,7 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)){
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealth(((float) customPlayer.getMaxHealth() / -40) * (1 - customPlayer.getInfernalDefense()));
+                customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -40) * (1 - customPlayer.getInfernalDefense())));
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -218,7 +218,7 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.LAVA)){
 
                 //reduce their health, update the hearts, and display the action bar
-                customPlayer.addHealth(((float) customPlayer.getMaxHealth() / -12) * (1 - customPlayer.getInfernalDefense()));
+                customPlayer.addHealth((int) (( customPlayer.getMaxHealth() / -12) * (1 - customPlayer.getInfernalDefense())));
                 updateHearts(player);
                 displayActionBar(player);
 
@@ -237,7 +237,7 @@ public class StatsManager implements Listener {
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.VOID)){
 
                     //reduce their health, update the hearts, and display the action bar
-                    customPlayer.addHealth((float) customPlayer.getMaxHealth() /-10);
+                    customPlayer.addHealth(customPlayer.getMaxHealth() /-10);
                     updateHearts(player);
                     displayActionBar(player);
 
@@ -419,7 +419,7 @@ public class StatsManager implements Listener {
 
                     //deal the damage
                     e.setDamage(finalDefenderDamage);
-                    attackerPlayer.setHealth(attackerPlayer.getHealth() - finalAttackerDamage);
+                    attackerPlayer.setHealth((int) (attackerPlayer.getHealth() - finalAttackerDamage));
 
                     //update the player's health bar
                     displayActionBar(player);
@@ -520,7 +520,7 @@ public class StatsManager implements Listener {
                     displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
                     //deal the damage
-                    defenderPlayer.setHealth(defenderPlayer.getHealth() - finalDefenderDamage);
+                    defenderPlayer.setHealth((int) (defenderPlayer.getHealth() - finalDefenderDamage));
 
                     //update the player's health bar
                     displayActionBar(playerDefend);
@@ -603,12 +603,12 @@ public class StatsManager implements Listener {
                 }
 
                 //deal the damage
-                defenderPlayer.setHealth(defenderPlayer.getHealth() - finalDefenderDamage);
+                defenderPlayer.setHealth((int) (defenderPlayer.getHealth() - finalDefenderDamage));
                 playerDefend.sendMessage("You took " + finalDefenderDamage + " damage from " + playerAttack.getName());
                 playerAttack.sendMessage("You dealt " + finalAttackerDamage + " damage to " + playerDefend.getName());
 
                 //deal the thorns damage
-                attackerPlayer.setHealth(attackerPlayer.getHealth() - finalAttackerDamage);
+                attackerPlayer.setHealth((int) (attackerPlayer.getHealth() - finalAttackerDamage));
 
                 //display the damage
                 displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
