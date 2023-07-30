@@ -76,8 +76,8 @@ public class CustomPlayer {
         this.uuid = uuid;
 
         PreparedStatement statement = main.getDatabase().getConnection().prepareStatement(
-                "SELECT RANK, FACTION, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, " +
-                        "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY, " +
+                "SELECT RANK, FACTION, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, " +
+                        "HEALTH_REGEN, HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY, " +
                         "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH" +
                         " FROM player_stats WHERE UUID = ?;");
         statement.setString(1, uuid.toString());
