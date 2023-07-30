@@ -42,6 +42,16 @@ public class SetAttributesCommand implements CommandExecutor {
                         }
                         break;
 
+                    case "faction":
+                        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setFaction(args[2]);
+                        //confirmation message
+                        if (sender instanceof Player) {
+                            sender.sendMessage(Component.text("Set " + player.getName() + "'s faction to " + args[2] + ".", TextColor.color(0, 255, 0)));
+                        } else {
+                            System.out.println("Set " + player.getName() + "'s faction to " + args[2] + ".");
+                        }
+                        break;
+
                     case "joindate":
                         main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setJoinDate(args[2]);
                         //confirmation message
