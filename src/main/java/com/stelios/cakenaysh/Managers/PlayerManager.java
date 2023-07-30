@@ -26,9 +26,4 @@ public class PlayerManager {
         customPlayers.remove(uuid);
     }
 
-    //returns the hashmap of custom players
-    public HashMap<UUID, CustomPlayer> getCustomPlayers(){
-        return customPlayers;
-    }
-
 }
