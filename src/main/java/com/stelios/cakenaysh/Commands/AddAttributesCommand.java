@@ -32,25 +32,6 @@ public class AddAttributesCommand implements CommandExecutor {
 
                 //if the attribute is a valid one add the correct value to it
                 switch (args[1].toLowerCase()) {
-                    case "playtime":
-                        try {
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addPlayTime(Float.parseFloat(args[2]));
-                            //confirmation message
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text(player.getName() + "'s play time has increased by " + args[2] + ".", TextColor.color(0, 255, 0)));
-                            } else {
-                                System.out.println(player.getName() + "'s play time has increased by " + args[2] + ".");
-                            }
-                        } catch (NumberFormatException e) {
-                            //error: invalid playtime
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Invalid playtime.", TextColor.color(255, 0, 0)));
-                            } else {
-                                System.out.println("Invalid playtime.");
-                            }
-                        }
-                        break;
-
                     case "level":
                         try {
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addLevels(Integer.parseInt(args[2]));

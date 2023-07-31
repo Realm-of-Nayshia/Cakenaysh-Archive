@@ -52,35 +52,6 @@ public class SetAttributesCommand implements CommandExecutor {
                         }
                         break;
 
-                    case "joindate":
-                        main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setJoinDate(args[2]);
-                        //confirmation message
-                        if (sender instanceof Player) {
-                            sender.sendMessage(Component.text("Set " + player.getName() + "'s join date to " + args[2] + ".", TextColor.color(0, 255, 0)));
-                        } else {
-                            System.out.println("Set " + player.getName() + "'s join date to " + args[2] + ".");
-                        }
-                        break;
-
-                    case "playtime":
-                        try {
-                            main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setPlayTime(Float.parseFloat(args[2]));
-                            //confirmation message
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Set " + player.getName() + "'s play time to " + args[2] + ".", TextColor.color(0, 255, 0)));
-                            } else {
-                                System.out.println("Set " + player.getName() + "'s playtime to " + args[2] + ".");
-                            }
-                        } catch (NumberFormatException e) {
-                            //error: invalid playtime
-                            if (sender instanceof Player) {
-                                sender.sendMessage(Component.text("Invalid playtime.", TextColor.color(255, 0, 0)));
-                            } else {
-                                System.out.println("Invalid playtime.");
-                            }
-                        }
-                        break;
-
                     case "level":
                         try{
                             main.getPlayerManager().getCustomPlayer(player.getUniqueId()).setLevel(Integer.parseInt(args[2]));
