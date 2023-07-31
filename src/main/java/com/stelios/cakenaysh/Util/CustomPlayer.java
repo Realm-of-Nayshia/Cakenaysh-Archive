@@ -3,6 +3,8 @@ package com.stelios.cakenaysh.Util;
 import com.stelios.cakenaysh.Events.SpeedChangedEvent;
 import com.stelios.cakenaysh.Events.XpChangedEvent;
 import com.stelios.cakenaysh.Main;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
@@ -486,6 +488,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET RANK = '" + rank + "' WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -496,6 +500,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET FACTION = '" + faction + "' WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -506,6 +512,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET JOIN_DATE = '" + joinDate + "' WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -516,6 +524,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET PLAY_TIME = " + playTime + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -526,6 +536,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET LEVEL = " + level + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -536,6 +548,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET INVESTMENT_POINTS = " + investmentPoints + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -546,6 +560,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET XP = " + xp + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -556,6 +572,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET STAMINA_REGEN = " + staminaRegen + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -566,6 +584,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET STAMINA = " + stamina + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -576,6 +596,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET MAX_STAMINA = " + maxStamina + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -586,6 +608,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET HEALTH_REGEN = " + healthRegen + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -596,6 +620,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET HEALTH = " + health + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -606,6 +632,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET MAX_HEALTH = " + maxHealth + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -616,6 +644,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET MELEE_PROFICIENCY = " + meleeProficiency + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -626,6 +656,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET RANGED_PROFICIENCY = " + rangedProficiency + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -636,6 +668,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET ARMOR_PROFICIENCY = " + armorProficiency + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -646,6 +680,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET WILSONCOIN = " + wilsonCoin + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -656,6 +692,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET PIETY = " + piety + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -666,6 +704,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET CHARISMA = " + charisma + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -676,6 +716,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET DECEPTION = " + deception + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -686,6 +728,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET AGILITY = " + agility + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -696,6 +740,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET LUCK = " + luck + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
@@ -706,6 +752,8 @@ public class CustomPlayer {
                     ("UPDATE player_stats SET STEALTH = " + stealth + " WHERE UUID = '" + uuid + "';");
             statement.executeUpdate();
         } catch (SQLException e) {
+            //kick the player
+            Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
