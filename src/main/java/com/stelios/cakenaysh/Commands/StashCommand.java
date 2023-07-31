@@ -41,7 +41,7 @@ public class StashCommand implements CommandExecutor {
 
                 //if the player has nothing in the stash
                 if (stash == null || stash.size() == 0){
-                    player.sendMessage(Component.text("Your stash is empty.", TextColor.color(255,0,0)));
+                    player.sendMessage(Component.text("Your stash is empty.", TextColor.color(0,255,0)));
                     return false;
 
                 //if the player has items in the stash
