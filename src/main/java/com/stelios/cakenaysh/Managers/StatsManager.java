@@ -160,86 +160,54 @@ public class StatsManager implements Listener {
 
             //if the player took fall damage
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
-
-                //reduce there health, update the hearts, and display the action bar
                 customPlayer.addHealth((int) (e.getDamage() * -5));
-                updateHearts(player);
-                displayActionBar(player);
 
             //if the player took damage from hunger
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
-
-                //reduce their health, update the hearts, and display the action bar
                 customPlayer.addHealth(customPlayer.getMaxHealth() /-18);
-                updateHearts(player);
-                displayActionBar(player);
 
             //if the player took damage from drowning
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
-
-                //reduce their health, update the hearts, and display the action bar
                 customPlayer.addHealth(customPlayer.getMaxHealth() /-18);
-                updateHearts(player);
-                displayActionBar(player);
 
             //if the player took damage from poison
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.POISON)){
 
-                //get the level of poison
+                //get the level of poison and reduce the health
                 int poisonLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.POISON)).findFirst().get().getAmplifier();
-
-                //reduce their health, update the hearts, and display the action bar
                 customPlayer.addHealth(-3*poisonLevel);
-                updateHearts(player);
-                displayActionBar(player);
 
             //if the player took damage from fire
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
-
-                //reduce their health, update the hearts, and display the action bar
                 customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -20) * (1 - customPlayer.getInfernalDefense())));
-                updateHearts(player);
-                displayActionBar(player);
 
             //if the player took damage from fire tick
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)){
-
-                //reduce their health, update the hearts, and display the action bar
                 customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -40) * (1 - customPlayer.getInfernalDefense())));
-                updateHearts(player);
-                displayActionBar(player);
 
             //if the player took damage from lava
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.LAVA)){
-
-                //reduce their health, update the hearts, and display the action bar
                 customPlayer.addHealth((int) (( customPlayer.getMaxHealth() / -12) * (1 - customPlayer.getInfernalDefense())));
-                updateHearts(player);
-                displayActionBar(player);
 
             //if the player took damage from wither
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.WITHER)){
 
-                //get the level of wither
+                //get the level of wither and reduce the health
                 int witherLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.WITHER)).findFirst().get().getAmplifier();
-
-                //reduce their health, update the hearts, and display the action bar
                 customPlayer.addHealth(-3*witherLevel);
-                updateHearts(player);
-                displayActionBar(player);
 
             //if the player took damage from the void
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.VOID)){
-
-                    //reduce their health, update the hearts, and display the action bar
                     customPlayer.addHealth(customPlayer.getMaxHealth() /-10);
-                    updateHearts(player);
-                    displayActionBar(player);
 
             }
 
             //negate the normal damage
             e.setDamage(0);
+
+            //update the hearts and display the action bar
+            updateHearts(player);
+            displayActionBar(player);
         }
     }
 
@@ -424,10 +392,9 @@ public class StatsManager implements Listener {
 
                 }
 
-            } else {
-                //error: defending entity either isn't a sentinel or doesn't have NpcStats trait
-                main.getLogger().log(Level.WARNING, "ERROR: defending entity either isn't a sentinel or doesn't have the NpcStats trait");
             }
+            //else do nothing: defending entity either isn't a sentinel or doesn't have NpcStats trait
+
 
 
         //if the defending entity is a player
