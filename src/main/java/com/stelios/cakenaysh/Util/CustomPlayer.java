@@ -9,10 +9,7 @@ import org.bukkit.entity.Player;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.UUID;
+import java.util.*;
 
 public class CustomPlayer {
 
@@ -138,7 +135,7 @@ public class CustomPlayer {
                             "'" + uuid + "'," +
                             "'" + rank + "'," +
                             "'" + faction + "'," +
-                            "'" + Calendar.getInstance().getTime() + "'," +
+                            "'" + joinDate + "'," +
                             playTime + "," +
                             level + "," +
                             investmentPoints + "," +
