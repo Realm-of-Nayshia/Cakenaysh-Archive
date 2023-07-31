@@ -10,6 +10,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class BattleItem extends Item {
     private float critChance;
     private float strength;
     private float health;
+    private float healthRegen;
+    private float stamina;
+    private float staminaRegen;
     private float defense;
     private float speed;
     private float thorns;
@@ -61,8 +65,8 @@ public class BattleItem extends Item {
     //@params rangedProficiency: The ranged proficiency of the item being built.
     //@params armorProficiency: The armor proficiency of the item being built.
     //@params isArmor: Whether the item being built is armor.
-    public BattleItem(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage,
-                      float critChance, float strength, float health, float defense, float speed, float thorns,
+    public BattleItem(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage, float critChance,
+                      float strength, float health, float healthRegen, float stamina, float staminaRegen, float defense, float speed, float thorns,
                       float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
                       float aquaticDefense, float aquaticDamage, float aerialDefense, float aerialDamage,
                       float meleeDefense, float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
@@ -75,6 +79,9 @@ public class BattleItem extends Item {
         this.critChance = critChance;
         this.strength = strength;
         this.health = health;
+        this.healthRegen = healthRegen;
+        this.stamina = stamina;
+        this.staminaRegen = staminaRegen;
         this.defense = defense;
         this.thorns = thorns;
         this.speed = speed;
@@ -111,60 +118,37 @@ public class BattleItem extends Item {
         }
 
         //setting pdc values for the item
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "itemType"), PersistentDataType.STRING, itemType);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "damage"), PersistentDataType.FLOAT, damage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "attackSpeed"), PersistentDataType.FLOAT, attackSpeed);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "critDamage"), PersistentDataType.FLOAT, critDamage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "critChance"), PersistentDataType.FLOAT, critChance);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "strength"), PersistentDataType.FLOAT, strength);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "health"), PersistentDataType.FLOAT, health);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "defense"), PersistentDataType.FLOAT, defense);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "speed"), PersistentDataType.FLOAT, speed);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "thorns"), PersistentDataType.FLOAT, thorns);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "infernalDefense"), PersistentDataType.FLOAT, infernalDefense);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "infernalDamage"), PersistentDataType.FLOAT, infernalDamage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "undeadDefense"), PersistentDataType.FLOAT, undeadDefense);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "undeadDamage"), PersistentDataType.FLOAT, undeadDamage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "aquaticDefense"), PersistentDataType.FLOAT, aquaticDefense);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "aquaticDamage"), PersistentDataType.FLOAT, aquaticDamage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "aerialDefense"), PersistentDataType.FLOAT, aerialDefense);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "aerialDamage"), PersistentDataType.FLOAT, aerialDamage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "meleeDefense"), PersistentDataType.FLOAT, meleeDefense);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "meleeDamage"), PersistentDataType.FLOAT, meleeDamage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "rangedDefense"), PersistentDataType.FLOAT, rangedDefense);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "rangedDamage"), PersistentDataType.FLOAT, rangedDamage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "magicDefense"), PersistentDataType.FLOAT, magicDefense);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "magicDamage"), PersistentDataType.FLOAT, magicDamage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
+        PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"), PersistentDataType.STRING, itemType);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "damage"), PersistentDataType.FLOAT, damage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "attackSpeed"), PersistentDataType.FLOAT, attackSpeed);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "critDamage"), PersistentDataType.FLOAT, critDamage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "critChance"), PersistentDataType.FLOAT, critChance);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "strength"), PersistentDataType.FLOAT, strength);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "health"), PersistentDataType.FLOAT, health);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "healthRegen"), PersistentDataType.FLOAT, healthRegen);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "stamina"), PersistentDataType.FLOAT, stamina);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "staminaRegen"), PersistentDataType.FLOAT, staminaRegen);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "defense"), PersistentDataType.FLOAT, defense);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "speed"), PersistentDataType.FLOAT, speed);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "thorns"), PersistentDataType.FLOAT, thorns);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "infernalDefense"), PersistentDataType.FLOAT, infernalDefense);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "infernalDamage"), PersistentDataType.FLOAT, infernalDamage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "undeadDefense"), PersistentDataType.FLOAT, undeadDefense);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "undeadDamage"), PersistentDataType.FLOAT, undeadDamage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "aquaticDefense"), PersistentDataType.FLOAT, aquaticDefense);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "aquaticDamage"), PersistentDataType.FLOAT, aquaticDamage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "aerialDefense"), PersistentDataType.FLOAT, aerialDefense);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "aerialDamage"), PersistentDataType.FLOAT, aerialDamage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "meleeDefense"), PersistentDataType.FLOAT, meleeDefense);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "meleeDamage"), PersistentDataType.FLOAT, meleeDamage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "rangedDefense"), PersistentDataType.FLOAT, rangedDefense);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "rangedDamage"), PersistentDataType.FLOAT, rangedDamage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "magicDefense"), PersistentDataType.FLOAT, magicDefense);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "magicDamage"), PersistentDataType.FLOAT, magicDamage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
 
         addItemFlags();
     }
@@ -178,8 +162,9 @@ public class BattleItem extends Item {
     //@param health: The health of the item being built.
     //@param speed: The speed of the item being built.
     public BattleItem(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage,
-                      float critChance, float strength, float health, float defense, float speed, float thorns,
-                      int meleeProficiency, int rangedProficiency, int armorProficiency, boolean isArmor){
+                      float critChance, float strength, float health, float healthRegen, float stamina, float staminaRegen,
+                      float defense, float speed, float thorns, int meleeProficiency, int rangedProficiency, int armorProficiency,
+                      boolean isArmor){
         super(material, amount, unstackable);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -187,6 +172,9 @@ public class BattleItem extends Item {
         this.critChance = critChance;
         this.strength = strength;
         this.health = health;
+        this.healthRegen = healthRegen;
+        this.stamina = stamina;
+        this.staminaRegen = staminaRegen;
         this.defense = defense;
         this.speed = speed;
         this.thorns = thorns;
@@ -209,32 +197,23 @@ public class BattleItem extends Item {
         }
 
         //setting pdc values for the item
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "itemType"), PersistentDataType.STRING, itemType);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "damage"), PersistentDataType.FLOAT, damage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "attackSpeed"), PersistentDataType.FLOAT, attackSpeed);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "critDamage"), PersistentDataType.FLOAT, critDamage);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "critChance"), PersistentDataType.FLOAT, critChance);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "strength"), PersistentDataType.FLOAT, strength);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "health"), PersistentDataType.FLOAT, health);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "defense"), PersistentDataType.FLOAT, defense);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "speed"), PersistentDataType.FLOAT, speed);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "thorns"), PersistentDataType.FLOAT, thorns);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
-        this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class),
-                "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
+        PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"), PersistentDataType.STRING, itemType);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "damage"), PersistentDataType.FLOAT, damage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "attackSpeed"), PersistentDataType.FLOAT, attackSpeed);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "critDamage"), PersistentDataType.FLOAT, critDamage);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "critChance"), PersistentDataType.FLOAT, critChance);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "strength"), PersistentDataType.FLOAT, strength);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "health"), PersistentDataType.FLOAT, health);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "healthRegen"), PersistentDataType.FLOAT, healthRegen);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "stamina"), PersistentDataType.FLOAT, stamina);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "staminaRegen"), PersistentDataType.FLOAT, staminaRegen);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "defense"), PersistentDataType.FLOAT, defense);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "speed"), PersistentDataType.FLOAT, speed);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "thorns"), PersistentDataType.FLOAT, thorns);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
 
         addItemFlags();
     }
@@ -416,6 +395,9 @@ public class BattleItem extends Item {
         makeLoreLine(loreList, "Crit Damage: ", this.getStat("critDamage"), true, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Crit Chance: ", this.getStat("critChance"), true, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Defense: ", this.getStat("defense"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Stamina Regen: ", this.getStat("staminaRegen"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Stamina: ", this.getStat("stamina"), false, false, 240, 40, 50, 200, 200, 200);
+        makeLoreLine(loreList, "Health Regen: ", this.getStat("healthRegen"), false, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Health: ", this.getStat("health"), false, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Strength: ", this.getStat("strength"), false, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Damage: ", this.getStat("damage"), false, false, 240, 40, 50, 200, 200, 200);

@@ -39,7 +39,6 @@ import org.mcmonkey.sentinel.SentinelTrait;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -154,25 +153,21 @@ public class StatsManager implements Listener {
     public void onDamaged(EntityDamageEvent e){
 
         //if the entity is a player and not a npc
-        if (e.getEntity() instanceof Player && !CitizensAPI.getNPCRegistry().isNPC(e.getEntity())){
+        if (e.getEntity() instanceof Player && !CitizensAPI.getNPCRegistry().isNPC(e.getEntity())) {
 
             Player player = (Player) e.getEntity();
             CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
 
             //if the player took fall damage
-            if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
+            if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
 
                 //reduce there health, update the hearts, and display the action bar
-                customPlayer.addHealth((int) (e.getDamage()*-5));
+                customPlayer.addHealth((int) (e.getDamage() * -5));
                 updateHearts(player);
                 displayActionBar(player);
-            }
-
-            //negate the normal damage
-            e.setDamage(0);
 
             //if the player took damage from hunger
-            if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
 
                 //reduce their health, update the hearts, and display the action bar
                 customPlayer.addHealth(customPlayer.getMaxHealth() /-18);
@@ -243,6 +238,8 @@ public class StatsManager implements Listener {
 
             }
 
+            //negate the normal damage
+            e.setDamage(0);
         }
     }
 
@@ -953,17 +950,19 @@ public class StatsManager implements Listener {
     //update the player's hearts
     public void updateHearts(Player player){
 
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+
         //if the player has no health, kill them
-        if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() <= 0) {
+        if (customPlayer.getHealth() <= 0) {
             player.setHealth(0);
 
         //if the player has super low health, set the health to 1/2 a heart
-        } else if (main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() > 0.0001 && main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() < 0.02){
+        } else if ((double) customPlayer.getHealth() / customPlayer.getMaxHealth() > 0.0001 && (double) customPlayer.getHealth() / customPlayer.getMaxHealth() < 0.02){
             player.setHealth(1);
 
         //else scale the hearts normally
         }else{
-            player.setHealth(main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getHealth() / main.getPlayerManager().getCustomPlayer(player.getUniqueId()).getMaxHealth() * 40);
+            player.setHealth((double) customPlayer.getHealth() / customPlayer.getMaxHealth() * 40);
         }
     }
 
@@ -997,6 +996,9 @@ public class StatsManager implements Listener {
                     customPlayer.setStrength(customPlayer.getStrength() + itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
                     customPlayer.setThorns(customPlayer.getThorns() + itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
                     customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() + itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                    customPlayer.setHealthRegen((int) (customPlayer.getHealthRegen() + itemData.get(new NamespacedKey(main, "healthRegen"), PersistentDataType.FLOAT)));
+                    customPlayer.setMaxStamina((int) (customPlayer.getMaxStamina() + itemData.get(new NamespacedKey(main, "stamina"), PersistentDataType.FLOAT)));
+                    customPlayer.setStaminaRegen((int) (customPlayer.getStaminaRegen() + itemData.get(new NamespacedKey(main, "staminaRegen"), PersistentDataType.FLOAT)));
                     customPlayer.setDefense(customPlayer.getDefense() + itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
                     customPlayer.setSpeed(customPlayer.getSpeed() + itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
                     customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() + itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
@@ -1059,6 +1061,9 @@ public class StatsManager implements Listener {
                     customPlayer.setStrength(customPlayer.getStrength() - itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
                     customPlayer.setThorns(customPlayer.getThorns() - itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
                     customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() - itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                    customPlayer.setHealthRegen((int) (customPlayer.getHealthRegen() - itemData.get(new NamespacedKey(main, "healthRegen"), PersistentDataType.FLOAT)));
+                    customPlayer.setMaxStamina((int) (customPlayer.getMaxStamina() - itemData.get(new NamespacedKey(main, "stamina"), PersistentDataType.FLOAT)));
+                    customPlayer.setStaminaRegen((int) (customPlayer.getStaminaRegen() - itemData.get(new NamespacedKey(main, "staminaRegen"), PersistentDataType.FLOAT)));
                     customPlayer.setDefense(customPlayer.getDefense() - itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
                     customPlayer.setSpeed(customPlayer.getSpeed() - itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
                     customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() - itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
@@ -1120,6 +1125,9 @@ public class StatsManager implements Listener {
                     customPlayer.setStrength(customPlayer.getStrength() + itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
                     customPlayer.setThorns(customPlayer.getThorns() + itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
                     customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() + itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                    customPlayer.setHealthRegen((int) (customPlayer.getHealthRegen() + itemData.get(new NamespacedKey(main, "healthRegen"), PersistentDataType.FLOAT)));
+                    customPlayer.setMaxStamina((int) (customPlayer.getMaxStamina() + itemData.get(new NamespacedKey(main, "stamina"), PersistentDataType.FLOAT)));
+                    customPlayer.setStaminaRegen((int) (customPlayer.getStaminaRegen() + itemData.get(new NamespacedKey(main, "staminaRegen"), PersistentDataType.FLOAT)));
                     customPlayer.setDefense(customPlayer.getDefense() + itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
                     customPlayer.setSpeed(customPlayer.getSpeed() + itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
                     customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() + itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
@@ -1181,6 +1189,9 @@ public class StatsManager implements Listener {
                     customPlayer.setStrength(customPlayer.getStrength() - itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
                     customPlayer.setThorns(customPlayer.getThorns() - itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
                     customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() - itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
+                    customPlayer.setHealthRegen((int) (customPlayer.getHealthRegen() - itemData.get(new NamespacedKey(main, "healthRegen"), PersistentDataType.FLOAT)));
+                    customPlayer.setMaxStamina((int) (customPlayer.getMaxStamina() - itemData.get(new NamespacedKey(main, "stamina"), PersistentDataType.FLOAT)));
+                    customPlayer.setStaminaRegen((int) (customPlayer.getStaminaRegen() - itemData.get(new NamespacedKey(main, "staminaRegen"), PersistentDataType.FLOAT)));
                     customPlayer.setDefense(customPlayer.getDefense() - itemData.get(new NamespacedKey(main, "defense"), PersistentDataType.FLOAT));
                     customPlayer.setSpeed(customPlayer.getSpeed() - itemData.get(new NamespacedKey(main, "speed"), PersistentDataType.FLOAT));
                     customPlayer.setInfernalDefense(customPlayer.getInfernalDefense() - itemData.get(new NamespacedKey(main, "infernalDefense"), PersistentDataType.FLOAT));
