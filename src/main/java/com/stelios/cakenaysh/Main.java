@@ -75,6 +75,7 @@ public final class Main extends JavaPlugin {
         getCommand("kill").setExecutor(new KillCommand());
         getCommand("vanish").setExecutor(new VanishCommand());
         getCommand("stash").setExecutor(new StashCommand());
+        getCommand("playtime").setExecutor(new PlayTimeCommand());
 
         getCommand("giveitem").setExecutor(new GiveItemCommand());
         getCommand("giveitem").setTabCompleter(new GiveItemTabComplete());

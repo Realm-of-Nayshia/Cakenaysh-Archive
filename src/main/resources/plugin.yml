@@ -56,3 +56,6 @@ commands:
   stash:
     description: Claims stashed items.
     syntax: /stash
+  playtime:
+    description: Shows the playtime of the player
+    syntax: /playtime

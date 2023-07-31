@@ -4,6 +4,7 @@ import com.stelios.cakenaysh.Events.SpeedChangedEvent;
 import com.stelios.cakenaysh.Events.XpChangedEvent;
 import com.stelios.cakenaysh.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -362,7 +363,7 @@ public class CustomPlayer {
         customPlayer.setRankDatabase();
         customPlayer.setFactionDatabase();
         customPlayer.setJoinDateDatabase();
-        customPlayer.setPlayTimeDatabase();
+        customPlayer.setPlayTimeDatabase((float) player.getStatistic(Statistic.PLAY_ONE_MINUTE) / (20*60*60));
         customPlayer.setLevelDatabase();
         customPlayer.setInvestmentPointsDatabase();
         customPlayer.setXpDatabase();
@@ -509,7 +510,7 @@ public class CustomPlayer {
         }
     }
 
-    public void setPlayTimeDatabase() {
+    public void setPlayTimeDatabase(float playTime) {
         try {
             PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
                     ("UPDATE player_stats SET PLAY_TIME = " + playTime + " WHERE UUID = '" + uuid + "';");
