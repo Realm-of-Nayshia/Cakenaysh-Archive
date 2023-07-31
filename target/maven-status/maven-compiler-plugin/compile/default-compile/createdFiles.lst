@@ -36,6 +36,7 @@ com\stelios\cakenaysh\Managers\LevelManager.class
 com\stelios\cakenaysh\Events\XpChangedEvent.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoStats.class
 com\stelios\cakenaysh\Managers\StatsManager$1.class
+com\stelios\cakenaysh\Commands\PlayTimeCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\SetNpcStatTabComplete.class
 com\stelios\cakenaysh\Util\Database.class
 com\stelios\cakenaysh\Commands\VanishCommand.class
