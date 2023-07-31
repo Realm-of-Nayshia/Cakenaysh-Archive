@@ -75,7 +75,7 @@ public class StatsManager implements Listener {
                     addPlayerStats(player, player.getInventory().getItemInMainHand());
                 }
             }
-        }.runTaskTimerAsynchronously(main, 0, 20*900);
+        }.runTaskTimerAsynchronously(main, 0, 20*1800);
     }
 
 
