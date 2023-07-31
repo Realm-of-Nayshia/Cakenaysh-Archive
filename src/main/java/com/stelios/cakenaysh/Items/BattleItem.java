@@ -236,6 +236,12 @@ public class BattleItem extends Item {
                 return this.strength;
             case "health":
                 return this.health;
+            case "healthRegen":
+                return this.healthRegen;
+            case "stamina":
+                return this.stamina;
+            case "staminaRegen":
+                return this.staminaRegen;
             case "defense":
                 return this.defense;
             case "speed":
