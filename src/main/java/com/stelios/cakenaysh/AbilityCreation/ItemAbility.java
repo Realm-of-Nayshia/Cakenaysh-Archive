@@ -41,7 +41,7 @@ public abstract class ItemAbility implements Listener {
             Bukkit.getPluginManager().registerEvents(this, Main.getPlugin(Main.class));
             firstEventRegistered = true;
 
-            //unregister the previous event and register the new one
+        //unregister the previous event and register the new one
         } else {
             unregister();
             Bukkit.getPluginManager().registerEvents(this, Main.getPlugin(Main.class));
@@ -106,7 +106,7 @@ public abstract class ItemAbility implements Listener {
             PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
 
             //if the item is a battle item
-            if (!(itemData.get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING) == "regularItem")) {
+            if (itemData.get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING) == ("weapon")) {
 
                 //if the player doesn't meet the item requirements, return false
                 if (itemData.get(new NamespacedKey(main, "meleeProficiency"), PersistentDataType.INTEGER) > customPlayer.getMeleeProficiency() ||
@@ -171,7 +171,9 @@ public abstract class ItemAbility implements Listener {
         if (e.getItem() != null) {
 
             //only fire the event if the correct item is in the main hand
-            if (e.getHand() == EquipmentSlot.HAND && e.getItem().isSimilar(item.build())) {
+            if (e.getHand() == EquipmentSlot.HAND &&
+                    (e.getItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(Main.class), "name"), PersistentDataType.STRING)
+                    .equals(item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(Main.getPlugin(Main.class), "name"), PersistentDataType.STRING)))) {
 
                 //if the player left clicks and the ability is a left click ability
                 if (e.getAction().isLeftClick() && ability.getClickType() == ClickType.LEFT){

@@ -44,7 +44,7 @@ public class PlayerInfoSkills extends Menu {
         registerButton(closeButton, 40);
 
         //melee proficiency
-        Item meleeProficiency = new Item(Material.IRON_SWORD, 1, false)
+        Item meleeProficiency = new Item(Material.IRON_SWORD, 1, false, "Melee Proficiency")
                 .setDisplayName(new ArrayList<>(Arrays.asList("Melee Level ", String.valueOf(customPlayer.getMeleeProficiency()))),
                         new ArrayList<>(Arrays.asList(214,88,88, 214,88,88)),
                         new ArrayList<>(Arrays.asList(false,false)),
@@ -81,7 +81,7 @@ public class PlayerInfoSkills extends Menu {
 
 
         //ranged proficiency
-        Item rangedProficiency = new Item(Material.BOW, 1, false)
+        Item rangedProficiency = new Item(Material.BOW, 1, false, "Ranged Proficiency")
                 .setDisplayName(new ArrayList<>(Arrays.asList("Ranged Level ", String.valueOf(customPlayer.getRangedProficiency()))),
                         new ArrayList<>(Arrays.asList(240,185,85, 240,185,85)),
                         new ArrayList<>(Arrays.asList(false,false)),
@@ -117,7 +117,7 @@ public class PlayerInfoSkills extends Menu {
         registerButton(rangedProficiencyButton, 20);
 
         //armor proficiency
-        Item armorProficiency = new Item(Material.IRON_CHESTPLATE, 1, false)
+        Item armorProficiency = new Item(Material.IRON_CHESTPLATE, 1, false, "Armor Proficiency")
                 .setDisplayName(new ArrayList<>(Arrays.asList("Armor Level ", String.valueOf(customPlayer.getArmorProficiency()))),
                         new ArrayList<>(Arrays.asList(77,85,92, 77,85,92)),
                         new ArrayList<>(Arrays.asList(false,false)),
@@ -154,7 +154,7 @@ public class PlayerInfoSkills extends Menu {
 
 
         //reset proficiencies button
-        Item resetProficiencies = new Item(Material.REDSTONE_TORCH, 1, false)
+        Item resetProficiencies = new Item(Material.REDSTONE_TORCH, 1, false, "Reset Proficiencies")
                 .setDisplayName(new ArrayList<>(Arrays.asList("Click to reset all proficiencies")),
                         new ArrayList<>(Arrays.asList(255,0,0)),
                         new ArrayList<>(Collections.singletonList(false)),
@@ -190,7 +190,7 @@ public class PlayerInfoSkills extends Menu {
 
         ////registering non-clickable buttons
         //proficiency information
-        Item proficiency = new Item(Material.PLAYER_HEAD, 1,false)
+        Item proficiency = new Item(Material.PLAYER_HEAD, 1,false, "Proficiency Information")
                 .setDisplayName(new ArrayList<>(Arrays.asList("Current Proficiency Levels")),
                         new ArrayList<>(Arrays.asList(153,255,51)),
                         new ArrayList<>(Collections.singletonList(false)),

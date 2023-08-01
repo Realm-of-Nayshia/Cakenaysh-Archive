@@ -45,7 +45,7 @@ public class PlayerInfoStats extends Menu {
 
         ////registering non-clickable buttons
         //combat stats
-        Item combatStats = new Item(Material.DIAMOND_SWORD, 1,false)
+        Item combatStats = new Item(Material.DIAMOND_SWORD, 1,false, "Combat Stats")
                 .setDisplayName(new ArrayList<>(Collections.singletonList("Combat Stats")),
                         new ArrayList<>(Arrays.asList(0,255,0)),
                         new ArrayList<>(Collections.singletonList(false)),

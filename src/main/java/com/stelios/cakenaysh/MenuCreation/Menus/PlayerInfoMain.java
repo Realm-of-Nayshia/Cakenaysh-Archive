@@ -30,7 +30,7 @@ public class PlayerInfoMain extends Menu {
 
         ////registering clickable buttons
         //profile button
-        Item profile = new Item(Material.PLAYER_HEAD, 1,false)
+        Item profile = new Item(Material.PLAYER_HEAD, 1,false, "profile")
                 .setDisplayName(new ArrayList<>(Collections.singletonList(player.getName() + "'s Profile")),
                         new ArrayList<>(Arrays.asList(0,255,0)),
                         new ArrayList<>(Collections.singletonList(false)),
@@ -77,7 +77,7 @@ public class PlayerInfoMain extends Menu {
 
 
         //stats button
-        Item combatStats = new Item(Material.DIAMOND_SWORD, 1,false)
+        Item combatStats = new Item(Material.DIAMOND_SWORD, 1,false, "combatStats")
                 .setDisplayName(new ArrayList<>(Collections.singletonList("Combat Stats")),
                         new ArrayList<>(Arrays.asList(0,255,0)),
                         new ArrayList<>(Collections.singletonList(false)),

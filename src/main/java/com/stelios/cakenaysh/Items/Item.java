@@ -10,6 +10,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -25,19 +26,23 @@ public class Item {
 
     //@param material: The material of the item being built.
     //@param amount: The amount of the item being built.
-    public Item(Material material, int amount, boolean unstackable) {
+    public Item(Material material, int amount, boolean unstackable, String name) {
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = this.itemStack.getItemMeta();
         this.unstackable = unstackable;
 
-        this.itemMeta.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"),
+        //setting pdc values for the item
+        PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
+
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"),
                 PersistentDataType.STRING, "regularItem");
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "name"), PersistentDataType.STRING, name);
 
         addItemFlags();
 
         //if the item is unstackable, add a unique identifier to the item
         if (unstackable){
-            this.itemMeta.getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"),
+            pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"),
                     PersistentDataType.STRING, UUID.randomUUID().toString());
         }
     }

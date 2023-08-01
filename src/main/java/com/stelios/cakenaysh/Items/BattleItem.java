@@ -19,32 +19,32 @@ import java.util.UUID;
 
 public class BattleItem extends Item {
 
-    private float damage;
-    private float attackSpeed;
-    private float critDamage;
-    private float critChance;
-    private float strength;
-    private float health;
-    private float healthRegen;
-    private float stamina;
-    private float staminaRegen;
-    private float defense;
-    private float speed;
-    private float thorns;
-    private float infernalDefense;
-    private float infernalDamage;
-    private float undeadDefense;
-    private float undeadDamage;
-    private float aquaticDefense;
-    private float aquaticDamage;
-    private float aerialDefense;
-    private float aerialDamage;
-    private float meleeDefense;
-    private float meleeDamage;
-    private float rangedDefense;
-    private float rangedDamage;
-    private float magicDefense;
-    private float magicDamage;
+    private final float damage;
+    private final float attackSpeed;
+    private final float critDamage;
+    private final float critChance;
+    private final float strength;
+    private final float health;
+    private final float healthRegen;
+    private final float stamina;
+    private final float staminaRegen;
+    private final float defense;
+    private final float speed;
+    private final float thorns;
+    private final float infernalDefense;
+    private final float infernalDamage;
+    private final float undeadDefense;
+    private final float undeadDamage;
+    private final float aquaticDefense;
+    private final float aquaticDamage;
+    private final float aerialDefense;
+    private final float aerialDamage;
+    private final float meleeDefense;
+    private final float meleeDamage;
+    private final float rangedDefense;
+    private final float rangedDamage;
+    private final float magicDefense;
+    private final float magicDamage;
     private final int meleeProficiency;
     private final int rangedProficiency;
     private final int armorProficiency;
@@ -65,14 +65,13 @@ public class BattleItem extends Item {
     //@params rangedProficiency: The ranged proficiency of the item being built.
     //@params armorProficiency: The armor proficiency of the item being built.
     //@params isArmor: Whether the item being built is armor.
-    public BattleItem(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage, float critChance,
-                      float strength, float health, float healthRegen, float stamina, float staminaRegen, float defense, float speed, float thorns,
-                      float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
+    public BattleItem(Material material, int amount, boolean unstackable, String name, String itemType, float damage, float attackSpeed,
+                      float critDamage, float critChance, float strength, float health, float healthRegen, float stamina, float staminaRegen,
+                      float defense, float speed, float thorns, float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
                       float aquaticDefense, float aquaticDamage, float aerialDefense, float aerialDamage,
                       float meleeDefense, float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
-                      float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency,
-                      boolean isArmor){
-        super(material, amount, unstackable);
+                      float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency){
+        super(material, amount, unstackable, name);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
         this.critDamage = critDamage;
@@ -109,17 +108,13 @@ public class BattleItem extends Item {
                     PersistentDataType.STRING, UUID.randomUUID().toString());
         }
 
-        //setting the pdc weapon type
-        String itemType = "regular";
-        if (isArmor){
-            itemType = "armor";
-        }else{
-            implementAttackSpeed();
-        }
+        //attackSpeed implementation
+        implementAttackSpeed(itemType);
 
         //setting pdc values for the item
         PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"), PersistentDataType.STRING, itemType);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "name"), PersistentDataType.STRING, name);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "damage"), PersistentDataType.FLOAT, damage);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "attackSpeed"), PersistentDataType.FLOAT, attackSpeed);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "critDamage"), PersistentDataType.FLOAT, critDamage);
@@ -149,71 +144,7 @@ public class BattleItem extends Item {
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
-
-        addItemFlags();
-    }
-
-    //@param material: The material of the item being built.
-    //@param amount: The amount of the item being built.
-    //@param damage: The damage of the item being built.
-    //@param attackSpeed: The attack speed of the item being built.
-    //@param critDamage: The crit damage of the item being built.
-    //@param critChance: The crit chance of the item being built.
-    //@param health: The health of the item being built.
-    //@param speed: The speed of the item being built.
-    public BattleItem(Material material, int amount, boolean unstackable, float damage, float attackSpeed, float critDamage,
-                      float critChance, float strength, float health, float healthRegen, float stamina, float staminaRegen,
-                      float defense, float speed, float thorns, int meleeProficiency, int rangedProficiency, int armorProficiency,
-                      boolean isArmor){
-        super(material, amount, unstackable);
-        this.damage = damage;
-        this.attackSpeed = attackSpeed;
-        this.critDamage = critDamage;
-        this.critChance = critChance;
-        this.strength = strength;
-        this.health = health;
-        this.healthRegen = healthRegen;
-        this.stamina = stamina;
-        this.staminaRegen = staminaRegen;
-        this.defense = defense;
-        this.speed = speed;
-        this.thorns = thorns;
-        this.meleeProficiency = meleeProficiency;
-        this.rangedProficiency = rangedProficiency;
-        this.armorProficiency = armorProficiency;
-
-        //if the item is unstackable, add a unique identifier to the item
-        if (unstackable){
-            this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"),
-                    PersistentDataType.STRING, UUID.randomUUID().toString());
-        }
-
-        //setting the pdc weapon type
-        String itemType = "regular";
-        if (isArmor){
-            itemType = "armor";
-        }else{
-            implementAttackSpeed();
-        }
-
-        //setting pdc values for the item
-        PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"), PersistentDataType.STRING, itemType);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "damage"), PersistentDataType.FLOAT, damage);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "attackSpeed"), PersistentDataType.FLOAT, attackSpeed);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "critDamage"), PersistentDataType.FLOAT, critDamage);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "critChance"), PersistentDataType.FLOAT, critChance);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "strength"), PersistentDataType.FLOAT, strength);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "health"), PersistentDataType.FLOAT, health);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "healthRegen"), PersistentDataType.FLOAT, healthRegen);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "stamina"), PersistentDataType.FLOAT, stamina);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "staminaRegen"), PersistentDataType.FLOAT, staminaRegen);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "defense"), PersistentDataType.FLOAT, defense);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "speed"), PersistentDataType.FLOAT, speed);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "thorns"), PersistentDataType.FLOAT, thorns);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "statsCalculated"), PersistentDataType.BOOLEAN, false);
 
         addItemFlags();
     }
@@ -287,44 +218,67 @@ public class BattleItem extends Item {
     }
 
     //set the attackSpeed attribute modifier depending on the vanilla attackSpeed of the item
-    public void implementAttackSpeed(){
+    public void implementAttackSpeed(String itemType){
 
         float baseAttackSpeed = 4.0f;
-        Material itemType = this.getItemStack().getType();
+        Material itemMaterial = this.getItemStack().getType();
 
         //get the base attack speed of the item based on the material
-        if (itemType == Material.WOODEN_SWORD || itemType == Material.STONE_SWORD
-                || itemType == Material.GOLDEN_SWORD || itemType == Material.IRON_SWORD
-                || itemType == Material.DIAMOND_SWORD || itemType == Material.NETHERITE_SWORD){
+        if (itemMaterial == Material.WOODEN_SWORD || itemMaterial == Material.STONE_SWORD
+                || itemMaterial == Material.GOLDEN_SWORD || itemMaterial == Material.IRON_SWORD
+                || itemMaterial == Material.DIAMOND_SWORD || itemMaterial == Material.NETHERITE_SWORD){
             baseAttackSpeed = 1.6f;
-        }else if (itemType == Material.WOODEN_SHOVEL || itemType == Material.STONE_SHOVEL
-                || itemType == Material.GOLDEN_SHOVEL || itemType == Material.IRON_SHOVEL
-                || itemType == Material.DIAMOND_SHOVEL || itemType == Material.NETHERITE_SHOVEL){
+        }else if (itemMaterial == Material.WOODEN_SHOVEL || itemMaterial == Material.STONE_SHOVEL
+                || itemMaterial == Material.GOLDEN_SHOVEL || itemMaterial == Material.IRON_SHOVEL
+                || itemMaterial == Material.DIAMOND_SHOVEL || itemMaterial == Material.NETHERITE_SHOVEL){
             baseAttackSpeed = 1.0f;
-        }else if (itemType == Material.WOODEN_PICKAXE || itemType == Material.STONE_PICKAXE
-                || itemType == Material.GOLDEN_PICKAXE || itemType == Material.IRON_PICKAXE
-                || itemType == Material.DIAMOND_PICKAXE || itemType == Material.NETHERITE_PICKAXE){
+        }else if (itemMaterial == Material.WOODEN_PICKAXE || itemMaterial == Material.STONE_PICKAXE
+                || itemMaterial == Material.GOLDEN_PICKAXE || itemMaterial == Material.IRON_PICKAXE
+                || itemMaterial == Material.DIAMOND_PICKAXE || itemMaterial == Material.NETHERITE_PICKAXE){
             baseAttackSpeed = 1.2f;
-        }else if (itemType == Material.TRIDENT){
+        }else if (itemMaterial == Material.TRIDENT){
             baseAttackSpeed = 1.1f;
-        }else if (itemType == Material.WOODEN_AXE || itemType == Material.STONE_AXE){
+        }else if (itemMaterial == Material.WOODEN_AXE || itemMaterial == Material.STONE_AXE){
             baseAttackSpeed = 0.8f;
-        }else if (itemType == Material.IRON_AXE){
+        }else if (itemMaterial == Material.IRON_AXE){
             baseAttackSpeed = 0.9f;
-        }else if (itemType == Material.GOLDEN_AXE || itemType == Material.DIAMOND_AXE
-                || itemType == Material.NETHERITE_AXE || itemType == Material.WOODEN_HOE
-                || itemType == Material.GOLDEN_HOE){
+        }else if (itemMaterial == Material.GOLDEN_AXE || itemMaterial == Material.DIAMOND_AXE
+                || itemMaterial == Material.NETHERITE_AXE || itemMaterial == Material.WOODEN_HOE
+                || itemMaterial == Material.GOLDEN_HOE){
             baseAttackSpeed = 1.0f;
-        }else if (itemType == Material.STONE_HOE){
+        }else if (itemMaterial == Material.STONE_HOE){
             baseAttackSpeed = 2.0f;
-        }else if (itemType == Material.IRON_HOE){
+        }else if (itemMaterial == Material.IRON_HOE){
             baseAttackSpeed = 3.0f;
         }
 
-        //setting the swing speed in the main hand
-        AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(),"generic.attackSpeed", attackSpeed * 0.1 - baseAttackSpeed,
-                AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
-        this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
+        //add attackSpeed modifiers to the items based on what type they are
+        switch (itemType) {
+            case "accessory": {
+
+                //set the attack speed: added to the base attack speed of the item
+                AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed * 0.1,
+                        AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND);
+                this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
+                break;
+            }
+            case "armor": {
+
+                //set the attack speed: added to the base attack speed of the item
+                AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed * 0.1,
+                        AttributeModifier.Operation.ADD_NUMBER);
+                this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
+                break;
+            }
+            case "weapon": {
+
+                //set the attack speed: the base attack speed of the item
+                AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed * 0.1 - baseAttackSpeed,
+                        AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
+                this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
+                break;
+            }
+        }
     }
 
 
@@ -412,9 +366,9 @@ public class BattleItem extends Item {
             loreList.add(0, Component.text(""));
         }
 
-        makeLoreLine(loreList, "Melee Proficiency: ", this.getStat("armorProficiency"), false, true, 77,85,92, 200, 200, 200);
+        makeLoreLine(loreList, "Armor Proficiency: ", this.getStat("armorProficiency"), false, true, 77,85,92, 200, 200, 200);
         makeLoreLine(loreList, "Ranged Proficiency: ", this.getStat("rangedProficiency"), false, true, 240, 185, 85, 200, 200, 200);
-        makeLoreLine(loreList, "Armor Proficiency: ", this.getStat("meleeProficiency"), false, true, 214,88,88, 200, 200, 200);
+        makeLoreLine(loreList, "Melee Proficiency: ", this.getStat("meleeProficiency"), false, true, 214,88,88, 200, 200, 200);
 
         //setting the lore of the item
         super.getItemMeta().lore(loreList);
