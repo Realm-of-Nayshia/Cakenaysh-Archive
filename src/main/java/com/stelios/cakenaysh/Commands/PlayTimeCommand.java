@@ -20,7 +20,7 @@ public class PlayTimeCommand implements CommandExecutor {
 
             //if there are no arguments
             if (args.length == 0){
-                player.sendMessage(Component.text("You have played for " + (float) player.getStatistic(Statistic.PLAY_ONE_MINUTE) / (20*60*60) + " hours.", TextColor.color(0,255, 0)));
+                player.sendMessage(Component.text("You have played for " + (float) ((int) ((float) player.getStatistic(Statistic.PLAY_ONE_MINUTE) / (20*60*60) * 10)) / 10 + " hours.", TextColor.color(0,255, 0)));
 
             //error: invalid syntax
             }else{
