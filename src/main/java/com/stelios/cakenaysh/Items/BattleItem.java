@@ -50,9 +50,11 @@ public class BattleItem extends Item {
     private final int armorProficiency;
 
 
-
     //@param material: The material of the item being built.
     //@param amount: The amount of the item being built.
+    //@param unstackable: Whether the item being built is stackable or not.
+    //@param name: The name of the item being built.
+    //@param itemType: The type of item being built.
     //@param damage: The damage of the item being built.
     //@param attackSpeed: The attack speed of the item being built.
     //@param critDamage: The crit damage of the item being built.
@@ -64,7 +66,6 @@ public class BattleItem extends Item {
     //@params meleeProficiency: The melee proficiency of the item being built.
     //@params rangedProficiency: The ranged proficiency of the item being built.
     //@params armorProficiency: The armor proficiency of the item being built.
-    //@params isArmor: Whether the item being built is armor.
     public BattleItem(Material material, int amount, boolean unstackable, String name, String itemType, float damage, float attackSpeed,
                       float critDamage, float critChance, float strength, float health, float healthRegen, float stamina, float staminaRegen,
                       float defense, float speed, float thorns, float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
@@ -144,7 +145,6 @@ public class BattleItem extends Item {
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "statsCalculated"), PersistentDataType.BOOLEAN, false);
 
         addItemFlags();
     }
