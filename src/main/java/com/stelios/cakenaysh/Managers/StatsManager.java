@@ -27,6 +27,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -605,7 +606,7 @@ public class StatsManager implements Listener {
         removePlayerStats(player, player.getInventory().getLeggings(), "armor");
         removePlayerStats(player, player.getInventory().getBoots(), "armor");
 
-        //wait 2 ticks to allow the proficiency to be changed
+        //wait 1 tick to allow the proficiency to be changed
         new BukkitRunnable(){
             @Override
             public void run() {
@@ -618,7 +619,7 @@ public class StatsManager implements Listener {
                 addPlayerStats(player, player.getInventory().getBoots(), "armor");
 
             }
-        }.runTaskLater(main, 2);
+        }.runTaskLater(main, 1);
     }
 
     @EventHandler
@@ -700,6 +701,15 @@ public class StatsManager implements Listener {
 
             //remove the stats of the old item
             removePlayerStats(player, e.getOldItemStack(), "weapon");
+
+        //if the item is being moved into or out of the offhand
+        } else if (e.getSlot() == 40){
+
+            //add the stats of the new item
+            addPlayerStats(player, e.getNewItemStack(), "accessory");
+
+            //remove the stats of the old item
+            removePlayerStats(player, e.getOldItemStack(), "accessory");
         }
     }
 
@@ -714,6 +724,20 @@ public class StatsManager implements Listener {
 
         //add the stats of the new item being held
         addPlayerStats(player, player.getInventory().getItem(e.getNewSlot()), "weapon");
+    }
+
+    //update the player's offhand stats when an item is put in it
+    @EventHandler
+    public void onSwapHands(PlayerSwapHandItemsEvent e){
+
+        Player player = e.getPlayer();
+
+        //remove the stats from the item they were holding
+        removePlayerStats(player, e.getMainHandItem(), "accessory");
+
+        //add the stats of the new item being held
+        addPlayerStats(player, e.getOffHandItem(), "accessory");
+
     }
 
     //update player stats when armor is equipped
