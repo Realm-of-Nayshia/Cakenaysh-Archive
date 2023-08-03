@@ -77,7 +77,7 @@ public class PlayerInfoMain extends Menu {
 
 
         //stats button
-        Item combatStats = new Item(Material.DIAMOND_SWORD, 1,false, "combatStats")
+        Item combatStats = new Item(Material.DIAMOND_SWORD, 1,false)
                 .setDisplayName(new ArrayList<>(Collections.singletonList("Combat Stats")),
                         new ArrayList<>(Arrays.asList(0,255,0)),
                         new ArrayList<>(Collections.singletonList(false)),
