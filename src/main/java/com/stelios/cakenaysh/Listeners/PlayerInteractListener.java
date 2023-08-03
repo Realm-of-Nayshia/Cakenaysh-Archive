@@ -29,8 +29,9 @@ public class PlayerInteractListener implements Listener {
             try {
                 if (item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(main, "itemType"))){
 
-                    //if the player tries to place a placeable item and the player is not trying to interact with a block
-                    if (e.isBlockInHand() && e.getAction() == Action.RIGHT_CLICK_BLOCK && !e.getClickedBlock().getType().isInteractable()){
+                    //if the player tries to place a placeable item and the player is trying to interact with a block
+                    if ((e.isBlockInHand() && e.getAction() == Action.RIGHT_CLICK_BLOCK && !e.getClickedBlock().getType().isInteractable()) ||
+                            (e.isBlockInHand() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType().isInteractable() && e.getPlayer().isSneaking())){
                         e.setCancelled(true);
                     }
 
