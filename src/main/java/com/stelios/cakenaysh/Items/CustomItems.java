@@ -13,7 +13,7 @@ public enum CustomItems {
 
 
     //GUI ITEMS
-    SKILLS(new Item(Material.END_CRYSTAL, 1,false, "Skills")
+    SKILLS(new Item(Material.END_CRYSTAL, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Skills")),
                     new ArrayList<>(Arrays.asList(0,255,0)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -29,7 +29,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    QUESTS(new Item(Material.WRITABLE_BOOK, 1,false, "Quests")
+    QUESTS(new Item(Material.WRITABLE_BOOK, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Quest Log")),
                     new ArrayList<>(Arrays.asList(0,255,0)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -45,7 +45,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false)),
                     new ArrayList<>(Arrays.asList(false, false)))),
 
-    RECIPE_BOOK(new Item(Material.WRITTEN_BOOK, 1,false, "Recipe Book")
+    RECIPE_BOOK(new Item(Material.WRITTEN_BOOK, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Recipe Book")),
                     new ArrayList<>(Arrays.asList(0,255,0)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -61,7 +61,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false)),
                     new ArrayList<>(Arrays.asList(false, false)))),
 
-    CHARACTER_MANAGEMENT(new Item(Material.NAME_TAG, 1,false, "Character Management")
+    CHARACTER_MANAGEMENT(new Item(Material.NAME_TAG, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Character Management")),
                     new ArrayList<>(Arrays.asList(0,255,0)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -77,7 +77,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false, false)),
                     new ArrayList<>(Arrays.asList(false, false, false)))),
 
-    BACK_BUTTON(new Item(Material.ARROW, 1,false, "Back button")
+    BACK_BUTTON(new Item(Material.ARROW, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Back")),
                     new ArrayList<>(Arrays.asList(255,255,255)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -86,7 +86,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    CLOSE(new Item(Material.BARRIER, 1,false, "Close")
+    CLOSE(new Item(Material.BARRIER, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Close")),
                     new ArrayList<>(Arrays.asList(255,0,0)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -95,7 +95,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    SETTINGS(new Item(Material.REDSTONE_TORCH, 1,false, "Settings")
+    SETTINGS(new Item(Material.REDSTONE_TORCH, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Settings")),
                     new ArrayList<>(Arrays.asList(0,255,0)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -111,7 +111,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    BLANK_BLACK_PANE(new Item(Material.BLACK_STAINED_GLASS_PANE, 1,false, "Blank Black Pane")
+    BLANK_BLACK_PANE(new Item(Material.BLACK_STAINED_GLASS_PANE, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("")),
                     new ArrayList<>(Arrays.asList(0,0,0)),
                     new ArrayList<>(Arrays.asList(false)),
