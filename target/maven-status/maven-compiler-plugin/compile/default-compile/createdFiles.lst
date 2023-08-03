@@ -1,6 +1,5 @@
 com\stelios\cakenaysh\Npc\NpcBuilder.class
 com\stelios\cakenaysh\AbilityCreation\ItemAbility.class
-com\stelios\cakenaysh\Managers\StatsManager$6.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
 com\stelios\cakenaysh\Commands\MenuCommand.class
 com\stelios\cakenaysh\Managers\StatsManager$2.class
