@@ -26,6 +26,8 @@ public class Item {
 
     //@param material: The material of the item being built.
     //@param amount: The amount of the item being built.
+    //@param unstackable: Whether the item is stackable or not.
+    //@param name: The name of the item being built.
     public Item(Material material, int amount, boolean unstackable, String name) {
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = this.itemStack.getItemMeta();
@@ -34,9 +36,29 @@ public class Item {
         //setting pdc values for the item
         PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
 
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"),
-                PersistentDataType.STRING, "regularItem");
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"), PersistentDataType.STRING, "regular");
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "name"), PersistentDataType.STRING, name);
+
+        addItemFlags();
+
+        //if the item is unstackable, add a unique identifier to the item
+        if (unstackable){
+            pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"), PersistentDataType.STRING, UUID.randomUUID().toString());
+        }
+    }
+
+    //@param material: The material of the item being built.
+    //@param amount: The amount of the item being built.
+    //@param unstackable: Whether the item is stackable or not.
+    public Item(Material material, int amount, boolean unstackable) {
+        this.itemStack = new ItemStack(material, amount);
+        this.itemMeta = this.itemStack.getItemMeta();
+        this.unstackable = unstackable;
+
+        //setting pdc values for the item
+        PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
+
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"), PersistentDataType.STRING, "regular");
 
         addItemFlags();
 
