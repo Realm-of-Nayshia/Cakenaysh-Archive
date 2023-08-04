@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,92 +76,101 @@ public class CustomPlayer {
 
         this.uuid = uuid;
 
-        PreparedStatement statement = main.getDatabase().getConnection().prepareStatement(
-                "SELECT RANK, FACTION, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, " +
-                        "HEALTH_REGEN, HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY, " +
-                        "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH" +
-                        " FROM player_stats WHERE UUID = ?;");
-        statement.setString(1, uuid.toString());
-        ResultSet rs = statement.executeQuery();
-        if (rs.next()) {
-            rank = rs.getString("RANK");
-            faction = rs.getString("FACTION");
-            joinDate = rs.getString("JOIN_DATE");
-            playTime = rs.getFloat("PLAY_TIME");
-            level = rs.getInt("LEVEL");
-            investmentPoints = rs.getInt("INVESTMENT_POINTS");
-            xp = rs.getInt("XP");
-            staminaRegen = rs.getInt("STAMINA_REGEN");
-            stamina = rs.getInt("STAMINA");
-            maxStamina = rs.getInt("MAX_STAMINA");
-            healthRegen = rs.getInt("HEALTH_REGEN");
-            health = rs.getInt("HEALTH");
-            maxHealth = rs.getInt("MAX_HEALTH");
-            meleeProficiency = rs.getInt("MELEE_PROFICIENCY");
-            rangedProficiency = rs.getInt("RANGED_PROFICIENCY");
-            armorProficiency = rs.getInt("ARMOR_PROFICIENCY");
-            wilsonCoin = rs.getInt("WILSONCOIN");
-            piety = rs.getInt("PIETY");
-            charisma = rs.getInt("CHARISMA");
-            deception = rs.getInt("DECEPTION");
-            agility = rs.getInt("AGILITY");
-            luck = rs.getInt("LUCK");
-            stealth = rs.getInt("STEALTH");
-        } else {
-            rank = "Guest";
-            faction = "None";
-            joinDate = Calendar.getInstance().getTime().toString();
-            playTime = 0;
-            level = 0;
-            investmentPoints = 0;
-            xp = 0;
-            staminaRegen = 1;
-            stamina = 100;
-            maxStamina = 100;
-            healthRegen = 1;
-            health = 100;
-            maxHealth = 100;
-            meleeProficiency = 0;
-            rangedProficiency = 0;
-            armorProficiency = 0;
-            wilsonCoin = 0;
-            piety = 0;
-            charisma = 0;
-            deception = 0;
-            agility = 0;
-            luck = 0;
-            stealth = 0;
-            PreparedStatement insert = main.getDatabase().getConnection().prepareStatement(
-                    "INSERT INTO player_stats (ID, UUID, RANK, FACTION, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
-                            "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY," +
-                            "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH) VALUES (" +
-                            "default," +
-                            "'" + uuid + "'," +
-                            "'" + rank + "'," +
-                            "'" + faction + "'," +
-                            "'" + joinDate + "'," +
-                            playTime + "," +
-                            level + "," +
-                            investmentPoints + "," +
-                            xp + "," +
-                            staminaRegen + "," +
-                            stamina + "," +
-                            maxStamina + "," +
-                            healthRegen + "," +
-                            health + "," +
-                            maxHealth + "," +
-                            meleeProficiency + "," +
-                            rangedProficiency + "," +
-                            armorProficiency + "," +
-                            wilsonCoin + "," +
-                            piety + "," +
-                            charisma + "," +
-                            deception + "," +
-                            agility + "," +
-                            luck + "," +
-                            stealth +
-                            ");");
-            insert.executeUpdate();
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT RANK, FACTION, JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, " +
+                     "XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN, HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, " +
+                     "WILSONCOIN, PIETY, CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH FROM player_stats WHERE UUID = ?;")) {
+            statement.setString(1, uuid.toString());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                rank = rs.getString("RANK");
+                faction = rs.getString("FACTION");
+                joinDate = rs.getString("JOIN_DATE");
+                playTime = rs.getFloat("PLAY_TIME");
+                level = rs.getInt("LEVEL");
+                investmentPoints = rs.getInt("INVESTMENT_POINTS");
+                xp = rs.getInt("XP");
+                staminaRegen = rs.getInt("STAMINA_REGEN");
+                stamina = rs.getInt("STAMINA");
+                maxStamina = rs.getInt("MAX_STAMINA");
+                healthRegen = rs.getInt("HEALTH_REGEN");
+                health = rs.getInt("HEALTH");
+                maxHealth = rs.getInt("MAX_HEALTH");
+                meleeProficiency = rs.getInt("MELEE_PROFICIENCY");
+                rangedProficiency = rs.getInt("RANGED_PROFICIENCY");
+                armorProficiency = rs.getInt("ARMOR_PROFICIENCY");
+                wilsonCoin = rs.getInt("WILSONCOIN");
+                piety = rs.getInt("PIETY");
+                charisma = rs.getInt("CHARISMA");
+                deception = rs.getInt("DECEPTION");
+                agility = rs.getInt("AGILITY");
+                luck = rs.getInt("LUCK");
+                stealth = rs.getInt("STEALTH");
+            } else {
+                rank = "Guest";
+                faction = "None";
+                joinDate = Calendar.getInstance().getTime().toString();
+                playTime = 0;
+                level = 0;
+                investmentPoints = 0;
+                xp = 0;
+                staminaRegen = 1;
+                stamina = 100;
+                maxStamina = 100;
+                healthRegen = 1;
+                health = 100;
+                maxHealth = 100;
+                meleeProficiency = 0;
+                rangedProficiency = 0;
+                armorProficiency = 0;
+                wilsonCoin = 0;
+                piety = 0;
+                charisma = 0;
+                deception = 0;
+                agility = 0;
+                luck = 0;
+                stealth = 0;
+
+                try (Connection connection1 = main.getDatabase().getHikari().getConnection();
+                     PreparedStatement statement1 = connection1.prepareStatement("INSERT INTO player_stats (ID, UUID, RANK, FACTION, " +
+                             "JOIN_DATE, PLAY_TIME, LEVEL, INVESTMENT_POINTS, XP, STAMINA_REGEN, STAMINA, MAX_STAMINA, HEALTH_REGEN," +
+                             "HEALTH, MAX_HEALTH, MELEE_PROFICIENCY, RANGED_PROFICIENCY, ARMOR_PROFICIENCY, WILSONCOIN, PIETY," +
+                             "CHARISMA, DECEPTION, AGILITY, LUCK, STEALTH) VALUES (" +
+                             "default," +
+                             "'" + uuid + "'," +
+                             "'" + rank + "'," +
+                             "'" + faction + "'," +
+                             "'" + joinDate + "'," +
+                             playTime + "," +
+                             level + "," +
+                             investmentPoints + "," +
+                             xp + "," +
+                             staminaRegen + "," +
+                             stamina + "," +
+                             maxStamina + "," +
+                             healthRegen + "," +
+                             health + "," +
+                             maxHealth + "," +
+                             meleeProficiency + "," +
+                             rangedProficiency + "," +
+                             armorProficiency + "," +
+                             wilsonCoin + "," +
+                             piety + "," +
+                             charisma + "," +
+                             deception + "," +
+                             agility + "," +
+                             luck + "," +
+                             stealth +
+                             ");")) {
+
+                    statement1.executeUpdate();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -483,276 +493,230 @@ public class CustomPlayer {
 
     //setting player stats in the database and locally within the class
     public void setRankDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET RANK = '" + rank + "' WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET RANK = '" + rank + "' WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setFactionDatabase(){
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET FACTION = '" + faction + "' WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET FACTION = '" + faction + "' WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setJoinDateDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET JOIN_DATE = '" + joinDate + "' WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET JOIN_DATE = '" + joinDate + "' WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setPlayTimeDatabase(float playTime) {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET PLAY_TIME = " + playTime + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET PLAY_TIME = " + playTime + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setLevelDatabase(){
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET LEVEL = " + level + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET LEVEL = " + level + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setInvestmentPointsDatabase(){
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET INVESTMENT_POINTS = " + investmentPoints + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET INVESTMENT_POINTS = " + investmentPoints + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setXpDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET XP = " + xp + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET XP = " + xp + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setStaminaRegenDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET STAMINA_REGEN = " + staminaRegen + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET STAMINA_REGEN = " + staminaRegen + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setStaminaDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET STAMINA = " + stamina + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET STAMINA = " + stamina + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setMaxStaminaDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET MAX_STAMINA = " + maxStamina + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET MAX_STAMINA = " + maxStamina + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setHealthRegenDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET HEALTH_REGEN = " + healthRegen + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET HEALTH_REGEN = " + healthRegen + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setHealthDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET HEALTH = " + health + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET HEALTH = " + health + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setMaxHealthDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET MAX_HEALTH = " + maxHealth + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET MAX_HEALTH = " + maxHealth + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setMeleeProficiencyDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET MELEE_PROFICIENCY = " + meleeProficiency + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET MELEE_PROFICIENCY = " + meleeProficiency + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setRangedProficiencyDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET RANGED_PROFICIENCY = " + rangedProficiency + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET RANGED_PROFICIENCY = " + rangedProficiency + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setArmorProficiencyDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET ARMOR_PROFICIENCY = " + armorProficiency + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET ARMOR_PROFICIENCY = " + armorProficiency + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setWilsonCoinDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET WILSONCOIN = " + wilsonCoin + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET WILSONCOIN = " + wilsonCoin + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setPietyDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET PIETY = " + piety + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET PIETY = " + piety + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setCharismaDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET CHARISMA = " + charisma + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET CHARISMA = " + charisma + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setDeceptionDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET DECEPTION = " + deception + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET DECEPTION = " + deception + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setAgilityDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET AGILITY = " + agility + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET AGILITY = " + agility + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setLuckDatabase() {
-        try {
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET LUCK = " + luck + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET LUCK = " + luck + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }
     }
 
     public void setStealthDatabase() {
-        try{
-            PreparedStatement statement = main.getDatabase().getConnection().prepareStatement
-                    ("UPDATE player_stats SET STEALTH = " + stealth + " WHERE UUID = '" + uuid + "';");
+        try (Connection connection = main.getDatabase().getHikari().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE player_stats SET STEALTH = " + stealth + " WHERE UUID = '" + uuid + "';")) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            //kick the player
             Bukkit.getPlayer(uuid).kick(Component.text("An error occurred while trying to save your data. Please contact a server admin.", TextColor.color(255,0,0)));
             e.printStackTrace();
         }

@@ -1,5 +1,7 @@
 package com.stelios.cakenaysh.Util;
 
+import com.zaxxer.hikari.HikariDataSource;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,29 +14,29 @@ public class Database {
     private final String USERNAME = "root";
     private final String PASSWORD = "GRUBBYGUSTARD123";
 
-    private Connection connection;
+    private HikariDataSource hikari;
 
     //connects the database to the server
     public void connect() throws SQLException {
-        connection = DriverManager.getConnection(
-                "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?useSSL=false",
-                USERNAME, PASSWORD);
+        hikari = new HikariDataSource();
+        hikari.setDataSourceClassName("com.mysql.cj.jdbc.MysqlDataSource");
+        hikari.addDataSourceProperty("serverName" ,HOST);
+        hikari.addDataSourceProperty("port" ,PORT);
+        hikari.addDataSourceProperty("databaseName" ,DATABASE);
+        hikari.addDataSourceProperty("user" ,USERNAME);
+        hikari.addDataSourceProperty("password" ,PASSWORD);
     }
 
     //checks if the database is connected
-    public boolean isConnected() {return (connection != null);}
+    public boolean isConnected() {return (hikari != null);}
 
     //gets the connection
-    public Connection getConnection() {return connection;}
+    public HikariDataSource getHikari() {return hikari;}
 
     //disconnects the database from the server
     public void disconnect() {
         if (isConnected()){
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            hikari.close();
         }
     }
 
