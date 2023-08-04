@@ -726,20 +726,6 @@ public class StatsManager implements Listener {
         addPlayerStats(player, player.getInventory().getItem(e.getNewSlot()), "weapon");
     }
 
-    //update the player's offhand stats when an item is put in it
-    @EventHandler
-    public void onSwapHands(PlayerSwapHandItemsEvent e){
-
-        Player player = e.getPlayer();
-
-        //remove the stats from the item they were holding
-        removePlayerStats(player, e.getMainHandItem(), "accessory");
-
-        //add the stats of the new item being held
-        addPlayerStats(player, e.getOffHandItem(), "accessory");
-
-    }
-
     //update player stats when armor is equipped
     @EventHandler
     public void onEquipArmor(PlayerArmorChangeEvent e){
