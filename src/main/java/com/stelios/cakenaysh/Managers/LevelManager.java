@@ -68,7 +68,7 @@ public class LevelManager implements Listener {
 
             //level up the player
             customPlayer.addLevels(levelUps);
-            player.sendMessage(Component.text("You leveled up to level " + customPlayer.getLevel() + " !", TextColor.color(0, 255, 0)));
+            player.sendMessage(Component.text("You leveled up to level " + customPlayer.getLevel() + "!", TextColor.color(0, 255, 0)));
             player.showTitle(Title.title(Component.text(" LEVEL UP! ", TextColor.color(0, 255, 0)), Component.text(customPlayer.getLevel()-levelUps + " -----> " + customPlayer.getLevel(), TextColor.color(0, 255, 0))));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             customPlayer.addInvestmentPoints(levelUps);
