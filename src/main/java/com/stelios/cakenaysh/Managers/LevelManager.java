@@ -5,6 +5,7 @@ import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.title.Title;
@@ -15,6 +16,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.mcmonkey.sentinel.SentinelTrait;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class LevelManager implements Listener {
 
@@ -35,16 +39,35 @@ public class LevelManager implements Listener {
                 //if the killer is a player and not a npc
                 if (e.getEntity().getKiller() instanceof Player && !CitizensAPI.getNPCRegistry().isNPC(e.getEntity().getKiller())) {
 
-                    //get the player
-                    Player player = e.getEntity().getKiller();
+                    //get the players that dealt damage to the npc
+                    NPC npc = CitizensAPI.getNPCRegistry().getNPC(e.getEntity());
+                    NpcStats npcStats = npc.getOrAddTrait(NpcStats.class);
+                    SentinelTrait sentinelTrait = npc.getOrAddTrait(SentinelTrait.class);
+                    HashMap<UUID, Float> playerDamages = npcStats.getPlayerDamages();
 
-                    //add xp to the player
-                    main.getPlayerManager().getCustomPlayer(player.getUniqueId()).addXp((int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp());
-                    player.sendMessage(Component.text("+" + (int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp() + "XP", TextColor.color(0, 255, 0)));
+                    //give xp to each player based on how much damage they dealt
+                    for (UUID uuid : playerDamages.keySet()) {
 
-                    //call the xp gain event
-                    Bukkit.getPluginManager().callEvent(new XpChangedEvent(player, (int) CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).getOrAddTrait(NpcStats.class).getXp(), CitizensAPI.getNPCRegistry().getNPC(e.getEntity())));
+                        Player player = Bukkit.getPlayer(uuid);
 
+                        //if the player is offline continue
+                        if(player == null) continue;
+
+                        //calculate the xp the player will get
+                        int xp = (int) (playerDamages.get(uuid) / sentinelTrait.health * npcStats.getXp());
+
+                        //if the xp is greater than the npc's xp set it to the npc's xp
+                        if(xp > npcStats.getXp()){
+                            xp = (int) npcStats.getXp();
+                        }
+
+                        //add xp to the player
+                        main.getPlayerManager().getCustomPlayer(uuid).addXp(xp);
+                        player.sendMessage(Component.text("+" + xp + "XP", TextColor.color(0, 255, 0)));
+
+                        //call the xp changed event
+                        Bukkit.getPluginManager().callEvent(new XpChangedEvent(player, xp, npc));
+                    }
                 }
             }catch (NullPointerException ex){
                 //do nothing

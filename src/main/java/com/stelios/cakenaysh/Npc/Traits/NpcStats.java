@@ -4,6 +4,9 @@ import com.stelios.cakenaysh.Main;
 import net.citizensnpcs.api.persistence.Persist;
 import net.citizensnpcs.api.trait.Trait;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class NpcStats extends Trait {
     public NpcStats() {
         super("npcstats");
@@ -33,6 +36,7 @@ public class NpcStats extends Trait {
     @Persist("rangedDamage") float rangedDamage = 0.0f;
     @Persist("magicDefense") float magicDefense = 0.0f;
     @Persist("magicDamage") float magicDamage = 0.0f;
+    @Persist("playerDamages") HashMap<UUID, Float> playerDamages = new HashMap<>();
 
     //getters
     public float getXp() {
@@ -94,6 +98,22 @@ public class NpcStats extends Trait {
     }
     public float getMagicDamage() {
         return magicDamage;
+    }
+    public HashMap<UUID, Float> getPlayerDamages() {
+        return playerDamages;
+    }
+
+    //setting a player's damage
+    public void addPlayerDamage(UUID uuid, float damage){
+
+        //if the player is already in the hashmap, add the damage to the existing damage
+        if(playerDamages.containsKey(uuid)){
+            playerDamages.put(uuid, playerDamages.get(uuid) + damage);
+
+        //if the player is not in the hashmap, add them
+        }else{
+            playerDamages.put(uuid, damage);
+        }
     }
 
     //setting a stat
@@ -184,6 +204,7 @@ public class NpcStats extends Trait {
         rangedDamage = 0.0f;
         magicDefense = 0.0f;
         magicDamage = 0.0f;
+        playerDamages.clear();
     }
 
 }

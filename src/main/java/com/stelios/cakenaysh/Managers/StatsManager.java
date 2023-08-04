@@ -377,8 +377,12 @@ public class StatsManager implements Listener {
                     float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
 
                     //if the damage is negative set it to zero
-                    if (finalDefenderDamage < 0){
+                    if (finalDefenderDamage <= 0){
                         finalDefenderDamage = 0;
+
+                    //if the damage is greater than 0, add the damage to be tracked on the npc trait
+                    } else {
+                        defenderNpcStats.addPlayerDamage(player.getUniqueId(), finalDefenderDamage);
                     }
 
                     //display the damage
