@@ -258,7 +258,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    TEST_ACCESSORY(new BattleItem(Material.BLACK_DYE, 1,false,"Test Accessory", "accessory",0,40,0,0
+    TEST_ACCESSORY(new BattleItem(Material.BLACK_DYE, 1,true,"Test Accessory", "accessory",0,40,0,0
             ,0,100,0,0,0,0,200,0,0,0,
             0,0,0,0,0,0,0,0,
             0,0,0,0,1,0,0)
@@ -338,7 +338,7 @@ public enum CustomItems {
 
 
     //REGULAR ITEMS
-    DIAL_OF_THE_SUN(new Item(Material.CLOCK, 1,false, "Dial of the Sun")
+    DIAL_OF_THE_SUN(new Item(Material.CLOCK, 1,true, "Dial of the Sun")
             .setDisplayName(new ArrayList<>(Arrays.asList("Dial of the Sun")),
                     new ArrayList<>(Arrays.asList(255,255,0)),
                     new ArrayList<>(Arrays.asList(true)),
