@@ -716,11 +716,41 @@ public class StatsManager implements Listener {
         //if the item is being moved into or out of the offhand
         } else if (e.getSlot() == 40){
 
-            //add the stats of the new item
-            addPlayerStats(player, e.getNewItemStack(), "accessory");
-
             //remove the stats of the old item
             removePlayerStats(player, e.getOldItemStack(), "accessory");
+
+            //if the player doesn't meet the requirements for the new item
+            if (!meetsItemRequirements(player, e.getNewItemStack(), false)){
+
+                //remove the item from the offhand
+                if (player.getInventory().getItem(EquipmentSlot.OFF_HAND).equals(e.getNewItemStack())) {
+                player.getInventory().setItemInOffHand(null);
+                }
+
+                //send the player a message
+                player.sendMessage(Component.text("You do not meet the requirements to equip this item.", TextColor.color(255, 0, 0)));
+
+                //wait a second
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+
+                        //if the player's inventory isn't full add the item to their inventory
+                        if (player.getInventory().firstEmpty() != -1) {
+                            player.getInventory().addItem(e.getNewItemStack());
+
+                        //add the item to the player's stash
+                        }else{
+                            main.getStashManager().addItemToStash(player, e.getNewItemStack());
+                        }
+                    }
+                }.runTaskLater(main, 20);
+
+            //if the player meets the requirements for the new item
+            } else {
+                //add the stats of the new item
+                addPlayerStats(player, e.getNewItemStack(), "accessory");
+            }
         }
     }
 
@@ -755,8 +785,6 @@ public class StatsManager implements Listener {
                 player.getInventory().setLeggings(null);
             }else if (player.getInventory().getItem(EquipmentSlot.FEET).equals(e.getNewItem())) {
                 player.getInventory().setBoots(null);
-            }else if (player.getInventory().getItem(EquipmentSlot.OFF_HAND).equals(e.getNewItem())) {
-                player.getInventory().setItemInMainHand(null);
             }
 
             //send the player a message
@@ -773,7 +801,7 @@ public class StatsManager implements Listener {
 
                     //add the item to the player's stash
                     }else{
-                        main.getStashManager().addItemsToStash(player, new ArrayList<ItemStack> (Collections.singletonList(e.getNewItem())));
+                        main.getStashManager().addItemToStash(player, e.getNewItem());
                     }
                 }
             }.runTaskLater(main, 20);
