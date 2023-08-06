@@ -48,7 +48,6 @@ public class BattleItem extends Item {
     private final int meleeProficiency;
     private final int rangedProficiency;
     private final int armorProficiency;
-    private final boolean unstackable;
 
 
     //@param material: The material of the item being built.
@@ -103,19 +102,18 @@ public class BattleItem extends Item {
         this.meleeProficiency = meleeProficiency;
         this.rangedProficiency = rangedProficiency;
         this.armorProficiency = armorProficiency;
-        this.unstackable = unstackable;
-
-        //if the item is unstackable, add a unique identifier to the item
-        if (unstackable){
-            this.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"),
-                    PersistentDataType.STRING, UUID.randomUUID().toString());
-        }
 
         //attackSpeed implementation
         implementAttackSpeed(itemType);
 
         //setting pdc values for the item
         PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
+
+        //if the item is unstackable, add a unique identifier to the item
+        if (unstackable){
+            pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"), PersistentDataType.STRING, UUID.randomUUID().toString());
+        }
+
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"), PersistentDataType.STRING, itemType);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "name"), PersistentDataType.STRING, name);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "damage"), PersistentDataType.FLOAT, damage);
@@ -147,6 +145,7 @@ public class BattleItem extends Item {
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "meleeProficiency"), PersistentDataType.INTEGER, meleeProficiency);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "unstackable"), PersistentDataType.BOOLEAN, unstackable);
 
         addItemFlags();
     }
@@ -217,10 +216,6 @@ public class BattleItem extends Item {
                 return this.armorProficiency;
         }
         return 0;
-    }
-
-    public boolean getUnstackable(){
-        return this.unstackable;
     }
 
     //set the attackSpeed attribute modifier depending on the vanilla attackSpeed of the item
