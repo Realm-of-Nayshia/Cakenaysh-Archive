@@ -2,13 +2,10 @@ package com.stelios.cakenaysh;
 
 import com.stelios.cakenaysh.Commands.*;
 import com.stelios.cakenaysh.Commands.TabComplete.*;
-import com.stelios.cakenaysh.Listeners.ConnectionListener;
+import com.stelios.cakenaysh.Listeners.*;
 import com.stelios.cakenaysh.MenuCreation.MenuListener;
 import com.stelios.cakenaysh.AbilityCreation.CustomAbilities;
 import com.stelios.cakenaysh.Items.CustomItems;
-import com.stelios.cakenaysh.Managers.LevelManager;
-import com.stelios.cakenaysh.Listeners.PlayerInteractListener;
-import com.stelios.cakenaysh.Listeners.ServerListPingListener;
 import com.stelios.cakenaysh.Util.*;
 import com.stelios.cakenaysh.AbilityCreation.Abilities.DialOfTheSunAbility;
 import com.stelios.cakenaysh.AbilityCreation.Abilities.WrathOfSpartaAbility;
@@ -60,11 +57,12 @@ public final class Main extends JavaPlugin {
 
     //registering events
     private void registerEvents(){
+        Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
-        Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
-        Bukkit.getPluginManager().registerEvents(new LevelManager(this), this);
+        Bukkit.getPluginManager().registerEvents(new XpGainListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new SentinelDeathListener(this), this);
         Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
     }
 
