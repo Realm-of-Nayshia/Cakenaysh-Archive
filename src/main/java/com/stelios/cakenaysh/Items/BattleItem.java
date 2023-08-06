@@ -48,6 +48,7 @@ public class BattleItem extends Item {
     private final int meleeProficiency;
     private final int rangedProficiency;
     private final int armorProficiency;
+    private final boolean unstackable;
 
 
     //@param material: The material of the item being built.
@@ -102,6 +103,7 @@ public class BattleItem extends Item {
         this.meleeProficiency = meleeProficiency;
         this.rangedProficiency = rangedProficiency;
         this.armorProficiency = armorProficiency;
+        this.unstackable = unstackable;
 
         //if the item is unstackable, add a unique identifier to the item
         if (unstackable){
@@ -215,6 +217,10 @@ public class BattleItem extends Item {
                 return this.armorProficiency;
         }
         return 0;
+    }
+
+    public boolean getUnstackable(){
+        return this.unstackable;
     }
 
     //set the attackSpeed attribute modifier depending on the vanilla attackSpeed of the item
