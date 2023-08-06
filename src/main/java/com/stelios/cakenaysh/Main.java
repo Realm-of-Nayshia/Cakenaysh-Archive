@@ -3,6 +3,7 @@ package com.stelios.cakenaysh;
 import com.stelios.cakenaysh.Commands.*;
 import com.stelios.cakenaysh.Commands.TabComplete.*;
 import com.stelios.cakenaysh.Listeners.*;
+import com.stelios.cakenaysh.Managers.StashManager;
 import com.stelios.cakenaysh.MenuCreation.MenuListener;
 import com.stelios.cakenaysh.AbilityCreation.CustomAbilities;
 import com.stelios.cakenaysh.Items.CustomItems;
@@ -24,6 +25,7 @@ public final class Main extends JavaPlugin {
 
     private Database database;
     private PlayerManager playerManager;
+    private StashManager stashManager;
 
     @Override
     public void onEnable() {
@@ -46,6 +48,7 @@ public final class Main extends JavaPlugin {
 
         //managers setup
         playerManager = new PlayerManager();
+        stashManager = new StashManager(this);
 
         //registering important plugin info
         registerEvents();
@@ -115,6 +118,9 @@ public final class Main extends JavaPlugin {
 
     //returns the player manager
     public PlayerManager getPlayerManager() {return playerManager;}
+
+    //returns the stash manager
+    public StashManager getStashManager() {return stashManager;}
 
 
 

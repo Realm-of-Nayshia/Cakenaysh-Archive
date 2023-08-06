@@ -773,7 +773,7 @@ public class StatsManager implements Listener {
 
                     //add the item to the player's stash
                     }else{
-                        addItemsToStash(player, new ArrayList<ItemStack> (Collections.singletonList(e.getNewItem())));
+                        main.getStashManager().addItemsToStash(player, new ArrayList<ItemStack> (Collections.singletonList(e.getNewItem())));
                     }
                 }
             }.runTaskLater(main, 20);
@@ -790,34 +790,6 @@ public class StatsManager implements Listener {
     //set player configurations
     public void setConfigurations(Player player){
         player.setMaxHealth(40);
-    }
-
-    //adds an item to the player's stash
-    public void addItemsToStash(Player player, ArrayList<ItemStack> items){
-
-        //get the stash yml file
-        File file = new File(main.getDataFolder(), "stashes.yml");
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        String key = player.getUniqueId().toString();
-
-        List<ItemStack> stash = (List<ItemStack>) config.getList(key);
-
-        //if the player doesn't have a stash create one
-        if (stash == null) {
-            stash = new ArrayList<ItemStack>();
-        }
-
-        //add each item to the stash
-        stash.addAll(items);
-        config.set(key, stash);
-
-        player.sendMessage(Component.text("Your inventory is full. "+ stash.size() + " items are in your stash.\nType /stash to collect your items.", TextColor.color(255, 0, 0)));
-
-        try {
-            config.save(file);
-        } catch (IOException ex) {
-            main.getLogger().log(Level.SEVERE, "Could not save stash.yml");
-        }
     }
 
     //update database stats

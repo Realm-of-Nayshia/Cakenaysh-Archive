@@ -6,6 +6,7 @@ com\stelios\cakenaysh\Commands\MenuCommand.class
 com\stelios\cakenaysh\Managers\StatsManager$2.class
 com\stelios\cakenaysh\Commands\SetAttributesCommand.class
 com\stelios\cakenaysh\MenuCreation\MenuListener.class
+com\stelios\cakenaysh\Managers\StashManager.class
 com\stelios\cakenaysh\Commands\AddAttributesCommand.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoMain.class
 com\stelios\cakenaysh\Commands\SetNpcStatCommand.class
