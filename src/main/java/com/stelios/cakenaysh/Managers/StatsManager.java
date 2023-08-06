@@ -879,6 +879,12 @@ public class StatsManager implements Listener {
     //display a hologram for the damage
     public void displayDamage(Entity entity, int damage, boolean isCritical, Location location){
 
+        //save the y location
+        double y = location.getY();
+
+        //move the location super high up before spawning the hologram
+        location.setY(2);
+
         //slightly offset the location
         location.add(((Math.random()*-2)+1)/2, ((Math.random()*-2)+1)/2 - 1, ((Math.random()*-2)+1)/2);
 
@@ -898,13 +904,16 @@ public class StatsManager implements Listener {
         armorStand.setCustomNameVisible(true);
         armorStand.customName(damageComponent);
 
-        //despawn the armor stand after 1 second
+        //move the location back to the original y location
+        armorStand.teleport(new Location(location.getWorld(), location.getX(), location.getY() + y - 2, location.getZ()));
+
+        //despawn the armor stand after 1.5 seconds
         new BukkitRunnable(){
             @Override
             public void run() {
                 armorStand.remove();
             }
-        }.runTaskLater(main, 20);
+        }.runTaskLater(main, 30);
 
     }
 
