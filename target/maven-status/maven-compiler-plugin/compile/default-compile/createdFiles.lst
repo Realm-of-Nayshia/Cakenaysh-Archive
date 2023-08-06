@@ -1,5 +1,6 @@
 com\stelios\cakenaysh\Npc\NpcBuilder.class
 com\stelios\cakenaysh\AbilityCreation\ItemAbility.class
+com\stelios\cakenaysh\Managers\StatsManager$6.class
 com\stelios\cakenaysh\Listeners\ServerListPingListener.class
 com\stelios\cakenaysh\Commands\MenuCommand.class
 com\stelios\cakenaysh\Managers\StatsManager$2.class
@@ -23,6 +24,7 @@ com\stelios\cakenaysh\Events\SpeedChangedEvent.class
 com\stelios\cakenaysh\Commands\StashCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\GetAttributesTabComplete.class
 com\stelios\cakenaysh\Listeners\ConnectionListener.class
+com\stelios\cakenaysh\Listeners\SentinelDeathListener.class
 com\stelios\cakenaysh\Commands\TabComplete\SetAttributesTabComplete.class
 com\stelios\cakenaysh\Main.class
 com\stelios\cakenaysh\Commands\ResetNpcStatsCommand.class
@@ -31,8 +33,8 @@ com\stelios\cakenaysh\Listeners\PlayerInteractListener.class
 com\stelios\cakenaysh\Managers\StatsManager$3.class
 com\stelios\cakenaysh\Managers\StatsManager$4.class
 com\stelios\cakenaysh\MenuCreation\Menu.class
-com\stelios\cakenaysh\Managers\LevelManager.class
 com\stelios\cakenaysh\Events\XpChangedEvent.class
+com\stelios\cakenaysh\Listeners\XpGainListener.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoStats.class
 com\stelios\cakenaysh\Managers\StatsManager$1.class
 com\stelios\cakenaysh\Commands\PlayTimeCommand.class

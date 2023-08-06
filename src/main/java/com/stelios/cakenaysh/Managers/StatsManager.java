@@ -142,8 +142,15 @@ public class StatsManager implements Listener {
         Player player = e.getPlayer();
 
         setConfigurations(player);
-        displayActionBar(player);
-        updateHearts(player);
+
+        //wait 1 tick to load the player's stats
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                displayActionBar(player);
+                updateHearts(player);
+            }
+        }.runTaskLater(main, 1);
     }
 
     @EventHandler
