@@ -59,7 +59,6 @@ public class PlayerInfoStats extends Menu {
                                 "Crit Damage ", customPlayer.getCritDamage() + "%", "nl",
                                 "Crit Chance ", customPlayer.getCritChance() + "%", "nl",
                                 "Strength ", String.valueOf((int) customPlayer.getStrength()), "nl",
-                                "Thorns ", String.valueOf((int) customPlayer.getThorns()), "nl",
                                 "Defense ", String.valueOf((int) customPlayer.getDefense()), "nl",
                                 "Infernal Defense ", customPlayer.getInfernalDefense() + "%", "nl",
                                 "Infernal Damage ", String.valueOf((int) customPlayer.getInfernalDamage()), "nl",
@@ -81,7 +80,6 @@ public class PlayerInfoStats extends Menu {
                                 66,64,219, 255,255,255,
                                 66,64,219, 255,255,255,
                                 255,51,51, 255,255,255,
-                                90,122,80, 255,255,255,
                                 72,163,44, 255,255,255,
                                 214,90,2, 255,255,255,
                                 214,90,2, 255,255,255,
@@ -97,11 +95,11 @@ public class PlayerInfoStats extends Menu {
                                 240,185,85, 255,255,255,
                                 174,56,217, 255,255,255,
                                 174,56,217, 255,255,255)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)));
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)));
 
         registerButton(new MenuButton(combatStats.build()), 4);
 

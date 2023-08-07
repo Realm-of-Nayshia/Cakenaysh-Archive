@@ -54,7 +54,6 @@ public class CustomPlayer {
     private float strength;
     private float defense;
     private float speed;
-    private float thorns;
     private float infernalDefense;
     private float infernalDamage;
     private float undeadDefense;
@@ -267,7 +266,6 @@ public class CustomPlayer {
     public float getSpeed() {
         return speed;
     }
-    public float getThorns() { return thorns; }
     public float getInfernalDefense() {
         return infernalDefense;
     }
@@ -443,9 +441,6 @@ public class CustomPlayer {
     public void setSpeed(float speed){
         this.speed = speed;
         Bukkit.getPluginManager().callEvent(new SpeedChangedEvent(Bukkit.getPlayer(uuid), speed));
-    }
-    public void setThorns(float thorns){
-        this.thorns = thorns;
     }
     public void setInfernalDefense(float infernalDefense){
         this.infernalDefense = infernalDefense;

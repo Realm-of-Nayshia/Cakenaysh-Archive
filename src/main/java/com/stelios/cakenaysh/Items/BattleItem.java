@@ -30,7 +30,6 @@ public class BattleItem extends Item {
     private final float staminaRegen;
     private final float defense;
     private final float speed;
-    private final float thorns;
     private final float infernalDefense;
     private final float infernalDamage;
     private final float undeadDefense;
@@ -68,7 +67,7 @@ public class BattleItem extends Item {
     //@params armorProficiency: The armor proficiency of the item being built.
     public BattleItem(Material material, int amount, boolean unstackable, String name, String itemType, float damage, float attackSpeed,
                       float critDamage, float critChance, float strength, float health, float healthRegen, float stamina, float staminaRegen,
-                      float defense, float speed, float thorns, float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
+                      float defense, float speed, float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
                       float aquaticDefense, float aquaticDamage, float aerialDefense, float aerialDamage,
                       float meleeDefense, float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
                       float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency){
@@ -83,7 +82,6 @@ public class BattleItem extends Item {
         this.stamina = stamina;
         this.staminaRegen = staminaRegen;
         this.defense = defense;
-        this.thorns = thorns;
         this.speed = speed;
         this.infernalDefense = infernalDefense;
         this.infernalDamage = infernalDamage;
@@ -127,7 +125,6 @@ public class BattleItem extends Item {
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "staminaRegen"), PersistentDataType.FLOAT, staminaRegen);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "defense"), PersistentDataType.FLOAT, defense);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "speed"), PersistentDataType.FLOAT, speed);
-        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "thorns"), PersistentDataType.FLOAT, thorns);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "infernalDefense"), PersistentDataType.FLOAT, infernalDefense);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "infernalDamage"), PersistentDataType.FLOAT, infernalDamage);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "undeadDefense"), PersistentDataType.FLOAT, undeadDefense);
@@ -178,8 +175,6 @@ public class BattleItem extends Item {
                 return this.defense;
             case "speed":
                 return this.speed;
-            case "thorns":
-                return this.thorns;
             case "infernalDefense":
                 return this.infernalDefense;
             case "infernalDamage":

@@ -210,7 +210,6 @@ public class StatsManager {
                     customPlayer.setCritChance(customPlayer.getCritChance() + itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
                     customPlayer.setCritDamage(customPlayer.getCritDamage() + itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
                     customPlayer.setStrength(customPlayer.getStrength() + itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
-                    customPlayer.setThorns(customPlayer.getThorns() + itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
                     customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() + itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
                     customPlayer.setHealthRegen((int) (customPlayer.getHealthRegen() + itemData.get(new NamespacedKey(main, "healthRegen"), PersistentDataType.FLOAT)));
                     customPlayer.setMaxStamina((int) (customPlayer.getMaxStamina() + itemData.get(new NamespacedKey(main, "stamina"), PersistentDataType.FLOAT)));
@@ -273,7 +272,6 @@ public class StatsManager {
                     customPlayer.setCritChance(customPlayer.getCritChance() - itemData.get(new NamespacedKey(main, "critChance"), PersistentDataType.FLOAT));
                     customPlayer.setCritDamage(customPlayer.getCritDamage() - itemData.get(new NamespacedKey(main, "critDamage"), PersistentDataType.FLOAT));
                     customPlayer.setStrength(customPlayer.getStrength() - itemData.get(new NamespacedKey(main, "strength"), PersistentDataType.FLOAT));
-                    customPlayer.setThorns(customPlayer.getThorns() - itemData.get(new NamespacedKey(main, "thorns"), PersistentDataType.FLOAT));
                     customPlayer.setMaxHealth((int) (customPlayer.getMaxHealth() - itemData.get(new NamespacedKey(main, "health"), PersistentDataType.FLOAT)));
                     customPlayer.setHealthRegen((int) (customPlayer.getHealthRegen() - itemData.get(new NamespacedKey(main, "healthRegen"), PersistentDataType.FLOAT)));
                     customPlayer.setMaxStamina((int) (customPlayer.getMaxStamina() - itemData.get(new NamespacedKey(main, "stamina"), PersistentDataType.FLOAT)));

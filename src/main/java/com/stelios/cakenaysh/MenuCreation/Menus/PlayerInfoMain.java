@@ -92,7 +92,6 @@ public class PlayerInfoMain extends Menu {
                                 "Crit Damage ", customPlayer.getCritDamage() + "%", "nl",
                                 "Crit Chance ", customPlayer.getCritChance() + "%", "nl",
                                 "Strength ", String.valueOf((int) customPlayer.getStrength()), "nl",
-                                "Thorns ", String.valueOf((int) customPlayer.getThorns()), "nl",
                                 "Defense ", String.valueOf((int) customPlayer.getDefense()))),
                         new ArrayList<>(Arrays.asList(128,128,128, 128,128,128,
                                 255,51,51, 255,255,255,
@@ -100,13 +99,12 @@ public class PlayerInfoMain extends Menu {
                                 66,64,219, 255,255,255,
                                 66,64,219, 255,255,255,
                                 255,51,51, 255,255,255,
-                                90,122,80, 255,255,255,
                                 72,163,44, 255,255,255)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
-                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false)));
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false)),
+                        new ArrayList<>(Arrays.asList(false,false,false,false,false,false,false,false,false,false,false,false,false,false)));
 
         MenuButton statsButton = new MenuButton(combatStats.build());
         statsButton.setWhenClicked(clicked ->

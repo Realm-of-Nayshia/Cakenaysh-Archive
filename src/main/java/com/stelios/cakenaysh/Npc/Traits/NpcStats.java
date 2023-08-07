@@ -20,7 +20,6 @@ public class NpcStats extends Trait {
     @Persist("critDamage") float critDamage = 0.0f;
     @Persist("critChance") float critChance = 0.0f;
     @Persist("strength") float strength = 0.0f;
-    @Persist("thorns") float thorns = 0.0f;
     @Persist("defense") float defense = 0.0f;
     @Persist("infernalDefense") float infernalDefense = 0.0f;
     @Persist("infernalDamage") float infernalDamage = 0.0f;
@@ -50,9 +49,6 @@ public class NpcStats extends Trait {
     }
     public float getStrength() {
         return strength;
-    }
-    public float getThorns() {
-        return thorns;
     }
     public float getDefense() {
         return defense;
@@ -131,9 +127,6 @@ public class NpcStats extends Trait {
             case "strength":
                 strength = value;
                 break;
-            case "thorns":
-                thorns = value;
-                break;
             case "defense":
                 defense = value;
                 break;
@@ -188,7 +181,6 @@ public class NpcStats extends Trait {
         critDamage = 0.0f;
         critChance = 0.0f;
         strength = 0.0f;
-        thorns = 0.0f;
         defense = 0.0f;
         infernalDefense = 0.0f;
         infernalDamage = 0.0f;

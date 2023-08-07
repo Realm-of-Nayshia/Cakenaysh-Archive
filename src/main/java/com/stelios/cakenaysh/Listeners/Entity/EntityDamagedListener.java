@@ -103,8 +103,6 @@ public class EntityDamagedListener implements Listener {
                 NPC defender = CitizensAPI.getNPCRegistry().getNPC(e.getEntity());
                 NpcStats defenderNpcStats = defender.getOrAddTrait(NpcStats.class);
 
-                float defenderThorns = defenderNpcStats.getThorns();
-                float defenderStrength = defenderNpcStats.getStrength();
                 float defenderDefense = defenderNpcStats.getDefense();
                 float defenderInfernalDefense = defenderNpcStats.getInfernalDefense();
                 float defenderUndeadDefense = defenderNpcStats.getUndeadDefense();
@@ -129,7 +127,6 @@ public class EntityDamagedListener implements Listener {
                         float attackerCritChance = attackerNpcStats.getCritChance();
                         float attackerCritDamage = attackerNpcStats.getCritDamage();
                         float attackerStrength = attackerNpcStats.getStrength();
-                        float attackerDefense = attackerNpcStats.getDefense();
                         float attackerInfernalDamage = attackerNpcStats.getInfernalDamage();
                         float attackerUndeadDamage = attackerNpcStats.getUndeadDamage();
                         float attackerAquaticDamage = attackerNpcStats.getAquaticDamage();
@@ -167,10 +164,6 @@ public class EntityDamagedListener implements Listener {
                         //defense calculation
                         float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
-                        //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
-                        float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
-                        float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
-
                         //if the damage is negative set it to zero
                         if (finalDefenderDamage < 0){
                             finalDefenderDamage = 0;
@@ -181,9 +174,6 @@ public class EntityDamagedListener implements Listener {
 
                         //deal the damage
                         e.setDamage(finalDefenderDamage);
-
-                        //THORNS CALCULATION FOR NPC
-
 
 
                     } else {
@@ -202,7 +192,6 @@ public class EntityDamagedListener implements Listener {
                     float attackerCritChance = attackerPlayer.getCritChance();
                     float attackerCritDamage = attackerPlayer.getCritDamage();
                     float attackerStrength = attackerPlayer.getStrength();
-                    float attackerDefense = attackerPlayer.getDefense();
                     float attackerInfernalDamage = attackerPlayer.getInfernalDamage();
                     float attackerUndeadDamage = attackerPlayer.getUndeadDamage();
                     float attackerAquaticDamage = attackerPlayer.getAquaticDamage();
@@ -248,10 +237,6 @@ public class EntityDamagedListener implements Listener {
                     //defense calculation
                     float finalDefenderDamage = cooldownDebuff * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
-                    //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
-                    float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
-                    float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
-
                     //if the damage is negative set it to zero
                     if (finalDefenderDamage <= 0){
                         finalDefenderDamage = 0;
@@ -266,12 +251,6 @@ public class EntityDamagedListener implements Listener {
 
                     //deal the damage
                     e.setDamage(finalDefenderDamage);
-                    attackerPlayer.setHealth((int) (attackerPlayer.getHealth() - finalAttackerDamage));
-
-                    //update the player's health bar
-                    statsManager.displayActionBar(player);
-                    statsManager.updateHearts(player);
-
                 }
 
             }
@@ -289,8 +268,6 @@ public class EntityDamagedListener implements Listener {
             Player playerDefend = (Player) e.getEntity();
             CustomPlayer defenderPlayer = main.getPlayerManager().getCustomPlayer(playerDefend.getUniqueId());
 
-            float defenderThorns = defenderPlayer.getThorns();
-            float defenderStrength = defenderPlayer.getStrength();
             float defenderDefense = defenderPlayer.getDefense();
             float defenderInfernalDefense = defenderPlayer.getInfernalDefense();
             float defenderUndeadDefense = defenderPlayer.getUndeadDefense();
@@ -315,7 +292,6 @@ public class EntityDamagedListener implements Listener {
                     float attackerCritChance = attackerNpcStats.getCritChance();
                     float attackerCritDamage = attackerNpcStats.getCritDamage();
                     float attackerStrength = attackerNpcStats.getStrength();
-                    float attackerDefense = attackerNpcStats.getDefense();
                     float attackerInfernalDamage = attackerNpcStats.getInfernalDamage();
                     float attackerUndeadDamage = attackerNpcStats.getUndeadDamage();
                     float attackerAquaticDamage = attackerNpcStats.getAquaticDamage();
@@ -353,10 +329,6 @@ public class EntityDamagedListener implements Listener {
                     //defense calculation
                     float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
-                    //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
-                    float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
-                    float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
-
                     //if the damage is negative set it to zero
                     if (finalDefenderDamage < 0){
                         finalDefenderDamage = 0;
@@ -371,10 +343,6 @@ public class EntityDamagedListener implements Listener {
                     //update the player's health bar
                     statsManager.displayActionBar(playerDefend);
                     statsManager.updateHearts(playerDefend);
-
-                    //THORNS CALCULATION FOR NPC
-
-
 
                 } else {
                     //error: attacking entity either isn't a sentinel or doesn't have NpcStats trait
@@ -392,7 +360,6 @@ public class EntityDamagedListener implements Listener {
                 float attackerCritChance = attackerPlayer.getCritChance();
                 float attackerCritDamage = attackerPlayer.getCritDamage();
                 float attackerStrength = attackerPlayer.getStrength();
-                float attackerDefense = attackerPlayer.getDefense();
                 float attackerInfernalDamage = attackerPlayer.getInfernalDamage();
                 float attackerUndeadDamage = attackerPlayer.getUndeadDamage();
                 float attackerAquaticDamage = attackerPlayer.getAquaticDamage();
@@ -439,10 +406,6 @@ public class EntityDamagedListener implements Listener {
                 //defense calculation
                 float finalDefenderDamage = cooldownDebuff * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
-                //thorns calculation (10 thorns is 1% of the incoming damage, before the attacker's defense is applied)
-                float noDefAttackerDamage = defenderStrength * (defenderThorns/10);
-                float finalAttackerDamage = noDefAttackerDamage * (1-((attackerDefense+1)/(attackerDefense+101)));
-
                 //if the damage is negative set it to zero
                 if (finalDefenderDamage < 0){
                     finalDefenderDamage = 0;
@@ -451,17 +414,12 @@ public class EntityDamagedListener implements Listener {
                 //deal the damage
                 defenderPlayer.setHealth((int) (defenderPlayer.getHealth() - finalDefenderDamage));
                 playerDefend.sendMessage("You took " + finalDefenderDamage + " damage from " + playerAttack.getName());
-                playerAttack.sendMessage("You dealt " + finalAttackerDamage + " damage to " + playerDefend.getName());
-
-                //deal the thorns damage
-                attackerPlayer.setHealth((int) (attackerPlayer.getHealth() - finalAttackerDamage));
+                playerAttack.sendMessage("You dealt " + finalDefenderDamage + " damage to " + playerDefend.getName());
 
                 //display the damage
                 statsManager.displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
                 //update the player's health bar
-                statsManager.displayActionBar(playerAttack);
-                statsManager.updateHearts(playerAttack);
                 statsManager.displayActionBar(playerDefend);
                 statsManager.updateHearts(playerDefend);
 
