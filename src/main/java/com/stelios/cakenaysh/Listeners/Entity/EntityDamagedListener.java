@@ -40,41 +40,41 @@ public class EntityDamagedListener implements Listener {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
                 customPlayer.addHealth((int) (e.getDamage() * -5));
 
-                //if the player took damage from hunger
+            //if the player took damage from hunger
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
                 customPlayer.addHealth(customPlayer.getMaxHealth() /-18);
 
-                //if the player took damage from drowning
+            //if the player took damage from drowning
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
                 customPlayer.addHealth(customPlayer.getMaxHealth() /-18);
 
-                //if the player took damage from poison
+            //if the player took damage from poison
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.POISON)){
 
                 //get the level of poison and reduce the health
                 int poisonLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.POISON)).findFirst().get().getAmplifier();
                 customPlayer.addHealth(-3*poisonLevel);
 
-                //if the player took damage from fire
+            //if the player took damage from fire
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
                 customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -20) * (1 - customPlayer.getInfernalDefense())));
 
-                //if the player took damage from fire tick
+            //if the player took damage from fire tick
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)){
                 customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -40) * (1 - customPlayer.getInfernalDefense())));
 
-                //if the player took damage from lava
+            //if the player took damage from lava
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.LAVA)){
                 customPlayer.addHealth((int) (( customPlayer.getMaxHealth() / -12) * (1 - customPlayer.getInfernalDefense())));
 
-                //if the player took damage from wither
+            //if the player took damage from wither
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.WITHER)){
 
                 //get the level of wither and reduce the health
                 int witherLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.WITHER)).findFirst().get().getAmplifier();
                 customPlayer.addHealth(-3*witherLevel);
 
-                //if the player took damage from the void
+            //if the player took damage from the void
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.VOID)){
                 customPlayer.addHealth(customPlayer.getMaxHealth() /-10);
 
@@ -181,7 +181,7 @@ public class EntityDamagedListener implements Listener {
                         main.getLogger().log(Level.WARNING, "ERROR: attacking entity either isn't a sentinel or doesn't have the NpcStats trait");
                     }
 
-                    //if the attacking entity is a player
+                //if the attacking entity is a player
                 } else if (e.getDamager() instanceof Player){
 
                     //get the player attacker and their stats
@@ -251,6 +251,9 @@ public class EntityDamagedListener implements Listener {
 
                     //deal the damage
                     e.setDamage(finalDefenderDamage);
+
+                    //put the player in combat
+                    main.getCombatManager().addCombatTimer(player.getUniqueId());
                 }
 
             }
@@ -258,7 +261,7 @@ public class EntityDamagedListener implements Listener {
 
 
 
-            //if the defending entity is a player
+        //if the defending entity is a player
         } else if (e.getEntity() instanceof Player) {
 
             //set the default damage to zero
@@ -344,12 +347,15 @@ public class EntityDamagedListener implements Listener {
                     statsManager.displayActionBar(playerDefend);
                     statsManager.updateHearts(playerDefend);
 
+                    //put the player in combat
+                    main.getCombatManager().addCombatTimer(playerDefend.getUniqueId());
+
                 } else {
                     //error: attacking entity either isn't a sentinel or doesn't have NpcStats trait
                     main.getLogger().log(Level.WARNING, "ERROR: attacking entity either isn't a sentinel or doesn't have the NpcStats trait");
                 }
 
-                //if the attacking entity is a player
+            //if the attacking entity is a player
             } else if (e.getDamager() instanceof Player){
 
                 //get the player attacker and their stats
@@ -422,6 +428,10 @@ public class EntityDamagedListener implements Listener {
                 //update the player's health bar
                 statsManager.displayActionBar(playerDefend);
                 statsManager.updateHearts(playerDefend);
+
+                //put the players in combat
+                main.getCombatManager().addCombatTimer(playerDefend.getUniqueId());
+                main.getCombatManager().addCombatTimer(playerAttack.getUniqueId());
 
             }
         }

@@ -25,6 +25,7 @@ public class StatsManager {
     //set player configurations
     public void setConfigurations(Player player){
         player.setMaxHealth(40);
+        main.getCombatManager().removeCombatTimer(player.getUniqueId());
     }
 
 
