@@ -345,7 +345,6 @@ public class BattleItem extends Item {
         makeLoreLine(loreList, "Ranged Damage: ", this.getStat("rangedDamage"), false, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Magic Defense: ", this.getStat("magicDefense"), true, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Magic Damage: ", this.getStat("magicDamage"), false, false, 240, 40, 50, 200, 200, 200);
-        makeLoreLine(loreList, "Thorns: ", this.getStat("thorns"), false, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Speed: ", this.getStat("speed"), true, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Attack Speed: ", this.getStat("attackSpeed"), false, false, 240, 40, 50, 200, 200, 200);
         makeLoreLine(loreList, "Crit Damage: ", this.getStat("critDamage"), true, false, 240, 40, 50, 200, 200, 200);
