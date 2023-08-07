@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Listeners;
+package com.stelios.cakenaysh.Listeners.Entity;
 
 import com.stelios.cakenaysh.Main;
 import org.bukkit.NamespacedKey;

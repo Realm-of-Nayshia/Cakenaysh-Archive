@@ -2,7 +2,18 @@ package com.stelios.cakenaysh;
 
 import com.stelios.cakenaysh.Commands.*;
 import com.stelios.cakenaysh.Commands.TabComplete.*;
-import com.stelios.cakenaysh.Listeners.*;
+import com.stelios.cakenaysh.Listeners.Entity.EntityDamagedListener;
+import com.stelios.cakenaysh.Listeners.Entity.PlayerInteractListener;
+import com.stelios.cakenaysh.Listeners.Entity.PlayerStatusChangeListener;
+import com.stelios.cakenaysh.Listeners.Entity.SentinelDeathListener;
+import com.stelios.cakenaysh.Listeners.Inventory.InventoryAlteredListener;
+import com.stelios.cakenaysh.Listeners.Server.ConnectionListener;
+import com.stelios.cakenaysh.Listeners.Server.ServerListPingListener;
+import com.stelios.cakenaysh.Listeners.Server.ServerStartupListener;
+import com.stelios.cakenaysh.Listeners.Stats.ProficiencyChangedListener;
+import com.stelios.cakenaysh.Listeners.Stats.SpeedChangedListener;
+import com.stelios.cakenaysh.Listeners.Stats.XpGainListener;
+import com.stelios.cakenaysh.Managers.CombatManager;
 import com.stelios.cakenaysh.Managers.StashManager;
 import com.stelios.cakenaysh.MenuCreation.MenuListener;
 import com.stelios.cakenaysh.AbilityCreation.CustomAbilities;
@@ -26,6 +37,8 @@ public final class Main extends JavaPlugin {
     private Database database;
     private PlayerManager playerManager;
     private StashManager stashManager;
+    private CombatManager combatManager;
+    private StatsManager statsManager;
 
     @Override
     public void onEnable() {
@@ -49,6 +62,8 @@ public final class Main extends JavaPlugin {
         //managers setup
         playerManager = new PlayerManager();
         stashManager = new StashManager(this);
+        combatManager = new CombatManager();
+        statsManager = new StatsManager(this);
 
         //registering important plugin info
         registerEvents();
@@ -60,9 +75,14 @@ public final class Main extends JavaPlugin {
 
     //registering events
     private void registerEvents(){
-        Bukkit.getPluginManager().registerEvents(new StatsManager(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new ServerStartupListener(this, statsManager), this);
+        Bukkit.getPluginManager().registerEvents(new EntityDamagedListener(this, statsManager), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerStatusChangeListener(this, statsManager), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryAlteredListener(this, statsManager), this);
+        Bukkit.getPluginManager().registerEvents(new ProficiencyChangedListener(this, statsManager), this);
+        Bukkit.getPluginManager().registerEvents(new SpeedChangedListener(this, statsManager), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new XpGainListener(this), this);
         Bukkit.getPluginManager().registerEvents(new SentinelDeathListener(this), this);
@@ -112,15 +132,12 @@ public final class Main extends JavaPlugin {
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(NpcStats.class).withName("npcstats"));
     }
 
-    ////getters
-    //gets and returns the database
+    //manager getters
     public Database getDatabase() {return database;}
-
-    //returns the player manager
     public PlayerManager getPlayerManager() {return playerManager;}
-
-    //returns the stash manager
     public StashManager getStashManager() {return stashManager;}
+    public CombatManager getCombatManager() {return combatManager;}
+    public StatsManager getStatsManager() {return statsManager;}
 
 
 

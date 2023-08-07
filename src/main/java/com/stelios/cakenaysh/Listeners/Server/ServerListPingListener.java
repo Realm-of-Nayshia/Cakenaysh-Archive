@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Listeners;
+package com.stelios.cakenaysh.Listeners.Server;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;

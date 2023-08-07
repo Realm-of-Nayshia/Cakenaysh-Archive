@@ -1,4 +1,4 @@
-package com.stelios.cakenaysh.Listeners;
+package com.stelios.cakenaysh.Listeners.Server;
 
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
