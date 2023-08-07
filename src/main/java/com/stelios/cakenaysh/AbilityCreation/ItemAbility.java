@@ -154,7 +154,7 @@ public abstract class ItemAbility implements Listener {
         }
 
         if (ability.getRemoveItem()){
-            player.getInventory().removeItem(item.build());
+            player.getInventory().setItemInMainHand(null);
         }
 
         return true;
@@ -181,7 +181,7 @@ public abstract class ItemAbility implements Listener {
                     if (e.getAction().isLeftClick() && ability.getClickType() == ClickType.LEFT) {
                         executeAbility(player);
 
-                        //if the player right clicks and the ability is a right click ability
+                    //if the player right clicks and the ability is a right click ability
                     } else if (e.getAction().isRightClick() && ability.getClickType() == ClickType.RIGHT) {
 
                         //if the player is trying to interact with a block that is interactable
