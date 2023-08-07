@@ -59,21 +59,23 @@ public final class Main extends JavaPlugin {
             e.printStackTrace();
         }
 
-        //managers setup
-        playerManager = new PlayerManager();
-        stashManager = new StashManager(this);
-        combatManager = new CombatManager();
-        statsManager = new StatsManager(this);
-
-        //registering important plugin info
+        //setup of important plugin info
+        registerManagers();
         registerEvents();
         registerCommands();
         registerAbilities();
         registerTraits();
-
     }
 
-    //registering events
+
+
+    public void registerManagers(){
+        playerManager = new PlayerManager();
+        stashManager = new StashManager(this);
+        combatManager = new CombatManager();
+        statsManager = new StatsManager(this);
+    }
+
     private void registerEvents(){
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
@@ -89,7 +91,6 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
     }
 
-    //registering commands
     @SuppressWarnings("DataFlowIssue")
     private void registerCommands(){
         getCommand("heal").setExecutor(new HealCommand());
@@ -121,13 +122,11 @@ public final class Main extends JavaPlugin {
         getCommand("menu").setExecutor(new MenuCommand());
     }
 
-    //registering abilities
     private void registerAbilities(){
         new WrathOfSpartaAbility(CustomAbilities.SPARTAN_WRATH, CustomItems.WRATH_OF_SPARTA.getItem(), 5, 5);
         new DialOfTheSunAbility(CustomAbilities.GRADUAL_SET_DAY, CustomItems.DIAL_OF_THE_SUN.getItem(), 25, 15);
     }
 
-    //registering traits
     private void registerTraits(){
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(NpcStats.class).withName("npcstats"));
     }
@@ -138,7 +137,6 @@ public final class Main extends JavaPlugin {
     public StashManager getStashManager() {return stashManager;}
     public CombatManager getCombatManager() {return combatManager;}
     public StatsManager getStatsManager() {return statsManager;}
-
 
 
     @Override
