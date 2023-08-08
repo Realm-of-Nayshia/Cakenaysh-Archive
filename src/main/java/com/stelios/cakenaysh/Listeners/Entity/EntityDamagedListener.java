@@ -6,6 +6,7 @@ import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -272,7 +273,14 @@ public class EntityDamagedListener implements Listener {
 
                     //if the damage is greater than 0, add the damage to be tracked on the npc trait
                     } else {
-                        defenderNpcStats.addPlayerDamage(player.getUniqueId(), finalDefenderDamage);
+
+                        LivingEntity livingEntity = (LivingEntity) e.getEntity();
+                        //if the damage will kill the npc, set the damage to the npc's health
+                        if (finalDefenderDamage >= livingEntity.getHealth()){
+                            defenderNpcStats.addPlayerDamage(player.getUniqueId(), (float) livingEntity.getHealth());
+                        } else {
+                            defenderNpcStats.addPlayerDamage(player.getUniqueId(), finalDefenderDamage);
+                        }
                     }
 
                     //display the damage
