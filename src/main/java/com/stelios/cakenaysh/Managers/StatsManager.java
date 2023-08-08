@@ -4,6 +4,7 @@ import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
@@ -90,14 +91,8 @@ public class StatsManager {
     //display a hologram for the damage
     public void displayDamage(Entity entity, int damage, boolean isCritical, Location location){
 
-        //save the y location
-        double y = location.getY();
-
-        //move the location super high up before spawning the hologram
-        location.setY(2);
-
         //slightly offset the location
-        location.add(((Math.random()*-2)+1)/2, ((Math.random()*-2)+1)/2 - 1, ((Math.random()*-2)+1)/2);
+        location.add(((Math.random()*-2)+1)/2, ((Math.random()*-2)+1)/2 + 1, ((Math.random()*-2)+1)/2);
 
         //create the damage component
         Component damageComponent;
@@ -108,21 +103,17 @@ public class StatsManager {
         }
 
         //spawn the hologram
-        ArmorStand armorStand = (ArmorStand) entity.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
-        armorStand.setInvisible(true);
-        armorStand.setGravity(false);
-        armorStand.setInvulnerable(true);
-        armorStand.setCustomNameVisible(true);
-        armorStand.customName(damageComponent);
+        TextDisplay textDisplay = (TextDisplay) Bukkit.getWorld(entity.getWorld().getUID()).spawnEntity(location, EntityType.TEXT_DISPLAY);
+        textDisplay.setBillboard(Display.Billboard.CENTER);
+        textDisplay.setCustomNameVisible(true);
+        textDisplay.customName(damageComponent);
 
-        //move the location back to the original y location
-        armorStand.teleport(new Location(location.getWorld(), location.getX(), location.getY() + y - 2, location.getZ()));
 
         //despawn the armor stand after 1.5 seconds
         new BukkitRunnable(){
             @Override
             public void run() {
-                armorStand.remove();
+                textDisplay.remove();
             }
         }.runTaskLater(main, 30);
 
