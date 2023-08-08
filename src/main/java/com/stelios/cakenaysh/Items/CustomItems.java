@@ -280,7 +280,7 @@ public enum CustomItems {
     WRATH_OF_SPARTA(new BattleItem(Material.GOLDEN_SWORD, 1,false, "Wrath of Sparta", "weapon",50000,40,100,50
             ,10,2,1,1,2,10,10,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,4,0)
+            0,4,0,0)
             .setUnbreakable()
             .setDisplayName(new ArrayList<>(Arrays.asList("Wrath of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
