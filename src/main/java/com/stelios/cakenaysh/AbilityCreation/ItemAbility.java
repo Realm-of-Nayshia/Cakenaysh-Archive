@@ -154,7 +154,12 @@ public abstract class ItemAbility implements Listener {
         }
 
         if (ability.getRemoveItem()){
-            player.getInventory().setItemInMainHand(null);
+            //remove the item from the player's inventory
+            if (player.getInventory().getItemInMainHand().getAmount() > 1)
+                player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+            else if (player.getInventory().getItemInMainHand().getAmount() == 1){
+                player.getInventory().setItemInMainHand(null);
+            }
         }
 
         return true;
