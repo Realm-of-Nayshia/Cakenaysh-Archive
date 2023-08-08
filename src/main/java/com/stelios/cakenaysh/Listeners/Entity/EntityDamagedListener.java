@@ -37,15 +37,15 @@ public class EntityDamagedListener implements Listener {
 
             //if the player took fall damage
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
-                customPlayer.addHealth((int) (e.getDamage() * -5));
+                customPlayer.addHealth((float) ((e.getDamage() * -5)));
 
             //if the player took damage from hunger
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
-                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-16);
+                customPlayer.addHealth((float) customPlayer.getMaxHealth() / -16);
 
             //if the player took damage from drowning
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
-                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-16);
+                customPlayer.addHealth((float) customPlayer.getMaxHealth() / -16);
 
             //if the player took damage from poison
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.POISON)){
@@ -193,6 +193,24 @@ public class EntityDamagedListener implements Listener {
                     Player player = (Player) e.getDamager();
                     CustomPlayer attackerPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
 
+                    //potion effects
+                    float attackerStrengthPotionLevel = 0;
+                    if (player.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)){
+                        attackerStrengthPotionLevel = player.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() + 1;
+                        if (attackerStrengthPotionLevel > 20){
+                            attackerStrengthPotionLevel = 20;
+                        }
+                    }
+
+                    float attackerWeaknessPotionLevel = 0;
+                    if (player.hasPotionEffect(PotionEffectType.WEAKNESS)){
+                        attackerWeaknessPotionLevel = player.getPotionEffect(PotionEffectType.WEAKNESS).getAmplifier() + 1;
+                        if (attackerWeaknessPotionLevel > 10){
+                            attackerWeaknessPotionLevel = 10;
+                        }
+                    }
+
+                    //stats
                     float attackerBaseDamage = attackerPlayer.getDamage();
                     float attackerCritChance = attackerPlayer.getCritChance();
                     float attackerCritDamage = attackerPlayer.getCritDamage();
@@ -240,13 +258,19 @@ public class EntityDamagedListener implements Listener {
                     }
 
                     //defense calculation
-                    float finalDefenderDamage = cooldownDebuff * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+                    float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+
+                    //potion effects
+                    finalDefenderDamage = finalDefenderDamage * (1 + ((attackerStrengthPotionLevel/10) + (-attackerWeaknessPotionLevel/10)));
+
+                    //cooldown debuff
+                    finalDefenderDamage = finalDefenderDamage * cooldownDebuff;
 
                     //if the damage is negative set it to zero
                     if (finalDefenderDamage <= 0){
                         finalDefenderDamage = 0;
 
-                        //if the damage is greater than 0, add the damage to be tracked on the npc trait
+                    //if the damage is greater than 0, add the damage to be tracked on the npc trait
                     } else {
                         defenderNpcStats.addPlayerDamage(player.getUniqueId(), finalDefenderDamage);
                     }
@@ -276,6 +300,16 @@ public class EntityDamagedListener implements Listener {
             Player playerDefend = (Player) e.getEntity();
             CustomPlayer defenderPlayer = main.getPlayerManager().getCustomPlayer(playerDefend.getUniqueId());
 
+            //potion effects
+            float defenderResistancePotionLevel = 0;
+            if (playerDefend.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)){
+                defenderResistancePotionLevel = playerDefend.getPotionEffect(PotionEffectType.DAMAGE_RESISTANCE).getAmplifier() + 1;
+                if (defenderResistancePotionLevel > 10) {
+                    defenderResistancePotionLevel = 10;
+                }
+            }
+
+            //stats
             float defenderDefense = defenderPlayer.getDefense();
             float defenderInfernalDefense = defenderPlayer.getInfernalDefense();
             float defenderUndeadDefense = defenderPlayer.getUndeadDefense();
@@ -337,6 +371,9 @@ public class EntityDamagedListener implements Listener {
                     //defense calculation
                     float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
 
+                    //potion effects
+                    finalDefenderDamage = finalDefenderDamage * (1-defenderResistancePotionLevel/10);
+
                     //if the damage is negative set it to zero
                     if (finalDefenderDamage < 0){
                         finalDefenderDamage = 0;
@@ -367,6 +404,24 @@ public class EntityDamagedListener implements Listener {
                 Player playerAttack = (Player) e.getDamager();
                 CustomPlayer attackerPlayer = main.getPlayerManager().getCustomPlayer(playerAttack.getUniqueId());
 
+                //potion effects
+                float attackerStrengthPotionLevel = 0;
+                if (playerAttack.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)){
+                    attackerStrengthPotionLevel = playerAttack.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier() + 1;
+                    if (attackerStrengthPotionLevel > 20){
+                        attackerStrengthPotionLevel = 20;
+                    }
+                }
+
+                float attackerWeaknessPotionLevel = 0;
+                if (playerAttack.hasPotionEffect(PotionEffectType.WEAKNESS)){
+                    attackerWeaknessPotionLevel = playerAttack.getPotionEffect(PotionEffectType.WEAKNESS).getAmplifier() + 1;
+                    if (attackerWeaknessPotionLevel > 10){
+                        attackerWeaknessPotionLevel = 10;
+                    }
+                }
+
+                //stats
                 float attackerBaseDamage = attackerPlayer.getDamage();
                 float attackerCritChance = attackerPlayer.getCritChance();
                 float attackerCritDamage = attackerPlayer.getCritDamage();
@@ -415,7 +470,14 @@ public class EntityDamagedListener implements Listener {
                 }
 
                 //defense calculation
-                float finalDefenderDamage = cooldownDebuff * typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+                float finalDefenderDamage = typeDamage * (1-(defenderDefense/(defenderDefense+100)));
+
+                //potions
+                finalDefenderDamage = finalDefenderDamage * (1 + ((attackerStrengthPotionLevel/10) + (-attackerWeaknessPotionLevel/10)));
+                finalDefenderDamage = finalDefenderDamage * (1 - (defenderResistancePotionLevel/10));
+
+                //cooldown debuff
+                finalDefenderDamage = finalDefenderDamage * cooldownDebuff;
 
                 //if the damage is negative set it to zero
                 if (finalDefenderDamage < 0){
