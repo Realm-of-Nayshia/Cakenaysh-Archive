@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ServerStartupListener implements Listener {
@@ -63,11 +64,19 @@ public class ServerStartupListener implements Listener {
                     //if the player has 0 health then don't regenerate health or stamina
                     if (customPlayer.getHealth() > 0) {
 
-                        //randomly increase the players saturation (only if saturation is below 3)
-                        if (player.getSaturation() < 3) {
+                        //if the player is level 15 or under, randomly increase the players saturation (only if saturation is below 3)
+                        if (player.getSaturation() < 3 && customPlayer.getLevel() <= 15) {
                             if (Math.random() > 0.96) {
                                 player.setSaturation((player.getSaturation() + 1));
                             }
+                        }
+
+                        //get the level of the player's regeneration potion effect
+                        int regenLevel = 0;
+                        if (player.hasPotionEffect(PotionEffectType.REGENERATION)) {
+                            regenLevel = player.getPotionEffect(PotionEffectType.REGENERATION).getAmplifier();
+                        } else {
+                            regenLevel = -1;
                         }
 
                         //regenerate stamina if not at max
@@ -77,7 +86,7 @@ public class ServerStartupListener implements Listener {
 
                         //regenerate health if not at max
                         if (customPlayer.getHealth() < customPlayer.getMaxHealth()) {
-                            customPlayer.addHealth(customPlayer.getHealthRegen());
+                            customPlayer.addHealth(customPlayer.getHealthRegen() + regenLevel + 1);
                         }
 
                         //if over max stamina, set to max stamina
