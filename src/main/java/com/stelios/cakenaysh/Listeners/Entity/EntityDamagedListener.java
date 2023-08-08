@@ -6,7 +6,6 @@ import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,41 +41,47 @@ public class EntityDamagedListener implements Listener {
 
             //if the player took damage from hunger
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.STARVATION)){
-                customPlayer.addHealth(customPlayer.getMaxHealth() /-18);
+                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-16);
 
             //if the player took damage from drowning
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
-                customPlayer.addHealth(customPlayer.getMaxHealth() /-18);
+                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-16);
 
             //if the player took damage from poison
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.POISON)){
 
                 //get the level of poison and reduce the health
-                int poisonLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.POISON)).findFirst().get().getAmplifier();
-                customPlayer.addHealth(-3*poisonLevel);
+                int poisonLevel = player.getPotionEffect(PotionEffectType.POISON).getAmplifier() + 1;
 
-            //if the player took damage from fire
-            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)){
-                customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -20) * (1 - customPlayer.getInfernalDefense())));
+                //if the poison would kill the player, set the health to 1
+                if (customPlayer.getHealth() - (3*poisonLevel) <= 0) {
+                    customPlayer.setHealth(1);
+                } else {
+                    customPlayer.addHealth(-3 * poisonLevel);
+                }
 
-            //if the player took damage from fire tick
-            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)){
+            //if the player took damage from fire, and doesn't have fire resistance
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE) && !player.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE)){
+                customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -25) * (1 - customPlayer.getInfernalDefense())));
+
+            //if the player took damage from fire tick, and doesn't have fire resistance
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK) && !player.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE)){
                 customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -40) * (1 - customPlayer.getInfernalDefense())));
 
-            //if the player took damage from lava
-            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.LAVA)){
-                customPlayer.addHealth((int) (( customPlayer.getMaxHealth() / -12) * (1 - customPlayer.getInfernalDefense())));
+            //if the player took damage from lava, and doesn't have fire resistance
+            }else if (e.getCause().equals(EntityDamageEvent.DamageCause.LAVA) && !player.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE)){
+                customPlayer.addHealth((int) ((customPlayer.getMaxHealth() / -12) * (1 - customPlayer.getInfernalDefense())));
 
             //if the player took damage from wither
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.WITHER)){
 
                 //get the level of wither and reduce the health
-                int witherLevel = ((LivingEntity) e.getEntity()).getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.WITHER)).findFirst().get().getAmplifier();
+                int witherLevel = player.getPotionEffect(PotionEffectType.WITHER).getAmplifier() + 1;
                 customPlayer.addHealth(-3*witherLevel);
 
             //if the player took damage from the void
             }else if (e.getCause().equals(EntityDamageEvent.DamageCause.VOID)){
-                customPlayer.addHealth(customPlayer.getMaxHealth() /-10);
+                customPlayer.addHealth((float) customPlayer.getMaxHealth() /-10);
 
             }
 
