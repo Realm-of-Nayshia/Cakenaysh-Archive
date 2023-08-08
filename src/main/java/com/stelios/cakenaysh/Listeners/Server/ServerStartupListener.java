@@ -72,7 +72,7 @@ public class ServerStartupListener implements Listener {
                         }
 
                         //get the level of the player's regeneration potion effect
-                        int regenLevel = 0;
+                        int regenLevel;
                         if (player.hasPotionEffect(PotionEffectType.REGENERATION)) {
                             regenLevel = player.getPotionEffect(PotionEffectType.REGENERATION).getAmplifier();
                         } else {
