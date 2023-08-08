@@ -157,7 +157,7 @@ public class StatsManager {
     public void displayActionBar(Player player){
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
 
-        player.sendActionBar(Component.text(customPlayer.getHealth() + " / " + customPlayer.getMaxHealth() + " ❤     ", TextColor.color(255,51,51))
+        player.sendActionBar(Component.text((int) customPlayer.getHealth() + " / " + customPlayer.getMaxHealth() + " ❤     ", TextColor.color(255,51,51))
                 .append(Component.text(customPlayer.getStamina() + " / " + customPlayer.getMaxStamina() + " ⚡", TextColor.color(255,135,51))));
     }
 

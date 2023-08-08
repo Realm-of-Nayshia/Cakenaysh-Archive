@@ -33,7 +33,7 @@ public class CustomPlayer {
     private int stamina;
     private int maxStamina;
     private int healthRegen;
-    private int health;
+    private float health;
     private int maxHealth;
     private int meleeProficiency;
     private int rangedProficiency;
@@ -93,7 +93,7 @@ public class CustomPlayer {
                 stamina = rs.getInt("STAMINA");
                 maxStamina = rs.getInt("MAX_STAMINA");
                 healthRegen = rs.getInt("HEALTH_REGEN");
-                health = rs.getInt("HEALTH");
+                health = rs.getFloat("HEALTH");
                 maxHealth = rs.getInt("MAX_HEALTH");
                 meleeProficiency = rs.getInt("MELEE_PROFICIENCY");
                 rangedProficiency = rs.getInt("RANGED_PROFICIENCY");
@@ -207,7 +207,7 @@ public class CustomPlayer {
     public int getHealthRegen() {
         return healthRegen;
     }
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
     public int getMaxHealth() {
@@ -755,7 +755,7 @@ public class CustomPlayer {
     public void setHealthRegen(int healthRegen) {
         this.healthRegen = healthRegen;
     }
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         this.health = health;
     }
     public void setMaxHealth(int maxHealth) {
@@ -821,7 +821,7 @@ public class CustomPlayer {
     public void addHealthRegen(int healthRegen) {
         this.healthRegen += healthRegen;
     }
-    public void addHealth(int health) {
+    public void addHealth(float health) {
         this.health += health;
     }
     public void addMaxHealth(int maxHealth) {
