@@ -14,14 +14,20 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+
 public class StatsManager {
 
     private final Main main;
+    private ArrayList<TextDisplay> textDisplays = new ArrayList<>();
 
     public StatsManager(Main main) {
         this.main = main;
     }
 
+    public ArrayList<TextDisplay> getTextDisplays() {
+        return textDisplays;
+    }
 
     //set player configurations
     public void setConfigurations(Player player){
@@ -108,15 +114,18 @@ public class StatsManager {
         textDisplay.setCustomNameVisible(true);
         textDisplay.customName(damageComponent);
 
+        //add the hologram to the arraylist
+        textDisplays.add(textDisplay);
+
 
         //despawn the armor stand after 1.5 seconds
         new BukkitRunnable(){
             @Override
             public void run() {
                 textDisplay.remove();
+                textDisplays.remove(textDisplay);
             }
         }.runTaskLater(main, 30);
-
     }
 
 
