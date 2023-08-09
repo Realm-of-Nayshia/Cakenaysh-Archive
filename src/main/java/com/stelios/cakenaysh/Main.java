@@ -25,11 +25,17 @@ import com.stelios.cakenaysh.Managers.PlayerManager;
 import com.stelios.cakenaysh.Managers.StatsManager;
 import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.TraitInfo;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public final class Main extends JavaPlugin {
@@ -141,8 +147,27 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
 
+        //save player data and kick all players
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            statsManager.updateDatabaseStats(player);
+
+            Objects.requireNonNull(player.getPlayer()).kick(Component.text("Server is shutting down.", TextColor.color(255,0,0)));
+        }
+
+        //loop through all the npcs
+        for (NPC npc : CitizensAPI.getNPCRegistry()) {
+
+            //remove all player data from every npcStats npc
+            if (npc.hasTrait(NpcStats.class)) {
+                npc.getOrAddTrait(NpcStats.class).clearPlayerDamages();
+            }
+        }
+
+        //remove all temporary damage text displays
+        statsManager.getTextDisplays().forEach(Entity::remove);
+
+        //disconnect from the database
         database.disconnect();
 
     }
