@@ -48,6 +48,7 @@ public class CustomPlayer {
 
     //info from items
     private float damage;
+    private float bonusDamage;
     private float attackSpeed;
     private float critDamage;
     private float critChance;
@@ -248,6 +249,9 @@ public class CustomPlayer {
     public float getDamage() {
         return damage;
     }
+    public float getBonusDamage() {
+        return bonusDamage;
+    }
     public float getAttackSpeed() {
         return attackSpeed;
     }
@@ -422,6 +426,9 @@ public class CustomPlayer {
     ////setters
     public void setDamage(float damage){
         this.damage = damage;
+    }
+    public void setBonusDamage(float bonusDamage){
+        this.bonusDamage = bonusDamage;
     }
     public void setAttackSpeed(float attackSpeed){
         this.attackSpeed = attackSpeed;

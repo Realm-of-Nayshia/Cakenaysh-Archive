@@ -212,7 +212,7 @@ public class EntityDamagedListener implements Listener {
                     }
 
                     //stats
-                    float attackerBaseDamage = attackerPlayer.getDamage();
+                    float attackerBaseDamage = attackerPlayer.getDamage() + attackerPlayer.getBonusDamage();
                     float attackerCritChance = attackerPlayer.getCritChance();
                     float attackerCritDamage = attackerPlayer.getCritDamage();
                     float attackerStrength = attackerPlayer.getStrength();
@@ -430,7 +430,7 @@ public class EntityDamagedListener implements Listener {
                 }
 
                 //stats
-                float attackerBaseDamage = attackerPlayer.getDamage();
+                float attackerBaseDamage = attackerPlayer.getDamage() + attackerPlayer.getBonusDamage();
                 float attackerCritChance = attackerPlayer.getCritChance();
                 float attackerCritDamage = attackerPlayer.getCritDamage();
                 float attackerStrength = attackerPlayer.getStrength();

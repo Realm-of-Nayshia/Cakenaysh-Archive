@@ -87,7 +87,7 @@ public class PlayerInfoMain extends Menu {
                         new ArrayList<>(Collections.singletonList(false)))
                 .setLore(new ArrayList<>(Arrays.asList("View your combat stats.","nl",
                                 "Click to see more.", "nl", "nl",
-                                "Damage ", String.valueOf((int) customPlayer.getDamage()), "nl",
+                                "Damage ", String.valueOf((int) (customPlayer.getDamage() + customPlayer.getBonusDamage())), "nl",
                                 "Attack Speed ", String.valueOf((int) customPlayer.getAttackSpeed()), "nl",
                                 "Crit Damage ", customPlayer.getCritDamage() + "%", "nl",
                                 "Crit Chance ", customPlayer.getCritChance() + "%", "nl",
