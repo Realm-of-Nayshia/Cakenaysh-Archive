@@ -48,6 +48,7 @@ com\stelios\cakenaysh\Commands\VanishCommand.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoSkills.class
 com\stelios\cakenaysh\Managers\StatsManager.class
 com\stelios\cakenaysh\Events\ProficiencyChangedEvent.class
+com\stelios\cakenaysh\AbilityCreation\Abilities\WrathOfSpartaAbility$1.class
 com\stelios\cakenaysh\Listeners\Server\ConnectionListener.class
 com\stelios\cakenaysh\Util\CustomPlayer.class
 com\stelios\cakenaysh\Items\BattleItem.class
