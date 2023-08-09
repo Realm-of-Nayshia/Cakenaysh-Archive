@@ -11,7 +11,7 @@
 
     <name>Cakenaysh</name>
 
-    <description>Main plungin for the Cakenaysh Minecraft Server</description>
+    <description>Main plugin for the Cakenaysh Minecraft Server</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
