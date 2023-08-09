@@ -39,17 +39,23 @@ public class SentinelDeathListener implements Listener {
         //if the player is a npc with the sentinel and npc stats trait
         if(CitizensAPI.getNPCRegistry().isNPC(e.getEntity()) && CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(SentinelTrait.class) && CitizensAPI.getNPCRegistry().getNPC(e.getEntity()).hasTrait(NpcStats.class)){
 
+            //get the important information about the dead npc
+            NPC npc = CitizensAPI.getNPCRegistry().getNPC(e.getEntity());
+            NpcStats npcStats = npc.getOrAddTrait(NpcStats.class);
+            SentinelTrait sentinelTrait = npc.getOrAddTrait(SentinelTrait.class);
+            HashMap<UUID, Float> playerDamages = npcStats.getPlayerDamages();
+
+            float totalDamage = 0;
+            for (Float damage : playerDamages.values()) {
+                totalDamage += damage;
+            }
+
+            ArrayList<ItemStack> drops = new ArrayList<>(sentinelTrait.drops);
+            ArrayList<Double> dropChances = new ArrayList<>(sentinelTrait.dropChances);
+
             try {
                 //if the killer is a player and not a npc
                 if (e.getEntity().getKiller() instanceof Player && !CitizensAPI.getNPCRegistry().isNPC(e.getEntity().getKiller())) {
-
-                    //get the important information about the dead npc
-                    NPC npc = CitizensAPI.getNPCRegistry().getNPC(e.getEntity());
-                    NpcStats npcStats = npc.getOrAddTrait(NpcStats.class);
-                    SentinelTrait sentinelTrait = npc.getOrAddTrait(SentinelTrait.class);
-                    HashMap<UUID, Float> playerDamages = npcStats.getPlayerDamages();
-                    ArrayList<ItemStack> drops = new ArrayList<>(sentinelTrait.drops);
-                    ArrayList<Double> dropChances = new ArrayList<>(sentinelTrait.dropChances);
 
                     //loop through the players that dealt damage to the npc
                     for (UUID uuid : playerDamages.keySet()) {
@@ -57,15 +63,14 @@ public class SentinelDeathListener implements Listener {
                         Player player = Bukkit.getPlayer(uuid);
 
                         //if the player is offline continue
-                        if(player == null) continue;
-
+                        if (player == null) continue;
 
                         ////give xp to each player based on how much damage they dealt to the npc
                         //calculate the xp the player will get
-                        int xp = (int) (playerDamages.get(uuid) / sentinelTrait.health * npcStats.getXp());
+                        int xp = (int) (playerDamages.get(uuid) / totalDamage * npcStats.getXp());
 
                         //if the xp is greater than the npc's xp set it to the npc's xp
-                        if(xp > npcStats.getXp()){
+                        if (xp > npcStats.getXp()) {
                             xp = (int) npcStats.getXp();
                         }
 
@@ -78,57 +83,100 @@ public class SentinelDeathListener implements Listener {
 
 
                         ////give the player their earned drops
-                        //loop through the drops
-                        for (int i = 0; i < drops.size(); i++){
+                        //if there is only 1 drop chance
+                        if (dropChances.size() == 1) {
 
-                            //calculate the chance of the drop based on how much damage the player dealt to the npc
-                            double chance = dropChances.get(i) * (playerDamages.get(uuid) / sentinelTrait.health);
+                            //loop through the dropped items
+                            for (ItemStack item : drops) {
 
-                            //if the chance is greater than 1 set it to 1
-                            if(chance > 1){
-                                chance = 1;
-                            }
+                                //calculate the chance of the drop based on how much damage the player dealt to the npc
+                                double chance = dropChances.get(0) * (playerDamages.get(uuid) / totalDamage);
 
-                            //if the chance is greater than a random number between 0 and 1 give the player the drop
-                            if(chance > Math.random()){
+                                //if the chance is greater than a random number between 0 and 1 give the player the drop
+                                if (chance > Math.random()) {
 
-                                ItemStack item = drops.get(i);
-                                PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
+                                    PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
 
-                                //if the item is a custom item
-                                try {
-                                    //if the item is unstackable
-                                    if (itemData.get(new NamespacedKey (main, "unstackable"), PersistentDataType.BOOLEAN)){
+                                    //if the item is a custom item
+                                    try {
+                                        //if the item is unstackable
+                                        if (Boolean.TRUE.equals(itemData.get(new NamespacedKey(main, "unstackable"), PersistentDataType.BOOLEAN))) {
 
-                                        //randomize the item's unique id
-                                        itemData.set(new NamespacedKey (main, "uniqueID"), PersistentDataType.STRING, UUID.randomUUID().toString());
+                                            player.sendMessage("unstackable item!");
+
+                                            //randomize the item's unique id
+                                            itemData.set(new NamespacedKey(main, "uniqueID"), PersistentDataType.STRING, UUID.randomUUID().toString());
+                                            item.setItemMeta(item.getItemMeta());
+                                        }
+                                    } catch (NullPointerException ex) {
+                                        //do nothing, item not a custom item
                                     }
-                                } catch (NullPointerException ex){
-                                    //do nothing, item not a custom item
-                                }
 
-                                //if the player's inventory isn't full add the item to their inventory
-                                if (player.getInventory().firstEmpty() != -1) {
-                                    player.getInventory().addItem(item);
+                                    //if the player's inventory isn't full add the item to their inventory
+                                    if (player.getInventory().firstEmpty() != -1) {
+                                        player.getInventory().addItem(item);
 
-                                //add the item to the player's stash
-                                } else {
-                                    StashManager stashManager = main.getStashManager();
-                                    stashManager.addItemToStash(player, item);
+                                    //add the item to the player's stash
+                                    } else {
+                                        StashManager stashManager = main.getStashManager();
+                                        stashManager.addItemToStash(player, item);
+                                    }
                                 }
                             }
 
-                            //clear the regularly dropped items
-                            e.getDrops().clear();
+                        } else {
 
+                            //loop through the drops
+                            for (int i = 0; i < drops.size(); i++) {
+
+                                //calculate the chance of the drop based on how much damage the player dealt to the npc
+                                double chance = dropChances.get(i) * (playerDamages.get(uuid) / totalDamage);
+
+                                player.sendMessage(chance + "");
+
+                                //if the chance is greater than a random number between 0 and 1 give the player the drop
+                                if (chance > Math.random()) {
+
+                                    ItemStack item = drops.get(i);
+                                    PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
+
+                                    //if the item is a custom item
+                                    try {
+                                        //if the item is unstackable
+                                        if (Boolean.TRUE.equals(itemData.get(new NamespacedKey(main, "unstackable"), PersistentDataType.BOOLEAN))) {
+
+                                            player.sendMessage("unstackable item!");
+
+                                            //randomize the item's unique id
+                                            itemData.set(new NamespacedKey(main, "uniqueID"), PersistentDataType.STRING, UUID.randomUUID().toString());
+                                            item.setItemMeta(item.getItemMeta());
+                                        }
+                                    } catch (NullPointerException ex) {
+                                        //do nothing, item not a custom item
+                                    }
+
+                                    //if the player's inventory isn't full add the item to their inventory
+                                    if (player.getInventory().firstEmpty() != -1) {
+                                        player.getInventory().addItem(item);
+
+                                        //add the item to the player's stash
+                                    } else {
+                                        StashManager stashManager = main.getStashManager();
+                                        stashManager.addItemToStash(player, item);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }catch (NullPointerException ex){
                 //do nothing
             }
+            //clear the regularly dropped items
+            e.getDrops().clear();
+
+            //clear the players and their damages to the npc
+            npcStats.clearPlayerDamages();
         }
-
     }
-
 }
