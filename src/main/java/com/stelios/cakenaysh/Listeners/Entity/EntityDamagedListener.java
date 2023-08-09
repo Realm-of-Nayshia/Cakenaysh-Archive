@@ -487,6 +487,11 @@ public class EntityDamagedListener implements Listener {
                 //cooldown debuff
                 finalDefenderDamage = finalDefenderDamage * cooldownDebuff;
 
+                //if the npc was hit by sweeping edge
+                if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
+                    finalDefenderDamage = finalDefenderDamage * 0.25f;
+                }
+
                 //if the damage is negative set it to zero
                 if (finalDefenderDamage < 0){
                     finalDefenderDamage = 0;
