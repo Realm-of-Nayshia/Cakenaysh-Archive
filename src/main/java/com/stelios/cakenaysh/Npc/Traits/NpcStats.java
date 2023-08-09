@@ -102,14 +102,19 @@ public class NpcStats extends Trait {
     //setting a player's damage
     public void addPlayerDamage(UUID uuid, float damage){
 
-        //if the player is already in the hashmap, add the damage to the existing damage
-        if(playerDamages.containsKey(uuid)){
+        //if the player has already damaged the npc, add the damage to their total
+        if (playerDamages.containsKey(uuid)){
             playerDamages.put(uuid, playerDamages.get(uuid) + damage);
 
-        //if the player is not in the hashmap, add them
-        }else{
+        //if the player hasn't damaged the npc, add them to the list
+        } else {
             playerDamages.put(uuid, damage);
         }
+    }
+
+    //clearing player's data
+    public void clearPlayerDamages(){
+        playerDamages.clear();
     }
 
     //setting a stat
@@ -196,7 +201,7 @@ public class NpcStats extends Trait {
         rangedDamage = 0.0f;
         magicDefense = 0.0f;
         magicDamage = 0.0f;
-        playerDamages.clear();
+        clearPlayerDamages();
     }
 
 }
