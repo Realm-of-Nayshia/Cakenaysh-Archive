@@ -32,11 +32,12 @@ public class WrathOfSpartaAbility extends ItemAbility {
         new BukkitRunnable() {
             @Override
             public void run() {
-                player.sendMessage(Component.text("The rage subsides...",
-                        TextColor.color(255,0,0)));
+
+                //remove the bonus damage
+                player.sendMessage(Component.text("The rage subsides...", TextColor.color(255,0,0)));
                 customPlayer.setBonusDamage(customPlayer.getBonusDamage() - bonusDamage);
             }
-        }.runTaskLaterAsynchronously(Main.getPlugin(Main.class), 200);
+        }.runTaskLater(Main.getPlugin(Main.class), 200);
 
     }
 }
