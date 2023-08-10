@@ -26,6 +26,7 @@ com\stelios\cakenaysh\Commands\TabComplete\ResetAttributesTabComplete.class
 com\stelios\cakenaysh\Managers\MenuManager.class
 com\stelios\cakenaysh\AbilityCreation\Abilities\WrathOfSpartaAbility.class
 com\stelios\cakenaysh\Managers\PlayerManager.class
+com\stelios\cakenaysh\Items\EquipmentBonuses$3.class
 com\stelios\cakenaysh\Listeners\Entity\PlayerStatusChangeListener.class
 com\stelios\cakenaysh\Items\CustomItems.class
 com\stelios\cakenaysh\Events\SpeedChangedEvent.class
@@ -64,6 +65,7 @@ com\stelios\cakenaysh\Listeners\Stats\XpGainListener.class
 com\stelios\cakenaysh\Listeners\Inventory\InventoryAlteredListener$2.class
 com\stelios\cakenaysh\Listeners\Stats\ProficiencyChangedListener.class
 com\stelios\cakenaysh\Commands\HealCommand.class
+com\stelios\cakenaysh\Items\EquipmentBonuses$4.class
 com\stelios\cakenaysh\Items\EquipmentBonuses$1.class
 com\stelios\cakenaysh\Commands\GiveItemCommand.class
 com\stelios\cakenaysh\Commands\KillCommand.class

@@ -297,6 +297,82 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
+    BLANK_HELMET(new BattleItem(Material.IRON_HELMET, 1,false,"Blank Helmet", "armor",0,0,0,0
+            ,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            0,0,0,0)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Blank Helmet")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("full set bonus testing")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    BLANK_CHESTPLATE(new BattleItem(Material.IRON_CHESTPLATE, 1,false,"Blank Chestplate", "armor",0,0,0,0
+            ,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            0,0,0,0)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Blank Chestplate")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("full set bonus testing")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    BLANK_LEGGINGS(new BattleItem(Material.IRON_LEGGINGS, 1,false,"Blank Leggings", "armor",0,0,0,0
+            ,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            0,0,0,0)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Blank Leggings")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("full set bonus testing")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    BLANK_BOOTS(new BattleItem(Material.IRON_BOOTS, 1,false,"Blank Boots", "armor",0,0,0,0
+            ,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            0,0,0,0)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Blank Boots")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("full set bonus testing")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
     SCYTHE_OF_INTELLIJ(new BattleItem(Material.GOLDEN_HOE, 1,false,"Scythe of Intellij", "weapon", 60,20,120,5
             ,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,

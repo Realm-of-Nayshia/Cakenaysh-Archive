@@ -15,6 +15,16 @@ public enum EquipmentBonuses {
                 put(PotionEffectType.DAMAGE_RESISTANCE, 0);
             }}),
 
+    BLANK_SET(null, CustomItems.getItemFromName("BLANK_HELMET"), CustomItems.getItemFromName("BLANK_CHESTPLATE"),
+            CustomItems.getItemFromName("BLANK_LEGGINGS"), CustomItems.getItemFromName("BLANK_BOOTS"),
+            new HashMap<String, Integer>() {{
+                put("damage", 10);
+                put("strength", 10);
+            }}, new HashMap<PotionEffectType, Integer>() {{
+                put(PotionEffectType.INCREASE_DAMAGE, 2);
+                put(PotionEffectType.DAMAGE_RESISTANCE, 0);
+            }}),
+
 
     ;
 
