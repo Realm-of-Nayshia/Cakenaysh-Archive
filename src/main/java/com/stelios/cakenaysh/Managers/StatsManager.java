@@ -81,10 +81,12 @@ public class StatsManager {
                 return true;
             }
 
-            //else return false
+            //send the message if applicable
             if (sendMessage){
                 player.sendMessage(Component.text("You do not meet the requirements to equip this item.", TextColor.color(255, 0, 0)));
             }
+
+            //else return false
             return false;
 
         //if the item is null return true
