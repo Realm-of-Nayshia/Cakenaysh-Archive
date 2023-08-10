@@ -2,6 +2,7 @@ package com.stelios.cakenaysh.Util;
 
 import com.stelios.cakenaysh.Events.SpeedChangedEvent;
 import com.stelios.cakenaysh.Events.XpChangedEvent;
+import com.stelios.cakenaysh.Items.EquipmentBonuses;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -70,6 +71,8 @@ public class CustomPlayer {
     private float magicDefense;
     private float magicDamage;
 
+    //equipment bonuses
+    private ArrayList<EquipmentBonuses> activeEquipmentBonuses = new ArrayList<>();
 
     public CustomPlayer(Main main, UUID uuid) throws SQLException {
         this.main = main;
@@ -423,6 +426,19 @@ public class CustomPlayer {
         return 0;
     }
 
+
+    //equipment bonus management
+    public ArrayList<EquipmentBonuses> getActiveEquipmentBonuses() {
+        return activeEquipmentBonuses;
+    }
+    public void addEquipmentBonus(EquipmentBonuses equipmentBonus) {
+        activeEquipmentBonuses.add(equipmentBonus);
+    }
+    public void clearEquipmentBonuses() {
+        activeEquipmentBonuses.clear();
+    }
+
+
     ////setters
     public void setDamage(float damage){
         this.damage = damage;
@@ -490,6 +506,148 @@ public class CustomPlayer {
     }
     public void setMagicDamage(float magicDamage){
         this.magicDamage = magicDamage;
+    }
+
+
+    //adds the specified stat and amount to the player
+    public void addStat(String stat, int amount){
+
+        switch (stat){
+            case "damage":
+                damage += amount;
+                break;
+            case "bonusDamage":
+                bonusDamage += amount;
+                break;
+            case "critChance":
+                critChance += amount;
+                break;
+            case "critDamage":
+                critDamage += amount;
+                break;
+            case "strength":
+                strength += amount;
+                break;
+            case "defense":
+                defense += amount;
+                break;
+            case "speed":
+                setSpeed(speed + amount);
+                break;
+            case "infernalDefense":
+                infernalDefense += amount;
+                break;
+            case "infernalDamage":
+                infernalDamage += amount;
+                break;
+            case "undeadDefense":
+                undeadDefense += amount;
+                break;
+            case "undeadDamage":
+                undeadDamage += amount;
+                break;
+            case "aquaticDefense":
+                aquaticDefense += amount;
+                break;
+            case "aquaticDamage":
+                aquaticDamage += amount;
+                break;
+            case "aerialDefense":
+                aerialDefense += amount;
+                break;
+            case "aerialDamage":
+                aerialDamage += amount;
+                break;
+            case "meleeDefense":
+                meleeDefense += amount;
+                break;
+            case "meleeDamage":
+                meleeDamage += amount;
+                break;
+            case "rangedDefense":
+                rangedDefense += amount;
+                break;
+            case "rangedDamage":
+                rangedDamage += amount;
+                break;
+            case "magicDefense":
+                magicDefense += amount;
+                break;
+            case "magicDamage":
+                magicDamage += amount;
+                break;
+        }
+    }
+
+
+    //removes the specified stat and amount to the player
+    public void removeStat(String stat, int amount){
+
+        switch (stat){
+            case "damage":
+                damage -= amount;
+                break;
+            case "bonusDamage":
+                bonusDamage -= amount;
+                break;
+            case "critChance":
+                critChance -= amount;
+                break;
+            case "critDamage":
+                critDamage -= amount;
+                break;
+            case "strength":
+                strength -= amount;
+                break;
+            case "defense":
+                defense -= amount;
+                break;
+            case "speed":
+                setSpeed(speed - amount);
+                break;
+            case "infernalDefense":
+                infernalDefense -= amount;
+                break;
+            case "infernalDamage":
+                infernalDamage -= amount;
+                break;
+            case "undeadDefense":
+                undeadDefense -= amount;
+                break;
+            case "undeadDamage":
+                undeadDamage -= amount;
+                break;
+            case "aquaticDefense":
+                aquaticDefense -= amount;
+                break;
+            case "aquaticDamage":
+                aquaticDamage -= amount;
+                break;
+            case "aerialDefense":
+                aerialDefense -= amount;
+                break;
+            case "aerialDamage":
+                aerialDamage -= amount;
+                break;
+            case "meleeDefense":
+                meleeDefense -= amount;
+                break;
+            case "meleeDamage":
+                meleeDamage -= amount;
+                break;
+            case "rangedDefense":
+                rangedDefense -= amount;
+                break;
+            case "rangedDamage":
+                rangedDamage -= amount;
+                break;
+            case "magicDefense":
+                magicDefense -= amount;
+                break;
+            case "magicDamage":
+                magicDamage -= amount;
+                break;
+        }
     }
 
 

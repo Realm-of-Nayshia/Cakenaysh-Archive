@@ -35,6 +35,7 @@ com\stelios\cakenaysh\Commands\TabComplete\SetAttributesTabComplete.class
 com\stelios\cakenaysh\Main.class
 com\stelios\cakenaysh\Commands\ResetNpcStatsCommand.class
 com\stelios\cakenaysh\Items\Item.class
+com\stelios\cakenaysh\Listeners\Entity\EntityPotionEffectListener.class
 com\stelios\cakenaysh\Listeners\Entity\SentinelDeathListener.class
 com\stelios\cakenaysh\MenuCreation\Menu.class
 com\stelios\cakenaysh\Events\XpChangedEvent.class
@@ -42,6 +43,7 @@ com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoStats.class
 com\stelios\cakenaysh\Listeners\Server\ServerStartupListener$1.class
 com\stelios\cakenaysh\Managers\StatsManager$1.class
 com\stelios\cakenaysh\Commands\PlayTimeCommand.class
+com\stelios\cakenaysh\Items\EquipmentBonuses$2.class
 com\stelios\cakenaysh\Commands\TabComplete\SetNpcStatTabComplete.class
 com\stelios\cakenaysh\Util\Database.class
 com\stelios\cakenaysh\Commands\VanishCommand.class
@@ -49,6 +51,7 @@ com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoSkills.class
 com\stelios\cakenaysh\Managers\StatsManager.class
 com\stelios\cakenaysh\Events\ProficiencyChangedEvent.class
 com\stelios\cakenaysh\AbilityCreation\Abilities\WrathOfSpartaAbility$1.class
+com\stelios\cakenaysh\Items\EquipmentBonuses.class
 com\stelios\cakenaysh\Listeners\Server\ConnectionListener.class
 com\stelios\cakenaysh\Util\CustomPlayer.class
 com\stelios\cakenaysh\Items\BattleItem.class
@@ -61,6 +64,7 @@ com\stelios\cakenaysh\Listeners\Stats\XpGainListener.class
 com\stelios\cakenaysh\Listeners\Inventory\InventoryAlteredListener$2.class
 com\stelios\cakenaysh\Listeners\Stats\ProficiencyChangedListener.class
 com\stelios\cakenaysh\Commands\HealCommand.class
+com\stelios\cakenaysh\Items\EquipmentBonuses$1.class
 com\stelios\cakenaysh\Commands\GiveItemCommand.class
 com\stelios\cakenaysh\Commands\KillCommand.class
 com\stelios\cakenaysh\Listeners\Entity\EntityDamagedListener.class

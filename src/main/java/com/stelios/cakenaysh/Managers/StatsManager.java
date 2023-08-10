@@ -1,5 +1,8 @@
 package com.stelios.cakenaysh.Managers;
 
+import com.stelios.cakenaysh.Items.BattleItem;
+import com.stelios.cakenaysh.Items.EquipmentBonuses;
+import com.stelios.cakenaysh.Items.Item;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import net.kyori.adventure.text.Component;
@@ -12,9 +15,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StatsManager {
 
@@ -307,5 +313,128 @@ public class StatsManager {
         displayActionBar(player);
         updateHearts(player);
     }
+
+
+    //add stats for equipment bonuses
+    public void calculateEquipmentBonuses(Player player){
+
+        EquipmentBonuses[] equipmentBonuses = EquipmentBonuses.values();
+        CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+
+        //remove all active equipment bonuses
+        for (EquipmentBonuses equipmentBonus : customPlayer.getActiveEquipmentBonuses()){
+
+            //get the equipment bonus's stats
+            HashMap<String, Integer> stats = equipmentBonus.getStats();
+            HashMap<PotionEffectType, Integer> potionEffects = equipmentBonus.getPotionEffects();
+
+            //remove the stats
+            for (String stat : stats.keySet()){
+                customPlayer.removeStat(stat, stats.get(stat));
+            }
+
+            //remove the potion effects
+            for (PotionEffectType potionEffect : potionEffects.keySet()){
+                player.removePotionEffect(potionEffect);
+            }
+        }
+
+        //clear the active equipment bonuses
+        customPlayer.clearEquipmentBonuses();
+
+
+        //loop through all equipment bonuses
+        for (EquipmentBonuses equipmentBonus : equipmentBonuses){
+
+            //recalculate all the equipment bonuses
+            Item offHand = equipmentBonus.getOffhand();
+            Item helmet = equipmentBonus.getHelmet();
+            Item chestplate = equipmentBonus.getChestplate();
+            Item leggings = equipmentBonus.getLeggings();
+            Item boots = equipmentBonus.getBoots();
+            HashMap<String, Integer> stats = equipmentBonus.getStats();
+            HashMap<PotionEffectType, Integer> potionEffects = equipmentBonus.getPotionEffects();
+
+            //if the player has the correct equipment equipped
+            if (hasEquipment(player, offHand, helmet, chestplate, leggings, boots)){
+
+                //add the equipment bonus
+                customPlayer.addEquipmentBonus(equipmentBonus);
+
+                //add the stats
+                for (String stat : stats.keySet()){
+                    customPlayer.addStat(stat, stats.get(stat));
+                }
+
+                //add the potion effects
+                for (PotionEffectType potionEffectType : potionEffects.keySet()){
+                    player.addPotionEffect(new PotionEffect(potionEffectType, -1, potionEffects.get(potionEffectType)));
+                }
+            }
+        }
+    }
+
+    //checks if the player is wearing the correct equipment
+    public boolean hasEquipment(Player player, Item offhand, Item helmet, Item chestplate, Item leggings, Item boots){
+
+        if (offhand != null){
+            try {
+                if (!(player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)
+                        .equals(offhand.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)))) {
+                    return false;
+                }
+            } catch (NullPointerException e) {
+                return false;
+            }
+        }
+
+        if (helmet != null){
+            try {
+                if (!(player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)
+                        .equals(helmet.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)))) {
+                    return false;
+                }
+            } catch (NullPointerException e) {
+                return false;
+            }
+        }
+
+        if (chestplate != null){
+            try {
+                if (!(player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)
+                        .equals(chestplate.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)))) {
+                    return false;
+                }
+            } catch (NullPointerException e) {
+                return false;
+            }
+        }
+
+        if (leggings != null){
+            try {
+                if (!(player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)
+                        .equals(leggings.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)))) {
+                    return false;
+                }
+            } catch (NullPointerException e) {
+                return false;
+            }
+        }
+
+        if (boots != null){
+            try {
+                if (!(player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)
+                        .equals(boots.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "name"), PersistentDataType.STRING)))) {
+                    return false;
+                }
+            } catch (NullPointerException e) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
 
 }

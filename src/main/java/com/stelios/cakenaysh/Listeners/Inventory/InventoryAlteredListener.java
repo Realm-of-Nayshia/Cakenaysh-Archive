@@ -184,6 +184,7 @@ public class InventoryAlteredListener implements Listener {
         }
 
         statsManager.removePlayerStats(player, e.getOldItem(), "armor");
+        statsManager.calculateEquipmentBonuses(player);
     }
 
 }

@@ -388,7 +388,6 @@ public enum CustomItems {
         return null;
     }
 
-    //
 
     //gets all the itemBuilders in the enum
     //@return ArrayList<Item> of all the items
