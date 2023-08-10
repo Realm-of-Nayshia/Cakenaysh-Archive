@@ -90,7 +90,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerStatusChangeListener(this, statsManager), this);
         Bukkit.getPluginManager().registerEvents(new InventoryAlteredListener(this, statsManager), this);
         Bukkit.getPluginManager().registerEvents(new ProficiencyChangedListener(this, statsManager), this);
-        Bukkit.getPluginManager().registerEvents(new SpeedChangedListener(this, statsManager), this);
+        Bukkit.getPluginManager().registerEvents(new SpeedChangedListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new XpGainListener(this), this);
         Bukkit.getPluginManager().registerEvents(new SentinelDeathListener(this), this);
