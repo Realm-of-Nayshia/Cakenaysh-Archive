@@ -37,7 +37,7 @@ public class PlayerInteractListener implements Listener {
 
                 }
             }catch (NullPointerException ex){
-                //item is not a custom item
+                //item is not a custom item or the block doesn't have a type
             }
         }
     }
