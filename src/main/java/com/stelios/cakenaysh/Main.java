@@ -2,10 +2,7 @@ package com.stelios.cakenaysh;
 
 import com.stelios.cakenaysh.Commands.*;
 import com.stelios.cakenaysh.Commands.TabComplete.*;
-import com.stelios.cakenaysh.Listeners.Entity.EntityDamagedListener;
-import com.stelios.cakenaysh.Listeners.Entity.PlayerInteractListener;
-import com.stelios.cakenaysh.Listeners.Entity.PlayerStatusChangeListener;
-import com.stelios.cakenaysh.Listeners.Entity.SentinelDeathListener;
+import com.stelios.cakenaysh.Listeners.Entity.*;
 import com.stelios.cakenaysh.Listeners.Inventory.InventoryAlteredListener;
 import com.stelios.cakenaysh.Listeners.Server.ConnectionListener;
 import com.stelios.cakenaysh.Listeners.Server.ServerListPingListener;
@@ -90,6 +87,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerStatusChangeListener(this, statsManager), this);
         Bukkit.getPluginManager().registerEvents(new InventoryAlteredListener(this, statsManager), this);
         Bukkit.getPluginManager().registerEvents(new ProficiencyChangedListener(this, statsManager), this);
+        Bukkit.getPluginManager().registerEvents(new EntityPotionEffectListener(), this);
         Bukkit.getPluginManager().registerEvents(new SpeedChangedListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new XpGainListener(this), this);
