@@ -27,6 +27,8 @@ import net.citizensnpcs.api.trait.TraitInfo;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -63,6 +65,7 @@ public final class Main extends JavaPlugin {
         }
 
         //setup of important plugin info
+        registerGameRules();
         registerManagers();
         registerEvents();
         registerCommands();
@@ -71,6 +74,12 @@ public final class Main extends JavaPlugin {
     }
 
 
+    public void registerGameRules(){
+        for (World world : Bukkit.getWorlds()){
+            world.setGameRule(GameRule.KEEP_INVENTORY, true);
+            world.setGameRule(GameRule.DO_LIMITED_CRAFTING, true);
+        }
+    }
 
     public void registerManagers(){
         playerManager = new PlayerManager();
