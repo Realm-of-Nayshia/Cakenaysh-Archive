@@ -464,17 +464,6 @@ public enum CustomItems {
         return null;
     }
 
-
-    //gets all the itemBuilders in the enum
-    //@return ArrayList<Item> of all the items
-    public static ArrayList<Item> getAllItems(){
-        ArrayList<Item> items = new ArrayList<>();
-        for (CustomItems item : CustomItems.values()){
-            items.add(item.item);
-        }
-        return items;
-    }
-
     //returns all the names of items in the enum
     //@return ArrayList<String> of all the names
     public static ArrayList<String> getNames(){
