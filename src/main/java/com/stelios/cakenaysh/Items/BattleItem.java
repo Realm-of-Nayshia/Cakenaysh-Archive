@@ -111,7 +111,7 @@ public class BattleItem extends Item {
         //if the texture string is not null, set the texture of the item
         if (textureURL != null) {
             SkullMeta skullMeta = (SkullMeta) getItemMeta();
-            PlayerProfile profile = Bukkit.getServer().createProfile("c7d5433d-2f5e-4c5f-bef1-c6bbefde4a9");
+            PlayerProfile profile = Bukkit.getServer().createProfile(UUID.randomUUID(), name);
             PlayerTextures textures = profile.getTextures();
             try {
                 textures.setSkin(new URL("http://textures.minecraft.net/texture/" + textureURL));
