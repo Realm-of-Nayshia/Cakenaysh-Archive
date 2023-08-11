@@ -30,7 +30,7 @@ public class PlayerInfoMain extends Menu {
 
         ////registering clickable buttons
         //profile button
-        Item profile = new Item(Material.PLAYER_HEAD, 1,false, "profile")
+        Item profile = new Item(Material.PLAYER_HEAD, 1,false)
                 .setDisplayName(new ArrayList<>(Collections.singletonList(player.getName() + "'s Profile")),
                         new ArrayList<>(Arrays.asList(0,255,0)),
                         new ArrayList<>(Collections.singletonList(false)),
