@@ -62,6 +62,7 @@ com\stelios\cakenaysh\Commands\GetAttributesCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.class
 com\stelios\cakenaysh\Npc\Npcs.class
 com\stelios\cakenaysh\Listeners\Stats\XpGainListener.class
+com\stelios\cakenaysh\Items\Recipes.class
 com\stelios\cakenaysh\Listeners\Inventory\InventoryAlteredListener$2.class
 com\stelios\cakenaysh\Listeners\Stats\ProficiencyChangedListener.class
 com\stelios\cakenaysh\Commands\HealCommand.class
