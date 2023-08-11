@@ -13,10 +13,12 @@ com\stelios\cakenaysh\Managers\StashManager.class
 com\stelios\cakenaysh\Commands\AddAttributesCommand.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoMain.class
 com\stelios\cakenaysh\Commands\SetNpcStatCommand.class
+com\stelios\cakenaysh\Commands\TabComplete\RecipeTabComplete.class
 com\stelios\cakenaysh\Listeners\Entity\PlayerDiscoverRecipeEvent.class
 com\stelios\cakenaysh\Commands\TabComplete\AddAttributesTabComplete.class
 com\stelios\cakenaysh\Listeners\Server\ServerListPingListener.class
 com\stelios\cakenaysh\Commands\ResetAttributesCommand.class
+com\stelios\cakenaysh\Managers\RecipeManager.class
 com\stelios\cakenaysh\MenuCreation\MenuButton.class
 com\stelios\cakenaysh\Commands\GetNpcStatsCommand.class
 com\stelios\cakenaysh\Listeners\Stats\ProficiencyChangedListener$1.class
@@ -59,6 +61,7 @@ com\stelios\cakenaysh\Listeners\Server\ConnectionListener.class
 com\stelios\cakenaysh\Util\CustomPlayer.class
 com\stelios\cakenaysh\Items\BattleItem.class
 com\stelios\cakenaysh\Listeners\Entity\PlayerInteractListener.class
+com\stelios\cakenaysh\Commands\RecipeCommand.class
 com\stelios\cakenaysh\Npc\Traits\NpcStats.class
 com\stelios\cakenaysh\Commands\GetAttributesCommand.class
 com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.class

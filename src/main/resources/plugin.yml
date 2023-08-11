@@ -22,6 +22,10 @@ commands:
     description: Gives the player the specified item.
     syntax: /giveitem <player> <item> <amount>
     permission: op
+  recipe:
+    description: Adds or removes the specified recipe from the specified player.
+    syntax: /recipe <player> <add/remove> <recipe>
+    permission: op
   setAttribute:
     description: Sets the specified attribute to the specified value.
     syntax: /setattribute <player> <attribute> <value>

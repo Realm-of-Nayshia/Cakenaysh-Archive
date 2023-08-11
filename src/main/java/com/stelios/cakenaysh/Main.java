@@ -11,16 +11,13 @@ import com.stelios.cakenaysh.Listeners.Server.ServerStartupListener;
 import com.stelios.cakenaysh.Listeners.Stats.ProficiencyChangedListener;
 import com.stelios.cakenaysh.Listeners.Stats.SpeedChangedListener;
 import com.stelios.cakenaysh.Listeners.Stats.XpGainListener;
-import com.stelios.cakenaysh.Managers.CombatManager;
-import com.stelios.cakenaysh.Managers.StashManager;
+import com.stelios.cakenaysh.Managers.*;
 import com.stelios.cakenaysh.MenuCreation.MenuListener;
 import com.stelios.cakenaysh.AbilityCreation.CustomAbilities;
 import com.stelios.cakenaysh.Items.CustomItems;
 import com.stelios.cakenaysh.Util.*;
 import com.stelios.cakenaysh.AbilityCreation.Abilities.DialOfTheSunAbility;
 import com.stelios.cakenaysh.AbilityCreation.Abilities.WrathOfSpartaAbility;
-import com.stelios.cakenaysh.Managers.PlayerManager;
-import com.stelios.cakenaysh.Managers.StatsManager;
 import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
@@ -45,6 +42,7 @@ public final class Main extends JavaPlugin {
     private StashManager stashManager;
     private CombatManager combatManager;
     private StatsManager statsManager;
+    private RecipeManager recipeManager;
 
     @Override
     public void onEnable() {
@@ -88,6 +86,7 @@ public final class Main extends JavaPlugin {
         stashManager = new StashManager(this);
         combatManager = new CombatManager();
         statsManager = new StatsManager(this);
+        recipeManager = new RecipeManager();
     }
 
     private void registerEvents(){
@@ -137,6 +136,9 @@ public final class Main extends JavaPlugin {
         getCommand("setnpcstat").setTabCompleter(new SetNpcStatTabComplete());
 
         getCommand("menu").setExecutor(new MenuCommand());
+
+        getCommand("recipe").setExecutor(new RecipeCommand());
+        getCommand("recipe").setTabCompleter(new RecipeTabComplete());
     }
 
     private void registerAbilities(){
@@ -160,6 +162,7 @@ public final class Main extends JavaPlugin {
     public StashManager getStashManager() {return stashManager;}
     public CombatManager getCombatManager() {return combatManager;}
     public StatsManager getStatsManager() {return statsManager;}
+    public RecipeManager getRecipeManager() {return recipeManager;}
 
 
     @Override

@@ -31,6 +31,7 @@ public enum Recipes {
     public ShapedRecipe getRecipe() {
         return recipe;
     }
+    public NamespacedKey getKey() { return recipe.getKey(); }
 
 
 }
