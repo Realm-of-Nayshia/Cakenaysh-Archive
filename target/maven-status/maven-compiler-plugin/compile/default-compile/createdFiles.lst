@@ -13,6 +13,7 @@ com\stelios\cakenaysh\Managers\StashManager.class
 com\stelios\cakenaysh\Commands\AddAttributesCommand.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoMain.class
 com\stelios\cakenaysh\Commands\SetNpcStatCommand.class
+com\stelios\cakenaysh\Listeners\Entity\PlayerDiscoverRecipeEvent.class
 com\stelios\cakenaysh\Commands\TabComplete\AddAttributesTabComplete.class
 com\stelios\cakenaysh\Listeners\Server\ServerListPingListener.class
 com\stelios\cakenaysh\Commands\ResetAttributesCommand.class
@@ -21,6 +22,7 @@ com\stelios\cakenaysh\Commands\GetNpcStatsCommand.class
 com\stelios\cakenaysh\Listeners\Stats\ProficiencyChangedListener$1.class
 com\stelios\cakenaysh\Listeners\Inventory\InventoryAlteredListener.class
 com\stelios\cakenaysh\AbilityCreation\Abilities\DialOfTheSunAbility.class
+com\stelios\cakenaysh\Listeners\Entity\PlayerAdvancementCompletedListener.class
 com\stelios\cakenaysh\AbilityCreation\CustomAbilities.class
 com\stelios\cakenaysh\Commands\TabComplete\ResetAttributesTabComplete.class
 com\stelios\cakenaysh\Managers\MenuManager.class
