@@ -2,6 +2,7 @@ package com.stelios.cakenaysh;
 
 import com.stelios.cakenaysh.Commands.*;
 import com.stelios.cakenaysh.Commands.TabComplete.*;
+import com.stelios.cakenaysh.Items.Recipes;
 import com.stelios.cakenaysh.Listeners.Entity.*;
 import com.stelios.cakenaysh.Listeners.Inventory.InventoryAlteredListener;
 import com.stelios.cakenaysh.Listeners.Server.ConnectionListener;
@@ -71,17 +72,18 @@ public final class Main extends JavaPlugin {
         registerCommands();
         registerAbilities();
         registerTraits();
+        registerRecipes();
     }
 
 
-    public void registerGameRules(){
+    private void registerGameRules(){
         for (World world : Bukkit.getWorlds()){
             world.setGameRule(GameRule.KEEP_INVENTORY, true);
             world.setGameRule(GameRule.DO_LIMITED_CRAFTING, true);
         }
     }
 
-    public void registerManagers(){
+    private void registerManagers(){
         playerManager = new PlayerManager();
         stashManager = new StashManager(this);
         combatManager = new CombatManager();
@@ -142,6 +144,12 @@ public final class Main extends JavaPlugin {
 
     private void registerTraits(){
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(NpcStats.class).withName("npcstats"));
+    }
+
+    private void registerRecipes() {
+        for (Recipes recipe : Recipes.values()) {
+            Bukkit.addRecipe(recipe.getRecipe());
+        }
     }
 
     //manager getters
