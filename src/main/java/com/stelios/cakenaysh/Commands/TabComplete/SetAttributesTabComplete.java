@@ -29,7 +29,7 @@ public class SetAttributesTabComplete implements TabCompleter {
 
             return StringUtil.copyPartialMatches(args[0], names, new ArrayList<>());
 
-            //second argument: attribute name
+        //second argument: attribute name
         }else if (args.length == 2){
 
             return StringUtil.copyPartialMatches(args[1], Arrays.asList("rank","faction","level","investmentPoints","xp","staminaRegen","stamina",
