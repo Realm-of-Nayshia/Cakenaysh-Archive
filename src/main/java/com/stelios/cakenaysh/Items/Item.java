@@ -1,18 +1,24 @@
 package com.stelios.cakenaysh.Items;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.profile.PlayerTextures;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,10 +34,25 @@ public class Item {
     //@param amount: The amount of the item being built.
     //@param unstackable: Whether the item is stackable or not.
     //@param name: The name of the item being built.
-    public Item(Material material, int amount, boolean unstackable, String name) {
+    public Item(Material material, int amount, boolean unstackable, String name, String textureURL) {
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = this.itemStack.getItemMeta();
         this.unstackable = unstackable;
+
+        //if the texture string is not null, set the texture of the item
+        if (textureURL != null) {
+            SkullMeta skullMeta = (SkullMeta) this.itemMeta;
+            PlayerProfile profile = Bukkit.getServer().createProfile("c7d5433d-2f5e-4c5f-bef1-c6bbefde4a9");
+            PlayerTextures textures = profile.getTextures();
+            try {
+                textures.setSkin(new URL("http://textures.minecraft.net/texture/" + textureURL));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            profile.setTextures(textures);
+            skullMeta.setPlayerProfile(profile);
+            this.itemStack.setItemMeta(skullMeta);
+        }
 
         //setting pdc values for the item
         PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
@@ -109,7 +130,7 @@ public class Item {
                     .decoration(TextDecoration.STRIKETHROUGH, isStrikethrough.get(i))));
         }
 
-        //loop through the nameList and concatenate each word to one textcomponent
+        //loop through the nameList and concatenate each word to one text component
         TextComponent displayName = Component.empty();
         for (TextComponent word : nameList){
             displayName = displayName.append(word);

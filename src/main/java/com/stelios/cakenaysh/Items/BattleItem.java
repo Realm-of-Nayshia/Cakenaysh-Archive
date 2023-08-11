@@ -1,18 +1,24 @@
 package com.stelios.cakenaysh.Items;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.profile.PlayerTextures;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -70,8 +76,9 @@ public class BattleItem extends Item {
                       float defense, float speed, float infernalDefense, float infernalDamage, float undeadDefense, float undeadDamage,
                       float aquaticDefense, float aquaticDamage, float aerialDefense, float aerialDamage,
                       float meleeDefense, float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
-                      float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency){
-        super(material, amount, unstackable, name);
+                      float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency,
+                      String textureURL){
+        super(material, amount, unstackable, name, textureURL);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
         this.critDamage = critDamage;
@@ -100,6 +107,21 @@ public class BattleItem extends Item {
         this.meleeProficiency = meleeProficiency;
         this.rangedProficiency = rangedProficiency;
         this.armorProficiency = armorProficiency;
+
+        //if the texture string is not null, set the texture of the item
+        if (textureURL != null) {
+            SkullMeta skullMeta = (SkullMeta) getItemMeta();
+            PlayerProfile profile = Bukkit.getServer().createProfile("c7d5433d-2f5e-4c5f-bef1-c6bbefde4a9");
+            PlayerTextures textures = profile.getTextures();
+            try {
+                textures.setSkin(new URL("http://textures.minecraft.net/texture/" + textureURL));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            profile.setTextures(textures);
+            skullMeta.setPlayerProfile(profile);
+            getItemStack().setItemMeta(skullMeta);
+        }
 
         //attackSpeed implementation
         implementAttackSpeed(itemType);
