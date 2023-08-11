@@ -13,6 +13,13 @@ public enum Recipes {
                     "GGG")
             .setIngredient('G', CustomItems.GRUBBY_GUSTARD.getItem().build())),
 
+    WRATH_OF_SPARTA(new ShapedRecipe(new NamespacedKey(Main.getPlugin(Main.class),
+            "wrath_of_sparta"), CustomItems.WRATH_OF_SPARTA.getItem().build())
+            .shape("T  ",
+                    "   ",
+                    "   ")
+            .setIngredient('T', CustomItems.TEST_ITEM.getItem().build())),
+
     ;
 
     private final ShapedRecipe recipe;
