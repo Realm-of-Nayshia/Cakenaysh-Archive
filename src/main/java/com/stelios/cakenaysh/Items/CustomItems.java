@@ -107,6 +107,16 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
+    EQUAL_SIGN(new Item(Material.PLAYER_HEAD, 1,false, "Equal Sign",
+            "d773155306c9d2d58b149673951cbc6666aef87b8f873538fc85745f01b51")
+            .setDisplayName(new ArrayList<>(Arrays.asList("")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
     CLOSE(new Item(Material.BARRIER, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("Close")),
                     new ArrayList<>(Arrays.asList(255,0,0)),
@@ -141,7 +151,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    BLANK_WHITE_PANE(new Item(Material.WHITE_STAINED_GLASS_PANE, 1,false)
+    BLANK_LIGHT_GRAY_PANE(new Item(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1,false)
             .setDisplayName(new ArrayList<>(Arrays.asList("")),
                     new ArrayList<>(Arrays.asList(0,0,0)),
                     new ArrayList<>(Arrays.asList(false)),
