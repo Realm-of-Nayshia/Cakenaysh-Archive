@@ -129,7 +129,7 @@ public class PlayerInfoMain extends Menu {
         //recipe book button
         MenuButton recipeBookButton = new MenuButton(CustomItems.RECIPE_BOOK.getItem().build());
         recipeBookButton.setWhenClicked(clicked ->
-                clicked.sendMessage("You clicked on your recipe book"));
+                new PlayerInfoRecipes(player).open(clicked));
 
         registerButton(recipeBookButton, 24);
 
