@@ -77,8 +77,29 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false, false)),
                     new ArrayList<>(Arrays.asList(false, false, false)))),
 
-    BACK_BUTTON(new Item(Material.ARROW, 1,false)
+    BACK_BUTTON(new Item(Material.PLAYER_HEAD, 1,false, "Back Button",
+            "cdc9e4dcfa4221a1fadc1b5b2b11d8beeb57879af1c42362142bae1edd5")
             .setDisplayName(new ArrayList<>(Arrays.asList("Back")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    NEXT_PAGE(new Item(Material.PLAYER_HEAD, 1,false, "Next Page",
+            "956a3618459e43b287b22b7e235ec699594546c6fcd6dc84bfca4cf30ab9311")
+            .setDisplayName(new ArrayList<>(Arrays.asList("Next Page")),
+                    new ArrayList<>(Arrays.asList(255,255,255)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    PREVIOUS_PAGE(new Item(Material.PLAYER_HEAD, 1,false, "Previous Page",
+            "cdc9e4dcfa4221a1fadc1b5b2b11d8beeb57879af1c42362142bae1edd5")
+            .setDisplayName(new ArrayList<>(Arrays.asList("Previous Page")),
                     new ArrayList<>(Arrays.asList(255,255,255)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -117,6 +138,24 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    BLANK_WHITE_PANE(new Item(Material.WHITE_STAINED_GLASS_PANE, 1,false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("")),
+                    new ArrayList<>(Arrays.asList(0,0,0)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    LOCKED_RED_PANE(new Item(Material.RED_STAINED_GLASS_PANE, 1, false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("LOCKED")),
+                    new ArrayList<>(Arrays.asList(255,0,0)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(true)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
@@ -466,6 +505,22 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(true)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
+
+    INGOT_OF_SPARTA(new Item(Material.GOLD_INGOT, 1 , false)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Ingot of Sparta")),
+                    new ArrayList<>(Arrays.asList(255,215,0)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("Από τις έντονες φωτιές της Σπάρτας. Αυτός ο", "nl", "χρυσός λέγεται ότι είναι ο ισχυρότερος στον κόσμο...")),
+                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
+                    new ArrayList<>(Arrays.asList(false,false)),
+                    new ArrayList<>(Arrays.asList(false,false)),
+                    new ArrayList<>(Arrays.asList(true,true)),
+                    new ArrayList<>(Arrays.asList(false,false)),
+                    new ArrayList<>(Arrays.asList(false,false)))),
 
     ;
 
