@@ -5,6 +5,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
+import java.util.Map;
+
 public enum Recipes {
 
     GRUBULOUSLY_GRUBBY_GRUSTARD(new ShapedRecipe(new NamespacedKey(Main.getPlugin(Main.class),
@@ -63,7 +65,7 @@ public enum Recipes {
     public NamespacedKey getKey() { return recipe.getKey(); }
     public ItemStack getResult() { return recipe.getResult(); }
     public String[] getShape() { return recipe.getShape(); }
-    public ItemStack[] getIngredients() { return recipe.getIngredientMap().values().toArray(new ItemStack[0]); }
+    public Map<Character, ItemStack> getIngredients() { return recipe.getIngredientMap(); }
 
 
 }
