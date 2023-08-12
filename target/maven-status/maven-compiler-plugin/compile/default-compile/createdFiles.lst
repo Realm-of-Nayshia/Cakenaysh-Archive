@@ -43,6 +43,7 @@ com\stelios\cakenaysh\Items\Item.class
 com\stelios\cakenaysh\Listeners\Entity\EntityPotionEffectListener.class
 com\stelios\cakenaysh\Listeners\Entity\SentinelDeathListener.class
 com\stelios\cakenaysh\MenuCreation\Menu.class
+com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoRecipes.class
 com\stelios\cakenaysh\Events\XpChangedEvent.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoStats.class
 com\stelios\cakenaysh\Listeners\Server\ServerStartupListener$1.class
