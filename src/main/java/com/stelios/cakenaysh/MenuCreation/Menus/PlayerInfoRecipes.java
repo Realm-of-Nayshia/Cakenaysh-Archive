@@ -62,7 +62,7 @@ public class PlayerInfoRecipes extends Menu {
                     //create a button for the recipe
                     MenuButton recipeButton = new MenuButton(recipe.getRecipe().getResult());
                     recipeButton.setWhenClicked(clicked -> {
-                        clicked.sendMessage("You clicked on an unlocked recipe!");
+                        new PlayerInfoRecipeDisplay(recipe).open(clicked);
                     });
 
                     //loop through the inventory slots
