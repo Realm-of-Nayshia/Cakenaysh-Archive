@@ -24,7 +24,7 @@ commands:
     permission: op
   recipe:
     description: Adds or removes the specified recipe from the specified player.
-    syntax: /recipe <player> <add/remove> <recipe>
+    syntax: /recipe <player> <add/remove/all/reset> <recipe>
     permission: op
   setAttribute:
     description: Sets the specified attribute to the specified value.

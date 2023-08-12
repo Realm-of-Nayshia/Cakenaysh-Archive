@@ -33,15 +33,15 @@ public class RecipeTabComplete implements TabCompleter {
         //send argument: add or remove
         } else if (args.length == 2){
 
-            return StringUtil.copyPartialMatches(args[1], Arrays.asList("add", "remove"), new ArrayList<>());
+            return StringUtil.copyPartialMatches(args[1], Arrays.asList("add", "remove","all","reset"), new ArrayList<>());
 
         //third argument: recipe name
-        }else if (args.length == 3){
+        }else if (args.length == 3 && (args[1].equals("add") || args[1].equals("remove"))){
 
             //add all recipes to the list
             List<String> names = new ArrayList<>();
             for (Recipes recipe : Recipes.values()) {
-                names.add(recipe.getKey().toString());
+                names.add(recipe.getKey().getKey());
             }
 
             return StringUtil.copyPartialMatches(args[2], names, new ArrayList<>());
