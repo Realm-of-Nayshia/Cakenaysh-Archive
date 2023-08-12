@@ -49,13 +49,13 @@ public class ConnectionListener implements Listener {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         String key = player.getUniqueId().toString();
 
-        List<NamespacedKey> recipes = (List<NamespacedKey>) config.getList(key);
+        List<String> recipes = (List<String>) config.getList(key);
 
         //if the player isn't in the yml file
         if (recipes == null) {
 
             //add the player to the recipe file
-            recipes = new ArrayList<NamespacedKey>();
+            recipes = new ArrayList<String>();
             config.set(key, recipes);
 
             //reset the player's recipes
