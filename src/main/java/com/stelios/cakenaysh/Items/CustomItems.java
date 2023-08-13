@@ -4,6 +4,8 @@ import com.stelios.cakenaysh.Main;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -480,6 +482,32 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(true, true, true)),
                     new ArrayList<>(Arrays.asList(false, false, false)),
                     new ArrayList<>(Arrays.asList(false, false, false)))),
+
+
+    //CONSUMABLE ITEMS
+    FILET_MIGNON(new ConsumableItem(Material.COOKED_BEEF, 1, false, "Test Consumable", 4,
+            new String[]{"Strength", "Crit Damage"},
+            new int[]{10, 20},
+            new int[]{60, 40},
+            new PotionEffect[]{
+                    new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 120 * 20, 2),
+                    new PotionEffect(PotionEffectType.JUMP, 60 * 20, 0),
+                    new PotionEffect(PotionEffectType.SPEED, 45 * 20, 1)})
+            .setDisplayName(new ArrayList<>(Arrays.asList("Filet Mignon")),
+                    new ArrayList<>(Arrays.asList(168,93,93)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("Now that's a", " JUICY ", "steak!")),
+                    new ArrayList<>(Arrays.asList(128,128,128,217,134,82,128,128,128)),
+                    new ArrayList<>(Arrays.asList(false, true, false)),
+                    new ArrayList<>(Arrays.asList(false, true, false)),
+                    new ArrayList<>(Arrays.asList(false, true, false)),
+                    new ArrayList<>(Arrays.asList(false, false, false)),
+                    new ArrayList<>(Arrays.asList(false, false ,false)))),
+
 
 
     //REGULAR ITEMS
