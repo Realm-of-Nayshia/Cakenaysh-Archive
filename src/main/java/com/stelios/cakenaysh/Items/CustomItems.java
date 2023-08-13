@@ -500,7 +500,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))
-            .setLore(new ArrayList<>(Arrays.asList("Now that's a", " JUICY ", "steak!")),
+            .setLore(new ArrayList<>(Arrays.asList("Now that's a ", "JUICY", " steak!")),
                     new ArrayList<>(Arrays.asList(128,128,128,217,134,82,128,128,128)),
                     new ArrayList<>(Arrays.asList(false, true, false)),
                     new ArrayList<>(Arrays.asList(false, true, false)),
