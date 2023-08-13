@@ -105,6 +105,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerAdvancementCompletedListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDiscoverRecipeEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerItemConsumeListener(this), this);
     }
 
     @SuppressWarnings("DataFlowIssue")
