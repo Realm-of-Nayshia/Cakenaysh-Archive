@@ -82,13 +82,14 @@ public class Item {
 
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"), PersistentDataType.STRING, "regular");
 
-        addItemFlags();
-
         //if the item is unstackable, add a unique identifier to the item
         if (unstackable){
             pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "uniqueID"),
                     PersistentDataType.STRING, UUID.randomUUID().toString());
         }
+
+        addItemFlags();
+
     }
 
     //getters
