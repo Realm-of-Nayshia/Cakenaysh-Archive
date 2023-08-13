@@ -9,6 +9,7 @@ import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -506,6 +507,203 @@ public class CustomPlayer {
     }
     public void setMagicDamage(float magicDamage){
         this.magicDamage = magicDamage;
+    }
+
+
+    //adds the specified stat and amount to the player for a specified amount of time
+    public void addStatWithDelay(String stat, int amount, long ticks){
+
+        switch (stat.toLowerCase()){
+            case "damage":
+                damage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        damage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "bonusdamage":
+                bonusDamage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        bonusDamage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "critchance":
+                critChance += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        critChance -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "critdamage":
+                critDamage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        critDamage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "strength":
+                strength += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        strength -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "defense":
+                defense += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        defense -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "speed":
+                setSpeed(speed + amount);
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        setSpeed(speed - amount);
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "infernaldefense":
+                infernalDefense += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        infernalDefense -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "infernaldamage":
+                infernalDamage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        infernalDamage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "undeaddefense":
+                undeadDefense += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        undeadDefense -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "undeaddamage":
+                undeadDamage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        undeadDamage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "aquaticdefense":
+                aquaticDefense += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        aquaticDefense -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "aquaticdamage":
+                aquaticDamage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        aquaticDamage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "aerialdefense":
+                aerialDefense += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        aerialDefense -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "aerialdamage":
+                aerialDamage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        aerialDamage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "meleedefense":
+                meleeDefense += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        meleeDefense -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "meleedamage":
+                meleeDamage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        meleeDamage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "rangeddefense":
+                rangedDefense += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        rangedDefense -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "rangeddamage":
+                rangedDamage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        rangedDamage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "magicdefense":
+                magicDefense += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        magicDefense -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+            case "magicdamage":
+                magicDamage += amount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        magicDamage -= amount;
+                    }
+                }.runTaskLater(main, ticks);
+                break;
+        }
     }
 
 
