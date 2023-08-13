@@ -309,7 +309,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    TEST_ACCESSORY(new BattleItem(Material.BLACK_DYE, 1,true,"Test Accessory", "accessory",0,40,0,0
+    TEST_ACCESSORY(new BattleItem(Material.BLACK_DYE, 1,true,"Test Accessory", "accessory",0,400,0,0
             ,0,100,0,0,0,0,200,0,0,0,
             0,0,0,0,0,0,0,0,
             0,0,0,0,1,0, null)
@@ -328,7 +328,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    WRATH_OF_SPARTA(new BattleItem(Material.GOLDEN_SWORD, 1,false, "Wrath of Sparta", "weapon",50000,40,100,50
+    WRATH_OF_SPARTA(new BattleItem(Material.GOLDEN_SWORD, 1,false, "Wrath of Sparta", "weapon",50000,400,100,50
             ,10,2,1,1,2,10,10,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
             0,4,0,0, null)
@@ -424,7 +424,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    SCYTHE_OF_INTELLIJ(new BattleItem(Material.GOLDEN_HOE, 1,false,"Scythe of Intellij", "weapon", 60,20,120,5
+    SCYTHE_OF_INTELLIJ(new BattleItem(Material.GOLDEN_HOE, 1,false,"Scythe of Intellij", "weapon", 60,160,120,5
             ,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
             0,0,0,0, null)
@@ -444,7 +444,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false)),
                     new ArrayList<>(Arrays.asList(false, false)))),
 
-    TEST_ITEM(new BattleItem(Material.ACACIA_SLAB,1,true,"Test Item", "weapon",5,5,1,1
+    TEST_ITEM(new BattleItem(Material.ACACIA_SLAB,1,true,"Test Item", "weapon",5,50,1,1
             ,2,1,1,1,1,1,2,1,4,2,
             6,8,3,3,4,5,1,34,
             5,4,1,1,1,1, null)

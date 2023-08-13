@@ -275,7 +275,7 @@ public class BattleItem extends Item {
             case "accessory": {
 
                 //set the attack speed: added to the base attack speed of the item
-                AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed * 0.1,
+                AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed * 0.01,
                         AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND);
                 this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
                 break;
@@ -283,7 +283,7 @@ public class BattleItem extends Item {
             case "armor": {
 
                 //set the attack speed: added to the base attack speed of the item
-                AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed * 0.1,
+                AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed * 0.01,
                         AttributeModifier.Operation.ADD_NUMBER);
                 this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
                 break;
@@ -291,7 +291,7 @@ public class BattleItem extends Item {
             case "weapon": {
 
                 //set the attack speed: the base attack speed of the item
-                AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed * 0.1 - baseAttackSpeed,
+                AttributeModifier swingSpeedMain = new AttributeModifier(UUID.randomUUID(), "generic.attackSpeed", attackSpeed * 0.01 - baseAttackSpeed,
                         AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
                 this.getItemMeta().addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, swingSpeedMain);
                 break;
