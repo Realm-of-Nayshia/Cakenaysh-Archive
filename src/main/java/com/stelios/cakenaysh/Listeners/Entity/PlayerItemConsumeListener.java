@@ -46,8 +46,7 @@ public class PlayerItemConsumeListener implements Listener {
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
 
         ////add the attributes of the item to the player
-        //saturation and food level
-        player.setSaturation(player.getSaturation() + Objects.requireNonNull(pdc.get(new NamespacedKey(Main.getPlugin(Main.class), "saturation"), PersistentDataType.FLOAT)));
+        //food level
         player.setFoodLevel(player.getFoodLevel() + Objects.requireNonNull(pdc.get(new NamespacedKey(Main.getPlugin(Main.class), "foodValue"), PersistentDataType.INTEGER)));
 
         //stats
