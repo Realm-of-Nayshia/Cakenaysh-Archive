@@ -399,7 +399,7 @@ public class BattleItem extends Item {
     //@param isPercent: If the stat needs a percent sign
     //@param red,green,blue(number): the rgb color of the number itself
     //@param red,green,blue(stat): the rgb color of the stat itself
-    public void makeLoreLine(List<TextComponent> loreList, String spacedStatName, float statValue, boolean isPercent, boolean isProficiency,
+    private void makeLoreLine(List<TextComponent> loreList, String spacedStatName, float statValue, boolean isPercent, boolean isProficiency,
                              int redNumber, int greenNumber, int blueNumber, int redStat, int greenStat, int blueStat) {
 
         //if the stat value is zero do nothing
