@@ -54,8 +54,8 @@ public class PlayerItemConsumeListener implements Listener {
         int[] statsAmount = Objects.requireNonNull(pdc.get(new NamespacedKey(Main.getPlugin(Main.class), "statsAmount"), DataType.INTEGER_ARRAY));
         int[] statsDuration = Objects.requireNonNull(pdc.get(new NamespacedKey(Main.getPlugin(Main.class), "statsDuration"), DataType.INTEGER_ARRAY));
 
-        for (String stat : stats){
-            customPlayer.addStatWithDelay(stat.replaceAll("\\s", ""), statsAmount[0], statsDuration[0] * 20L);
+        for (int i = 0; i <stats.length; i ++){
+            customPlayer.addStatWithDelay(stats[i].replaceAll("\\s", ""), statsAmount[i], statsDuration[i] * 20L);
         }
 
         //potion effects

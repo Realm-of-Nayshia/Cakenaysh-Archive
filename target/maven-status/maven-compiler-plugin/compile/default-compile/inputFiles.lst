@@ -1,6 +1,7 @@
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\GetAttributesCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Managers\RecipeManager.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Items\EquipmentBonuses.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\Entity\PlayerItemConsumeListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\Entity\PlayerStatusChangeListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\AbilityCreation\ItemAbility.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Managers\CombatManager.java
@@ -55,6 +56,7 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Managers\PlayerManager.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Npc\Npcs.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Items\ConsumableItem.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\Entity\PlayerAdvancementCompletedListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\MenuCreation\MenuButton.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoRecipeDisplay.java
