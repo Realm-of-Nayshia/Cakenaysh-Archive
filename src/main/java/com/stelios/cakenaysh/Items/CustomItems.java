@@ -1,8 +1,12 @@
 package com.stelios.cakenaysh.Items;
 
 import com.stelios.cakenaysh.Main;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
+import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -218,6 +222,8 @@ public enum CustomItems {
             ,10,10000,0,0,0,10000,0,0,0,0,
             0,0,0,0,0,0,0,0,
             0,0,0,0,1,0, null)
+            .setUnbreakable()
+            .setArmorTrim(new ArmorTrim(TrimMaterial.NETHERITE, TrimPattern.SILENCE))
             .setDisplayName(new ArrayList<>(Arrays.asList("Helmet of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -237,6 +243,8 @@ public enum CustomItems {
             ,10,10000,0,0,0,10000,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
             0,0,0,0,0, null)
+            .setUnbreakable()
+            .setArmorTrim(new ArmorTrim(TrimMaterial.NETHERITE, TrimPattern.SILENCE))
             .setDisplayName(new ArrayList<>(Arrays.asList("Chestplate of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -256,6 +264,8 @@ public enum CustomItems {
             ,10,10000,0,0,0,10000,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
             0,0,0,0,1, null)
+            .setUnbreakable()
+            .setArmorTrim(new ArmorTrim(TrimMaterial.NETHERITE, TrimPattern.SILENCE))
             .setDisplayName(new ArrayList<>(Arrays.asList("Leggings of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -275,6 +285,8 @@ public enum CustomItems {
             ,10,10000,0,0,0,10000,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
             0,0,0,0,0, null)
+            .setUnbreakable()
+            .setArmorTrim(new ArmorTrim(TrimMaterial.NETHERITE, TrimPattern.SILENCE))
             .setDisplayName(new ArrayList<>(Arrays.asList("Boots of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -421,6 +433,26 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    FIRE_BOOTS(new BattleItem(Material.LEATHER_BOOTS, 1,false,"Color Boots", "armor",0,0,0,0
+            ,0,0,0,0,0,0,0,20,10,0,0,
+            0,0,0,0,0,0, 0,0,0,
+            0,0,0,0, null)
+            .setArmorColor(Color.ORANGE)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Fire Boots")),
+                    new ArrayList<>(Arrays.asList(215, 53, 2)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("We testin' boot color.")),
+                    new ArrayList<>(Arrays.asList(255, 117, 0)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(true)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 

@@ -7,12 +7,16 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.profile.PlayerTextures;
@@ -26,7 +30,7 @@ import java.util.UUID;
 public class Item {
 
     private final ItemStack itemStack;
-    private final ItemMeta itemMeta;
+    private ItemMeta itemMeta;
     private final boolean unstackable;
 
 
@@ -209,6 +213,26 @@ public class Item {
     //@return the Item
     public Item setUnbreakable(){
         this.itemMeta.setUnbreakable(true);
+        return this;
+    }
+
+    //sets the armor trim of the item
+    public Item setArmorTrim(ArmorTrim trim){
+        ArmorMeta armorMeta = (ArmorMeta) this.itemMeta;
+        armorMeta.setTrim(trim);
+        this.itemMeta = armorMeta;
+        updateItemMeta();
+        this.itemMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+        return this;
+    }
+
+    //sets the armor color of the item
+    public Item setArmorColor(Color color){
+        LeatherArmorMeta armorMeta = (LeatherArmorMeta) this.itemMeta;
+        armorMeta.setColor(color);
+        this.itemMeta = armorMeta;
+        updateItemMeta();
+        this.itemMeta.addItemFlags(ItemFlag.HIDE_DYE);
         return this;
     }
 
