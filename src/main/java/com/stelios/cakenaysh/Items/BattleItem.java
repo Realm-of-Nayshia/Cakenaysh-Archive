@@ -1,6 +1,7 @@
 package com.stelios.cakenaysh.Items;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
+import com.jeff_media.morepersistentdatatypes.DataType;
 import com.stelios.cakenaysh.Main;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.profile.PlayerTextures;
 
 import java.net.MalformedURLException;
@@ -53,6 +55,7 @@ public class BattleItem extends Item {
     private final int meleeProficiency;
     private final int rangedProficiency;
     private final int armorProficiency;
+    private final PotionEffect[] potionEffects;
 
 
     //@param material: The material of the item being built.
@@ -77,7 +80,7 @@ public class BattleItem extends Item {
                       float aquaticDefense, float aquaticDamage, float aerialDefense, float aerialDamage,
                       float meleeDefense, float meleeDamage, float rangedDefense, float rangedDamage, float magicDefense,
                       float magicDamage, int meleeProficiency, int rangedProficiency, int armorProficiency,
-                      String textureURL){
+                      String textureURL, PotionEffect[] potionEffects){
         super(material, amount, unstackable, name, textureURL);
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -107,6 +110,12 @@ public class BattleItem extends Item {
         this.meleeProficiency = meleeProficiency;
         this.rangedProficiency = rangedProficiency;
         this.armorProficiency = armorProficiency;
+
+        //if the potionEffects array is null, set it to an empty array
+        if (potionEffects == null){
+            potionEffects = new PotionEffect[0];
+        }
+        this.potionEffects = potionEffects;
 
         //if the texture string is not null, set the texture of the item
         if (textureURL != null) {
@@ -165,6 +174,7 @@ public class BattleItem extends Item {
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "rangedProficiency"), PersistentDataType.INTEGER, rangedProficiency);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "armorProficiency"), PersistentDataType.INTEGER, armorProficiency);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "unstackable"), PersistentDataType.BOOLEAN, unstackable);
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "potionEffects"), DataType.POTION_EFFECT_ARRAY, potionEffects);
 
         addItemFlags();
     }
@@ -350,6 +360,124 @@ public class BattleItem extends Item {
             lore = lore.append(word);
         }
         loreList.add(lore);
+
+        //add the potion effects as lore
+        if (potionEffects.length > 0){
+            loreList.add(0, Component.text(""));
+        }
+
+        for (PotionEffect effect : potionEffects){
+
+            String name = effect.getType().getName();
+
+            switch (effect.getType().getName()) {
+                case "ABSORPTION":
+                    name = "Absorption";
+                    break;
+                case "BAD_OMEN":
+                    name = "Bad Omen";
+                    break;
+                case "BLINDNESS":
+                    name = "Blindness";
+                    break;
+                case "CONDUIT_POWER":
+                    name = "Conduit Power";
+                    break;
+                case "CONFUSION":
+                    name = "Nausea";
+                    break;
+                case "DAMAGE_RESISTANCE":
+                    name = "Resistance";
+                    break;
+                case "DARKNESS":
+                    name = "Darkness";
+                    break;
+                case "DOLPHINS_GRACE":
+                    name = "Dolphin's Grace";
+                    break;
+                case "FAST_DIGGING":
+                    name = "Haste";
+                    break;
+                case "FIRE_RESISTANCE":
+                    name = "Fire Resistance";
+                    break;
+                case "GLOWING":
+                    name = "Glowing";
+                    break;
+                case "HARM":
+                    name = "Instant Damage";
+                    break;
+                case "HEAL":
+                    name = "Instant Health";
+                    break;
+                case "HEALTH_BOOST":
+                    name = "Health Boost";
+                    break;
+                case "HERO_OF_THE_VILLAGE":
+                    name = "Hero of the Village";
+                    break;
+                case "HUNGER":
+                    name = "Hunger";
+                    break;
+                case "INCREASE_DAMAGE":
+                    name = "Strength";
+                    break;
+                case "INVISIBILITY":
+                    name = "Invisibility";
+                    break;
+                case "JUMP":
+                    name = "Jump Boost";
+                    break;
+                case "LEVITATION":
+                    name = "Levitation";
+                    break;
+                case "LUCK":
+                    name = "Luck";
+                    break;
+                case "NIGHT_VISION":
+                    name = "Night Vision";
+                    break;
+                case "POISON":
+                    name = "Poison";
+                    break;
+                case "REGENERATION":
+                    name = "Regeneration";
+                    break;
+                case "SATURATION":
+                    name = "Saturation";
+                    break;
+                case "SLOW":
+                    name = "Slowness";
+                    break;
+                case "SLOW_DIGGING":
+                    name = "Mining Fatigue";
+                    break;
+                case "SLOW_FALLING":
+                    name = "Slow Falling";
+                    break;
+                case "SPEED":
+                    name = "Speed";
+                    break;
+                case "UNLUCK":
+                    name = "Bad Luck";
+                    break;
+                case "WATER_BREATHING":
+                    name = "Water Breathing";
+                    break;
+                case "WEAKNESS":
+                    name = "Weakness";
+                    break;
+                case "WITHER":
+                    name = "Wither";
+                    break;
+            }
+
+            TextComponent newLoreLine = Component.text(effect.getDuration()/20 + "s of ", TextColor.color(200,200,200))
+                    .decoration(TextDecoration.ITALIC, false)
+                    .append(Component.text(name + " " + (effect.getAmplifier() + 1), TextColor.color(240, 40, 50)))
+                            .decoration(TextDecoration.ITALIC, false);
+            loreList.add(0, newLoreLine);
+        }
 
         //adding the custom item attributes to the item lore
         loreList.add(0, Component.text(""));
