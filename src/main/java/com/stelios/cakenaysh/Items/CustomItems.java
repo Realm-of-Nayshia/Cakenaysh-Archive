@@ -465,6 +465,7 @@ public enum CustomItems {
             ,50,100,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
             0,0,0,0, null,null)
+            .setUnbreakable()
             .setDisplayName(new ArrayList<>(Arrays.asList("Forgotten Helmet")),
                     new ArrayList<>(Arrays.asList(55, 52, 59)),
                     new ArrayList<>(Arrays.asList(true)),

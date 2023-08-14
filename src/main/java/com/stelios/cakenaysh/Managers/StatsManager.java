@@ -142,23 +142,14 @@ public class StatsManager {
 
     //manages the health of the player when equipping different items
     public void manageHealthAndStamina(CustomPlayer customPlayer, float healthBefore, float maxHealthBefore, float staminaBefore, float maxStaminaBefore){
+
         //if health is greater than max health, set health to max health
         if (customPlayer.getHealth() > customPlayer.getMaxHealth()) {
             customPlayer.setHealth(customPlayer.getMaxHealth());
         }
 
-        //if the player was at maximum health, set health to max health
-        if (healthBefore >= maxHealthBefore) {
-            customPlayer.setHealth(customPlayer.getMaxHealth());
-        }
-
         //if the stamina is greater than max stamina, set the stamina to max stamina
         if (customPlayer.getStamina() > customPlayer.getMaxStamina()) {
-            customPlayer.setStamina(customPlayer.getMaxStamina());
-        }
-
-        //if the player was at maximum stamina, set stamina to max stamina
-        if (staminaBefore >= maxStaminaBefore) {
             customPlayer.setStamina(customPlayer.getMaxStamina());
         }
     }
