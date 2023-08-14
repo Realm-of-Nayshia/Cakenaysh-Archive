@@ -514,6 +514,9 @@ public class CustomPlayer {
     public void addStatWithDelay(String stat, int amount, long ticks){
 
         switch (stat.toLowerCase()){
+            case "health":
+                health += amount;
+                break;
             case "damage":
                 damage += amount;
                 new BukkitRunnable(){
@@ -711,6 +714,9 @@ public class CustomPlayer {
     public void addStat(String stat, int amount){
 
         switch (stat){
+            case "maxhealth":
+                maxHealth += amount;
+                break;
             case "damage":
                 damage += amount;
                 break;
@@ -782,6 +788,9 @@ public class CustomPlayer {
     public void removeStat(String stat, int amount){
 
         switch (stat){
+            case "maxhealth":
+                maxHealth -= amount;
+                break;
             case "damage":
                 damage -= amount;
                 break;
