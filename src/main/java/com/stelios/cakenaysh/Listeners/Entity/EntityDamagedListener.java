@@ -1,20 +1,25 @@
 package com.stelios.cakenaysh.Listeners.Entity;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Managers.StatsManager;
 import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.mcmonkey.sentinel.SentinelTrait;
 
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class EntityDamagedListener implements Listener {
@@ -175,6 +180,21 @@ public class EntityDamagedListener implements Listener {
                             finalDefenderDamage = 0;
                         }
 
+                        //apply the weapon's effects if it has any
+                        if (attackerSentinelTrait.itemHelper.getHeldItem() != null) {
+                            if (Objects.requireNonNull(attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
+
+                                //get the weapon's effects
+                                PotionEffect[] potionEffects = attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "potionEffects"), DataType.POTION_EFFECT_ARRAY);
+                                LivingEntity defenderLivingEntity = (LivingEntity) defender.getEntity();
+
+                                //apply the effects
+                                for (PotionEffect potionEffect : Objects.requireNonNull(potionEffects)) {
+                                    defenderLivingEntity.addPotionEffect(potionEffect);
+                                }
+                            }
+                        }
+
                         //display the damage
                         statsManager.displayDamage(defender.getEntity(), (int) finalDefenderDamage, isCritical, defender.getStoredLocation());
 
@@ -283,6 +303,24 @@ public class EntityDamagedListener implements Listener {
                         }
                     }
 
+                    //apply the weapon's effects if it has any
+                    if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
+                        if (Objects.requireNonNull(player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
+
+                            //get the weapon's effects
+                            PotionEffect[] potionEffects = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "potionEffects"), DataType.POTION_EFFECT_ARRAY);
+                            LivingEntity defenderLivingEntity = (LivingEntity) defender.getEntity();
+
+                            player.sendMessage("applying effects 1");
+
+                            //apply the effects
+                            for (PotionEffect potionEffect : Objects.requireNonNull(potionEffects)) {
+                                player.sendMessage("applying effects final");
+                                defenderLivingEntity.addPotionEffect(potionEffect);
+                            }
+                        }
+                    }
+
                     //display the damage
                     statsManager.displayDamage(player, (int) finalDefenderDamage, isCritical, defender.getStoredLocation());
 
@@ -387,6 +425,20 @@ public class EntityDamagedListener implements Listener {
                         finalDefenderDamage = 0;
                     }
 
+                    //apply the weapon's effects if it has any
+                    if (attackerSentinelTrait.itemHelper.getHeldItem() != null) {
+                        if (Objects.requireNonNull(attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
+
+                            //get the weapon's effects
+                            PotionEffect[] potionEffects = attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "potionEffects"), DataType.POTION_EFFECT_ARRAY);
+
+                            //apply the effects
+                            for (PotionEffect potionEffect : Objects.requireNonNull(potionEffects)) {
+                                playerDefend.addPotionEffect(potionEffect);
+                            }
+                        }
+                    }
+
                     //display the damage
                     statsManager.displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
@@ -487,23 +539,32 @@ public class EntityDamagedListener implements Listener {
                 //cooldown debuff
                 finalDefenderDamage = finalDefenderDamage * cooldownDebuff;
 
-                //if the npc was hit by sweeping edge
-                if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
-                    finalDefenderDamage = finalDefenderDamage * 0.25f;
-                }
-
                 //if the damage is negative set it to zero
                 if (finalDefenderDamage < 0){
                     finalDefenderDamage = 0;
                 }
 
+                //apply the weapon's effects if it has any
+                if (playerAttack.getInventory().getItemInMainHand().getItemMeta() != null) {
+                    if (Objects.requireNonNull(playerAttack.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
+
+                        //get the weapon's effects
+                        PotionEffect[] potionEffects = playerAttack.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "potionEffects"), DataType.POTION_EFFECT_ARRAY);
+
+                        //apply the effects
+                        for (PotionEffect potionEffect : Objects.requireNonNull(potionEffects)) {
+                            playerDefend.addPotionEffect(potionEffect);
+                        }
+                    }
+                }
+
+                //display the damage
+                statsManager.displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
+
                 //deal the damage
                 defenderPlayer.setHealth((int) (defenderPlayer.getHealth() - finalDefenderDamage));
                 playerDefend.sendMessage("You took " + finalDefenderDamage + " damage from " + playerAttack.getName());
                 playerAttack.sendMessage("You dealt " + finalDefenderDamage + " damage to " + playerDefend.getName());
-
-                //display the damage
-                statsManager.displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
                 //update the player's health bar
                 statsManager.displayActionBar(playerDefend);
