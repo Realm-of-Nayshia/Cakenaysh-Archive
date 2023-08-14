@@ -183,7 +183,7 @@ public enum CustomItems {
     JAZZ_HANDS(new BattleItem(Material.GOLDEN_BOOTS, 1,false,"Jazz Hands", "armor",-50,40,0,0
             ,0,20,0,0,0,100,0,0,0,
             0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,0, null)
+            0,0,0,0,0,0,0, null,null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Jazz Hands")),
                     new ArrayList<>(Arrays.asList(255, 0, 251)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -202,7 +202,7 @@ public enum CustomItems {
     SPEED_BOOTS(new BattleItem(Material.CHAINMAIL_BOOTS, 1,false,"Speed Boots", "armor",0,0,0,0
             ,0,20,0,0,0,0,100,0,0,0,
             0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0, null)
+            0,0,0,0,0,0, null,null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Speed Boots")),
                     new ArrayList<>(Arrays.asList(119, 218, 230)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -221,7 +221,7 @@ public enum CustomItems {
     HELM_OF_SPARTA(new BattleItem(Material.GOLDEN_HELMET, 1,false,"Helmet of Sparta", "armor",0,0,0,0
             ,10,10000,0,0,0,10000,0,0,0,0,
             0,0,0,0,0,0,0,0,
-            0,0,0,0,1,0, null)
+            0,0,0,0,1,0, null,null)
             .setUnbreakable()
             .setArmorTrim(new ArmorTrim(TrimMaterial.NETHERITE, TrimPattern.SILENCE))
             .setDisplayName(new ArrayList<>(Arrays.asList("Helmet of Sparta")),
@@ -242,7 +242,7 @@ public enum CustomItems {
     CHEST_OF_SPARTA(new BattleItem(Material.GOLDEN_CHESTPLATE, 1,false,"Chestplate of Sparta", "armor",0,0,0,0
             ,10,10000,0,0,0,10000,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0, null)
+            0,0,0,0,0, null, null)
             .setUnbreakable()
             .setArmorTrim(new ArmorTrim(TrimMaterial.NETHERITE, TrimPattern.SILENCE))
             .setDisplayName(new ArrayList<>(Arrays.asList("Chestplate of Sparta")),
@@ -263,7 +263,7 @@ public enum CustomItems {
     LEGS_OF_SPARTA(new BattleItem(Material.GOLDEN_LEGGINGS, 1,false,"Leggings of Sparta", "armor",0,40,0,0
             ,10,10000,0,0,0,10000,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,0,0,1, null)
+            0,0,0,0,1, null,null)
             .setUnbreakable()
             .setArmorTrim(new ArmorTrim(TrimMaterial.NETHERITE, TrimPattern.SILENCE))
             .setDisplayName(new ArrayList<>(Arrays.asList("Leggings of Sparta")),
@@ -284,7 +284,7 @@ public enum CustomItems {
     BOOTS_OF_SPARTA(new BattleItem(Material.GOLDEN_BOOTS, 1,false,"Boots of Sparta", "armor",0,0,0,0
             ,10,10000,0,0,0,10000,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0, null)
+            0,0,0,0,0, null, null)
             .setUnbreakable()
             .setArmorTrim(new ArmorTrim(TrimMaterial.NETHERITE, TrimPattern.SILENCE))
             .setDisplayName(new ArrayList<>(Arrays.asList("Boots of Sparta")),
@@ -305,7 +305,7 @@ public enum CustomItems {
     TEST_HELM(new BattleItem(Material.NETHERITE_HELMET, 1,false,"Test Helm", "armor",0,0,1000,0
             ,0,0,0,0,0,1000,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,0,0, null)
+            0,0,0,0, null,null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Test Helm")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -324,7 +324,7 @@ public enum CustomItems {
     TEST_ACCESSORY(new BattleItem(Material.BLACK_DYE, 1,true,"Test Accessory", "accessory",0,400,0,0
             ,0,100,0,0,0,0,200,0,0,0,
             0,0,0,0,0,0,0,0,
-            0,0,0,0,1,0, null)
+            0,0,0,0,1,0, null,null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Test Accessory")),
                     new ArrayList<>(Arrays.asList(69, 123, 209)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -343,8 +343,10 @@ public enum CustomItems {
     WRATH_OF_SPARTA(new BattleItem(Material.GOLDEN_SWORD, 1,false, "Wrath of Sparta", "weapon",50000,400,100,50
             ,10,2,1,1,2,10,10,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,4,0,0, null)
-            .setUnbreakable()
+            0,4,0,0, null,
+            new PotionEffect[]{
+                    new PotionEffect(PotionEffectType.POISON, 20, 0)
+            }).setUnbreakable()
             .setDisplayName(new ArrayList<>(Arrays.asList("Wrath of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -360,10 +362,32 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
+    FIERCE_AZARIAHS_EDGE(new BattleItem(Material.IRON_SWORD, 1, false, "Fierce Azariahs Edge", "weapon", 200, 200, 20, 50,
+            12,0,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,10,0,0,null,
+            new PotionEffect[]{
+                    new PotionEffect(PotionEffectType.SLOW, 20 * 20, 1),
+                    new PotionEffect(PotionEffectType.POISON, 20 * 20, 2)
+            }).setUnbreakable()
+            .setDisplayName(new ArrayList<>(Arrays.asList("Fierce Azariahs Edge")),
+                    new ArrayList<>(Arrays.asList(255,223,0)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("Well kept despite its excessive use.", "nl", "Its last owner must have cleaned it obsessively.")),
+                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(true, true)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)))),
+
     BLANK_HELMET(new BattleItem(Material.IRON_HELMET, 1,false,"Blank Helmet", "armor",0,0,0,0
             ,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,0,0, null)
+            0,0,0,0, null,null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Blank Helmet")),
                     new ArrayList<>(Arrays.asList(255,255,255)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -382,7 +406,7 @@ public enum CustomItems {
     BLANK_CHESTPLATE(new BattleItem(Material.IRON_CHESTPLATE, 1,false,"Blank Chestplate", "armor",0,0,0,0
             ,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,0,0, null)
+            0,0,0,0, null,null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Blank Chestplate")),
                     new ArrayList<>(Arrays.asList(255,255,255)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -401,7 +425,7 @@ public enum CustomItems {
     BLANK_LEGGINGS(new BattleItem(Material.IRON_LEGGINGS, 1,false,"Blank Leggings", "armor",0,0,0,0
             ,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,0,0, null)
+            0,0,0,0, null,null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Blank Leggings")),
                     new ArrayList<>(Arrays.asList(255,255,255)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -420,7 +444,7 @@ public enum CustomItems {
     BLANK_BOOTS(new BattleItem(Material.IRON_BOOTS, 1,false,"Blank Boots", "armor",0,0,0,0
             ,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,0,0, null)
+            0,0,0,0, null,null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Blank Boots")),
                     new ArrayList<>(Arrays.asList(255,255,255)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -436,10 +460,114 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
+
+    FORGOTTEN_HELMET(new BattleItem(Material.NETHERITE_HELMET, 1,false,"Forgotten Helmet", "armor",20,0,0,0
+            ,50,100,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            0,0,0,0, null,null)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Forgotten Helmet")),
+                    new ArrayList<>(Arrays.asList(55, 52, 59)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("An enigmatic helmet dug up from deep below Nilgarf.", "nl", "Extremely Resilient.")),
+                    new ArrayList<>(Arrays.asList(128,128,128,128,128,128)),
+                    new ArrayList<>(Arrays.asList(false,false)),
+                    new ArrayList<>(Arrays.asList(false,false)),
+                    new ArrayList<>(Arrays.asList(true,true)),
+                    new ArrayList<>(Arrays.asList(false,false)),
+                    new ArrayList<>(Arrays.asList(false,false)))),
+
+    GLADIATOR_CHESTPLATE(new BattleItem(Material.NETHERITE_CHESTPLATE, 1,false,"Gladiator Chestplate", "armor",0,0,100,20
+            ,100,-20,0,0,0,100,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            0,0,0,0, null,null)
+            .setUnbreakable().setArmorTrim(new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.SILENCE))
+            .setDisplayName(new ArrayList<>(Arrays.asList("Gladiator Chestplate")),
+                    new ArrayList<>(Arrays.asList(102, 38, 38)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("Rugged armor that marks its wearer as a fierce fighter from The Colosseum.")),
+                    new ArrayList<>(Arrays.asList(128,128,128)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+
+    GLADIATOR_LEGGINGS(new BattleItem(Material.NETHERITE_LEGGINGS, 1,false,"Gladiator Leggings", "armor",0,0,100,20
+            ,100,-20,0,0,0,100,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            0,0,0,0, null,null)
+            .setUnbreakable().setArmorTrim(new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.SILENCE))
+            .setDisplayName(new ArrayList<>(Arrays.asList("Gladiator Leggings")),
+                    new ArrayList<>(Arrays.asList(102, 38, 38)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("Rugged armor that marks its wearer as a fierce fighter from The Colosseum.")),
+                    new ArrayList<>(Arrays.asList(128,128,128)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+
+    SCARAB_TONGUE_BOOTS(new BattleItem(Material.LEATHER_BOOTS, 1,false,"Scarab Tongue Boots", "armor",0,0,0,0
+            ,10,0,2,0,0,0,50,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            0,0,0,0, null,null)
+            .setUnbreakable().setArmorColor(Color.PURPLE)
+            .setDisplayName(new ArrayList<>(Arrays.asList("Scarab Tongue Boots")),
+                    new ArrayList<>(Arrays.asList(209, 67, 169)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("Makeshift boots strung from the bouncy tongue of a desert scarab")),
+                    new ArrayList<>(Arrays.asList(128,128,128)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+    SPIDER_FANG_DAGGER(new BattleItem(Material.STONE_SWORD, 1,false,"Spider Fang Dagger", "weapon",50,200,0,0
+            ,10,0,0,0,0,0,10,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            100,0,0,0, null,
+            new PotionEffect[]{new PotionEffect(PotionEffectType.POISON, 20 * 20, 1)})
+            .setUnbreakable()
+            .setDisplayName(new ArrayList<>(Arrays.asList("Spider Fang Dagger")),
+                    new ArrayList<>(Arrays.asList(182, 45, 189)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("A fancy dagger strung from a deadly spider's fang.")),
+                    new ArrayList<>(Arrays.asList(128,128,128)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
+
+
     FIRE_BOOTS(new BattleItem(Material.LEATHER_BOOTS, 1,false,"Color Boots", "armor",0,0,0,0
             ,0,0,0,0,0,0,0,20,10,0,0,
             0,0,0,0,0,0, 0,0,0,
-            0,0,0,0, null)
+            0,0,0,0, null,null)
             .setArmorColor(Color.ORANGE)
             .setDisplayName(new ArrayList<>(Arrays.asList("Fire Boots")),
                     new ArrayList<>(Arrays.asList(215, 53, 2)),
@@ -459,7 +587,7 @@ public enum CustomItems {
     SCYTHE_OF_INTELLIJ(new BattleItem(Material.GOLDEN_HOE, 1,false,"Scythe of Intellij", "weapon", 60,160,120,5
             ,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
-            0,0,0,0, null)
+            0,0,0,0, null,null)
             .setUnbreakable()
             .setDisplayName(new ArrayList<>(Arrays.asList("Scythe of Intellij")),
                     new ArrayList<>(Arrays.asList(66,27,224)),
@@ -479,7 +607,7 @@ public enum CustomItems {
     TEST_ITEM(new BattleItem(Material.ACACIA_SLAB,1,true,"Test Item", "weapon",5,50,1,1
             ,2,1,1,1,1,1,2,1,4,2,
             6,8,3,3,4,5,1,34,
-            5,4,1,1,1,1, null)
+            5,4,1,1,1,1, null,null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Te","st"," Item")),
                     new ArrayList<>(Arrays.asList(66,27,224,25,124,254,33,55,235)),
                     new ArrayList<>(Arrays.asList(false, false, true)),
@@ -499,7 +627,7 @@ public enum CustomItems {
     ,0,0,0,0,1000,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,
-            "c7e8cb57fe790e965e3cfa6c4fbc16e3226210d65f5614e8853fa9fb84074441")
+            "c7e8cb57fe790e965e3cfa6c4fbc16e3226210d65f5614e8853fa9fb84074441",null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Grubby Gustard")),
                     new ArrayList<>(Arrays.asList(81, 143, 91)),
                     new ArrayList<>(Arrays.asList(false)),
@@ -540,6 +668,27 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false, false, false)),
                     new ArrayList<>(Arrays.asList(false, false ,false)))),
 
+    MIGHTY_SUB(new ConsumableItem(Material.BREAD, 1, false, "Mighty Sub", 4,
+            new String[]{"Health"},
+            new int[]{100},
+            new int[]{0},
+            new PotionEffect[]{
+                    new PotionEffect(PotionEffectType.REGENERATION, 20 * 20, 1),
+                    new PotionEffect(PotionEffectType.SPEED, 20 * 20, 0)})
+            .setDisplayName(new ArrayList<>(Arrays.asList("Mighty Sub")),
+                    new ArrayList<>(Arrays.asList(67, 191, 88)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("A deluxe sub that's sure to satisfy.")),
+                    new ArrayList<>(Arrays.asList(128,128,128)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(true)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))),
 
 
     //REGULAR ITEMS
