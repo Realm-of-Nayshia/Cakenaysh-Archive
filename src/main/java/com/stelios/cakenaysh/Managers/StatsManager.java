@@ -59,6 +59,9 @@ public class StatsManager {
         //remove the stats from the main hand
         removePlayerStats(player, player.getInventory().getItemInMainHand(), "weapon");
 
+        //remove the stats from the offhand
+        removePlayerStats(player, player.getInventory().getItemInOffHand(), "accessory");
+
         //saving the player's stats to the database
         customPlayer.saveAttributesToDatabase(player);
     }
