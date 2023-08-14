@@ -70,11 +70,19 @@ public class ConsumableItem extends Item {
 
         //add the stats as lore
         for (int i = 0; i < stats.length; i++){
-            TextComponent newLoreLine = Component.text("+" + statsAmount[i] + " " + stats[i], TextColor.color(240, 40, 50))
-                    .decoration(TextDecoration.ITALIC, false)
-                    .append(Component.text(" for " + statsDuration[i] + "s", TextColor.color(200,200,200))
-                            .decoration(TextDecoration.ITALIC, false));
-            loreList.add(newLoreLine);
+
+            if (stats[i].equalsIgnoreCase("Health")) {
+                TextComponent newLoreLine = Component.text("+" + statsAmount[i] + " " + stats[i], TextColor.color(240, 40, 50))
+                        .decoration(TextDecoration.ITALIC, false);
+                loreList.add(newLoreLine);
+
+            } else {
+                TextComponent newLoreLine = Component.text("+" + statsAmount[i] + " " + stats[i], TextColor.color(240, 40, 50))
+                        .decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text(" for " + statsDuration[i] + "s", TextColor.color(200, 200, 200))
+                                .decoration(TextDecoration.ITALIC, false));
+                loreList.add(newLoreLine);
+            }
         }
 
         //add the potion effects as lore
