@@ -311,11 +311,8 @@ public class EntityDamagedListener implements Listener {
                             PotionEffect[] potionEffects = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "potionEffects"), DataType.POTION_EFFECT_ARRAY);
                             LivingEntity defenderLivingEntity = (LivingEntity) defender.getEntity();
 
-                            player.sendMessage("applying effects 1");
-
                             //apply the effects
                             for (PotionEffect potionEffect : Objects.requireNonNull(potionEffects)) {
-                                player.sendMessage("applying effects final");
                                 defenderLivingEntity.addPotionEffect(potionEffect);
                             }
                         }
