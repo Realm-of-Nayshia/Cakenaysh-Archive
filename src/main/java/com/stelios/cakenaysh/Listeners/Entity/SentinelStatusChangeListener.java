@@ -5,11 +5,13 @@ import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Managers.StashManager;
 import com.stelios.cakenaysh.Npc.Traits.NpcStats;
 import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.event.NPCSpawnEvent;
 import net.citizensnpcs.api.npc.NPC;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,16 +26,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class SentinelDeathListener implements Listener {
+public class SentinelStatusChangeListener implements Listener {
 
     Main main;
 
-    public SentinelDeathListener(Main main){
+    public SentinelStatusChangeListener(Main main){
         this.main = main;
     }
 
 
-    //giving xp to the player that killed the npc
+    @EventHandler
+    public void onPlayerSpawn(NPCSpawnEvent e){
+
+        //if the npc has the sentinel and npc stats traits
+        if(CitizensAPI.getNPCRegistry().getNPC(e.getNPC().getEntity()).hasTrait(SentinelTrait.class) && CitizensAPI.getNPCRegistry().getNPC(e.getNPC().getEntity()).hasTrait(NpcStats.class)) {
+
+            //set the maximum no damage ticks to 1 so the npc can be damaged in rapid succession
+            LivingEntity livingEntity = (LivingEntity) e.getNPC().getEntity();
+            livingEntity.setMaximumNoDamageTicks(1);
+
+        }
+    }
+
+
+
     @EventHandler
     public void onPlayerDeath(EntityDeathEvent e){
 

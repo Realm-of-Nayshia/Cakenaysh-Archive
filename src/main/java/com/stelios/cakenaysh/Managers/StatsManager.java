@@ -38,6 +38,7 @@ public class StatsManager {
     public void setConfigurations(Player player){
         player.setMaxHealth(40);
         main.getCombatManager().removeCombatTimer(player.getUniqueId());
+        player.setMaximumNoDamageTicks(1);
     }
 
 
