@@ -1,6 +1,5 @@
 package com.stelios.cakenaysh.Managers;
 
-import com.stelios.cakenaysh.Items.BattleItem;
 import com.stelios.cakenaysh.Items.EquipmentBonuses;
 import com.stelios.cakenaysh.Items.Item;
 import com.stelios.cakenaysh.Main;
@@ -141,7 +140,7 @@ public class StatsManager {
 
 
     //manages the health of the player when equipping different items
-    public void manageHealthAndStamina(CustomPlayer customPlayer, float healthBefore, float maxHealthBefore, float staminaBefore, float maxStaminaBefore){
+    public void manageHealthAndStamina(CustomPlayer customPlayer){
 
         //if health is greater than max health, set health to max health
         if (customPlayer.getHealth() > customPlayer.getMaxHealth()) {
@@ -189,12 +188,6 @@ public class StatsManager {
 
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
 
-        //get the player's health and stamina beforehand
-        float healthBefore = customPlayer.getHealth();
-        float maxHealthBefore = customPlayer.getMaxHealth();
-        float staminaBefore = customPlayer.getStamina();
-        float maxStaminaBefore = customPlayer.getMaxStamina();
-
         try {
 
             //get the item's data
@@ -240,7 +233,7 @@ public class StatsManager {
         }
 
         //manage the player's health and stamina while updating the player's action bar and hearts
-        manageHealthAndStamina(customPlayer, healthBefore, maxHealthBefore, staminaBefore, maxStaminaBefore);
+        manageHealthAndStamina(customPlayer);
         displayActionBar(player);
         updateHearts(player);
     }
@@ -250,12 +243,6 @@ public class StatsManager {
     public void removePlayerStats(Player player, ItemStack item, String itemType) {
 
         CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
-
-        //get the player's health beforehand
-        float healthBefore = customPlayer.getHealth();
-        float maxHealthBefore = customPlayer.getMaxHealth();
-        float staminaBefore = customPlayer.getStamina();
-        float maxStaminaBefore = customPlayer.getMaxStamina();
 
         try {
 
@@ -303,7 +290,7 @@ public class StatsManager {
         }
 
         //manage the player's health and stamina while updating the player's action bar and hearts
-        manageHealthAndStamina(customPlayer, healthBefore, maxHealthBefore, staminaBefore, maxStaminaBefore);
+        manageHealthAndStamina(customPlayer);
         displayActionBar(player);
         updateHearts(player);
     }
