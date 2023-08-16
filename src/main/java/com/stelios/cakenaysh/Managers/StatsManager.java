@@ -174,12 +174,12 @@ public class StatsManager {
             player.setHealth(0);
 
         //if the player has super low health, set the health to 1/2 a heart
-        } else if ((double) customPlayer.getHealth() / customPlayer.getMaxHealth() > 0.0001 && (double) customPlayer.getHealth() / customPlayer.getMaxHealth() < 0.02){
+        } else if (customPlayer.getHealth() / customPlayer.getMaxHealth() > 0.0001 && customPlayer.getHealth() / customPlayer.getMaxHealth() < 0.02){
             player.setHealth(1);
 
         //else scale the hearts normally
         }else{
-            player.setHealth((double) customPlayer.getHealth() / customPlayer.getMaxHealth() * 40);
+            player.setHealth(customPlayer.getHealth() / customPlayer.getMaxHealth() * 40);
         }
     }
 
