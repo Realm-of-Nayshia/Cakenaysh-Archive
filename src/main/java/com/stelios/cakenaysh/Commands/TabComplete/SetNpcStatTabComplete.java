@@ -22,7 +22,7 @@ public class SetNpcStatTabComplete implements org.bukkit.command.TabCompleter{
                     "rangeddamage","magicdefense","magicdamage"), new ArrayList<>());
         }
 
-        //return the list
+        //return an empty list
         return new ArrayList<>();
 
     }

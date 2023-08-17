@@ -35,7 +35,7 @@ public class GiveItemTabComplete implements TabCompleter {
             return StringUtil.copyPartialMatches(args[1], CustomItems.getNames() , new ArrayList<>());
         }
 
-        //return the list
+        //return an empty list
         return new ArrayList<>();
     }
 }

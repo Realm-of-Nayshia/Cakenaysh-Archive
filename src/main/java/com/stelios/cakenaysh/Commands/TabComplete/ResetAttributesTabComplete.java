@@ -29,7 +29,7 @@ public class ResetAttributesTabComplete implements TabCompleter {
             return StringUtil.copyPartialMatches(args[0], names, new ArrayList<>());
         }
 
-        //return the list
+        //return an empty list
         return new ArrayList<>();
     }
 }

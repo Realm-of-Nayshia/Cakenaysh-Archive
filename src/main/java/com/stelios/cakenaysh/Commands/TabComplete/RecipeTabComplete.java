@@ -47,7 +47,7 @@ public class RecipeTabComplete implements TabCompleter {
             return StringUtil.copyPartialMatches(args[2], names, new ArrayList<>());
         }
 
-        //return the list
+        //return an empty list
         return new ArrayList<>();
     }
 

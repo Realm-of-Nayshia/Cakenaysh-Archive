@@ -37,7 +37,7 @@ public class AddAttributesTabComplete implements TabCompleter {
                     "wilsonCoin","piety","charisma","deception","agility","luck","stealth"), new ArrayList<>());
         }
 
-        //return the list
+        //return an empty list
         return new ArrayList<>();
     }
 }
