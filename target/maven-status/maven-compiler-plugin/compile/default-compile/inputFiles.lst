@@ -54,6 +54,7 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Items\BattleItem.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\Stats\SpeedChangedListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Managers\PlayerManager.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\Entity\SentinelStatusChangeListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Npc\Npcs.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Items\ConsumableItem.java
@@ -67,4 +68,4 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Events\XpChangedEvent.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\AbilityCreation\Abilities\WrathOfSpartaAbility.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\GetAttributesTabComplete.java
-C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\Entity\SentinelDeathListener.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Managers\PacketManager.java
