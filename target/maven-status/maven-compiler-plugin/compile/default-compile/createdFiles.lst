@@ -30,6 +30,7 @@ com\stelios\cakenaysh\Util\CustomPlayer$19.class
 com\stelios\cakenaysh\Commands\ResetNpcStatsCommand.class
 com\stelios\cakenaysh\Items\Item.class
 com\stelios\cakenaysh\Listeners\Entity\EntityPotionEffectListener.class
+com\stelios\cakenaysh\Managers\PacketManager.class
 com\stelios\cakenaysh\MenuCreation\Menu.class
 com\stelios\cakenaysh\Listeners\Server\ServerStartupListener$1.class
 com\stelios\cakenaysh\Util\CustomPlayer$18.class
@@ -45,6 +46,7 @@ com\stelios\cakenaysh\Commands\TabComplete\GiveItemTabComplete.class
 com\stelios\cakenaysh\Util\CustomPlayer$17.class
 com\stelios\cakenaysh\Npc\Npcs.class
 com\stelios\cakenaysh\Items\Recipes.class
+com\stelios\cakenaysh\Listeners\Entity\SentinelStatusChangeListener.class
 com\stelios\cakenaysh\Listeners\Inventory\InventoryAlteredListener$2.class
 com\stelios\cakenaysh\Items\EquipmentBonuses$4.class
 com\stelios\cakenaysh\Commands\GiveItemCommand.class
@@ -74,7 +76,6 @@ com\stelios\cakenaysh\Util\CustomPlayer$2.class
 com\stelios\cakenaysh\Commands\TabComplete\SetAttributesTabComplete.class
 com\stelios\cakenaysh\Main.class
 com\stelios\cakenaysh\Util\CustomPlayer$5.class
-com\stelios\cakenaysh\Listeners\Entity\SentinelDeathListener.class
 com\stelios\cakenaysh\MenuCreation\Menus\PlayerInfoRecipes.class
 com\stelios\cakenaysh\Util\CustomPlayer$15.class
 com\stelios\cakenaysh\Events\XpChangedEvent.class
@@ -84,6 +85,7 @@ com\stelios\cakenaysh\Util\CustomPlayer$3.class
 com\stelios\cakenaysh\Commands\PlayTimeCommand.class
 com\stelios\cakenaysh\Items\EquipmentBonuses$2.class
 com\stelios\cakenaysh\Items\ConsumableItem.class
+com\stelios\cakenaysh\Managers\PacketManager$1.class
 com\stelios\cakenaysh\Commands\TabComplete\SetNpcStatTabComplete.class
 com\stelios\cakenaysh\Util\Database.class
 com\stelios\cakenaysh\Commands\VanishCommand.class
