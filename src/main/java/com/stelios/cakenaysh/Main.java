@@ -136,6 +136,9 @@ public final class Main extends JavaPlugin {
 
         getCommand("recipe").setExecutor(new RecipeCommand());
         getCommand("recipe").setTabCompleter(new RecipeTabComplete());
+
+        getCommand("updatecollection").setExecutor(new UpdateCollectionCommand());
+        getCommand("updatecollection").setTabCompleter(new UpdateCollectionTabComplete());
     }
 
     private void registerAbilities(){
@@ -168,8 +171,7 @@ public final class Main extends JavaPlugin {
 
         //save player data and kick all players
         for (Player player : Bukkit.getOnlinePlayers()) {
-            statsManager.updateDatabaseStats(player);
-
+            statsManager.updateDatabaseStatsPlayer(player);
             Objects.requireNonNull(player.getPlayer()).kick(Component.text("Server is shutting down.", TextColor.color(255,0,0)));
         }
 

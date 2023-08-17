@@ -3,7 +3,7 @@ version: '${project.version}'
 main: com.stelios.cakenaysh.Main
 api-version: '1.20'
 authors: [Stelios]
-description: Main plungin for the Cakenaysh Minecraft Server
+description: Main plugin for the Cakenaysh Minecraft Server
 depend: [Citizens]
 softdepend: [Sentinel]
 commands:
@@ -21,6 +21,10 @@ commands:
   giveItem:
     description: Gives the player the specified item.
     syntax: /giveitem <player> <item> <amount>
+    permission: op
+  updateCollection:
+    description: Manually updates the given database collection for all players.
+    syntax: /updatecollection <collection>
     permission: op
   recipe:
     description: Adds or removes the specified recipe from the specified player.

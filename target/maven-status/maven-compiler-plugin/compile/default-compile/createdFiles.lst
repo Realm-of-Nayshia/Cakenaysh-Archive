@@ -48,6 +48,7 @@ com\stelios\cakenaysh\Npc\Npcs.class
 com\stelios\cakenaysh\Items\Recipes.class
 com\stelios\cakenaysh\Listeners\Entity\SentinelStatusChangeListener.class
 com\stelios\cakenaysh\Listeners\Inventory\InventoryAlteredListener$2.class
+com\stelios\cakenaysh\Commands\UpdateCollectionCommand.class
 com\stelios\cakenaysh\Items\EquipmentBonuses$4.class
 com\stelios\cakenaysh\Commands\GiveItemCommand.class
 com\stelios\cakenaysh\Listeners\Entity\EntityDamagedListener.class
@@ -92,6 +93,7 @@ com\stelios\cakenaysh\Commands\VanishCommand.class
 com\stelios\cakenaysh\Managers\StatsManager.class
 com\stelios\cakenaysh\Events\ProficiencyChangedEvent.class
 com\stelios\cakenaysh\Util\CustomPlayer$4.class
+com\stelios\cakenaysh\Commands\TabComplete\UpdateCollectionTabComplete.class
 com\stelios\cakenaysh\Util\CustomPlayer.class
 com\stelios\cakenaysh\Items\BattleItem.class
 com\stelios\cakenaysh\Listeners\Entity\PlayerInteractListener.class
