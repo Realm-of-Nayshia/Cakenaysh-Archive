@@ -182,7 +182,8 @@ public class EntityDamagedListener implements Listener {
 
                         //apply the weapon's effects if it has any
                         if (attackerSentinelTrait.itemHelper.getHeldItem() != null) {
-                            if (Objects.requireNonNull(attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
+                            if (attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)
+                                    && Objects.requireNonNull(attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
 
                                 //get the weapon's effects
                                 PotionEffect[] potionEffects = attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "potionEffects"), DataType.POTION_EFFECT_ARRAY);
@@ -305,7 +306,8 @@ public class EntityDamagedListener implements Listener {
 
                     //apply the weapon's effects if it has any
                     if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
-                        if (Objects.requireNonNull(player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
+                        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)
+                                && Objects.requireNonNull(player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
 
                             //get the weapon's effects
                             PotionEffect[] potionEffects = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "potionEffects"), DataType.POTION_EFFECT_ARRAY);
@@ -424,7 +426,8 @@ public class EntityDamagedListener implements Listener {
 
                     //apply the weapon's effects if it has any
                     if (attackerSentinelTrait.itemHelper.getHeldItem() != null) {
-                        if (Objects.requireNonNull(attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
+                        if (attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)
+                                && Objects.requireNonNull(attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
 
                             //get the weapon's effects
                             PotionEffect[] potionEffects = attackerSentinelTrait.itemHelper.getHeldItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "potionEffects"), DataType.POTION_EFFECT_ARRAY);
@@ -543,7 +546,8 @@ public class EntityDamagedListener implements Listener {
 
                 //apply the weapon's effects if it has any
                 if (playerAttack.getInventory().getItemInMainHand().getItemMeta() != null) {
-                    if (Objects.requireNonNull(playerAttack.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
+                    if (playerAttack.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)
+                            && Objects.requireNonNull(playerAttack.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "itemType"), PersistentDataType.STRING)).equals("weapon")) {
 
                         //get the weapon's effects
                         PotionEffect[] potionEffects = playerAttack.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(main, "potionEffects"), DataType.POTION_EFFECT_ARRAY);

@@ -27,10 +27,11 @@ import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -182,7 +183,10 @@ public final class Main extends JavaPlugin {
         }
 
         //remove all temporary damage text displays
-        statsManager.getTextDisplays().forEach(Entity::remove);
+        ArrayList<TextDisplay> textDisplays = statsManager.getTextDisplays();
+        for (TextDisplay textDisplay : textDisplays) {
+            textDisplay.remove();
+        }
 
         //disconnect from the database
         database.getClient().close();
