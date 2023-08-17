@@ -2,8 +2,6 @@ package com.stelios.cakenaysh.Listeners.Server;
 
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -14,7 +12,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,15 +30,12 @@ public class ConnectionListener implements Listener {
 
         Player player = e.getPlayer();
 
+        //inject the player
+        main.getPacketManager().inject(player);
+
         //creates a new CustomPlayer for each joining player
-        try {
-            CustomPlayer playerData = new CustomPlayer(main, player.getUniqueId());
-            main.getPlayerManager().addCustomPlayer(player.getUniqueId(), playerData);
-        } catch (SQLException ex) {
-            player.kick(Component.text(("An error occurred while loading your data. Please contact a server admin."),
-                    TextColor.color(255,0,0)));
-            ex.printStackTrace();
-        }
+        CustomPlayer playerData = new CustomPlayer(main, player.getUniqueId());
+        main.getPlayerManager().addCustomPlayer(player.getUniqueId(), playerData);
 
 
         //get the recipes yml file
@@ -77,6 +71,9 @@ public class ConnectionListener implements Listener {
     public void onQuit(PlayerQuitEvent e){
 
         Player player = e.getPlayer();
+
+        //unInject the player
+        main.getPacketManager().unInject(player);
 
         //remove the custom player after waiting 1 second
         main.getServer().getScheduler().runTaskLater(main, () -> {

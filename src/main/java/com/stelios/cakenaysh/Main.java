@@ -1,7 +1,11 @@
 package com.stelios.cakenaysh;
 
+import com.stelios.cakenaysh.AbilityCreation.Abilities.DialOfTheSunAbility;
+import com.stelios.cakenaysh.AbilityCreation.Abilities.WrathOfSpartaAbility;
+import com.stelios.cakenaysh.AbilityCreation.CustomAbilities;
 import com.stelios.cakenaysh.Commands.*;
 import com.stelios.cakenaysh.Commands.TabComplete.*;
+import com.stelios.cakenaysh.Items.CustomItems;
 import com.stelios.cakenaysh.Items.Recipes;
 import com.stelios.cakenaysh.Listeners.Entity.*;
 import com.stelios.cakenaysh.Listeners.Inventory.InventoryAlteredListener;
@@ -13,12 +17,8 @@ import com.stelios.cakenaysh.Listeners.Stats.SpeedChangedListener;
 import com.stelios.cakenaysh.Listeners.Stats.XpGainListener;
 import com.stelios.cakenaysh.Managers.*;
 import com.stelios.cakenaysh.MenuCreation.MenuListener;
-import com.stelios.cakenaysh.AbilityCreation.CustomAbilities;
-import com.stelios.cakenaysh.Items.CustomItems;
-import com.stelios.cakenaysh.Util.*;
-import com.stelios.cakenaysh.AbilityCreation.Abilities.DialOfTheSunAbility;
-import com.stelios.cakenaysh.AbilityCreation.Abilities.WrathOfSpartaAbility;
 import com.stelios.cakenaysh.Npc.Traits.NpcStats;
+import com.stelios.cakenaysh.Util.Database;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.TraitInfo;
@@ -31,7 +31,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -43,6 +42,7 @@ public final class Main extends JavaPlugin {
     private CombatManager combatManager;
     private StatsManager statsManager;
     private RecipeManager recipeManager;
+    private PacketManager packetManager;
 
     @Override
     public void onEnable() {
@@ -54,14 +54,8 @@ public final class Main extends JavaPlugin {
             return;
         }
 
-        ////plugin startup logic
         //database setup
         database = new Database();
-        try {
-            database.connect();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         //setup of important plugin info
         registerGameRules();
@@ -87,6 +81,7 @@ public final class Main extends JavaPlugin {
         combatManager = new CombatManager();
         statsManager = new StatsManager(this);
         recipeManager = new RecipeManager();
+        packetManager = new PacketManager();
     }
 
     private void registerEvents(){
@@ -101,7 +96,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new SpeedChangedListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerListPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new XpGainListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new SentinelDeathListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new SentinelStatusChangeListener(this), this);
         Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerAdvancementCompletedListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDiscoverRecipeEvent(), this);
@@ -164,6 +159,7 @@ public final class Main extends JavaPlugin {
     public CombatManager getCombatManager() {return combatManager;}
     public StatsManager getStatsManager() {return statsManager;}
     public RecipeManager getRecipeManager() {return recipeManager;}
+    public PacketManager getPacketManager() {return packetManager;}
 
 
     @Override
@@ -189,7 +185,7 @@ public final class Main extends JavaPlugin {
         statsManager.getTextDisplays().forEach(Entity::remove);
 
         //disconnect from the database
-        database.disconnect();
+        database.getClient().close();
 
     }
 

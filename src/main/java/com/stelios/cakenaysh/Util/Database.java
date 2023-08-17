@@ -1,43 +1,37 @@
 package com.stelios.cakenaysh.Util;
 
-import com.zaxxer.hikari.HikariDataSource;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 
 public class Database {
 
-    private final String HOST = "localhost";
-    private final int PORT = 3306;
-    private final String DATABASE = "cakenaysh";
-    private final String USERNAME = "root";
-    private final String PASSWORD = "GRUBBYGUSTARD123";
+    private final MongoClient client;
+    private final MongoDatabase database;
+    private final MongoCollection<Document> playerStats;
+    private final MongoCollection<Document> playerItems;
 
-    private HikariDataSource hikari;
-
-    //connects the database to the server
-    public void connect() throws SQLException {
-        hikari = new HikariDataSource();
-        hikari.setDataSourceClassName("com.mysql.cj.jdbc.MysqlDataSource");
-        hikari.addDataSourceProperty("serverName" ,HOST);
-        hikari.addDataSourceProperty("port" ,PORT);
-        hikari.addDataSourceProperty("databaseName" ,DATABASE);
-        hikari.addDataSourceProperty("user" ,USERNAME);
-        hikari.addDataSourceProperty("password" ,PASSWORD);
+    public Database() {
+        client = MongoClients.create();
+        database = client.getDatabase("cakenaysh");
+        playerStats = database.getCollection("playerStats");
+        playerItems = database.getCollection("playerItems");
     }
 
-    //checks if the database is connected
-    public boolean isConnected() {return (hikari != null);}
-
-    //gets the connection
-    public HikariDataSource getHikari() {return hikari;}
-
-    //disconnects the database from the server
-    public void disconnect() {
-        if (isConnected()){
-            hikari.close();
-        }
+    //getters
+    public MongoClient getClient() {
+        return client;
+    }
+    public MongoDatabase getDatabase() {
+        return database;
+    }
+    public MongoCollection<Document> getPlayerStats() {
+        return playerStats;
+    }
+    public MongoCollection<Document> getPlayerItems() {
+        return playerItems;
     }
 
 }
