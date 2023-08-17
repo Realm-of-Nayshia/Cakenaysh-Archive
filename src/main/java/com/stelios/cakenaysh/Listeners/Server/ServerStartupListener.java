@@ -3,11 +3,13 @@ package com.stelios.cakenaysh.Listeners.Server;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Managers.StatsManager;
 import com.stelios.cakenaysh.Util.CustomPlayer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -28,22 +30,10 @@ public class ServerStartupListener implements Listener {
         new BukkitRunnable(){
             @Override
             public void run() {
-                for (Player player : main.getServer().getOnlinePlayers()){
-                    statsManager.updateDatabaseStats(player);
-
-                    //add the stats back to the player's armor
-                    for (ItemStack item : player.getInventory().getArmorContents()){
-
-                        if (item != null){
-
-                            //remove the stats from the armor
-                            statsManager.addPlayerStats(player, item, "armor");
-                        }
-                    }
-
-                    //add the stats back to the main hand
-                    statsManager.addPlayerStats(player, player.getInventory().getItemInMainHand(), "weapon");
-                }
+                //send a message to everyone
+                main.getServer().broadcast(Component.text("Saving player stats...", TextColor.color(48, 48, 48), TextDecoration.ITALIC));
+                statsManager.updateDatabaseStatsAll();
+                main.getServer().broadcast(Component.text("Player stats saved.", TextColor.color(48, 48, 48), TextDecoration.ITALIC));
             }
         }.runTaskTimerAsynchronously(main, 0, 20*1800);
     }

@@ -42,7 +42,7 @@ public class PlayerStatusChangeListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
-        statsManager.updateDatabaseStats(e.getPlayer());
+        statsManager.updateDatabaseStatsPlayer(e.getPlayer());
     }
 
     @EventHandler
