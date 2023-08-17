@@ -12,12 +12,18 @@ public class Database {
     private final MongoDatabase database;
     private final MongoCollection<Document> playerStats;
     private final MongoCollection<Document> playerItems;
+    private final MongoCollection<Document> playerStashes;
+    private final MongoCollection<Document> playerRecipes;
+    private final MongoCollection<Document> npcInfo;
 
     public Database() {
         client = MongoClients.create();
         database = client.getDatabase("cakenaysh");
         playerStats = database.getCollection("playerStats");
         playerItems = database.getCollection("playerItems");
+        playerStashes = database.getCollection("playerStashes");
+        playerRecipes = database.getCollection("playerRecipes");
+        npcInfo = database.getCollection("npcInfo");
     }
 
     //getters
@@ -32,6 +38,15 @@ public class Database {
     }
     public MongoCollection<Document> getPlayerItems() {
         return playerItems;
+    }
+    public MongoCollection<Document> getPlayerStashes() {
+        return playerStashes;
+    }
+    public MongoCollection<Document> getPlayerRecipes() {
+        return playerRecipes;
+    }
+    public MongoCollection<Document> getNpcInfo() {
+        return npcInfo;
     }
 
 }
