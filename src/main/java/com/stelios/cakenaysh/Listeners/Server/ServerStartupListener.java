@@ -1,11 +1,13 @@
 package com.stelios.cakenaysh.Listeners.Server;
 
+import com.mongodb.MongoException;
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Managers.StatsManager;
 import com.stelios.cakenaysh.Util.CustomPlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bson.Document;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,9 +33,9 @@ public class ServerStartupListener implements Listener {
             @Override
             public void run() {
                 //send a message to everyone
-                main.getServer().broadcast(Component.text("Saving player stats...", TextColor.color(48, 48, 48), TextDecoration.ITALIC));
+                main.getServer().sendMessage(Component.text("Saving player stats...", TextColor.color(100,100,100), TextDecoration.ITALIC));
                 statsManager.updateDatabaseStatsAll();
-                main.getServer().broadcast(Component.text("Player stats saved.", TextColor.color(48, 48, 48), TextDecoration.ITALIC));
+                main.getServer().sendMessage(Component.text("Player stats saved.", TextColor.color(100,100,100), TextDecoration.ITALIC));
             }
         }.runTaskTimerAsynchronously(main, 0, 20*1800);
     }
@@ -45,6 +47,20 @@ public class ServerStartupListener implements Listener {
         new BukkitRunnable(){
             @Override
             public void run() {
+
+                //ping the database to make sure it's connected
+                try {
+                    main.getDatabase().getDatabase().runCommand(new Document("ping", 1));
+
+                //if the database is down
+                } catch (MongoException e) {
+
+                    //kick all the players and shut down the server
+                    for (Player player : main.getServer().getOnlinePlayers()){
+                        player.kick(Component.text("Database connection lost.", TextColor.color(255, 0, 0)));
+                    }
+                    main.getServer().shutdown();
+                }
 
                 for (Player player : main.getServer().getOnlinePlayers()){
 
