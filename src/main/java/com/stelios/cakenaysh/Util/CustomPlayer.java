@@ -89,8 +89,6 @@ public class CustomPlayer {
         Document filter = new Document("uuid", uuid.toString());
         Document existingPlayer = playerStats.find(filter).first();
 
-        Bukkit.getLogger().info("Player " + uuid + " is in the database: " + (existingPlayer != null));
-
         //if the player is in the database
         if (existingPlayer != null) {
 
