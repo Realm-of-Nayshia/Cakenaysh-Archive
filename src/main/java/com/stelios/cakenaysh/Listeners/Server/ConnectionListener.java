@@ -37,7 +37,6 @@ public class ConnectionListener implements Listener {
         CustomPlayer playerData = new CustomPlayer(main, player.getUniqueId());
         main.getPlayerManager().addCustomPlayer(player.getUniqueId(), playerData);
 
-
         //get the recipes yml file
         File file = new File(main.getDataFolder(), "recipes.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -75,7 +74,7 @@ public class ConnectionListener implements Listener {
         //unInject the player
         main.getPacketManager().unInject(player);
 
-        //remove the custom player after waiting 1 second
+        //remove the custom player after waiting 1 tick
         main.getServer().getScheduler().runTaskLater(main, () -> {
             main.getPlayerManager().removeCustomPlayer(player.getUniqueId());
         }, 10);
