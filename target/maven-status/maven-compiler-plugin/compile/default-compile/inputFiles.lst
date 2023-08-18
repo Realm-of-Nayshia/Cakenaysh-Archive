@@ -4,6 +4,7 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\Entity\PlayerItemConsumeListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\Entity\PlayerStatusChangeListener.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\AbilityCreation\ItemAbility.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\UpdateCollectionTabComplete.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Managers\CombatManager.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\PlayTimeCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Listeners\Entity\PlayerInteractListener.java
@@ -68,4 +69,5 @@ C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\s
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Events\XpChangedEvent.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\AbilityCreation\Abilities\WrathOfSpartaAbility.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\TabComplete\GetAttributesTabComplete.java
+C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Commands\UpdateCollectionCommand.java
 C:\Users\sd\Desktop\Programming\Minecraft Projects\Cakenaysh\src\main\java\com\stelios\cakenaysh\Managers\PacketManager.java

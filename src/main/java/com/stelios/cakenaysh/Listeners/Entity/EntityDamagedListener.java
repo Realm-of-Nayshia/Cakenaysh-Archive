@@ -320,14 +320,14 @@ public class EntityDamagedListener implements Listener {
                         }
                     }
 
+                    //put the player in combat
+                    main.getCombatManager().addCombatTimer(player.getUniqueId());
+
                     //display the damage
                     statsManager.displayDamage(player, (int) finalDefenderDamage, isCritical, defender.getStoredLocation());
 
                     //deal the damage
                     e.setDamage(finalDefenderDamage);
-
-                    //put the player in combat
-                    main.getCombatManager().addCombatTimer(player.getUniqueId());
                 }
 
             }
@@ -439,6 +439,9 @@ public class EntityDamagedListener implements Listener {
                         }
                     }
 
+                    //put the player in combat
+                    main.getCombatManager().addCombatTimer(playerDefend.getUniqueId());
+
                     //display the damage
                     statsManager.displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
@@ -448,9 +451,6 @@ public class EntityDamagedListener implements Listener {
                     //update the player's health bar
                     statsManager.displayActionBar(playerDefend);
                     statsManager.updateHearts(playerDefend);
-
-                    //put the player in combat
-                    main.getCombatManager().addCombatTimer(playerDefend.getUniqueId());
 
                 } else {
                     //error: attacking entity either isn't a sentinel or doesn't have NpcStats trait
@@ -559,6 +559,10 @@ public class EntityDamagedListener implements Listener {
                     }
                 }
 
+                //put the players in combat
+                main.getCombatManager().addCombatTimer(playerDefend.getUniqueId());
+                main.getCombatManager().addCombatTimer(playerAttack.getUniqueId());
+
                 //display the damage
                 statsManager.displayDamage(playerDefend, (int) finalDefenderDamage, isCritical, playerDefend.getLocation());
 
@@ -570,11 +574,6 @@ public class EntityDamagedListener implements Listener {
                 //update the player's health bar
                 statsManager.displayActionBar(playerDefend);
                 statsManager.updateHearts(playerDefend);
-
-                //put the players in combat
-                main.getCombatManager().addCombatTimer(playerDefend.getUniqueId());
-                main.getCombatManager().addCombatTimer(playerAttack.getUniqueId());
-
             }
         }
     }

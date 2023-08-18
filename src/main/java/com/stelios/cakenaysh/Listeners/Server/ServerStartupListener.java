@@ -105,8 +105,8 @@ public class ServerStartupListener implements Listener {
                             customPlayer.setHealth(customPlayer.getMaxHealth());
                         }
 
-                        statsManager.updateHearts(player);
                         statsManager.displayActionBar(player);
+                        statsManager.updateHearts(player);
 
                     }else{
                         //kill the player
