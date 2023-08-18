@@ -36,6 +36,7 @@ public class ConsumableItem extends Item {
         PersistentDataContainer pdc = this.getItemMeta().getPersistentDataContainer();
 
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "itemType"), PersistentDataType.STRING, "consumable");
+        pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "name"), PersistentDataType.STRING, name);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "foodValue"), PersistentDataType.INTEGER, foodValue);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "stats"), DataType.STRING_ARRAY, stats);
         pdc.set(new NamespacedKey(Main.getPlugin(Main.class), "statsAmount"), DataType.INTEGER_ARRAY, statsAmount);
