@@ -20,17 +20,24 @@ public class HealCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
+            //get the main class
+            Main main = Main.getPlugin(Main.class);
+
             //if there is no target for the command, heal the player
             if (args.length == 0) {
-                CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(player.getUniqueId());
+                CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
                 customPlayer.setHealth(customPlayer.getMaxHealth());
+                main.getStatsManager().displayActionBar(player);
+                main.getStatsManager().updateHearts(player);
                 player.sendMessage(Component.text("You have been healed!", TextColor.color(0, 255, 0)));
 
             //if there is a valid target for the command, heal the target
             } else if (args.length == 1) {
                 if(Bukkit.getOnlinePlayers().contains(Bukkit.getServer().getPlayer(args[0]))){
                     Player target = Bukkit.getServer().getPlayer(args[0]);
-                    CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(target.getUniqueId());
+                    CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(target.getUniqueId());
+                    main.getStatsManager().displayActionBar(player);
+                    main.getStatsManager().updateHearts(player);
                     customPlayer.setHealth(customPlayer.getMaxHealth());
                     player.sendMessage(Component.text("You have healed " + target.getName() + "!", TextColor.color(0, 255, 0)));
                     target.sendMessage(Component.text("You have been healed!", TextColor.color(0, 255, 0)));

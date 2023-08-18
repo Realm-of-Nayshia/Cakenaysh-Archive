@@ -19,16 +19,23 @@ public class KillCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
+            //get the main class
+            Main main = Main.getPlugin(Main.class);
+
             //if there is no target for the command, kill the player
             if (args.length == 0) {
-                CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(player.getUniqueId());
+                CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(player.getUniqueId());
+                main.getStatsManager().displayActionBar(player);
+                main.getStatsManager().updateHearts(player);
                 customPlayer.setHealth(0);
 
             //if there is a valid target for the command, kill the target
             } else if (args.length == 1) {
                 if(Bukkit.getOnlinePlayers().contains(Bukkit.getServer().getPlayer(args[0]))){
                     Player target = Bukkit.getServer().getPlayer(args[0]);
-                    CustomPlayer customPlayer = Main.getPlugin(Main.class).getPlayerManager().getCustomPlayer(target.getUniqueId());
+                    CustomPlayer customPlayer = main.getPlayerManager().getCustomPlayer(target.getUniqueId());
+                    main.getStatsManager().displayActionBar(target);
+                    main.getStatsManager().updateHearts(target);
                     customPlayer.setHealth(0);
                 }else{
                     player.sendMessage(Component.text("Target player isn't online.", TextColor.color(255, 0, 0)));
