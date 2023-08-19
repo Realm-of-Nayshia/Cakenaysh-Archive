@@ -111,7 +111,7 @@ public class InventoryAlteredListener implements Listener {
                         if (player.getInventory().firstEmpty() != -1) {
                             player.getInventory().addItem(e.getNewItemStack());
 
-                            //add the item to the player's stash
+                        //add the item to the player's stash
                         }else{
                             main.getStashManager().addItemToStash(player, e.getNewItemStack());
                         }
