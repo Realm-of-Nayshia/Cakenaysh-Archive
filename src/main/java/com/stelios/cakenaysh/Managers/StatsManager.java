@@ -168,7 +168,7 @@ public class StatsManager {
     }
 
 
-    //display a hologram for the damage
+    //display a text display for the damage
     public void displayDamage(Entity entity, int damage, boolean isCritical, Location location){
 
         //slightly offset the location
@@ -182,22 +182,28 @@ public class StatsManager {
             damageComponent = Component.text(damage, TextColor.color(204,0,0));
         }
 
-        //spawn the hologram
+        //spawn the text display
+        System.out.println("spawned text display VERY EARLY");
         TextDisplay textDisplay = (TextDisplay) Bukkit.getWorld(entity.getWorld().getUID()).spawnEntity(location, EntityType.TEXT_DISPLAY);
+        System.out.println("spawned text display EARLY");
         textDisplay.setBillboard(Display.Billboard.CENTER);
         textDisplay.setCustomNameVisible(true);
         textDisplay.customName(damageComponent);
 
-        //add the hologram to the arraylist
+        //add the text display to the arraylist
         textDisplays.add(textDisplay);
 
+        System.out.println("spawned text display");
 
-        //despawn the armor stand after 1.5 seconds
+
+        //despawn the text display after 1.5 seconds
         new BukkitRunnable(){
             @Override
             public void run() {
+                System.out.println("despawning text display");
                 textDisplay.remove();
                 textDisplays.remove(textDisplay);
+                System.out.println("despawned text display");
             }
         }.runTaskLater(main, 30);
     }
@@ -234,7 +240,12 @@ public class StatsManager {
 
         //if the player has no health, kill them
         if (customPlayer.getHealth() <= 0) {
-            player.setHealth(0);
+
+            //if the player is not already dead, kill them
+            if (player.getHealth() > 0) {
+                player.setHealth(0);
+                player.sendMessage(Component.text("You have died.", TextColor.color(255, 0, 0)));
+            }
 
         //if the player has super low health, set the health to 1/2 a heart
         } else if (customPlayer.getHealth() / customPlayer.getMaxHealth() > 0.0001 && customPlayer.getHealth() / customPlayer.getMaxHealth() < 0.02){
