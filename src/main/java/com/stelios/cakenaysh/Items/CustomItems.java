@@ -585,6 +585,27 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(true)),
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
+
+    SCYTHE_OF_INTELLIJ(new BattleItem(Material.GOLDEN_HOE, 1,false,"Scythe of Intellij", "weapon", 60,160,120,5
+            ,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,
+            0,0,0,0, null,null)
+            .setUnbreakable()
+            .setDisplayName(new ArrayList<>(Arrays.asList("Scythe of Intellij")),
+                    new ArrayList<>(Arrays.asList(66,27,224)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)),
+                    new ArrayList<>(Arrays.asList(false)))
+            .setLore(new ArrayList<>(Arrays.asList("A divine weapon created by the ancient", "nl", "God of Intellect: Intellij")),
+                    new ArrayList<>(Arrays.asList(200,200,200,200,200,200)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)),
+                    new ArrayList<>(Arrays.asList(false, false)))),
+
     TEST_ITEM(new BattleItem(Material.ACACIA_SLAB,1,true,"Test Item", "weapon",5,50,1,1
             ,2,1,1,1,1,1,2,1,4,2,
             6,8,3,3,4,5,1,34,
