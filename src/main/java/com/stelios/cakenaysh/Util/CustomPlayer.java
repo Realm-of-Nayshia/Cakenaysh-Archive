@@ -14,10 +14,7 @@ import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.UUID;
+import java.util.*;
 
 public class CustomPlayer {
 
@@ -147,6 +144,7 @@ public class CustomPlayer {
 
             //add the player to the database with the default stats
             Document document = new Document("uuid", uuid.toString())
+                    .append("name", Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName())
                     .append("rank", rank)
                     .append("faction", faction)
                     .append("joinDate", joinDate)

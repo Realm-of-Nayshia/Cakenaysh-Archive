@@ -2,19 +2,11 @@ package com.stelios.cakenaysh.Listeners.Server;
 
 import com.stelios.cakenaysh.Main;
 import com.stelios.cakenaysh.Util.CustomPlayer;
-import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
 public class ConnectionListener implements Listener {
 
@@ -40,33 +32,8 @@ public class ConnectionListener implements Listener {
         //create a stash for new players
         main.getStashManager().createStash(player);
 
-        //get the recipes yml file
-        File file = new File(main.getDataFolder(), "recipes.yml");
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        String key = player.getUniqueId().toString();
-
-        List<String> recipes = (List<String>) config.getList(key);
-
-        //if the player isn't in the yml file
-        if (recipes == null) {
-
-            //add the player to the recipe file
-            recipes = new ArrayList<String>();
-            config.set(key, recipes);
-
-            //reset the player's recipes
-            for (NamespacedKey recipe : player.getDiscoveredRecipes()) {
-                player.undiscoverRecipe(recipe);
-            }
-
-            //save the file
-            try {
-                config.save(file);
-            } catch (IOException ex) {
-                main.getLogger().log(Level.SEVERE, "Could not save recipes.yml");
-            }
-        }
-
+        //create a recipe file for new players and remove all their recipes
+        main.getRecipeManager().createRecipeFile(player);
     }
 
     @EventHandler
@@ -78,9 +45,7 @@ public class ConnectionListener implements Listener {
         main.getPacketManager().unInject(player);
 
         //remove the custom player after waiting 1 tick
-        main.getServer().getScheduler().runTaskLater(main, () -> {
-            main.getPlayerManager().removeCustomPlayer(player.getUniqueId());
-        }, 10);
+        main.getServer().getScheduler().runTaskLater(main, () -> main.getPlayerManager().removeCustomPlayer(player.getUniqueId()), 10);
     }
 
 }

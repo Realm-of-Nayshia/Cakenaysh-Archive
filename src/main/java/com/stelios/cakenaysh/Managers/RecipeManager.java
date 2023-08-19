@@ -1,33 +1,50 @@
 package com.stelios.cakenaysh.Managers;
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import com.stelios.cakenaysh.Items.Recipes;
 import com.stelios.cakenaysh.Main;
+import org.bson.Document;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
+import java.util.Objects;
 
 public class RecipeManager {
 
     private final Main main = Main.getPlugin(Main.class);
-    private final File file = new File(main.getDataFolder(), "recipes.yml");
-    private final YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-
+    private final MongoCollection<Document> playerRecipes = main.getDatabase().getPlayerRecipes();
 
     //get the player's list of recipes
     public ArrayList<String> getRecipes(Player player){
 
-        ArrayList<String> recipes = (ArrayList<String>) config.getList(player.getUniqueId().toString());
-
-        if (recipes == null){
-            recipes = new ArrayList<>();
+        try {
+            if (playerRecipes.find(new Document("uuid", player.getUniqueId().toString())).first().getList("recipes", String.class) == null) {
+                return new ArrayList<>();
+            }
+        } catch (NullPointerException e){
+            return new ArrayList<>();
         }
 
-        return recipes;
+        return (ArrayList<String>) Objects.requireNonNull(playerRecipes.find(new Document("uuid", player.getUniqueId().toString())).first()).getList("recipes", String.class);
+    }
+
+    //create a recipes file for the player and remove all their recipes
+    public void createRecipeFile(Player player){
+
+        //if the player already has a recipes file
+        if (!(playerRecipes.find(new Document("uuid", player.getUniqueId().toString())).first() == null)){
+            return;
+        }
+
+        //create a new recipes file
+        playerRecipes.insertOne(new Document("uuid", player.getUniqueId().toString()).append("name", player.getName()).append("recipes", new ArrayList<String>()));
+
+        //reset the player's recipes
+        for (NamespacedKey recipe : player.getDiscoveredRecipes()) {
+            player.undiscoverRecipe(recipe);
+        }
     }
 
     //add a recipe to the player's list
@@ -37,8 +54,8 @@ public class RecipeManager {
         ArrayList<String> recipes = getRecipes(player);
         recipes.add(recipe);
 
-        config.set(player.getUniqueId().toString(), recipes);
-        save();
+        //update the player's recipes
+        playerRecipes.updateOne(Filters.eq("uuid", player.getUniqueId().toString()), new Document("$set", new Document("recipes", recipes)));
         player.discoverRecipe(new NamespacedKey(main, recipe));
     }
 
@@ -49,8 +66,8 @@ public class RecipeManager {
         ArrayList<String> recipes = getRecipes(player);
         recipes.remove(recipe);
 
-        config.set(player.getUniqueId().toString(), recipes);
-        save();
+        //update the player's recipes
+        playerRecipes.updateOne(Filters.eq("uuid", player.getUniqueId().toString()), new Document("$set", new Document("recipes", recipes)));
         player.undiscoverRecipe(new NamespacedKey(main, recipe));
     }
 
@@ -77,14 +94,4 @@ public class RecipeManager {
             }
         }
     }
-
-    //save the file
-    public void save(){
-        try {
-            config.save(file);
-        } catch (IOException ex) {
-            main.getLogger().log(Level.SEVERE, "Could not save recipes.yml");
-        }
-    }
-
 }

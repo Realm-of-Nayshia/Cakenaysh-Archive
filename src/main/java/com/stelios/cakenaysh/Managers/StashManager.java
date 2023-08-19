@@ -16,12 +16,10 @@ import java.util.Objects;
 public class StashManager {
 
     private final Main main = Main.getPlugin(Main.class);
+    private final MongoCollection<Document> playerStashes = main.getDatabase().getPlayerStashes();
 
     //creates a stash for a player
     public void createStash(Player player){
-
-        //get the playerStashes collection
-        MongoCollection<Document> playerStashes = main.getDatabase().getPlayerStashes();
 
         //if the player doesn't have a stash already
         if (!(playerStashes.find(new Document("uuid", player.getUniqueId().toString())).first() == null)){
@@ -29,14 +27,11 @@ public class StashManager {
         }
 
         //create a new stash
-        playerStashes.insertOne(new Document("uuid", player.getUniqueId().toString()).append("stash", new ArrayList<String>()));
+        playerStashes.insertOne(new Document("uuid", player.getUniqueId().toString()).append("name", player.getName()).append("stash", new ArrayList<String>()));
     }
 
     //adds an item to the player's stash
     public void addItemToStash(Player player, ItemStack item){
-
-        //get the playerStashes collection
-        MongoCollection<Document> playerStashes = main.getDatabase().getPlayerStashes();
 
         //get the player's stash
         ArrayList<String> stash = (ArrayList<String>) playerStashes.find(new Document("uuid", player.getUniqueId().toString())).first().get("stash");
@@ -65,9 +60,6 @@ public class StashManager {
 
     //adds multiple items to the player's stash
     public void addItemsToStash(Player player, ArrayList<ItemStack> items){
-
-        //get the playerStashes collection
-        MongoCollection<Document> playerStashes = main.getDatabase().getPlayerStashes();
 
         //get the player's stash
         ArrayList<String> stash = (ArrayList<String>) playerStashes.find(new Document("uuid", player.getUniqueId().toString())).first().get("stash");
@@ -101,9 +93,6 @@ public class StashManager {
     //removes an item from the player's stash
     public void removeItemFromStash(Player player, ItemStack item){
 
-            //get the playerStashes collection
-            MongoCollection<Document> playerStashes = main.getDatabase().getPlayerStashes();
-
             //get the player's stash
             ArrayList<String> stash = (ArrayList<String>) playerStashes.find(new Document("uuid", player.getUniqueId().toString())).first().get("stash");
 
@@ -126,9 +115,6 @@ public class StashManager {
 
     //removes multiple items from the player's stash
     public void removeItemsFromStash(Player player, ArrayList<ItemStack> items){
-
-        //get the playerStashes collection
-        MongoCollection<Document> playerStashes = main.getDatabase().getPlayerStashes();
 
         //get the player's stash
         ArrayList<String> stash = (ArrayList<String>) playerStashes.find(new Document("uuid", player.getUniqueId().toString())).first().get("stash");
