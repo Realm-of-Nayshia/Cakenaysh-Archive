@@ -78,7 +78,7 @@ public final class Main extends JavaPlugin {
 
     private void registerManagers(){
         playerManager = new PlayerManager();
-        stashManager = new StashManager(this);
+        stashManager = new StashManager();
         combatManager = new CombatManager();
         statsManager = new StatsManager(this);
         recipeManager = new RecipeManager();

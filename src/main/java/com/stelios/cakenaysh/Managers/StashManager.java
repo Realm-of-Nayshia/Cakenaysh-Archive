@@ -15,11 +15,7 @@ import java.util.Objects;
 
 public class StashManager {
 
-    Main main;
-
-    public StashManager(Main main) {
-        this.main = main;
-    }
+    private final Main main = Main.getPlugin(Main.class);
 
     //creates a stash for a player
     public void createStash(Player player){
