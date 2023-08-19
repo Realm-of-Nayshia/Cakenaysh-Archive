@@ -83,7 +83,7 @@ public class CustomPlayer {
 
         MongoCollection<Document> playerStats = main.getDatabase().getPlayerStats();
 
-        // Create uuid unique index
+        //create a unique uuid index
         playerStats.createIndex(Indexes.ascending("uuid"), new IndexOptions().unique(true));
 
         Document filter = new Document("uuid", uuid.toString());
@@ -398,8 +398,7 @@ public class CustomPlayer {
                 .append("luck", luck)
                 .append("stealth", stealth);
 
-        Document updateQuery = new Document("$set", document);
-        main.getDatabase().getPlayerStats().updateOne(Filters.eq("uuid", player.getUniqueId().toString()), updateQuery);
+        main.getDatabase().getPlayerStats().updateOne(Filters.eq("uuid", player.getUniqueId().toString()), new Document("$set", document));
     }
 
     //gets the amount of xp needed to level up
