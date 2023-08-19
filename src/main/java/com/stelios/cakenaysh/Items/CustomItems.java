@@ -4,6 +4,7 @@ import com.stelios.cakenaysh.Main;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
@@ -726,7 +727,7 @@ public enum CustomItems {
                     new ArrayList<>(Arrays.asList(false)),
                     new ArrayList<>(Arrays.asList(false)))),
 
-    INGOT_OF_SPARTA(new Item(Material.GOLD_INGOT, 1 , false)
+    INGOT_OF_SPARTA(new Item(Material.GOLD_INGOT, 1 , false, "Ingot of Sparta", null)
             .setDisplayName(new ArrayList<>(Arrays.asList("Ingot of Sparta")),
                     new ArrayList<>(Arrays.asList(255,215,0)),
                     new ArrayList<>(Arrays.asList(true)),
@@ -756,6 +757,19 @@ public enum CustomItems {
     //@return the Item
     public Item getItem(){
         return item;
+    }
+
+
+    //gets the name of an item
+    //@param item: The item being picked.
+    //@return the name of the item
+    public static String getNameFromItem(ItemStack item){
+        for (CustomItems customItem : CustomItems.values()){
+            if (customItem.getItem().getItemStack().equals(item)){
+                return customItem.name();
+            }
+        }
+        return null;
     }
 
     //gets an item from the enum

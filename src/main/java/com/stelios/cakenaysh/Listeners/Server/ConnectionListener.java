@@ -37,6 +37,9 @@ public class ConnectionListener implements Listener {
         CustomPlayer playerData = new CustomPlayer(main, player.getUniqueId());
         main.getPlayerManager().addCustomPlayer(player.getUniqueId(), playerData);
 
+        //create a stash for new players
+        main.getStashManager().createStash(player);
+
         //get the recipes yml file
         File file = new File(main.getDataFolder(), "recipes.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
