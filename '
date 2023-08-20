@@ -1,0 +1,377 @@
+pick dfee808 Continued custom abilities.
+pick d8b562f Completed custom abilities.
+pick c906c43 Refactored many classes to be prone to less errors. Main class overhaul.
+pick 46d2348 Item ability system has been completed.
+pick 656d453 Made different colors and decorations possible for item name and lore.
+pick ebcbbda Slightly changed wrath of sparta ability because funny.
+pick 1e56d46 If the database is not loaded players will be auto kicked.
+pick 84c703e Pushed to keep main branch up to date.
+pick 7769485 Added an actionbar for player health and stamina.
+pick a795c24 Added health and stamina regeneration.
+pick 55728ac Added health and stamina regeneration.
+pick fa20714 Added health and stamina regeneration.
+pick b1b092d Added a ton of new attributes and with their respective commands and methods.
+pick 97a53ff Fixed a bug with overflow stamina and health regen. Both regens now scale off your regen attributes.
+pick 3e4dfc5 Changed the testitem to show the new lore creation rework.
+pick 00bc6c2 Fixed a bug with the stamina and health regen system.
+pick 4d19adb Removed unused imports.
+pick 2d71fe6 Slightly changed comments.
+pick d6a780d Fixed various bugs relating to player attribute manipulation.
+pick 5525290 Newest versions pushed.
+pick b439c8f Commented out all the code temporarily.
+pick aef9bc4 Committing everything before trying to link citizens api.
+pick 136b40d Added Citizens and Sentinel to the plugin. Basic functionality with these plugins work.
+pick cb614fe Removed strength and defense from the database. Added armor proficiency to the database.
+pick ce3c14d Added basic functionality with the combat system. PVP and PVE work. NPC VS NPC is being worked on. Also added and tweaked a few items.
+pick c3c4354 Versioning the files for the first time.
+pick f445ac3 Changed the players current health to a float.
+pick f03ab17 Fix aerial damage typo.
+pick e5e40e2 Fixed hitting with no item causing an error.
+pick f8ac6c4 Created the new NpcStats trait for npcs to hold primitive data types. Created a setter command and a tab completer for this new trait.
+pick 1e9499b Created the new NpcStats trait for npcs to hold primitive data types. Created a setter command and a tab completer for this new trait.
+pick 63e7c4e Getting and resetting npc stats has been added. A regular defense attribute has been added to all battle items.
+pick f340e6e XP added as a new stat for npcs.
+pick 27373a7 Removed CitizensEnableListener.java because it wasn't doing anything useful.
+pick a928a40 Altered the customitems to work with the new system. A few new testitems have been addded as well.
+pick 164158e Added a new thorns NPC stat (removed a few useless ones as well I believe). Npc's should give xp to the player on death now.
+pick a4628a9 Removed speed from the database.
+pick 1759c70 Removed speed from the database. Added itemstats to the customPlayer class. Itemstats will be updated in the game and not save when the player leaves the game (currently all of these stats are stored in BattleItemBuilder PDCS).
+pick 85fa457 Added itemstats to BattleItemBuilder items. Itemstats will be updated in the game and not save when the player leaves the game (currently all of these stats are stored in BattleItemBuilder PDCS).
+pick 63b8b76 Latest jars.
+pick 3b5f0f2 Continued work on the combat system and the stats system.
+pick 6bbc0b1 Removed a useless class.
+pick be0c905 Removed a useless argument
+pick 7c1db72 Removed a useless argument from the resetAttributes method
+pick e301455 Registered the NpcStats EntityDeathEvent.
+pick ee0720b Slightly altered the EntityDeathEvent (it still fires 3 times for some reason) to not produce an error in the console every time.
+pick bb3f2e7 New listener created to add xp to the player when killing a NPC.
+pick d7601a9 Move the listener to give xp on NPC death to a different class.
+pick dbc8f15 Removed all armor stats when the player leaves the game because they automatically get added back in when the player joins the game.
+pick 5452b37 Versioning a new file.
+pick 7313daa Latest jars and updates.
+pick 771cfad Fixed proficiencies being floats when displayed in the lore.
+pick d8b3d85 Slightly changed item stats.
+pick be33be5 Abilities no longer work if the player doesn't meet the proficiency requirements.
+pick a5810f8 Player can no longer wear equipment if they don't meet the proficiency requirements (only by clicking so far).
+pick 9fd3a86 Proficiencies now display as an int rather than a float.
+pick 7c4293b Pushing latest jars and files.
+pick d148067 Versioning file for first time.
+pick 8bf7a28 Versioning file for first time.
+pick ecf190f All player attributes will only save locally inside the plugin until the player leaves the game where they will be sent to the database.
+pick 1d9b428 Slightly altered the getAttributes method to display the information better.
+pick b8abc57 Added a new level attribute to the player inside the database. All the methods and commands were updated to accommodate the new attribute.
+pick 6b601eb New menu creation system has been implemented.
+pick 60375b3 Moved managers to a new package. Their code has also slightly been tweaked to fix a few bugs.
+pick b78ef65 Registering new commands and events.
+pick ed6cdf4 Refactored to disable placing custom items.
+pick fbbb824 Updating latest jars and files. Versioning some files for the first time.
+pick b9601b3 Removed an unused import.
+pick 7b3eaa1 Patched using abilities when interacting with blocks.
+pick 82c7c0b Patched being unable to open chest if holding a placeable custom item.
+pick eb84bcf Changed colors of the health and stamina bars.
+pick 7ec174e Removed the rpg menu item.
+pick 23ef71c Added a new stat to the database called investmentPoints. The player will be able to invest these into proficiencies in the future to be able to equip higher level items.
+pick 0906769 Slightly altered the player profile itemStack.
+pick 6023977 New menu subclass to hold all the combat stats of the player.
+pick ce1d594 Levels implemented. The player can now level up when reaching the correct amount of xp (when leveing up the player will be rewarded investment points).
+pick b6f49d1 Pushing latest jars and config files.
+pick 3c1adbd Pushing latest jars and config files.
+pick ea140ad New custom event to detect when the speed is changed.
+pick 69980f6 removed an unused import and formatted the class better
+pick c7e9ba6 Implemented the new SpeedChangedEvent to control the player speed.
+pick 06a3d15 Implemented the new SpeedChangedEvent to control the player speed in the setSpeed method.
+pick 8dfca83 Implemented weapon charge up damage mechanic. Spamming doesn't do good damage.
+pick 51e42a7 Implemented weapon attackSpeed mechanic. Every 1 attackSpeed increases the weapon swingSpeed attribute by 0.1.
+pick e9fb3f2 Implemented weapon attackSpeed mechanic. Every 1 attackSpeed increases the weapon swingSpeed attribute by 0.1.
+pick e5519a5 Tweaked customItem stats to implement the new attackSpeed mechanic.
+pick 2a852b1 Pushing latest jars and config files.
+pick f2e0c74 Item attributes such as attackSpeed are now removed off the item lore.
+pick 15317dc Updated project structure to make more sense.
+pick 33ea58e Updated project structure to make more sense.
+pick becbd31 Updated project structure to make more sense.
+pick 57bb4a0 Cooldown debuff nerf alongside displayable damage amounts when being hit or hitting mobs.
+pick fb2282c Versioning the moved files for the first time.
+pick 3c83370 Updating imports due to refactoring of the plugin structure.
+pick 7a245b5 Changed speed inside of lore to be a percent instead of a flat increase.
+pick 8d99913 Moved the items used in menus to the top of the class.
+pick 57e6c05 The displayed items that do not rely on the player are now obtained from the CustomPlayer enum.
+pick 74f3c08 Added rudimentary functionality to the skills button in the menu.
+pick a2cc05a Slightly tweaked the formatting and colors of the stats itemStack.
+pick d66c524 Changed color of proficiencies inside a battleItem's lore.
+pick cfeacf8 Added a new event that fires right before the player's proficiency is changed. Doesn't fire from the command as of yet.
+pick da6ff02 Renamed the XpGainEvent to the XpChangedEvent.
+pick 9383ef6 Renamed the XpGainEvent to the XpChangedEvent.
+pick 121ce18 Implemented a check for when the player increases proficiencies through the menu to recalculate the proper stats of equipped items.
+pick a0dc6eb Slightly changed the lore of the back button.
+pick 8a81d75 Updated the colors of each proficiency to match the ones in the menu.
+pick 8b1aebc Overhauled the looks of the skills page in the menu.
+pick 2767561 Changed the combatstats item lore to be less confusing.
+pick ad1c472 Changed the colors and formatting of the lore inside the main CombatStats button.
+pick 506987e Pushing latest jars and files.
+pick 18adeb1 Updated the colors of the item stats in the combat stats menu.
+pick b19b0f7 Lowered wrath of sparta crit chance.
+pick c8666d8 Refactored adding a lore line in the BattleItemBuilder.class.
+pick 0a6eda2 Added a check for if damage is less than 0 to prevent healing players if dealing negative damage.
+pick b6e5260 Added a check for if damage is less than 0 to prevent healing players if dealing negative damage.
+pick fc339a5 Fixed BattleItem lore displaying two negative signs instead of one when having a negative stat.
+pick beccf13 Refactored filling the menus up with blank panes after adding all the other buttons.
+pick 069df34 Added getter methods for the inventory and the button map.
+pick 1daa801 Renamed to MenuButton to be more clear.
+pick 010a4d6 Uses the new MenuButton and Menu classes.
+pick 4c16c0c Updated to use the renamed methods in CustomItems.java.
+pick f14b649 Updated some method names to make more sense.
+pick 5b71807 Renamed from ItemBuilder.java to Item.java
+pick 848eb01 Updated the use the renamed methods in CustomItems.java.
+pick fc70ddc Renamed from BattleItemBuilder.java to BattleItem.java.
+pick 2cb3213 Renamed from ItemBuilder.java to Item.java
+pick 1d0ede1 Uses the renamed BattleItem.class and Item.class.
+pick 27f0e2c Latest Jars.
+pick 6cf96bd Refactored blank pane creation.
+pick 63590da Changed legs of sparta attack speed buff for testing purposes.
+pick 616c48d Removed offhand attack speed changes. An item's attack speed is only set when the item is in the main hand.
+pick 73c121a Changing proficiencies with commands now recalculates player stats.
+pick 14dfde4 Changing proficiencies with commands now recalculates player stats.
+pick 39b0d3b Uses the renamed Item and BattleItem classes.
+pick cfb8e93 Jars and files.
+pick 73f7674 Moved the XpGainedEvent call from inside the commands into the CustomPlayer.java methods.
+pick 2d2bd3e Moved the XpGainedEvent call from inside the commands into the CustomPlayer.java methods. Also removed the useless lines of code from the methods that set the player's stats in the database.
+pick a095343 Player stats get saved every 30 minutes automatically.
+pick 8c9d11d Fixed item stats being removed and not added back after saving the player stats to the database.
+pick 70e7e91 Fixed armor not taking durability damage
+pick 8af6ddf Fixed the /heal command
+pick 222fa1c Added the /kill and /heal commands for admins
+pick 81456b4 Added the /kill and /heal commands for admins
+pick 7a8fba1 Added a /stash command to store overflow player items.
+pick 529a437 Created a method to add items to a player's stash. Currently is only implemented as an edge case for the player equipping armor then filling their inventory before the armor can be removed.
+pick 31bcd21 Added a /stash command for overflow player items.
+pick b50ee04 Removed a useless method.
+pick 731e023 Renamed the players table in the database to player_stats to prevent confusion when adding faction tables in the future.
+pick ddf476d Renamed the players table in the database to player_stats to prevent confusion when adding faction tables in the future.
+pick f7c2e9a Renamed the players table in the database to player_stats to prevent confusion when adding faction tables in the future.
+pick 542811a Added a new faction column to the player_stats table
+pick 77c7e45 Added a new faction column to the player_stats table.
+pick 674cf78 Removed being able to change the join date and playtime
+pick 49e2de0 Removed being able to change the join date and playtime
+pick cd2bba9 Tweaked inserting the join date into the database.
+pick 7a64e48 Added playtime to the database and as a command for the players.
+pick b228420 Added playtime to the database and as a command for the players.
+pick e7ee25a Added health regen, stamina and stamina regen as new working stats on items.
+pick 2fe6717 Cleaned up the EntityDamageEvent code as well as fixed a casting issue that made the player die whenever they took any damage.
+pick d0b3d0c Added healthRegen, stamina, and staminaRegen to the stat getter method in order for them to display in the item lore.
+pick 34fc8e7 Changed the color for having no items in the stash to green.
+pick 383a797 Players will now be kicked if their data can't be saved in the database.
+pick dfe5114 Player data now actually saves every 30 minutes.
+pick 5fc1ec1 Testing new combat stuff
+pick 5331136 Testing new combat stuff
+pick a85f367 Fixed stats not being applied correctly on armor and weapons (especially when quickly scrolling through items).
+pick 26f2af5 Removed the silly name requirements for gui items.
+pick e6c67cb Using non customItems will no longer throw a massive error in the console.
+pick e52758c New constructor for items with a name pdc requirement (used for identifying the item for abilities).
+pick d855fdb Altered the items for abide by the new item constructors.
+pick 1869060 New constructor parameters to be more clear on what type of item each CustomItem is (weapon, accessory, armor) alongside some other tweaks.
+pick 21e517f New constructor parameters to be more clear on what type of item each CustomItem is (weapon, accessory, armor) alongside some other tweaks.
+pick 0d7db41 Item creation and stat calculation overhaul.
+pick d499f94 Implemented stat changes from offhand items (finally).
+pick 1a33fe2 Implemented stat changes from offhand items (finally).
+pick 9623771 Prevented players from placing custom items that are blocks when shift right-clicking an interactable block.
+pick 8db41a7 Made playtime a nicer number.
+pick cc71d5f Made playtime a nicer number.
+pick 7c40b8c Fixed a formatting issue with the levelup message.
+pick 457ba86 Fixed accessories giving double the stats and removing double the stats in specific edge cases.
+pick 20105db Fixed accessories giving double the stats and removing double the stats in specific edge cases.
+pick b68fa09 Added xp sharing when killing npcs. Everyone that contributed to killing a npc will get xp depending on how much damage they dealt.
+pick f5fe339 Added xp sharing when killing npcs. Everyone that contributed to killing a npc will get xp depending on how much damage they dealt.
+pick 551bb07 Updated the database to use HikariCP.
+pick e8efe67 Made test_accessory and the dial of the sun unstackable.
+pick cfe983d Made test_accessory and the dial of the sun unstackable.
+pick 3fc6a8e Made a getter for BattleItems' unstackable boolean variable.
+pick f7fb046 Made a getter for BattleItems' unstackable boolean variable.
+pick 8adbfbc Uncommented the ServerListPingListener.
+pick 51915d1 Split up LevelManager.java into SentinelDeathListener.java and XpGainListener.java.
+pick 2480a1d Split up LevelManager.java into SentinelDeathListener.java and XpGainListener.java.
+pick 97ea4df Added a tick long wait in the onJoin method to fix an error be thrown if the player joins before their stats are loaded.
+pick 18100b4 Changed the HikariCP version to 5.0.1 instead of having LATEST due to it being removed soon.
+pick 41c4e23 Moved the stash management into StashManager.java.
+pick dfc5dd0 Moved the stash management into StashManager.java.
+pick aa3fc14 Items now have whether they are unstackable or not inside a pdc.
+pick 9106bed If the player trys to equip an offhand item and doesn't meet the requirements for it, the item will be removed from their offhand slot and put into their inventory (will be sent to the stash if inventory is full).
+pick 908d0b4 Fixed armor stand flickering when displaying the damage hologram.
+pick 6f1fc30 Removed unused imports.
+pick fe08729 Split up the events StatsManager.java into many different listener classes to unclutter the program.
+pick 041ef4e Added some foundational code to split npc xp and drops when killed by multiple players. Rewards will scale based on damage dealt (temporarily broken until a weird error is fixed).
+pick 4353e27 Split up the events StatsManager.java into many different listener classes to unclutter the program.
+pick 6eee893 Added some foundational code to split npc xp and drops when killed by multiple players. Rewards will scale based on damage dealt (temporarily broken until this weird error is fixed).
+pick f92ad26 Consolidated the initialization of manager classes into one method to unclutter the onEnable.
+pick 221c3e0 Removed thorns from players and npcs.
+pick aa14bb7 Removed thorns from players and npcs.
+pick 8761540 Removed thorns for good this time...
+pick 4d2f194 Fixed one time use abilities sometimes breaking.
+pick 0509ddc Fixed one time use abilities sometimes breaking.
+pick d2128d3 Added a primitive combat management system that keeps track of it the player is in combat or not.
+pick e6cc609 Added a primitive combat management system that keeps track of it the player is in combat or not.
+pick 2fb0e6e Fixed a bug that removed all items from the player's main hand when using an ability even if they had more than 1 item in it.
+pick 6635166 Changed health to a float in the database to allow for more accurate health calculations.
+pick d295453 Changed health to a float in the database to allow for more accurate health calculations.
+pick 5ceceb9 Added fire resistance and refactored the poison code to not kill.
+pick 41fc124 Saturation food buff only available till level 15. Added regeneration.
+pick ec630ae Saturation food buff only available till level 15. Added regeneration.
+pick 58be5a1 Combat system now calculates for strength, resistance, and weakness potion effects.
+pick c2889fc Combat system now calculates for strength, resistance, and weakness potion effects.
+pick 6417052 Switched out from using armor stands to text displays for showing how much damage a player or npc has dealt.
+pick 878a1e8 Changed wrath of sparta proficiency requirements.
+pick 6128b41 Switched out from using armor stands to text displays for showing how much damage a player or npc has dealt.
+pick a5b2ce0 If the player is to deliver the final blow to a npc, the npc persistent player damage storage will only add the exact amount of damage to kill the npc to the storage instead of adding all the player's damage.
+pick 23df223 Added cleanup to the onDisable. Now, on plugin shutdown, player stats get saved, player data gets cleared off NPCs, and temporary damage text displays all get removed.
+pick fffb939 Temporary damage text displays now get removed on plugin disable.
+pick 1f32749 Altered the NpcStats.java to fix Xp sharing and item drop chance scaling.
+pick 7608de0 Altered SentinelDeathListener.java to fix Xp sharing and item drop chance scaling.
+pick b812cfe Finally fixed dropped items from npcs not being unstackable.
+pick f099e3b Fixed sweeping edge not working on players.
+pick a586072 Fixed sweeping edge not working on players.
+pick 600e980 Fixed a typo.
+pick a876a8e Added a bonus damage stat to be used in item abilities.
+pick 484e08b Made the wrath of sparta ability double the player's damage.
+pick 89b34ee Added a bonus damage stat to be used in item abilities.
+pick 5ada744 Corrected a comment.
+pick 0ea16ad Fixed walk-speed being able to go over the limit.
+pick 545c607 Fixed walk-speed being able to go over the limit.
+pick 5512160 Fixed an inaccurate comment.
+pick 70e3d90 Code cleanup
+pick adf3fe7 Added potion effect usage logic. Consumed potion effects will not supersede infinite armor set effects.
+pick 3f8f05d Added potion effect usage logic. Consumed potion effects will not supersede infinite armor set effects.
+pick 00dbcb2 Implemented equipment bonus infrastructure. "Full set bonuses" can now be created which give stat bonuses and potion effects.
+pick 6550c27 Added potion effect usage logic. Consumed potion effects will not supersede infinite armor set effects.
+pick f274337 Code cleanup.
+pick a202b12 Added the "blank" set of armor alongside its full set bonus for testing purposes.
+pick f01b34b Added the "blank" set of armor alongside its full set bonus for testing purposes.
+pick 8f59a69 Removed a useless method.
+pick d14e36a Added the capability of creating player head custom items.
+pick 7477178 Removed an unnecessary constructor parameter.
+pick 6263f82 Added the Grubby Gustard and the Grubulously Grubby Grustard...
+pick de1efa7 Added the Grubby Gustard and the Grubulously Grubby Grustard...
+pick 0516d63 Removed an unnecessary constructor parameter.
+pick 821b075 Added the capability of creating player head custom items.
+pick 249e496 Manually set game rules in the on enable (keep inventory and limited crafting to true).
+pick 58e8e27 Manually set game rules in the on enable (keep inventory and limited crafting to true).
+pick 1e8ae63 Added the registration of game rules and recipes.
+pick 963f5e5 Added an enum to store all custom crafting recipes.
+pick 0bef350 Added an enum to store all custom crafting recipes.
+pick 120f520 Tweaked custom player head creation to not throw a ton of errors.
+pick db7399e Added a new recipe for testing purposes.
+pick 270879e Added a new recipe for testing purposes.
+pick 0526f06 Added events to prevent the player from getting advancements or recipes the normal way.
+pick c81985a Fixed a formatting issue.
+pick d7e789a Implemented a recipe system to keep track of player unlocked recipes. Created a command to unlock and lock recipes for the time being (and for admins).
+pick b86527c Implemented a recipe system to keep track of player unlocked recipes. Created a command to unlock and lock recipes for the time being (and for admins).
+pick 2cfdaeb Admins can now choose to manually remove or be given all recipes.
+pick a70c146 Admins can now choose to manually remove or be given all recipes.
+pick ba2e239 Refactored the recipe yml file to hold the key part of each recipe's NamespacedKey instead of holding the key itself.
+pick def34cd Refactored the recipe yml file to hold the key part of each recipe's NamespacedKey instead of holding the key itself. Also added a few new methods to reset and give all recipes.
+pick b5b9951 Changed click functionality to open the recipe menu instead of sending a message.
+pick adc3aa8 Added new CustomItems to be used in new recipes.
+pick 96514c3 Added more recipes and new methods to obtain more recipe information.
+pick 6995b65 Custom crafting recipes now appear in the player menu. Locked recipes will appear locked.
+pick e7b71a7 Custom crafting recipes now appear in the player menu. Locked recipes will appear locked.
+pick 1fc235b Changed the invisible white pane into the light gray color to look like the inventory background better.
+pick 25598cc Changed the invisible white pane into the light gray color to look like the inventory background better.
+pick 012ad2b Slightly altered the methods to return the ingredients more efficiently and accurately.
+pick 8e354bd Slightly altered the methods to return the ingredients more efficienctly and accurately.
+pick f57a681 A menu now appears that displays an unlocked item's recipe when it is clicked.
+pick 7da5754 Completed the menu that displays an unlocked item's recipe when it is clicked.
+pick 0d07fe8 Organized a few method calls better.
+pick ab04352 Made a local method private.
+pick 0f3bbe8 Added a new dependency to help with PDC data types.
+pick aa18bcd Added a new JUICY consumable item.
+pick 053af1d Organized a few method calls better.
+pick 929be7c Made a local method private.
+pick 2110719 Added a new JUICY consumable item.
+pick e004593 Added a new method to temporarily increase player stats.
+pick 8355022 Created a new listener to implement custom consumable perks.
+pick 96b0748 Created new consumable items that give abilities and stats when consumed.
+pick aa942c6 Removed a useless method that was causing an error.
+pick 5a65c7c Removed a useless method that was causing an error.
+pick 7bf1f56 Fixed a bug where spaces in the consumable stat name didn't proc its buff.
+pick a20cb0d Fixed a bug where all non-initial elements of a consumable's stat list would take the initial's duration and amplifier instead of their own.
+pick 65f093e Made 1 attack speed stat point worth 0.01 of the generic minecraft attack speed (so 160 will swing like a normal sword).
+pick 12fa9a5 Made 1 attack speed stat point worth 0.01 of the generic minecraft attack speed (so 160 will swing like a normal sword).
+pick 7014efd Added trimmed and dyed armor as options for custom items.
+pick 005b40b Added trimmed and dyed armor as options for custom items.
+pick 7ada112 Added health increases and max health changes as an option for consumables and abilities.
+pick 95268eb Added health increases and max health changes as an option for consumables and abilities.
+pick b8493fc Added new custom items for demonstration purposes.
+pick cdd08ba Changed how the lore is displayed for items that give health.
+pick 9775ff9 Added implementation of potion effects on entity damaged.
+pick 691375f Added lore for potion effects that attach to weapons.
+pick 499ef48 Fixed accessory items not removing their stats from the player when leaving the game.
+pick c12d7bb Removed confirmation message that potion effects have been applied on hit from a weapon.
+pick 1a82a8e Slightly tweaked the health scaling on equip and dequip of armor to prevent rapid health regeneration glitches,
+pick aa29425 Slightly tweaked the health scaling on equip and dequip of armor to prevent rapid health regeneration glitches,
+pick a90cdf8 Removed unnecessary parameters and variables.
+pick 03b6e2e Implemented NMS.
+pick 557e63e Removed the default damage cooldown from players and npcs. A one-second wait between hits is no longer needed.
+pick a17bbf9 Renamed SentinelDeathListener.class to SentinelStatusChangeListener.class.
+pick 35f23dd Renamed SentinelDeathListener.class to SentinelStatusChangeListener.class.
+pick 584c939 Removed unnecessary casts.
+pick f8a24d1 Implemented NMS into the plugin. Stopped the inordinate amount of damage particles from appearing on hit.
+pick 0aa7133 Implemented NMS into the plugin. Stopped the inordinate amount of damage particles from appearing on hit.
+pick 3cfe059 Implemented NMS into the plugin. Switched the database to a MongoDB database.
+pick 18970c5 Changed the database to MongoDB. Player stats now save properly on the new database.
+pick 41c3cb9 Changed the database to MongoDB. Player stats now save properly on the new database.
+pick 54ad1c4 Fixed hitting with non-custom items throwing a massive error.
+pick f7f8ef2 Made a comment more accurate for tab completer classes.
+pick f5157d9 Added a new command to update the database from inside the game.
+pick 2ba07e7 Added a new command to update the database from inside the game.
+pick b04d350 Refactored the methods that save player stats to the database.
+pick 8449186 All players will be kicked and the server will be shutdown if the database goes down.
+pick 6a6cecb Removed an unnecessary print debug statement.
+pick 99fcb34 All players will be kicked and the server will be shutdown if the database goes down.
+pick d2548a0 Removed an unnecessary print debug statement.
+pick a673ab1 Added recipes, stash, and npc information collections to the database and the database class to be implemented at a later date.
+pick dd8c1ad Added recipes, stash, and npc information collections to the database and the database class to be implemented at a later date.
+pick 5828445 Added quests as a new collection in the database to be used at a future point in time.
+pick fc5483f Made /heal and /kill update the action bar and vanilla health bar instantly.
+pick 80441ce Made /heal and /kill update the action bar and vanilla health bar instantly.
+pick cdb173d Fixed a bug with the /kill command not killing instantly.
+pick e327427 Moved around some code to try and fix the bug of persistent damage displays.
+pick 21b5f0c Moved around some code to try and fix the bug of persistent damage displays.
+pick ea13750 Added the consumable name as a pdc.
+pick f0b1908 Fixed a comment.
+pick ed2fbb7 Moved the stash system from yml files into the MongoDB database.
+pick eec9833 Made a few efficiency tweaks in the code.
+pick f353b2c Made a few efficiency tweaks in the code.
+pick 08976fc Altered the StashManager constructor.
+pick acb8e27 Added print statements to try and debug a strange bug.
+pick d32e93f Moved the recipe and stash systems' data storage from yml files to the database.
+pick 46a0f4c Moved the recipe and stash systems' data storage from yml files to the database.
+pick c76d84b Moved the recipe and stash systems' data storage from yml files to the database.
+
+# Rebase 829bfd8..c76d84b onto 829bfd8 (347 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup [-C | -c] <commit> = like "squash" but keep only the previous
+#                    commit's log message, unless -C is used, in which case
+#                    keep only this commit's message; -c is same as -C but
+#                    opens the editor
+# x, exec <command> = run command (the rest of the line) using shell
+# b, break = stop here (continue rebase later with 'git rebase --continue')
+# d, drop <commit> = remove commit
+# l, label <label> = label current HEAD with a name
+# t, reset <label> = reset HEAD to a label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+#         create a merge commit using the original merge commit's
+#         message (or the oneline, if no original merge commit was
+#         specified); use -c <commit> to reword the commit message
+# u, update-ref <ref> = track a placeholder for the <ref> to be updated
+#                       to this position in the new commits. The <ref> is
+#                       updated at the end of the rebase
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
