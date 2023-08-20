@@ -183,9 +183,7 @@ public class StatsManager {
         }
 
         //spawn the text display
-        System.out.println("spawned text display VERY EARLY");
         TextDisplay textDisplay = (TextDisplay) Bukkit.getWorld(entity.getWorld().getUID()).spawnEntity(location, EntityType.TEXT_DISPLAY);
-        System.out.println("spawned text display EARLY");
         textDisplay.setBillboard(Display.Billboard.CENTER);
         textDisplay.setCustomNameVisible(true);
         textDisplay.customName(damageComponent);
@@ -193,17 +191,12 @@ public class StatsManager {
         //add the text display to the arraylist
         textDisplays.add(textDisplay);
 
-        System.out.println("spawned text display");
-
-
         //despawn the text display after 1.5 seconds
         new BukkitRunnable(){
             @Override
             public void run() {
-                System.out.println("despawning text display");
-                textDisplay.remove();
                 textDisplays.remove(textDisplay);
-                System.out.println("despawned text display");
+                textDisplay.remove();
             }
         }.runTaskLater(main, 30);
     }
